@@ -1,0 +1,4 @@
+AUDIO RECORDING in frontend:
+https://www.npmjs.com/package/react-audio-voice-recorder
+https://blog.logrocket.com/how-to-create-video-audio-recorder-react/
+
