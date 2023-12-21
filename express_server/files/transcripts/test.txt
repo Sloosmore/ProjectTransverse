@@ -1,0 +1,11 @@
+ That's all only one of them was getting called.
+ You know, like, just in the structure? Yes.
+ If you were trying to say, oh my God, now it works. So I had one function inside the other function, and I was,
+ supporting both the functions, but now.
+ When you talk, it's going into this tier.
+ So all the conversation that we're having right now.
+ that we're having right now it's putting me into this and I have no idea how accurate the
+ transcription is because I'm using a pretty lightweight whisper model at this point, but it's
+ should be capturing everything that I'm saying. And I...
+ Yeah, it looks really pretty well.
+ So, just have this open and

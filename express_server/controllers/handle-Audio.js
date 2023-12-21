@@ -4,6 +4,7 @@ const uuid = require("uuid");
 let { PythonShell } = require("python-shell");
 const delAudio = require("../middleware/audio/deleteAudio");
 const appendTranscript = require("../middleware/audio/appendTranscript");
+const readTranscript = require("../middleware/audio/readTranscirpts");
 
 const handleAudio = async (req, res) => {
   try {

@@ -10,7 +10,6 @@ filename = sys.argv[1]
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-print(filename)
 try:
     audio_path = os.path.join(script_dir, f'../files/audiologs/{filename}.webm')
     result = model.transcribe(audio_path)
