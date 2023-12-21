@@ -1,0 +1,47 @@
+.donut {
+  width: 200px;
+  height: 200px;
+  border: 10px solid lightgray;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background-color: transparent;
+  animation: pulse 8s infinite;
+  transform-origin: center;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.1);
+  } /* Expand */
+  15% {
+    transform: scale(0.95);
+  } /* Contract */
+  25% {
+    transform: scale(1.05);
+  } /* Slightly expand */
+  35% {
+    transform: scale(0.97);
+  } /* Slightly contract */
+  45% {
+    transform: scale(1.08);
+  } /* Expand */
+  55% {
+    transform: scale(1);
+  } /* Back to normal */
+  65% {
+    transform: scale(1.12);
+  } /* Larger expansion */
+  75% {
+    transform: scale(0.9);
+  } /* Larger contraction */
+  85% {
+    transform: scale(1.05);
+  } /* Expand */
+  95% {
+    transform: scale(0.98);
+  } /* Slightly contract */
+}
