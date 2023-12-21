@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const AudioRecorderComponent = () => {
+  const [tscript, updateTranscript] = useState("");
+
   function sendToServer(blob) {
     fetch(`/v-api`, {
       method: "POST",
@@ -14,7 +16,11 @@ const AudioRecorderComponent = () => {
         }
         return response.text();
       })
-      .then((text) => console.log("data sent"))
+      .then((text) => {
+        console.log("Response from server:", text);
+        let audioRes = JSON.parse(text);
+        updateTranscript(audioRes["transcript"]);
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -31,13 +37,17 @@ const AudioRecorderComponent = () => {
   }
 
   useEffect(() => {
+    // This code will run after `tscript` is updated
+    console.log(tscript);
+  }, [tscript]);
+
+  useEffect(() => {
     if (navigator.mediaDevices.getUserMedia) {
       const constraints = { audio: true };
       // Chunks is genrally a list (const chunks = []) but I am making it a let because I want to overwrite it every time
 
       const onSuccess = (stream) => {
-
-        setInterval(()=>record_and_send(stream), 5000);
+        setInterval(() => record_and_send(stream), 5000);
       };
 
       navigator.mediaDevices

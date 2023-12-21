@@ -10,42 +10,64 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 function App() {
+  //this is for sidebar
   const [data, setData] = useState([]);
 
-  /*useEffect(() => {
-    // An async function to fetch data from the API
-    async function fetchData() {
-      // Logging the API URL from environment variables for debugging
-      console.log(import.meta.env.VITE_API_URL);
+  const [tscript, updateTranscript] = useState("Just start talking");
 
-      try {
-        // Await the fetch call to the API and store the response
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}transcript/`
-        );
-
-        // Check if the response is successful (status code 200-299)
+  function sendToServer(blob) {
+    fetch(`/v-api`, {
+      method: "POST",
+      body: blob,
+    })
+      .then((response) => {
         if (!response.ok) {
-          // If not successful, throw an error
-          throw new Error("Network response was not ok");
+          throw Error(
+            `Server returned ${response.status}: ${response.statusText}`
+          );
         }
+        return response.text();
+      })
+      .then((text) => {
+        console.log("Response from server:", text);
+        let audioRes = JSON.parse(text);
+        updateTranscript(audioRes["transcript"]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
-        // Await the parsing of the response body as JSON
-        const result = await response.json();
+  function record_and_send(stream) {
+    const recorder = new MediaRecorder(stream);
+    const chunks = [];
+    recorder.ondataavailable = (e) => chunks.push(e.data);
+    recorder.onstop = (e) =>
+      sendToServer(new Blob(chunks, { type: "audio/webm;codecs=opus" }));
+    setTimeout(() => recorder.stop(), 5000);
+    recorder.start();
+  }
 
-        // Log the result for debugging and update the state with the fetched data
-        console.log(result);
-        setData(result);
-      } catch (error) {
-        // Log any errors that occur during the fetch operation
-        console.error("Error fetching data:", error);
-      }
+  useEffect(() => {
+    // This code will run after `tscript` is updated
+    console.log(tscript);
+  }, [tscript]);
+
+  useEffect(() => {
+    if (navigator.mediaDevices.getUserMedia) {
+      const constraints = { audio: true };
+      // Chunks is genrally a list (const chunks = []) but I am making it a let because I want to overwrite it every time
+
+      const onSuccess = (stream) => {
+        setInterval(() => record_and_send(stream), 5000);
+      };
+
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(onSuccess)
+        .catch((error) => console.log("Error getting media", error));
     }
-
-    // Call the fetchData function to initiate the fetch operation
-    fetchData();
-    // The empty dependency array tells React to run the effect once on mount
-  }, []);*/
+  }, []);
 
   return (
     <Router>
@@ -61,7 +83,7 @@ function App() {
           <div className="col">
             <Routes>
               <Route path="/c/:taskId" element={<Chatroom />} />
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home transcript={tscript} />} />
             </Routes>
           </div>
         </div>

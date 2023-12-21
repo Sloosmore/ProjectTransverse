@@ -1,13 +1,15 @@
 const fsPromises = require("fs").promises;
 const path = require("path");
 const uuid = require("uuid");
-let { PythonShell } = require("python-shell");
 const delAudio = require("../middleware/audio/deleteAudio");
 const appendTranscript = require("../middleware/audio/appendTranscript");
 const readTranscript = require("../middleware/audio/readTranscirpts");
+const runPyTscript = require("../middleware/audio/pythonTranscription");
 
 const handleAudio = async (req, res) => {
   try {
+    const start = Date.now();
+
     const chunks = [];
     req.on("data", (chunk) => chunks.push(chunk));
     req.on("end", async () => {
@@ -24,25 +26,18 @@ const handleAudio = async (req, res) => {
       await fsPromises.writeFile(filePath, audioData);
 
       // send filepath to pythonscript
-      let options = {
-        scriptPath: path.join(__dirname, "..", "middleware"),
-        args: [transcriptID],
-      };
-
-      textFragment = await PythonShell.run("transcription.py", options).then(
-        (results) => {
-          console.log("results:", results);
-          return results;
-        }
-      );
 
       //IMPORTANT: file structure of reading txt file will need to be upgraded from one txt file later
       //filepath to write should be a var
 
       //these are all async functions
-      appendTranscript(textFragment, "test");
+      textFragment = await runPyTscript(transcriptID);
+
+      await appendTranscript(textFragment, "test");
+
       delAudio(transcriptID);
-      tscript = readTranscript("test");
+
+      let tscript = await readTranscript("test");
 
       console.log("Audio file saved successfully");
       res.status(200).json({
