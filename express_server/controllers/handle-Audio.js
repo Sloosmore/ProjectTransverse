@@ -41,6 +41,7 @@ const handleAudio = async (req, res) => {
       //these are all async functions
       appendTranscript(textFragment, "test");
       delAudio(transcriptID);
+      tscript = readTranscript("test");
 
       console.log("Audio file saved successfully");
       res.status(200).json({
