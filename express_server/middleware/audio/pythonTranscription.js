@@ -3,7 +3,7 @@ const path = require("path");
 
 runPyTscript = async (transcriptID) => {
   let options = {
-    scriptPath: path.join(__dirname, ".."),
+    scriptPath: path.join(__dirname),
     args: [transcriptID],
   };
 
@@ -11,7 +11,7 @@ runPyTscript = async (transcriptID) => {
     "transcription.py",
     options,
     (err, results) => {
-      if (err) console.log(err)
+      if (err) console.log(err);
       console.log("results:", results);
       return results;
     }

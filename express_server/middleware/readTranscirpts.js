@@ -4,7 +4,7 @@ const path = require("path");
 readTranscript = async (filename) => {
   try {
     const data = await fsPromises.readFile(
-      path.join(__dirname, "../..", "/files/transcripts", `${filename}.txt`),
+      path.join(__dirname, "..", "/files/transcripts", `${filename}.txt`),
       "utf8"
     );
     return data;

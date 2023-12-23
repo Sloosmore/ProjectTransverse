@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const { logEvents, logger } = require("./middleware/logEvents");
 const errorHandler = require("./middleware/errorHandle");
+const path = require("path");
 
+const chokidar = require("chokidar");
 const PORT = process.env.PORT || 5001;
 
 app.use(logger);
@@ -17,12 +19,27 @@ app.use("/", require("./routes/root"));
 app.use("/v-api", require("./routes/voice"));
 
 //app.use("/c", require("./routes/chat"));
-//will work on in a sec
-
-app.get("/api", (req, res) => {
-  res.json({ users: ["userOne", "userTwo", "userThree"] });
-});
+//will work later
 
 app.use(errorHandler);
+app.listen(PORT, () => console.log(`server started on port ${PORT}`));
 
-app.listen(PORT, () => console.log("server started on port 5001"));
+// NL Handeler ------------------------------------------
+
+const handleTask = require("./controllers/handleTask");
+
+const filepath = path.join(__dirname, "files/transcripts/");
+
+const watcher = chokidar.watch(filepath, {
+  ignored: /(^|[\/\\])\../, // ignore dotfiles
+  persistent: true,
+});
+
+watcher
+  .on("add", (path) => {}) //to be done later
+  .on("change", async (path) => {
+    await handleTask(path);
+  })
+  .on("unlink", (path) => {}); //to be done later
+
+//-------------------------------------------------------

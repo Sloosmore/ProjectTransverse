@@ -1,14 +1,18 @@
 const fsPromises = require("fs").promises;
 const path = require("path");
 const uuid = require("uuid");
+
+//middleware imports
 const delAudio = require("../middleware/audio/deleteAudio");
 const appendTranscript = require("../middleware/audio/appendTranscript");
-const readTranscript = require("../middleware/audio/readTranscirpts");
+const readTranscript = require("../middleware/readTranscirpts");
 const runPyTscript = require("../middleware/audio/pythonTranscription");
+const timerAppend = require("../middleware/addTimer");
 
 const handleAudio = async (req, res) => {
   try {
-    const start = Date.now();
+    //time
+    let startfin = Date.now();
 
     const chunks = [];
     req.on("data", (chunk) => chunks.push(chunk));
@@ -27,17 +31,21 @@ const handleAudio = async (req, res) => {
 
       // send filepath to pythonscript
 
-      //IMPORTANT: file structure of reading txt file will need to be upgraded from one txt file later
-      //filepath to write should be a var
-
       //these are all async functions
       textFragment = await runPyTscript(transcriptID);
 
-      await appendTranscript(textFragment, "test");
-
       delAudio(transcriptID);
 
+      //IMPORTANT: file structure of reading txt file will need to be upgraded from one txt file later
+      //filepath to write should be a var
+
+      // >99.9% of the response time is the translation
+      await appendTranscript(textFragment, "test");
+
       let tscript = await readTranscript("test");
+
+      //time
+      timerAppend(startfin, true);
 
       console.log("Audio file saved successfully");
       res.status(200).json({
