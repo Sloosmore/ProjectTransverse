@@ -1,6 +1,10 @@
 import autogen
 import os
+import sys
 from autogen.agentchat.contrib.gpt_assistant_agent import GPTAssistantAgent
+
+task = sys.argv[1]
+
 
 config_list = [
 
