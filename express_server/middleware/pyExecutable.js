@@ -1,14 +1,15 @@
 let { PythonShell } = require("python-shell");
 const path = require("path");
 
-runPyTscript = async (transcriptID) => {
+runPyTscript = async (Filepath, pyArg) => {
   let options = {
     scriptPath: path.join(__dirname),
-    args: [transcriptID],
+    args: [pyArg],
   };
 
+
   let textFragment = await PythonShell.run(
-    "transcription.py",
+    Filepath,
     options,
     (err, results) => {
       if (err) console.log(err);
@@ -17,9 +18,7 @@ runPyTscript = async (transcriptID) => {
     }
   );
 
-  console.log(textFragment);
 
-  return textFragment;
 };
 
 module.exports = runPyTscript;

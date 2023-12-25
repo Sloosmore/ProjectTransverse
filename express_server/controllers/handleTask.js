@@ -1,9 +1,8 @@
 //https://www.npmjs.com/package/chokidar
 const fsPromises = require("fs").promises;
 const path = require("path");
-const fs = require("fs");
 const readTranscript = require("../middleware/readTranscirpts");
-const chokidar = require("chokidar");
+const runPyTscript = require("../middleware/pyExecutable");
 
 const handleTask = async (filePath) => {
   const filename = path.parse(filePath).name;
@@ -18,7 +17,8 @@ const handleTask = async (filePath) => {
   const hasBlankLine = lines.some((line) => line.trim() === "");
 
   if (tscript.toLowerCase().includes("transcript")) {
-    //to cell task que
+    filePath = "celeryQue/createDoc.py";
+    runPyTscript(filePath, tscript);
     await fsPromises.writeFile(filePath, "");
   } else if (tscript.toLowerCase().includes("navigate") && hasBlankLine) {
     //gpt call

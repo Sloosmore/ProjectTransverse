@@ -2,8 +2,8 @@ import autogen
 import os
 import sys
 from autogen.agentchat.contrib.gpt_assistant_agent import GPTAssistantAgent
+from celeryConfig import app
 
-task = sys.argv[1]
 
 
 config_list = [
@@ -41,14 +41,20 @@ user_proxy = autogen.UserProxyAgent(
         max_consecutive_auto_reply=2,
         is_termination_msg=lambda x: x.get("content", "").rstrip().endswith("TERMINATE"),
         code_execution_config={
-            "work_dir": "files/docs",
+            "work_dir": "../../files/docs",
             "use_docker": False,  # set to True or image name like "python:3" to use docker
         },
         # llm_config=llm_config
     )
     # the assistant receives a message from the user_proxy, which contains the task description
+@app.task(name='my_app.autogen_Create')
+def createDoc(task):
+    user_proxy.initiate_chat(
+                assistant,
+                message=task,
+            )
+if __name__ == "__main__":
+    import sys
+    tscript = sys.argv[1]
+    createDoc.delay(tscript)
 
-user_proxy.initiate_chat(
-        assistant,
-        message=task,
-    )

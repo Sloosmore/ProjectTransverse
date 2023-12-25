@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-const { logEvents, logger } = require("./middleware/logEvents");
-const errorHandler = require("./middleware/errorHandle");
+const { logEvents, logger } = require("./middleware/infoTracking/logEvents");
+const errorHandler = require("./middleware/infoTracking/errorHandle");
 const path = require("path");
 
 const chokidar = require("chokidar");
