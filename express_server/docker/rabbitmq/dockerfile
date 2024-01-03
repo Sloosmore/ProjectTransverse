@@ -1,0 +1,12 @@
+# Use the official RabbitMQ image as a parent image
+FROM rabbitmq:3.13-rc
+
+# Set environment variables, if needed
+ENV RABBITMQ_DEFAULT_USER=user
+ENV RABBITMQ_DEFAULT_PASS=password
+
+# Copy configuration files or scripts, if any
+# COPY ./my-rabbitmq-config.conf /etc/rabbitmq/
+
+# Additional commands to customize the image
+# RUN apt-get update && apt-get install -y my-package

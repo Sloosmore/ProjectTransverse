@@ -5,20 +5,107 @@ import Sidebar from "./sidebar/sidebar";
 import Home from "./panel";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Chatroom from "./chat-room";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 
 function App() {
   //this is for sidebar
+  const [mode, setMode] = useState("default");
+
   const [data, setData] = useState([]);
 
-  const [tscript, updateTranscript] = useState("Just start talking");
+  const commands = [
+    {
+      command: "end session",
+      callback: () => {
+        window.location.replace("https://www.google.com");
+      },
+    },
+    {
+      command: "transverse",
+      callback: () => {
+        fetch(`/tverse-api`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ transcript }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw Error(
+                `Server returned ${response.status}: ${response.statusText}`
+              );
+            }
+            const { resetTranscript } = useSpeechRecognition();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      },
+    },
+    {
+      command: "go to *",
+      callback: (route) => {
+        fetch(`/route-api`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ route }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw Error(
+                `Server returned ${response.status}: ${response.statusText}`
+              );
+            }
+            const { resetTranscript } = useSpeechRecognition();
+            const route = response.body["task_id"];
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      },
+    },
+    {
+      command: "note(s) mode",
+      callback: () => {
+        setMode("note");
+      },
+    },
+    {
+      command: "default mode",
+      callback: () => {
+        setMode("default");
+      },
+    },
+  ];
 
-  function sendToServer(blob) {
-    fetch(`/v-api`, {
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition({ commands });
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
+
+  useEffect(() => {
+    if (mode === "default") {
+      apiRoute = `/tscript-api`;
+    } else if (mode === "note") {
+      apiRoute = `/notes-api`;
+    }
+    fetch(apiRoute, {
       method: "POST",
-      body: blob,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ transcript }),
     })
       .then((response) => {
         if (!response.ok) {
@@ -26,46 +113,17 @@ function App() {
             `Server returned ${response.status}: ${response.statusText}`
           );
         }
-        return response.text();
-      })
-      .then((text) => {
-        console.log("Response from server:", text);
-        let audioRes = JSON.parse(text);
-        updateTranscript(audioRes["transcript"]);
       })
       .catch((err) => {
         console.log(err);
       });
-  }
-
-  function record_and_send(stream) {
-    const recorder = new MediaRecorder(stream);
-    const chunks = [];
-    recorder.ondataavailable = (e) => chunks.push(e.data);
-    recorder.onstop = (e) =>
-      sendToServer(new Blob(chunks, { type: "audio/webm;codecs=opus" }));
-    setTimeout(() => recorder.stop(), 5000);
-    recorder.start();
-  }
+  }, [transcript]);
 
   useEffect(() => {
-    // This code will run after `tscript` is updated
-    console.log(tscript);
-  }, [tscript]);
-
-  useEffect(() => {
-    if (navigator.mediaDevices.getUserMedia) {
-      const constraints = { audio: true };
-      // Chunks is genrally a list (const chunks = []) but I am making it a let because I want to overwrite it every time
-
-      const onSuccess = (stream) => {
-        setInterval(() => record_and_send(stream), 5000);
-      };
-
-      navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(onSuccess)
-        .catch((error) => console.log("Error getting media", error));
+    if (browserSupportsSpeechRecognition) {
+      SpeechRecognition.startListening({ continuous: true });
+    } else {
+      console.log("this very bad how did you end up here");
     }
   }, []);
 
@@ -83,7 +141,7 @@ function App() {
           <div className="col">
             <Routes>
               <Route path="/c/:taskId" element={<Chatroom />} />
-              <Route path="/" element={<Home transcript={tscript} />} />
+              <Route path="/" element={<Home transcript={transcript} />} />
             </Routes>
           </div>
         </div>

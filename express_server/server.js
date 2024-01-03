@@ -16,7 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use("/", require("./routes/root"));
-app.use("/v-api", require("./routes/voice"));
+app.use("/tscript-api", require("./routes/tscript"));
+app.use("/tverse-api", require("./routes/tverse"));
 
 //app.use("/c", require("./routes/chat"));
 //will work later
@@ -24,12 +25,7 @@ app.use("/v-api", require("./routes/voice"));
 app.use(errorHandler);
 app.listen(PORT, () => console.log(`server started on port ${PORT}`));
 
-// NL Handeler ------------------------------------------
-
-const handleTask = require("./controllers/handleTask");
-
-const filepath = path.join(__dirname, "files/transcripts/");
-
+const filepath = path.join(__dirname, "files/docs");
 const watcher = chokidar.watch(filepath, {
   ignored: /(^|[\/\\])\../, // ignore dotfiles
   persistent: true,
@@ -38,8 +34,7 @@ const watcher = chokidar.watch(filepath, {
 watcher
   .on("add", (path) => {}) //to be done later
   .on("change", async (path) => {
-    await handleTask(path);
+    console.log("checkpoint");
+    
   })
   .on("unlink", (path) => {}); //to be done later
-
-//-------------------------------------------------------

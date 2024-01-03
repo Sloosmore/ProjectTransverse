@@ -1,0 +1,16 @@
+# Base Image
+FROM node:21-alpine3.18
+
+# Set Working Directory
+WORKDIR /express_server
+
+# Install Dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy app source
+COPY . .
+
+# Expose port and start application
+EXPOSE 3000
+CMD ["node", "server.js"]
