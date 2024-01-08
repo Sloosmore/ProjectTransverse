@@ -1,23 +1,21 @@
 const runPy = require("../middleware/pyExecutable");
-const record = require("../middleware/writeTaskDB");
+const { record } = require("../middleware/writeTaskDB");
 const uuid = require("uuid");
 
 const handleTverse = async (req, res) => {
   try {
-    tscript = req.body["transcript"];
-
+    let tscript = req.body["transcript"];
     //add
-    ID = uuid.v4();
-    record(tscript, ID);
+    let ID = uuid.v4();
+    let initRecord = await record(tscript, ID);
 
-    tscript = req.body["transcript"];
-    consol.log(tscript);
+    console.log(tscript);
     pyPath = "celeryQue/tverseExecutable.py";
 
     pyArg = [tscript, ID];
-    await runPy(pyPath, pyArg);
 
-    res.status(201).json({ message: "Recieved", ID: ID });
+    runPy(pyPath, pyArg);
+    res.status(201).json(initRecord);
   } catch {
     res.status(500).json({ message: "Server is on fire" });
   }

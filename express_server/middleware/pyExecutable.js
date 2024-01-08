@@ -1,10 +1,10 @@
 let { PythonShell } = require("python-shell");
 const path = require("path");
 
-runPy = async (Filepath, pyArg) => {
+const runPy = async (Filepath, pyArg) => {
   let options = {
     scriptPath: path.join(__dirname),
-    args: [pyArg],
+    args: pyArg,
   };
 
   await PythonShell.run(Filepath, options, (err, results) => {
@@ -15,3 +15,4 @@ runPy = async (Filepath, pyArg) => {
 };
 
 module.exports = runPy;
+//

@@ -17,14 +17,14 @@ function App() {
 
   const commands = [
     {
-      command: "end session",
+      command: "kill",
       callback: () => {
         window.location.replace("https://www.google.com");
       },
     },
     {
       command: "transverse",
-      callback: () => {
+      callback: ({ resetTranscript }) => {
         fetch(`/tverse-api`, {
           method: "POST",
           headers: {
@@ -38,11 +38,41 @@ function App() {
                 `Server returned ${response.status}: ${response.statusText}`
               );
             }
-            const { resetTranscript } = useSpeechRecognition();
+            return response.json();
+          })
+          .then((content) => {
+            let initRecord = JSON.parse(content);
+            console.log(initRecord);
+            setData([...data, initRecord]);
+            const ID = initRecord.task_id;
+            console.log(ID);
+            return ID;
+          })
+          .then((ID) => {
+            const eventSource = new EventSource(`/awaitDoc-api/?ID=${ID}`);
+            eventSource.onopen = () => console.log(">>> Connection opened!");
+            eventSource.onmessage = (event) => {
+              const inData = event.data;
+              console.log("SSE message:", inData);
+              //probably check again
+              try {
+                const newData = JSON.parse(inData);
+
+                setData(...data, newData); // Update the state with the modified array
+                console.log(data);
+              } catch {
+                console.error("Error parsing SSE data:", error);
+              }
+            };
+            eventSource.onerror = (error) => {
+              console.error("SSE error:", error);
+              eventSource.close();
+            };
           })
           .catch((err) => {
             console.log(err);
           });
+        resetTranscript();
       },
     },
     {
@@ -81,6 +111,10 @@ function App() {
         setMode("default");
       },
     },
+    {
+      command: "clear",
+      callback: ({ resetTranscript }) => resetTranscript(),
+    },
   ];
 
   const {
@@ -95,6 +129,7 @@ function App() {
   }
 
   useEffect(() => {
+    let apiRoute;
     if (mode === "default") {
       apiRoute = `/tscript-api`;
     } else if (mode === "note") {
@@ -125,6 +160,16 @@ function App() {
     } else {
       console.log("this very bad how did you end up here");
     }
+  }, [mode]);
+
+  useEffect(() => {
+    fetch("/records-api", {
+      method: "GET",
+    })
+      .then((responce) => responce.json())
+      .then((data) => {
+        setData(data.records);
+      });
   }, []);
 
   return (

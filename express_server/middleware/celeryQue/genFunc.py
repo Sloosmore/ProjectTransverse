@@ -92,7 +92,7 @@ def docx_gen(input_content):
     filepath = f'../../files/docs/{filename}'
 
     full_path = os.path.join(script_dir, filepath)
-    doc.save(filename)
+    doc.save(full_path)
 
 def pptx_gen(input_content):
     filename_match = re.search(r'<!-- filename: (.*?).pptx -->', input_content)

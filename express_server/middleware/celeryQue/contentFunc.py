@@ -66,9 +66,9 @@ def doc_content(task):
 
 #TODO this just needs to updates the message of the record given the UUID
 def update(id, output, thread_id):
-    filename='fileRecords.json'
+    jsonRecord='fileRecords.json'
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    filepath = f'../../db/{filename}'
+    filepath = f'../../../db/{jsonRecord}'
     full_path = os.path.join(script_dir, filepath)
 
     with open(full_path, 'r+') as file:
@@ -78,7 +78,8 @@ def update(id, output, thread_id):
             if record:
                 # Update the record's parameters
                 record['thread_id'] = thread_id
-                record['file'] = parse_title(output)
+                record['filename'] = parse_title(output)
+                record['file'] = f'./files/docs/{parse_title(output)}'
                 record['content'] = output
                 
                 now = datetime.now()
@@ -91,8 +92,7 @@ def update(id, output, thread_id):
                 json.dump(file_data, file, indent=4)
             else:
                 print(f"Record with ID {id} not found.")
-
-
+                
 
 
 prompt = 'make an essay about puppies'

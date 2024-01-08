@@ -26,10 +26,10 @@ function TaskList({ tasks }) {
           >
             <Task
               filename={task.filename}
-              transcription={task.transcription}
-              outfile={task.outfile}
+              transcription={task.prompt[0]}
+              outfile={task.file}
               state="in_progress"
-              name={task.id.substring(0, 13)}
+              name={(task.filename || task.task_id).substring(0, 13)}
             />
             {}
           </div>

@@ -11,6 +11,10 @@ export default defineConfig({
       // proxy requests that start with /api to the target server
       "/v-api": "http://localhost:5001",
       "/tscript-api": "http://localhost:5001",
+      "/tverse-api": "http://localhost:5001",
+      "/notes-api": "http://localhost:5001",
+      "/awaitDoc-api": "http://localhost:5001",
+      "/records-api": "http://localhost:5001",
     },
   },
 });
