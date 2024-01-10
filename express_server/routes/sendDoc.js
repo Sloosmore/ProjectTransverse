@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const handleDocSend = require("../controllers/handleDocSend");
+const sendDoc = require("../controllers/handleSendDoc");
 
-router.get("/", handleDocSend.handleDocSend);
+router.get("/", sendDoc.sendDoc);
 
 module.exports = router;

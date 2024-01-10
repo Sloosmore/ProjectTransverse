@@ -13,6 +13,7 @@ async function record(prompt, uu_id) {
     filename: null,
     file: null,
     content: null,
+    progress: "in_progress",
   };
   try {
     await write_json(task_record);

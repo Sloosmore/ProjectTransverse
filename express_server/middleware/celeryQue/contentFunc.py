@@ -81,6 +81,7 @@ def update(id, output, thread_id):
                 record['filename'] = parse_title(output)
                 record['file'] = f'./files/docs/{parse_title(output)}'
                 record['content'] = output
+                record['progress'] = 'complete'
                 
                 now = datetime.now()
                 formatted_now = now.strftime("%Y-%m-%d %H:%M:%S.%f")

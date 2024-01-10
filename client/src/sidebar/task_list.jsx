@@ -10,8 +10,14 @@ function TaskList({ tasks }) {
 
   const goToTask = (task) => {
     const taskParam = encodeURIComponent(JSON.stringify(task));
-    navigate(`/c/${task.id}`, {
-      state: { outfile: task.outfile, transcription: task.transcription },
+    navigate(`/c/${task.task_id}`, {
+      state: {
+        task_id: task.task_id,
+        prompt: task.prompt[0],
+        filename: task.filename,
+        file: task.file,
+        content: task.content,
+      },
     });
   };
 
@@ -26,9 +32,8 @@ function TaskList({ tasks }) {
           >
             <Task
               filename={task.filename}
-              transcription={task.prompt[0]}
               outfile={task.file}
-              state="in_progress"
+              state={task.progress || "complete"}
               name={(task.filename || task.task_id).substring(0, 13)}
             />
             {}

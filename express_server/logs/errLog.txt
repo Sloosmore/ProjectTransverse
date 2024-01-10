@@ -1,0 +1,9 @@
+20240108	14:55:11	d5dcf4ae-6545-49da-8b7c-fd2980cde7d8	ReferenceError: directoryPath is not defined
+20240108	14:58:12	8859b99a-860d-4114-a635-c2c9bf86b971	Error: ENOTDIR: not a directory, stat '/Users/stanloosmore/Documents/Code/ProjectTransverse/express_server/files/docs/Transverse_A_Note-Taking_App.docx/Transverse_A_Note-Taking_App.docx'
+20240108	16:06:00	ec387592-381e-4302-b6dd-90b90592eb15	ReferenceError: libre is not defined
+20240108	16:06:06	713c0a51-9d4b-4397-83af-fdf9a09c363f	ReferenceError: libre is not defined
+20240108	16:09:25	358504ff-e1ec-4d6b-b14c-49c31585a3a6	ReferenceError: libre is not defined
+20240108	16:09:28	ec994c6c-32d7-4495-8dd0-5935300d0a5f	ReferenceError: libre is not defined
+20240108	16:12:01	b4f89755-6e84-4715-9b77-b498cea2982c	ReferenceError: libre is not defined
+20240108	16:12:11	6eae68cc-1100-4e1b-b19c-1cd1f8b242fe	ReferenceError: libre is not defined
+20240108	16:36:23	3cb3752d-7b8a-440c-8f20-c0c71658e353	ReferenceError: filePath is not defined
