@@ -10,6 +10,7 @@ function TaskList({ tasks }) {
 
   const goToTask = (task) => {
     const taskParam = encodeURIComponent(JSON.stringify(task));
+
     navigate(`/c/${task.task_id}`, {
       state: {
         task_id: task.task_id,

@@ -1,11 +1,17 @@
+import "regenerator-runtime";
 import { useState, useEffect } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import Sidebar from "./sidebar/sidebar";
-import Home from "./panel";
+import Home from "./content/panel";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Chatroom from "./chat-room";
+import Chatroom from "./content/docView";
+import Noteroom from "./content/noteView";
+import HelpModal from "./help";
+import { fetchTaskRecords, fetchNoteRecords } from "./services/docsApi";
+import { AppRoutes } from "./content/routes";
+
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -13,10 +19,21 @@ import SpeechRecognition, {
 const WS_URL = "ws://localhost:5001/notes-api";
 
 function App() {
-  //this is for sidebar
+  //this is for help
+  const [showModal, setShowModal] = useState(false);
+  const closeModal = () => setShowModal(false);
+
+  //this is for note vs default mode
   const [mode, setMode] = useState("default");
 
-  const [data, setData] = useState([]);
+  //this is for docs in sidebar
+  const [docData, setData] = useState([]);
+
+  //this is for notes in sidebar
+  const [noteData, setNotes] = useState([]);
+
+  //this is for specific active instace of WS notes
+  const [noteName, setNoteName] = useState();
 
   const { sendJsonMessage, readyState } = useWebSocket(WS_URL, {
     onOpen: () => {
@@ -24,7 +41,28 @@ function App() {
     },
 
     onMessage: (event) => {
-      console.log("WebSocket message received:", event.data);
+      const wsData = JSON.parse(event.data);
+      console.log("WebSocket message received:", wsData);
+      if (wsData.noteRecord) {
+        //this should happen once during notemode init
+        console.log("-------======================================-------");
+        console.log(wsData.noteRecord);
+        setNotes([...noteData, wsData.noteRecord]);
+      }
+      if (wsData.resetState === true) {
+        resetTranscript();
+      }
+      if (wsData.md) {
+        //find record and set markdown in that specific file
+        //this will update the markdown of a specific record
+        const updateMd = noteData.map((record) => {
+          if (record.title === noteName) {
+            record.markdown = wsData.md;
+          }
+          return record;
+        });
+        setNotes(updateMd);
+      }
     },
 
     onError: (event) => {
@@ -45,7 +83,7 @@ function App() {
     },
     {
       command: "transverse",
-      callback: ({ resetTranscript }) => {
+      callback: () => {
         fetch(`/tverse-api`, {
           method: "POST",
           headers: {
@@ -64,7 +102,7 @@ function App() {
           .then((content) => {
             let initRecord = JSON.parse(content);
             console.log(initRecord);
-            setData([...data, initRecord]);
+            setData([...docData, initRecord]);
             const ID = initRecord.task_id;
             console.log(ID);
             return ID;
@@ -72,30 +110,10 @@ function App() {
           .then((ID) => {
             const eventSource = new EventSource(`/awaitDoc-api/?ID=${ID}`);
             eventSource.onopen = () => console.log(">>> Connection opened!");
-            eventSource.onmessage = (event) => {
-              const inData = event.data;
-              console.log("SSE message:", inData);
-              //probably check again
+            eventSource.onmessage = () => {
+              //Grabbing everything
               try {
-                /*
-                const newData = JSON.parse(inData);
-                console.log(newData);
-
-                setData((prevData) => [
-                  ...prevData.filter(
-                    (item) => item.task_id !== newData.task_id
-                  ),
-                  newData,
-                ]); // Update the state with the modified array
-                console.log([...data, JSON.parse(newData)]);*/
-                //acting odd so will try something else:
-                fetch("/records-api", {
-                  method: "GET",
-                })
-                  .then((responce) => responce.json())
-                  .then((data) => {
-                    setData(data.records);
-                  });
+                fetchTaskRecords().then(setData);
               } catch {
                 console.error("Error parsing SSE data:", error);
               }
@@ -136,20 +154,76 @@ function App() {
       },
     },
     {
-      command: "note(s) mode",
-      callback: () => {
+      command: "* note mode",
+      callback: (name) => {
+        resetTranscript();
+        console.log(name);
+        const noteMatch = noteData.filter((record) => {
+          return record.title === name;
+        });
+        if (noteMatch.length === 0) {
+          const statusUpdate = noteData.map((record) => {
+            return { ...record, status: "inactive" };
+          });
+          setNotes(statusUpdate);
+          //this should now create a record in the backend if it doens't exsist
+          //sendJsonMessage({ title: name, transcript: "" });
+
+          //TDODODODODO JSON to backend that includes title and ts
+        }
         setMode("note");
+        sendJsonMessage({
+          title: name,
+          transcript: transcript,
+          init: true,
+        });
+
+        setNoteName(name);
+
+        console.log();
       },
     },
     {
       command: "default mode",
       callback: () => {
+        resetTranscript();
+        const deactiveNotes = noteData.map((record) => {
+          return { ...record, status: "inactive" };
+        });
+        setNotes(deactiveNotes);
         setMode("default");
       },
     },
     {
       command: "clear",
-      callback: ({ resetTranscript }) => resetTranscript(),
+      callback: () => resetTranscript(),
+    },
+    {
+      command: "help",
+      callback: () => {
+        resetTranscript();
+        setShowModal(true);
+      },
+    },
+    {
+      command: "exit",
+      callback: () => {
+        resetTranscript();
+        setShowModal(false);
+      },
+    },
+    {
+      command: "* note insturctions",
+      callback: (instructions) => {
+        resetTranscript();
+        fetch("/settings/noteInstruct", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ instructions }),
+        });
+      },
     },
   ];
 
@@ -163,6 +237,8 @@ function App() {
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
+
+  const [timeoutId, setTimeoutId] = useState(null);
 
   useEffect(() => {
     if (mode === "default") {
@@ -184,7 +260,24 @@ function App() {
           console.log(err);
         });
     } else if (mode === "note") {
-      sendJsonMessage({ transcript: transcript });
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      // Set a new timeout
+      const id = setTimeout(() => {
+        sendJsonMessage({
+          title: noteName,
+          transcript: transcript,
+          init: false,
+        });
+      }, 2000); // 400 milliseconds
+      setTimeoutId(id);
+
+      // Clean up function
+      return () => {
+        clearTimeout(id); // Using 'id' directly
+      };
     }
   }, [transcript]);
 
@@ -197,13 +290,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch("/records-api", {
-      method: "GET",
-    })
-      .then((responce) => responce.json())
-      .then((data) => {
-        setData(data.records);
-      });
+    fetchTaskRecords().then(setData);
+    fetchNoteRecords().then(setNotes);
   }, []);
 
   return (
@@ -214,17 +302,21 @@ function App() {
             className="col-3 bg-lightgrey p-0 d-flex flex-column"
             style={{ minWidth: "200px", maxWidth: "250px" }}
           >
-            <Sidebar data={data} />
+            <Sidebar docData={docData} noteData={noteData} />
           </div>
 
           <div className="col">
-            <Routes>
-              <Route path="/c/:taskId" element={<Chatroom data={data} />} />
-              <Route
-                path="/"
-                element={<Home transcript={transcript.slice(-300)} />}
-              />
-            </Routes>
+            <AppRoutes
+              transcript={transcript}
+              docData={docData}
+              noteData={noteData}
+            />
+          </div>
+          <div>
+            <HelpModal show={showModal} onClose={closeModal}>
+              {/* Modal body content goes here */}
+              ...
+            </HelpModal>
           </div>
         </div>
       </div>

@@ -4,106 +4,141 @@ const fsPromises = require("fs").promises;
 const uuid = require("uuid");
 const { isUtf8 } = require("buffer");
 const fetch = require("node-fetch");
+const {
+  h2TagThreashold,
+  splitMarkdownAtHeadings,
+  splitTranscript,
+  findLastIsoDateTime,
+  removeDateTimes,
+  subtractString,
+} = require("../middleware/wsNotes/wsParse");
+const { queryAI } = require("../middleware/wsNotes/gptMD");
+const { appendToJsonFile } = require("../middleware/wsNotes/writeNoteRecord");
+const { record } = require("../middleware/writeTaskDB");
+//the temporary markdown section may not be needed but good to have in place in case
+
+const noteDBpath = path.join(__dirname, "../..", "/db/noteRecords.json");
 
 // read in
 async function handleWebSocketConnection(ws, request) {
-  const noteRecord = {
-    ID: uuid(),
-    DateCreated: new Date().toISOString(),
-    reqContent: request || "default",
+  const connectMessage = {
+    message: "Connected to WebSocket!",
   };
 
-  const transPath = `../files/transcripts/${noteRecord.ID}`;
-
-  const dirPath = path.join(__dirname, transPath);
-
-  const activePath = path.join(__dirname, `${transPath}/step.txt`);
-  const globTransPath = path.join(__dirname, `${transPath}/glob.txt`);
-  const markDown = path.join(__dirname, `${transPath}/md.txt`);
-
-  await fsPromises.mkdir(dirPath);
-  await fsPromises.writeFile(globTransPath);
-  await fsPromises.writeFile(activePath);
-  await fsPromises.writeFile(markDown);
+  ws.send(JSON.stringify(connectMessage));
 
   //Append note record to db
 
   ws.on("message", async (message) => {
-    data = JSON.parse(message);
-    console.log(data);
-    await fsPromises.writefile(transPath, data.transcript);
-    setTimeout(async () => {
-      const ts = await fsPromises.readFile(transPath, "utf8");
-      if ((data.transcript === ts) != "") {
-        ws.send({ md: null, resetState: true });
+    try {
+      const data = JSON.parse(message);
 
-        await fsPromises.writeFile(transPath);
-        await fsPromises.appendFile(globTransPath, ts);
+      const title = data.title;
+      const ts = data.transcript;
+      const justActivated = data.init;
 
-        res = await queryAI(ts);
+      const transPath = `../files/transcripts/${title}`;
+      const dirPath = path.join(__dirname, transPath);
+      const activePath = path.join(__dirname, `${transPath}/stepTS.txt`);
+      const WholeTransPath = path.join(__dirname, `${transPath}/wholeTS.txt`);
+      const SectionMarkdown = path.join(__dirname, `${transPath}/stepMD.txt`);
+      const WholemarkDown = path.join(__dirname, `${transPath}/wholeMD.txt`);
 
+      if (justActivated) {
+        const record = {
+          title: title,
+          note_id: uuid.v4(),
+          markdown: "",
+          status: "active",
+        };
+        console.log("++++++++++++++++++++++++++++++++++++++++++++");
+        console.log(record);
+
+        //send inital record
+
+        ws.send(
+          JSON.stringify({
+            md: "",
+            resetState: false,
+            noteRecord: record,
+          })
+        );
+
+        await appendToJsonFile(noteDBpath, record);
+
+        await fsPromises.mkdir(dirPath);
+        await fsPromises.writeFile(activePath, "");
+        await fsPromises.writeFile(WholeTransPath, "");
+        await fsPromises.writeFile(SectionMarkdown, "");
+        await fsPromises.writeFile(WholemarkDown, `# ${title} \n\n`);
+      } else if (ts.length > 500) {
+        // write time text active and reg text to glob
+        console.log(ts);
+        const date = new Date();
+        await fsPromises.appendFile(
+          activePath,
+          `<${date.toISOString()}> ${ts}`
+        );
+        await fsPromises.appendFile(WholeTransPath, ts);
+
+        console.log(data);
+        ws.send(
+          JSON.stringify({ md: null, resetState: true, noteRecord: null })
+        );
+
+        //only pass the new ts to the AI query
+
+        const transAI = await fsPromises.readFile(activePath, "utf-8");
+        const res = await queryAI(transAI);
+        console.log(`AI ${JSON.stringify(res, null, 2)}`);
+        const md = res["data"][0]["content"][0]["text"]["value"];
         //Append markdown
-        let backTrace = true;
-        if (backTrace) {
-          await fsPromises.appendFile(markDown);
-          markDown = await fsPromises.readFile(markDown);
+        await fsPromises.writeFile(SectionMarkdown, md);
+
+        //final MD to be sent to the front
+        let markdown = "";
+        //droping undefined because responce is not being parse c
+        if (h2TagThreashold(md)) {
+          //grab last DT in markdown
+          const dateTime = findLastIsoDateTime(md);
+          //split the DT TS to get the most relivent info
+          const workingTS = splitTranscript(dateTime, md);
+          //rewrite ts with what is needed
+          await fsPromises.writeFile(activePath, workingTS);
+
+          //split the active markdown
+          const { completeSection, newSection } = splitMarkdownAtHeadings(md);
+
+          // put the complete section into full file
+          await fsPromises.appendFile(WholemarkDown, completeSection);
+          const wholeMD = await fsPromises.readFile(WholemarkDown);
+
+          markdown = `${wholeMD}\n${newSection}`;
         } else {
-          const ActionNeeded = true;
+          const wholeMD = await fsPromises.readFile(WholemarkDown);
+          markdown = `${wholeMD}\n${md}`;
         }
 
-        ws.send({ md: markdown, resetState: false });
+        const updatedMDRecord = {
+          title: title,
+          markdown: markdown,
+        };
+
+        await appendToJsonFile(noteDBpath, updatedMDRecord);
+
+        ws.send(
+          JSON.stringify({
+            md: markdown,
+            resetState: false,
+            noteRecord: null,
+          })
+        );
       }
-    }, 5000);
-
-    //
-
-    ws.send(`request recieved`);
-  });
-
-  ws.send("Connected to WebSocket!");
-}
-
-const apiUrl = "http://localhost:1234/v1/chat/completions";
-
-let conversationHistory = [
-  { role: "system", content: "Always answer in rhymes." },
-];
-
-async function queryAI(message) {
-  // Add the new user message to the conversation history
-  conversationHistory.push({ role: "user", content: message });
-
-  // Prepare the request body with the updated conversation history
-  const requestBody = {
-    model: "local-model", // this field is currently unused
-    messages: conversationHistory,
-  };
-
-  try {
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // 'Authorization': 'Bearer YOUR_API_KEY' // Not needed for local queries
-      },
-      body: JSON.stringify(requestBody),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    } catch (error) {
+      console.error(`Error: ${error.message}`);
+      console.error(`Stack trace: ${error.stack}`);
     }
-
-    const data = await response.json();
-    const aiResponse = data.choices[0].message;
-
-    // Add the AI response to the conversation history
-    conversationHistory.push({ role: "assistant", content: aiResponse });
-
-    console.log(aiResponse); // Log the AI response
-    return aiResponse;
-  } catch (error) {
-    console.error("Error querying AI model: ", error);
-  }
+  });
 }
 
 module.exports = { handleWebSocketConnection };

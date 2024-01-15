@@ -5,7 +5,7 @@ const errorHandler = require("./middleware/infoTracking/errorHandle");
 const http = require("http");
 const server = http.createServer(app);
 
-const chokidar = require("chokidar");
+//const chokidar = require("chokidar");
 const PORT = process.env.PORT || 5001;
 
 app.use(logger);
@@ -20,6 +20,8 @@ app.use("/", require("./routes/root"));
 app.use("/tscript-api", require("./routes/tscript"));
 app.use("/tverse-api", require("./routes/tverse"));
 app.use("/awaitDoc-api", require("./routes/updateData"));
+
+//put in GET req for notes data
 app.use("/records-api", require("./routes/records"));
 app.use("/grabDoc-api", require("./routes/sendDoc"));
 
@@ -29,9 +31,8 @@ const WebSocket = require("ws");
 const wss = new WebSocket.Server({ noServer: true });
 
 server.on("upgrade", (request, socket, head) => {
-  console.log("Parsing session from request...");
+  console.log("WS connection upgraded");
   if (request.url === "/notes-api") {
-    console.log("here");
     wss.handleUpgrade(request, socket, head, (ws) => {
       wss.emit("connection", ws, request);
     });
@@ -40,9 +41,9 @@ server.on("upgrade", (request, socket, head) => {
   }
 });
 
-//const {handleWebSocketConnection} = require('./controllers/handleNoteWS')
+const { handleWebSocketConnection } = require("./controllers/handleNoteWS");
 
-//wss.on('connection', handleWebSocketConnection);
+wss.on("connection", handleWebSocketConnection);
 //----------------------------------------------------------------------
 
 app.use(errorHandler);

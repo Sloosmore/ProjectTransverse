@@ -1,0 +1,10 @@
+###intro to python## Overloaded Operators
+<2024-01-15T04:41:49.172Z>
+- Operators can be overloaded, allowing them to behave differently based on their context.
+- Example: combining a number with a string using multiplication will result in a new string with the specified number of replicas.
+- Example: two strings can be combined using the addition operator.
+
+## Static Semantics
+<2024-01-15T05:11:23.224Z>
+In the context of programming, static semantics is highlighted as an important factor. It involves the analysis of a program's text to determine its meaning, even before it is run.
+

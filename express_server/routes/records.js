@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const handleRecords = require("../controllers/handleRecords");
+const { sendTasks, sendNotes } = require("../controllers/handleRecords");
 
-router.get("/", handleRecords.sendTasks);
+router.get("/tasks", sendTasks);
+router.get("/notes", sendNotes);
 
 module.exports = router;

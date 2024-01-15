@@ -13,4 +13,22 @@ const sendTasks = async (req, res) => {
   }
 };
 
-module.exports = { sendTasks };
+const sendNotes = async (req, res) => {
+  try {
+    console.log("Reading file...");
+    const filepath = path.join(__dirname, "../../db/noteRecords.json");
+    const data = await fsPromises.readFile(filepath, "utf8");
+    const parsedData = JSON.parse(data);
+    parsedData.noteRecords = parsedData.noteRecords.map((record) => {
+      return {
+        ...record,
+        status: "inactive",
+      };
+    });
+    res.status(201).json(parsedData);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+module.exports = { sendTasks, sendNotes };
