@@ -14,6 +14,7 @@ export default defineConfig({
       "/awaitDoc-api": "http://localhost:5001",
       "/records-api": "http://localhost:5001",
       "/grabDoc-api": "http://localhost:5001",
+      "/settings": "http://localhost:5001",
 
       "/notes-api": {
         target: "ws://localhost:5001",

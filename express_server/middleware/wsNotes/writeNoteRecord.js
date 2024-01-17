@@ -28,4 +28,28 @@ async function appendToJsonFile(filePath, newData) {
   await fsPromises.writeFile(filePath, json, "utf8");
 }
 
-module.exports = { appendToJsonFile };
+
+async function deactivateRecords(filePath) {
+  // Read the existing data
+  const data = await fsPromises.readFile(filePath, "utf8");
+
+  // Parse the data into a JavaScript object
+  const obj = JSON.parse(data);
+  const records = obj.noteRecords;
+
+  // Update the status of each record to "inactive"
+  const updatedRecords = records.map((record) => {
+    return { ...record, status: "inactive" };
+  });
+
+  // Package the updated records back into the original object
+  obj.noteRecords = updatedRecords;
+
+  // Convert the object back into a JSON string
+  const json = JSON.stringify(obj, null, 2);
+
+  // Write the JSON string back to the file
+  await fsPromises.writeFile(filePath, json, "utf8");
+}
+
+module.exports = { appendToJsonFile, deactivateRecords };

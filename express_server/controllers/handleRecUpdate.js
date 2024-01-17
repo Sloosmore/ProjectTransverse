@@ -38,7 +38,8 @@ const handleDocSend = async (req, res) => {
       let recordValues = Object.values(record);
       let falsyValues = recordValues.filter((value) => !value);
       if (falsyValues.length === 0) {
-        sendSSE(JSON.stringify(record));
+        console.log("lets go");
+        sendSSE(JSON.stringify({ message: "good to go" }));
         watcher.close();
         res.end();
       } else {

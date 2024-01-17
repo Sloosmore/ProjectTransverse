@@ -1,5 +1,7 @@
 require("dotenv").config();
 const OpenAI = require("openai");
+const fsPromises = require("fs").promises;
+const path = require("path");
 
 const ts2md_id = "asst_fnBdBUj9ef4kdeq1B9uCEYNZ";
 const openAIKey = process.env.OPENAI_KEY;
@@ -19,8 +21,13 @@ async function queryAI(message) {
     });
 
     // Running the assistant
+    configPath = path.join(__dirname, "../../files/settings/LLMconfig.txt");
+    const customIntructions =
+      (await fsPromises.readFile(configPath, "utf8")) ||
+      "Write brief concise bullet points on every topic discussed, make sure to bold any interesting vocabulary and clearly define it";
     const run = await openai.beta.threads.runs.create(thread.id, {
       assistant_id: ts2md_id,
+      instructions: customIntructions,
     });
 
     let runRetrieve = await openai.beta.threads.runs.retrieve(

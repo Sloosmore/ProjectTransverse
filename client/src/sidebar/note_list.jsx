@@ -14,6 +14,7 @@ function NoteList({ notes }) {
         title: notes.title,
         id: notes.note_id,
         markdown: notes.markdown,
+        status: notes.status,
       },
     });
   };

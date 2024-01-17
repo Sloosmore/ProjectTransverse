@@ -13,7 +13,10 @@ const {
   subtractString,
 } = require("../middleware/wsNotes/wsParse");
 const { queryAI } = require("../middleware/wsNotes/gptMD");
-const { appendToJsonFile } = require("../middleware/wsNotes/writeNoteRecord");
+const {
+  appendToJsonFile,
+  deactivateRecords,
+} = require("../middleware/wsNotes/writeNoteRecord");
 const { record } = require("../middleware/writeTaskDB");
 //the temporary markdown section may not be needed but good to have in place in case
 
@@ -45,14 +48,15 @@ async function handleWebSocketConnection(ws, request) {
       const WholemarkDown = path.join(__dirname, `${transPath}/wholeMD.txt`);
 
       if (justActivated) {
+        await deactivateRecords(noteDBpath);
+
         const record = {
           title: title,
           note_id: uuid.v4(),
-          markdown: "",
+          markdown: `# ${title}`,
           status: "active",
         };
         console.log("++++++++++++++++++++++++++++++++++++++++++++");
-        console.log(record);
 
         //send inital record
 
@@ -81,12 +85,11 @@ async function handleWebSocketConnection(ws, request) {
         );
         await fsPromises.appendFile(WholeTransPath, ts);
 
-        console.log(data);
         ws.send(
           JSON.stringify({ md: null, resetState: true, noteRecord: null })
         );
 
-        //only pass the new ts to the AI query
+        //only pass the new ts to the AI query when the transcript gets reset it needs to pass the thresehold which it probaly should
 
         const transAI = await fsPromises.readFile(activePath, "utf-8");
         const res = await queryAI(transAI);
@@ -102,7 +105,16 @@ async function handleWebSocketConnection(ws, request) {
           //grab last DT in markdown
           const dateTime = findLastIsoDateTime(md);
           //split the DT TS to get the most relivent info
-          const workingTS = splitTranscript(dateTime, md);
+          console.log(
+            "---------------------------------------------------------------------------------------------------------"
+          );
+          console.log(`Datetime:${dateTime}`);
+          console.log(md);
+          console.log(
+            "---------------------------------------------------------------------------------------------------------"
+          );
+
+          const workingTS = splitTranscript(dateTime, transAI);
           //rewrite ts with what is needed
           await fsPromises.writeFile(activePath, workingTS);
 

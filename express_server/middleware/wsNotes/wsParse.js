@@ -29,6 +29,12 @@ function splitMarkdownAtHeadings(mdString) {
 
 function splitTranscript(isoDate, inputString) {
   // Escape special characters in the date string for regex use
+
+  //the problem is the isodate my not be returned
+  if (!isoDate) {
+    console.log(inputString)
+    return inputString;
+  }
   const escapedDate = isoDate.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
   // Regular expression for the specified ISO date
@@ -62,6 +68,15 @@ function findLastIsoDateTime(inputString) {
     return matches[matches.length - 1];
   } else {
     // Return null or an empty string if no match is found
+    //this is the problem!!
+    console.log("Returning Null??");
+    console.log(
+      "------------------------------------------------------------------------------------------------------------"
+    );
+    console.log(inputString);
+    console.log(
+      "------------------------------------------------------------------------------------------------------------"
+    );
     return null;
   }
 }

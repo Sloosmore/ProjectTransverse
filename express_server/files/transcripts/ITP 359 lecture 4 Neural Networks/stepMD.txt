@@ -1,0 +1,13 @@
+## The Training Process and Activation Functions
+- **Logarithm and Likelihood Function**: Mathematical functions used in the training process for deep learning models to maximize the likelihood of predicted outcomes.
+- **Softmax**: An activation function commonly used in the final layer of a neural network to obtain probabilities that sum to one.
+
+## Loss Functions and Optimization
+- **Mean Square Error**: A loss function used for regression tasks in machine learning.
+- **Cross Entropy**: A loss function used for classification tasks in machine learning.
+- **Stochastic Gradient Descent (SGD)**: An optimization algorithm that samples a small number of data points to update the model's parameters in each iteration.
+
+## Optimization Challenges and Techniques
+- **Derivatives and Computational Cost**: Calculating derivatives in the training process is computationally expensive, leading to longer training times.
+- **Plateau and Oscillation**: Challenges in optimization, with potential solutions such as using parameters like momentum and boosting to avoid oscillation and finding the global minimum.
+- **Back Propagation**: The process of calculating derivatives using the chain rule, allowing for efficient optimization and training in neural networks.

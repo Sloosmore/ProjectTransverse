@@ -1,0 +1,16 @@
+# Machine Learning 2 - Features, Neural Networks 
+
+## Machine Learning Lecture Announcement
+<2024-01-17T01:35:15.102Z>
+- Homework one on foundations is due tomorrow at 11:00 p.m.
+  - Deadline is at 11:00 p.m., not 11:59 p.m.
+  - Encouragement to complete a test submission early to avoid any last-minute technical issues.
+- Students are responsible for any technical issues and are encouraged to test submission early for peace of mind.
+- No penalty for submitting something before the deadline and checking for issues.
+
+## Machine Learning<2024-01-17T01:36:21.698Z>
+- Method of data analysis that automates model building
+- Systems learn and improve from experience without being explicitly programmed
+- Backpropagation and nearest neighbors to be discussed in an upcoming lecture
+- Overview of scikit-learn to be covered as well for project purposes
+

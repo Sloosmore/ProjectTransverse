@@ -4,14 +4,14 @@ import useWebSocket, { ReadyState } from "react-use-websocket";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import Sidebar from "./sidebar/sidebar";
-import Home from "./content/panel";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Chatroom from "./content/docView";
-import Noteroom from "./content/noteView";
-import HelpModal from "./help";
-import { fetchTaskRecords, fetchNoteRecords } from "./services/docsApi";
-import { AppRoutes } from "./content/routes";
 
+import HelpModal from "./modals/help";
+import { fetchTaskRecords, fetchNoteRecords } from "./services/sidebarTasksApi";
+import { AppRoutes } from "./content/routes";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import { tvrseFunc } from "./services/tverseAPI";
+import { handleSendLLM } from "./services/setNotepref";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -27,13 +27,19 @@ function App() {
   const [mode, setMode] = useState("default");
 
   //this is for docs in sidebar
-  const [docData, setData] = useState([]);
+  const [docData, setDocs] = useState([]);
 
   //this is for notes in sidebar
   const [noteData, setNotes] = useState([]);
 
   //this is for specific active instace of WS notes
-  const [noteName, setNoteName] = useState();
+  const [noteName, setNoteName] = useState(
+    localStorage.getItem("noteName") || ""
+  );
+
+  useEffect(() => {
+    localStorage.setItem("noteName", noteName);
+  }, [noteName]);
 
   const { sendJsonMessage, readyState } = useWebSocket(WS_URL, {
     onOpen: () => {
@@ -84,55 +90,14 @@ function App() {
     {
       command: "transverse",
       callback: () => {
-        fetch(`/tverse-api`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ transcript }),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw Error(
-                `Server returned ${response.status}: ${response.statusText}`
-              );
-            }
-            return response.json();
-          })
-          .then((content) => {
-            let initRecord = JSON.parse(content);
-            console.log(initRecord);
-            setData([...docData, initRecord]);
-            const ID = initRecord.task_id;
-            console.log(ID);
-            return ID;
-          })
-          .then((ID) => {
-            const eventSource = new EventSource(`/awaitDoc-api/?ID=${ID}`);
-            eventSource.onopen = () => console.log(">>> Connection opened!");
-            eventSource.onmessage = () => {
-              //Grabbing everything
-              try {
-                fetchTaskRecords().then(setData);
-              } catch {
-                console.error("Error parsing SSE data:", error);
-              }
-            };
-            eventSource.onerror = (error) => {
-              console.error("SSE error:", error);
-              eventSource.close();
-            };
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        tvrseFunc(transcript, setDocs);
         resetTranscript();
       },
     },
     {
       command: "go to *",
       callback: (route) => {
-        fetch(`/route-api`, {
+        /*fetch(`/route-api`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -150,37 +115,22 @@ function App() {
           })
           .catch((err) => {
             console.log(err);
-          });
+          });*/
       },
     },
     {
       command: "* note mode",
       callback: (name) => {
         resetTranscript();
-        console.log(name);
-        const noteMatch = noteData.filter((record) => {
-          return record.title === name;
-        });
-        if (noteMatch.length === 0) {
-          const statusUpdate = noteData.map((record) => {
-            return { ...record, status: "inactive" };
-          });
-          setNotes(statusUpdate);
-          //this should now create a record in the backend if it doens't exsist
-          //sendJsonMessage({ title: name, transcript: "" });
-
-          //TDODODODODO JSON to backend that includes title and ts
-        }
-        setMode("note");
-        sendJsonMessage({
-          title: name,
-          transcript: transcript,
-          init: true,
-        });
-
-        setNoteName(name);
-
-        console.log();
+        createNewNote(
+          name,
+          transcript,
+          noteData,
+          setNotes,
+          setMode,
+          wsJSON,
+          setNoteName
+        );
       },
     },
     {
@@ -216,13 +166,7 @@ function App() {
       command: "* note insturctions",
       callback: (instructions) => {
         resetTranscript();
-        fetch("/settings/noteInstruct", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ instructions }),
-        });
+        handleSendLLM(instructions);
       },
     },
   ];
@@ -282,17 +226,63 @@ function App() {
   }, [transcript]);
 
   useEffect(() => {
+    fetchTaskRecords().then(setDocs);
+    fetchNoteRecords().then(setNotes);
     if (browserSupportsSpeechRecognition) {
       SpeechRecognition.startListening({ continuous: true });
     } else {
       console.log("this very bad how did you end up here");
     }
+    const handleKeyDown = (event) => {
+      if (event.key === "c") {
+        resetTranscript();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
+  const [failsafeTimeoutId, setFailsafeTimeoutId] = useState(null);
+
   useEffect(() => {
-    fetchTaskRecords().then(setData);
-    fetchNoteRecords().then(setNotes);
-  }, []);
+    if (failsafeTimeoutId) {
+      clearTimeout(failsafeTimeoutId);
+    }
+
+    // Set a new timeout
+    const id = setTimeout(() => {
+      SpeechRecognition.stopListening();
+      setTimeout(() => {
+        SpeechRecognition.startListening({ continuous: true });
+      }, 77); // turn on the mic after .077 seconds
+    }, 12000); // 25 seconds
+
+    setFailsafeTimeoutId(id);
+
+    // Clean up function
+    return () => {
+      clearTimeout(id); // Using 'id' directly
+    };
+  }, [transcript]);
+
+  const controlProps = {
+    setDocs,
+    setNotes,
+    wsJSON: sendJsonMessage,
+    setMode,
+    setNoteName,
+  };
+
+  const pauseProps = {
+    mode,
+    setMode,
+    noteName,
+    setNotes,
+    noteData,
+  };
 
   return (
     <Router>
@@ -302,7 +292,12 @@ function App() {
             className="col-3 bg-lightgrey p-0 d-flex flex-column"
             style={{ minWidth: "200px", maxWidth: "250px" }}
           >
-            <Sidebar docData={docData} noteData={noteData} />
+            <Sidebar
+              docData={docData}
+              noteData={noteData}
+              pauseProps={pauseProps}
+              controlProps={controlProps}
+            />
           </div>
 
           <div className="col">

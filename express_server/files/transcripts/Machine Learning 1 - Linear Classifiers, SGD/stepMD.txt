@@ -1,0 +1,9 @@
+- **Reflex-based models**: A type of model that takes immediate and automatic action in response to stimuli, without the need for learning or reasoning.
+- **Machine learning**: The scientific study of algorithms and statistical models that computer systems use to perform a specific task without using explicit instructions, relying on patterns and inference instead. 
+- **Linear predictors**: Predictors that are based on linear regression models, used for classification and regression tasks.
+- **Gradient descent**: An optimization algorithm used to minimize a function by iteratively moving in the direction of the steepest descent as defined by the negative of the gradient. 
+- **Training data**: A set of examples used to train a model, typically comprised of input-output pairs.
+- **Learning algorithm**: A computational method of achieving a specific task through the process of adapting parameters in a system using data.
+- **Inference**: The process of deriving logical conclusions from premises known or assumed to be true, or the process of predicting an output given an input in a model. 
+- **Feature extraction**: The process of selecting and transforming variables when creating a predictive model.
+- **Feature vector**: A numerical representation of an object, often used in machine learning to represent features of the input data.

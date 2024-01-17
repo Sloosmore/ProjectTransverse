@@ -1,0 +1,24 @@
+# ML3 
+
+## Machine Learning Review
+2024-01-17T01:46:35.872Z
+- Supervised learning involves feature extraction and learning algorithms
+- Feature extraction converts examples into a feature vector
+- Linear predictors or neural networks provide scores for the feature vectors
+- Scores are defined via simple or more complex linear combinations
+- Score functions can be used for classification and regression
+
+## Back Propagation Example and K Nearest Neighbors
+2024-01-17T01:46:35.872Z
+- Back propagation exemplifies how neural networks update weights during training.
+- K Nearest Neighbors is an algorithm used for classification and regression based on the proximity of data points.
+
+## True Objective of Machine Learning
+2024-01-17T01:47:35.473Z
+- Minimizing error on unseen future examples
+- Learning about machines
+- **Machine Learning Vocabulary**
+    - *Gradient*: A vector that points in the direction of the greatest rate of increase of a function and whose magnitude is the slope of the function in that direction.
+- The true objective is minimizing error on unseen future examples, rather than just minimizing error on the training set.
+- Unsupervised learning will be discussed later.
+

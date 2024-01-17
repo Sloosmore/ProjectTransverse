@@ -1,0 +1,15 @@
+## Submission Deadline: January 18, 2024 at 11:00 p.m.
+- The deadline for submission is January 18, 2024, at 11:00 p.m.
+- Importance of completing the test submission early to avoid last-minute technical issues
+- No penalties for early submission and checking for issues
+- Students are accountable for any technical problems and are encouraged to test submission early for peace of mind.
+
+## Training Loss and Weight Vector
+- Training loss is the average over all examples in a training set of the loss of a particular example with respect to the weight vector.
+- The goal is to find the single weight vector that minimizes the training loss in order to have low loss on average for all examples.
+
+## Regression and Classification Loss Functions
+- In regression, the loss function is based on the residual, which measures how much the model's prediction overshoots the true label.
+- For classification, specifically binary classification, the margin is the key metric, representing the score multiplied by the label.
+
+*Please provide a clearer context or query for more accurate assistance.*

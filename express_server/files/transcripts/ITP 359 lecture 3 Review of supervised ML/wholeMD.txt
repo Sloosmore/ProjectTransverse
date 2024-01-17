@@ -1,0 +1,100 @@
+# ITP 359 lecture 3 Review of supervised ML 
+
+## Troubleshooting Testing (2024-01-17T02:00:52.619Z)
+- Testing was done before arrival but encountered an error.
+- Describing need for uninterrupted functioning and optimization.
+- Looking to address refreshing issue when using effects and location hook.
+- Working on proper re-rendering of the system. 
+- Referring to seller's rooms in the discussion.
+
+## Testing and Error Handling
+- Testing the functionality before the official use to identify and resolve any potential errors.
+- In this context, "error" refers to an unexpected problem or malfunction in the system.
+
+## Testing and Debugging
+2024-01-17T02:00:52.619Z
+- Testing a feature before it's ready
+- Encountering errors while testing
+- Needing to optimize the feature
+- Difficulty with refreshing and re-rendering when using location hook to pull data from a link
+
+## Review of Last Semester - 2024-01-17T02:02:50.993Z
+- Next week's session will focus on forecasting.
+- The upcoming topics include Markov chains and naive Bayes outboard.
+- These concepts are important statistical methods.
+
+## Sequential Data in Finance and Audio Processing
+2024-01-17T02:04:42.744Z
+- Algorithmic traders often use sequential data for trading, which is also utilized in audio processing.
+- Hidden Markov models, autoencoders, and variational autoencoders are popular in processing sequential data for various applications.
+
+## AI Approaches and Modeling Techniques
+2024-01-17T02:06:10.989Z
+- Generated AI mentions the use of generators in AI models
+- Plans to start with variation oil and odors in those types of models
+- Homework on forecasting to be completed within two weeks
+- The first homework may be released on Thursday or Monday/Tuesday
+- Emphasis on not rushing through the material and having ample time for learning
+
+## Approximation Problem and AI Approaches
+2024-01-17T02:07:39.014Z
+- **Approximation Problem:** A problem involving finding a function that approximates a given target, often tackled using statistical or numerical methods.
+- AI approaches primarily involve dealing with approximation problems.
+- Techniques for addressing approximation problems include statistical methods, numerical methods, linear regression, logistic regression, and neural networks.
+
+## Regression and Classification
+2024-01-17T02:09:09.171Z
+- Neural network used for classification and regression
+- K-Nearest Neighbor algorithm used for classification and recommendation systems
+- Brief intro to Association Analysis and Principal Component Analysis (PCAs)
+
+## Traveling Salesman Problems and Research Competition
+2024-01-17T02:10:14.064Z
+- Traveling Salesman Problems involve finding the shortest possible route that visits each city exactly once and returns to the original city
+- Research competition likely involved exploring algorithms and strategies for solving complex problems like the Traveling Salesman Problem
+- Statistical standpoint refers to analyzing data from a mathematical perspective, considering patterns and probability
+- Machine learning standpoint involves using algorithms and statistical models for computers to learn and make decisions
+
+## Nomenclature 
+2024-01-17T02:12:32.198Z
+- **Noise:** A random variation that is added to the data, which impacts the accuracy of learning algorithms.
+
+- The dataset consists of:
+  - Features denoted by "m"
+  - Targets denoted by "n"
+- The instance of the dataset is denoted by a role with superscripts in parentheses. 
+- In machine learning, managing numerous indices is essential, requiring a specific notation for clarity. 
+
+## Regression and Approximation Problem
+2024-01-17T02:13:57.000Z
+- The basic problem is regression, aiming to find an approximation that depends on the feature vector and a certain number of parameters.
+- The parameters are referred to as Theta in the context of general parameters and as weights in the case of a neural network.
+- Approximation problem involves finding a function that approximates the target up to a certain error and involves minimizing this error.
+- There is complex theory and decision-making involved in choosing the function class and type of function that can effectively model the problem.
+
+## Dimensionality and Regression
+2024-01-17T02:16:55.680Z
+- **Dimensionality**: The number of dimensions, which has implications for computational complexity.
+- The dimension of the problem can impact computational capability due to the curse of dimensionality.
+- Regression involves choosing a model to approximate a problem, such as a neural network.
+
+## Python Packages and Model Accuracy
+2024-01-17T02:20:31.289Z
+- Python packages can be used to assess model accuracy and avoid overfitting
+- Choosing the right number of parameters and architecture is crucial for model performance
+- Overfitting can be a challenge, especially with complex models like GPT
+
+## Linear Regression
+2024-01-17T02:21:20.052Z
+- Model represented by the function y = b₀ + b₁x
+- Chooses a linear relationship between the input and output variables
+
+- Overfitting: The modeling error which occurs when a function is too closely fit to a limited set of data points, and then makes poor predictions about other data
+- Parameters: Variables in the function representing the slope and the y-intercept
+
+## Choosing a Model for Approximation
+2024-01-17T02:23:04.536Z
+- Choosing a model as an approximator for modeling tasks
+- Different models for different situations
+- Use of dual networks for any continuous function
+
