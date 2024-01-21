@@ -2,3 +2,5 @@ node_modules
 myenv
 audiologs
 .env
+files/transcripts
+files/docs

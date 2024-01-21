@@ -10,9 +10,15 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
   const [preferences, setPreferences] = useState(null);
   //Value of LLMPref text box
   const [textareaValue, setTextareaValue] = useState("");
+
+  const [showAlert, setShowAlert] = useState(false);
   //Set prefferences when called
   const handleSubmitLLM = () => {
     setPreferences(textareaValue);
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 5000); // hide after 5 second
   };
   //grab LLM prefferences
   const fetchLLMpref = () => {
@@ -95,32 +101,29 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
                   onChange={(e) => setTextareaValue(e.target.value)}
                 ></textarea>
               </div>
-              <Button variant="primary" type="button" onClick={handleSubmitLLM}>
-                Submit
-              </Button>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="1">
-            <Accordion.Header>Generate Document</Accordion.Header>
-            <Accordion.Body>
-              <div className="mb-3">
-                <label
-                  htmlFor="exampleFormControlTextarea1"
-                  className="form-label"
-                >
-                  Document Prompt
-                </label>
-                <textarea
-                  className="form-control"
-                  id="exampleFormControlTextarea2"
-                  rows="3"
-                  value={docPrompt}
-                  onChange={(e) => setDocPrompt(e.target.value)}
-                ></textarea>
+              <div className="row align-items-center">
+                <div className="col-3">
+                  <Button
+                    variant="primary"
+                    type="button"
+                    onClick={handleSubmitLLM}
+                  >
+                    Submit
+                  </Button>
+                </div>
+                <div className="col-8">
+                  {showAlert && (
+                    <div
+                      className="alert alert-success"
+                      role="alert"
+                      style={{ padding: "8px", marginTop: "14px" }}
+                    >
+                      <i className="bi bi-check2-circle me-2"></i>
+                      Notetaking preference submitted
+                    </div>
+                  )}
+                </div>
               </div>
-              <Button variant="primary" type="submit" onClick={sendDoc}>
-                Submit
-              </Button>
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="2">
@@ -154,6 +157,29 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
                   </div>
                 </div>
               </div>
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="1">
+            <Accordion.Header>Generate Document</Accordion.Header>
+            <Accordion.Body>
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleFormControlTextarea1"
+                  className="form-label"
+                >
+                  Document Prompt
+                </label>
+                <textarea
+                  className="form-control"
+                  id="exampleFormControlTextarea2"
+                  rows="3"
+                  value={docPrompt}
+                  onChange={(e) => setDocPrompt(e.target.value)}
+                ></textarea>
+              </div>
+              <Button variant="primary" type="submit" onClick={sendDoc}>
+                Submit
+              </Button>
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>

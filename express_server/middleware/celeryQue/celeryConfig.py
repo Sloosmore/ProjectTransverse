@@ -10,5 +10,4 @@ app.conf.task_routes = {
     'my_app.autogen_Create': {'queue': 'agCreate_queue'},
 }
 
-#celery -A celeryConfig worker --loglevel=info -Q whisper_queue
 #celery -A celeryConfig worker --loglevel=info -Q agCreate_queue

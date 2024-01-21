@@ -1,5 +1,30 @@
+version: "3.8"
+
 services:
   frontend:
-    build:
-  backend:
-  db:
+    build: ./client
+    ports:
+      - "5173:5173"
+    depends_on:
+      - node_backend
+      - python_backend
+
+  node_backend:
+    build: ./express_server
+    ports:
+      - "5001:5001"
+    depends_on:
+      - rabbitmq
+
+  python_backend:
+    build: ./express_server/middleware/celeryQue
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - "./rabbitmq_data:/var/lib/rabbitmq"

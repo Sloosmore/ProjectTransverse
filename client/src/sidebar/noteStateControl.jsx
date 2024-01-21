@@ -8,14 +8,18 @@ function PausePlay({ pauseProps }) {
   useEffect(() => {
     if (mode === "note") {
       setButton("pause");
-    } else if (mode === "default" && noteName) {
-      setButton("play");
       const updatedRecords = noteData.map((record) => {
         if (record.title === noteName) {
           return { ...record, status: "active" };
         } else {
           return record;
         }
+      });
+      setNotes(updatedRecords);
+    } else if (mode === "default" && noteName) {
+      setButton("play");
+      const updatedRecords = noteData.map((record) => {
+        return { ...record, status: "inactive" };
       });
       setNotes(updatedRecords);
     }
@@ -31,7 +35,7 @@ function PausePlay({ pauseProps }) {
           role="button"
         >
           <i
-            className="bi bi-pause bi-2x align-left"
+            className="bi bi-pause-fill bi-2x align-left"
             style={{ fontSize: "1.5rem" }}
           ></i>
           <span className="mx-auto">Pause</span>
@@ -45,10 +49,10 @@ function PausePlay({ pauseProps }) {
           data-tooltip-id="play-tooltip"
         >
           <i
-            className="bi bi-play bi-2x align-left"
+            className="bi bi-record2 bi-2x align-left"
             style={{ fontSize: "1.5rem" }}
           ></i>
-          <span className="mx-auto">Play </span>
+          <span className="mx-auto">Capture</span>
         </div>
       ) : null}
       <ReactTooltip

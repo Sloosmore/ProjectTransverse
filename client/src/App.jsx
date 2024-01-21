@@ -20,8 +20,8 @@ const WS_URL = "ws://localhost:5001/notes-api";
 
 function App() {
   //this is for help
-  const [showModal, setShowModal] = useState(false);
-  const closeModal = () => setShowModal(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
+  const closeModal = () => setShowHelpModal(false);
 
   //this is for note vs default mode
   const [mode, setMode] = useState("default");
@@ -36,6 +36,8 @@ function App() {
   const [noteName, setNoteName] = useState(
     localStorage.getItem("noteName") || ""
   );
+
+  useEffect(() => {}, [noteData]);
 
   useEffect(() => {
     localStorage.setItem("noteName", noteName);
@@ -152,14 +154,14 @@ function App() {
       command: "help",
       callback: () => {
         resetTranscript();
-        setShowModal(true);
+        setShowHelpModal(true);
       },
     },
     {
       command: "exit",
       callback: () => {
         resetTranscript();
-        setShowModal(false);
+        setShowHelpModal(false);
       },
     },
     {
@@ -177,6 +179,47 @@ function App() {
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition({ commands });
+
+  // Mic Failsafe functions -----------------------------------------------------------------------------
+  //so timerFailsame does not call UseEffect
+  const [timerFailsafe, setTimerFailsafe] = useState(true);
+
+  useEffect(() => {
+    if (!listening && timerFailsafe) {
+      SpeechRecognition.stopListening();
+      SpeechRecognition.startListening({ continuous: true });
+      console.log("Mic restared");
+    }
+  }, [listening]);
+
+  const [failsafeTimeoutId, setFailsafeTimeoutId] = useState(null);
+
+  useEffect(() => {
+    if (mode === "note") {
+      if (failsafeTimeoutId) {
+        clearTimeout(failsafeTimeoutId);
+      }
+
+      // Set a new timeout
+      const id = setTimeout(() => {
+        setTimerFailsafe(false);
+        SpeechRecognition.stopListening();
+        setTimeout(() => {
+          console.log("mic off!!!");
+          SpeechRecognition.startListening({ continuous: true });
+          setTimerFailsafe(true);
+        }, 400); // turn on the mic after .077 seconds
+      }, 10000); // 25 seconds
+
+      setFailsafeTimeoutId(id);
+
+      // Clean up function
+      return () => {
+        clearTimeout(id); // Using 'id' directly
+      };
+    }
+  }, [transcript]);
+  // ------------------------------------------------------------------------------------------------
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
@@ -225,6 +268,12 @@ function App() {
     }
   }, [transcript]);
 
+  const handleCKeyDown = (event) => {
+    if (event.key === "c") {
+      resetTranscript();
+    }
+  };
+
   useEffect(() => {
     fetchTaskRecords().then(setDocs);
     fetchNoteRecords().then(setNotes);
@@ -233,40 +282,13 @@ function App() {
     } else {
       console.log("this very bad how did you end up here");
     }
-    const handleKeyDown = (event) => {
-      if (event.key === "c") {
-        resetTranscript();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
+
+    window.addEventListener("keydown", handleCKeyDown);
     // Cleanup function to remove the event listener when the component unmounts
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keydown", handleCKeyDown);
     };
   }, []);
-
-  const [failsafeTimeoutId, setFailsafeTimeoutId] = useState(null);
-
-  useEffect(() => {
-    if (failsafeTimeoutId) {
-      clearTimeout(failsafeTimeoutId);
-    }
-
-    // Set a new timeout
-    const id = setTimeout(() => {
-      SpeechRecognition.stopListening();
-      setTimeout(() => {
-        SpeechRecognition.startListening({ continuous: true });
-      }, 77); // turn on the mic after .077 seconds
-    }, 12000); // 25 seconds
-
-    setFailsafeTimeoutId(id);
-
-    // Clean up function
-    return () => {
-      clearTimeout(id); // Using 'id' directly
-    };
-  }, [transcript]);
 
   const controlProps = {
     setDocs,
@@ -284,6 +306,15 @@ function App() {
     noteData,
   };
 
+  const eventListeners = {
+    handleCKeyDown,
+  };
+
+  const modeKit = {
+    mode,
+    setMode,
+  };
+
   return (
     <Router>
       <div className="container-fluid vh-100 d-flex">
@@ -297,6 +328,7 @@ function App() {
               noteData={noteData}
               pauseProps={pauseProps}
               controlProps={controlProps}
+              eventListeners={eventListeners}
             />
           </div>
 
@@ -305,13 +337,12 @@ function App() {
               transcript={transcript}
               docData={docData}
               noteData={noteData}
+              helpModal={setShowHelpModal}
+              modeKit = {modeKit}
             />
           </div>
           <div>
-            <HelpModal show={showModal} onClose={closeModal}>
-              {/* Modal body content goes here */}
-              ...
-            </HelpModal>
+            <HelpModal show={showHelpModal} onClose={closeModal} />
           </div>
         </div>
       </div>
@@ -320,3 +351,4 @@ function App() {
 }
 
 export default App;
+

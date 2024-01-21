@@ -1,6 +1,5 @@
 import sys
 from celeryConfig import app
-import os
 from contentFunc import doc_content, update
 from genFunc import gen_file
 from celeryConfig import app

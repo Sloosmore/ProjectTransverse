@@ -3,11 +3,23 @@ import Chatroom from "./docView";
 import Noteroom from "./noteView";
 import Home from "./panel";
 
-export const AppRoutes = ({ transcript, docData, noteData }) => (
+export const AppRoutes = ({
+  transcript,
+  docData,
+  noteData,
+  helpModal,
+  modeKit,
+}) => (
   <Routes>
     <Route
-      path="/n/:taskId"
-      element={<Noteroom noteData={noteData} transcript={transcript} />}
+      path="/n/:noteId"
+      element={
+        <Noteroom
+          noteData={noteData}
+          transcript={transcript}
+          modeKit={modeKit}
+        />
+      }
     />
     <Route
       path="/c/:taskId"
@@ -15,7 +27,12 @@ export const AppRoutes = ({ transcript, docData, noteData }) => (
     />
     <Route
       path="/"
-      element={<Home transcript={transcript ? transcript.slice(-300) : ""} />}
+      element={
+        <Home
+          transcript={transcript ? transcript.slice(-300) : ""}
+          helpModal={helpModal}
+        />
+      }
     />
   </Routes>
 );

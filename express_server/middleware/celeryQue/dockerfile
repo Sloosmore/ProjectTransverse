@@ -1,0 +1,12 @@
+FROM python:3.11-slim
+
+WORKDIR /usr/src/app
+
+# Install Python dependencies
+COPY . .
+RUN pip install --no-cache-dir -r requirements.txt
+
+ENV NAME World
+
+# Command to run the Celery worker
+CMD ["celery", "-A", "celeryConfig", "worker", "--loglevel=info", '-Q', 'agCreate_queue']
