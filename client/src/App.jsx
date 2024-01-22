@@ -313,6 +313,8 @@ function App() {
   const modeKit = {
     mode,
     setMode,
+    noteData,
+    setNotes,
   };
 
   return (
@@ -338,7 +340,7 @@ function App() {
               docData={docData}
               noteData={noteData}
               helpModal={setShowHelpModal}
-              modeKit = {modeKit}
+              modeKit={modeKit}
             />
           </div>
           <div>
@@ -351,4 +353,3 @@ function App() {
 }
 
 export default App;
-

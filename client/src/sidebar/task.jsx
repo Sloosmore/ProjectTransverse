@@ -7,6 +7,7 @@ function Task({ name, state }) {
     in_progress: "grey",
     active: "active",
     inactive: "inactive",
+    playback: "playback",
   };
 
   const task = (

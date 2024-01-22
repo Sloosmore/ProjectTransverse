@@ -51,7 +51,7 @@ function Sidebar({ docData, noteData, pauseProps, controlProps }) {
           <div
             id="example-collapse-text"
             className="overflow-auto"
-            style={{ maxHeight: "60%" }}
+            style={{ maxHeight: "500px" }}
           >
             <NoteList notes={noteData} />
           </div>
@@ -73,7 +73,7 @@ function Sidebar({ docData, noteData, pauseProps, controlProps }) {
           <div
             id="example-collapse-text"
             className="overflow-auto"
-            style={{ maxHeight: "60%" }}
+            style={{ maxHeight: "500px" }}
           >
             <TaskList tasks={docData} />
           </div>
