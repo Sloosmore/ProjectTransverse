@@ -37,8 +37,6 @@ function App() {
     localStorage.getItem("noteName") || ""
   );
 
-  useEffect(() => {}, [noteData]);
-
   useEffect(() => {
     localStorage.setItem("noteName", noteName);
   }, [noteName]);
@@ -182,13 +180,14 @@ function App() {
 
   // Mic Failsafe functions -----------------------------------------------------------------------------
   //so timerFailsame does not call UseEffect
-  const [timerFailsafe, setTimerFailsafe] = useState(true);
 
   useEffect(() => {
-    if (!listening && timerFailsafe) {
-      SpeechRecognition.stopListening();
-      SpeechRecognition.startListening({ continuous: true });
-      console.log("Mic restared");
+    console.log("listening effect triggered");
+    if (!listening) {
+      setTimeout(() => {
+        SpeechRecognition.startListening({ continuous: true });
+        console.log("Restart after trgger");
+      }, 100);
     }
   }, [listening]);
 
@@ -202,14 +201,11 @@ function App() {
 
       // Set a new timeout
       const id = setTimeout(() => {
-        setTimerFailsafe(false);
-        SpeechRecognition.stopListening();
         setTimeout(() => {
-          console.log("mic off!!!");
           SpeechRecognition.startListening({ continuous: true });
-          setTimerFailsafe(true);
-        }, 400); // turn on the mic after .077 seconds
-      }, 10000); // 25 seconds
+          console.log("mic restared");
+        }, 200);
+      }, 7000); // 10 seconds
 
       setFailsafeTimeoutId(id);
 
@@ -219,6 +215,7 @@ function App() {
       };
     }
   }, [transcript]);
+
   // ------------------------------------------------------------------------------------------------
 
   if (!browserSupportsSpeechRecognition) {
@@ -247,23 +244,36 @@ function App() {
           console.log(err);
         });
     } else if (mode === "note") {
+      //send to backend after 2 sec
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
-
-      // Set a new timeout
-      const id = setTimeout(() => {
+      const backID = setTimeout(() => {
         sendJsonMessage({
           title: noteName,
           transcript: transcript,
           init: false,
         });
-      }, 2000); // 400 milliseconds
-      setTimeoutId(id);
+      }, 2000);
+      setTimeoutId(backID);
+
+      //restart frontend after 7
+      clearTimeout(failsafeTimeoutId);
+
+      // Set a new timeout
+      const resetID = setTimeout(() => {
+        setTimeout(() => {
+          SpeechRecognition.startListening({ continuous: true });
+          console.log("mic restared");
+        }, 200);
+      }, 7000); // 10 seconds
+
+      setFailsafeTimeoutId(resetID);
 
       // Clean up function
       return () => {
-        clearTimeout(id); // Using 'id' directly
+        clearTimeout(resetID);
+        clearTimeout(backID); // Using 'id' directly
       };
     }
   }, [transcript]);

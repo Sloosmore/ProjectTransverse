@@ -83,7 +83,7 @@ const TextToSpeech = ({ markdown, modeKit, ID, selectedText }) => {
 
   useEffect(() => {
     // Check if selectedText is not empty
-    if (selectedText) {
+    if (selectedText && mode !== "note") {
       handleReset(); // Stop any ongoing speech
       const filterText = convertMarkdownToText(selectedText);
       const newUtterance = new SpeechSynthesisUtterance(filterText); // Create a new utterance for the selected text

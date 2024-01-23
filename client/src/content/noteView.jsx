@@ -62,8 +62,8 @@ function Noteroom({ noteData, modeKit }) {
             <ReactMarkdown>{element}</ReactMarkdown>
           </div>
         ))}
+        {status === "active" && <LoadNote />}
       </div>
-      {status === "active" && <LoadNote />}
     </div>
   );
 }
