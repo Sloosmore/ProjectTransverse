@@ -30,6 +30,7 @@ app.use("/settings", require("./routes/settings"));
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ noServer: true });
 
+
 server.on("upgrade", (request, socket, head) => {
   console.log("WS connection upgraded");
   if (request.url === "/notes-api") {
