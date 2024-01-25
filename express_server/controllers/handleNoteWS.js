@@ -4,30 +4,18 @@ const fsPromises = require("fs").promises;
 const uuid = require("uuid");
 const { isUtf8 } = require("buffer");
 const fetch = require("node-fetch");
-const {
-  h2TagThreashold,
-  splitMarkdownAtHeadings,
-  splitTranscript,
-  findLastIsoDateTime,
-  removeDateTimes,
-  subtractString,
-} = require("../middleware/wsNotes/wsParse");
+
 const { queryAI } = require("../middleware/wsNotes/gptMD");
 const {
   appendToJsonFile,
   deactivateRecords,
 } = require("../middleware/wsNotes/writeNoteRecord");
 const { record } = require("../middleware/writeTaskDB");
-//the temporary markdown section may not be needed but good to have in place in case
 
-const noteDBpath = path.join(__dirname, "../..", "/db/noteRecords.json");
-
-// read in
 async function handleWebSocketConnection(ws, request) {
   const connectMessage = {
     message: "Connected to WebSocket!",
   };
-
   ws.send(JSON.stringify(connectMessage));
 
   //Append note record to db
@@ -40,25 +28,25 @@ async function handleWebSocketConnection(ws, request) {
       const ts = data.transcript;
       const justActivated = data.init;
 
-      const transPath = `../files/transcripts/${title}`;
-      const dirPath = path.join(__dirname, transPath);
-      const activePath = path.join(__dirname, `${transPath}/stepTS.txt`);
-      const WholeTransPath = path.join(__dirname, `${transPath}/wholeTS.txt`);
-      const SectionMarkdown = path.join(__dirname, `${transPath}/stepMD.txt`);
-      const WholemarkDown = path.join(__dirname, `${transPath}/wholeMD.txt`);
-
       if (justActivated) {
-        await deactivateRecords(noteDBpath);
+        //deactive all other note if it matches user
 
-        const record = {
-          title: title,
-          note_id: uuid.v4(),
-          markdown: `# ${title}`,
-          status: "active",
-        };
-        console.log("++++++++++++++++++++++++++++++++++++++++++++");
+        //------------------------------------------
 
-        //send inital record
+
+        //write new record to DB
+        /*
+        note_id =  uuid.v4()
+        user_id = user 
+        title = title
+        markdown = {title}
+        status = active
+        date_created = date.now
+        date_updated = date.now
+        */
+
+        
+        //send returned record from DB
 
         ws.send(
           JSON.stringify({
@@ -68,13 +56,7 @@ async function handleWebSocketConnection(ws, request) {
           })
         );
 
-        await appendToJsonFile(noteDBpath, record);
 
-        await fsPromises.mkdir(dirPath);
-        await fsPromises.writeFile(activePath, "");
-        await fsPromises.writeFile(WholeTransPath, "");
-        await fsPromises.writeFile(SectionMarkdown, "");
-        await fsPromises.writeFile(WholemarkDown, `# ${title} \n\n`);
       } else if (ts.length > 500) {
         // write time text active and reg text to glob
         console.log(ts);
@@ -145,7 +127,17 @@ async function handleWebSocketConnection(ws, request) {
             noteRecord: null,
           })
         );
-      }
+      } else (
+
+        //send timestamped transcript
+        ws.send(
+          JSON.stringify({
+            md: "",
+            resetState: false,
+            noteRecord: record,
+          })
+        )
+      )
     } catch (error) {
       console.error(`Error: ${error.message}`);
       console.error(`Stack trace: ${error.stack}`);

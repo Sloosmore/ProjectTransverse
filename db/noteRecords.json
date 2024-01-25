@@ -106,6 +106,18 @@
       "title": "ski club",
       "note_id": "9bc87639-28c3-4da3-ab84-351fb3740fcc",
       "markdown": "# ski club",
+      "status": "inactive"
+    },
+    {
+      "title": "sep demo",
+      "note_id": "fa4e4ccd-7ef8-4821-afba-f2ea842576ca",
+      "markdown": "# sep demo",
+      "status": "inactive"
+    },
+    {
+      "title": "dgsdf",
+      "note_id": "0d6c8cad-2d18-4e7d-8d01-25765646acb6",
+      "markdown": "# dgsdf",
       "status": "active"
     }
   ]
