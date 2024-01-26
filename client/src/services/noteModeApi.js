@@ -5,7 +5,7 @@ export const createNewNote = (
   setNotes,
   setMode,
   wsJSON,
-  setNoteName
+  
 ) => {
   console.log(name);
   const noteMatch = noteData.filter((record) => {
@@ -24,5 +24,4 @@ export const createNewNote = (
     init: true,
   });
 
-  setNoteName(name);
 };

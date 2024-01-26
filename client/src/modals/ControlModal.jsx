@@ -5,7 +5,7 @@ import { createNewNote } from "../services/noteModeApi";
 import { tvrseFunc } from "../services/tverseAPI";
 
 function ControlModal({ show, handleClose, noteData, controlProps }) {
-  const { setDocs, setNotes, wsJSON, setMode, setNoteName } = controlProps;
+  const { setDocs, setNotes, wsJSON, setMode } = controlProps;
   //LLM preffereences
   const [preferences, setPreferences] = useState(null);
   //Value of LLMPref text box
@@ -71,7 +71,6 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
         setNotes,
         setMode,
         wsJSON,
-        setNoteName
       );
     }
   };

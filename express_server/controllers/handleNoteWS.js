@@ -1,16 +1,6 @@
-const path = require("path");
-const fs = require("fs");
-const fsPromises = require("fs").promises;
 const uuid = require("uuid");
-const { isUtf8 } = require("buffer");
-const fetch = require("node-fetch");
-
 const { queryAI } = require("../middleware/wsNotes/gptMD");
-const {
-  appendToJsonFile,
-  deactivateRecords,
-} = require("../middleware/wsNotes/writeNoteRecord");
-const { record } = require("../middleware/writeTaskDB");
+const { pool } = require("../db/db");
 
 async function handleWebSocketConnection(ws, request) {
   const connectMessage = {
@@ -28,116 +18,123 @@ async function handleWebSocketConnection(ws, request) {
       const ts = data.transcript;
       const justActivated = data.init;
 
+      //this is loosmore's user ID
+      const user = data.user || "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
+
       if (justActivated) {
-        //deactive all other note if it matches user
+        const user_id = user;
 
-        //------------------------------------------
+        const inactiveQuery =
+          "UPDATE note SET status = $1 WHERE user_id = $2 RETURNING *";
+        const inactiveValues = ["inactive", user_id];
 
+        const note_id = uuid.v4();
+        const status = "active";
+        const is_deleted = false;
+        const thread_id = "";
 
-        //write new record to DB
-        /*
-        note_id =  uuid.v4()
-        user_id = user 
-        title = title
-        markdown = {title}
-        status = active
-        date_created = date.now
-        date_updated = date.now
-        */
+        const date_created = new Date();
+        const date_updated = new Date();
 
-        
-        //send returned record from DB
+        const active_transcript = "";
+        const full_transcript = "";
+        const active_markdown = "";
+        const full_markdown = "";
 
-        ws.send(
-          JSON.stringify({
-            md: "",
-            resetState: false,
-            noteRecord: record,
-          })
-        );
+        const newRecQuery =
+          "INSERT INTO note(note_id, user_id, title, status, date_created, date_updated, is_deleted, active_transcript, full_transcript, active_markdown, full_markdown) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *";
+        const newRec = [
+          note_id,
+          user_id,
+          title,
+          status,
+          date_created,
+          date_updated,
+          is_deleted,
+          active_transcript,
+          full_transcript,
+          active_markdown,
+          full_markdown,
+          thread_id,
+        ];
 
-
-      } else if (ts.length > 500) {
-        // write time text active and reg text to glob
-        console.log(ts);
-        const date = new Date();
-        await fsPromises.appendFile(
-          activePath,
-          `<${date.toISOString()}> ${ts}`
-        );
-        await fsPromises.appendFile(WholeTransPath, ts);
-
-        ws.send(
-          JSON.stringify({ md: null, resetState: true, noteRecord: null })
-        );
-
-        //only pass the new ts to the AI query when the transcript gets reset it needs to pass the thresehold which it probaly should
-
-        const transAI = await fsPromises.readFile(activePath, "utf-8");
-        const res = await queryAI(transAI);
-        console.log(`AI ${JSON.stringify(res, null, 2)}`);
-        const md = res["data"][0]["content"][0]["text"]["value"];
-        //Append markdown
-        await fsPromises.writeFile(SectionMarkdown, md);
-
-        //final MD to be sent to the front
-        let markdown = "";
-        //droping undefined because responce is not being parse c
-        if (h2TagThreashold(md)) {
-          //grab last DT in markdown
-          const dateTime = findLastIsoDateTime(md);
-          //split the DT TS to get the most relivent info
-          console.log(
-            "---------------------------------------------------------------------------------------------------------"
+        try {
+          //inacive records
+          const { rows: inactiveRows } = await pool.query(
+            inactiveQuery,
+            inactiveValues
           );
-          console.log(`Datetime:${dateTime}`);
-          console.log(md);
-          console.log(
-            "---------------------------------------------------------------------------------------------------------"
+          const inactiveRecords = inactiveRows;
+
+          //send new record
+          const { rows: newRecRows } = await pool.query(newRecQuery, newRec);
+          const record = newRecRows[0];
+
+          // send returned records from DB so frontend can set the notes
+          ws.send(
+            JSON.stringify({
+              noteRecords: [record, ...inactiveRecords],
+              note_id,
+            })
           );
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        //do this every time:
+        //turn this into a function that takes in transcript
+        const id = data.note_id;
 
-          const workingTS = splitTranscript(dateTime, transAI);
-          //rewrite ts with what is needed
-          await fsPromises.writeFile(activePath, workingTS);
+        let oldTS = "";
+        const matchIDQuery =
+          "Select full_transcript FROM note WHERE note_id = ($1)";
+        const matchedRecord = [id];
 
-          //split the active markdown
-          const { completeSection, newSection } = splitMarkdownAtHeadings(md);
-
-          // put the complete section into full file
-          await fsPromises.appendFile(WholemarkDown, completeSection);
-          const wholeMD = await fsPromises.readFile(WholemarkDown);
-
-          markdown = `${wholeMD}\n${newSection}`;
-        } else {
-          const wholeMD = await fsPromises.readFile(WholemarkDown);
-          markdown = `${wholeMD}\n${md}`;
+        try {
+          pool
+            .query(matchIDQuery, matchedRecord)
+            .then((res) => {
+              oldTS = res.rows[0];
+              console.log(record);
+            })
+            .catch((err) => {
+              console.error(`Error: ${err}`);
+            });
+        } catch (error) {
+          console.error(`Error: ${error}`);
         }
 
-        const updatedMDRecord = {
-          title: title,
-          markdown: markdown,
-        };
+        const date = new Date();
+        const dateTs = `${transcript} \n\n ${date.toISOString()}`;
+        const newTS = oldTS + dateTs;
 
-        await appendToJsonFile(noteDBpath, updatedMDRecord);
-
-        ws.send(
-          JSON.stringify({
-            md: markdown,
-            resetState: false,
-            noteRecord: null,
-          })
-        );
-      } else (
+        const reWriteTS =
+          "UPDATE note SET full_transcript = $1 WHERE note_id = $2";
+        const reWriteTSParam = [newTS, id];
 
         //send timestamped transcript
         ws.send(
           JSON.stringify({
-            md: "",
-            resetState: false,
-            noteRecord: record,
+            resetState: true,
+            transcript: dateTs,
           })
-        )
-      )
+        );
+
+        //only pass the new ts to the AI query when the transcript gets reset it needs to pass the thresehold which it probaly should
+        if (activeTS.length >= 750) {
+          //in theroy the thread ID should be passed into this function
+
+          const res = await queryAI(dateTs);
+          console.log(`AI ${JSON.stringify(res, null, 2)}`);
+          const md = res["data"][0]["content"][0]["text"]["value"];
+          //insted of updating the MD by adding will now send chuncks to the frontend
+          ws.send(
+            JSON.stringify({
+              md: md,
+            })
+          );
+        }
+      }
     } catch (error) {
       console.error(`Error: ${error.message}`);
       console.error(`Stack trace: ${error.stack}`);

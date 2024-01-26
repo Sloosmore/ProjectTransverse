@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import titleFromID from "../services/titleFromID";
 
 function PausePlay({ pauseProps }) {
   const { mode, setMode, noteName, setNotes, noteData } = pauseProps;
@@ -9,7 +10,7 @@ function PausePlay({ pauseProps }) {
     if (mode === "note") {
       setButton("pause");
       const updatedRecords = noteData.map((record) => {
-        if (record.title === noteName) {
+        if (record.note_id === noteName) {
           return { ...record, status: "active" };
         } else {
           return record;
@@ -57,7 +58,7 @@ function PausePlay({ pauseProps }) {
       ) : null}
       <ReactTooltip
         place="right"
-        content={noteName}
+        content={titleFromID(noteName, noteData)}
         id="play-tooltip"
         className="bg-light text-black-50 border"
       />

@@ -9,6 +9,7 @@ export const AppRoutes = ({
   noteData,
   helpModal,
   modeKit,
+  annotatingKit,
 }) => (
   <Routes>
     <Route
@@ -18,6 +19,7 @@ export const AppRoutes = ({
           noteData={noteData}
           transcript={transcript}
           modeKit={modeKit}
+          annotatingKit={annotatingKit}
         />
       }
     />

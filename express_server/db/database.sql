@@ -24,5 +24,10 @@ CREATE TABLE note(
     date_created DATE NOT NULL,
     date_updated DATE NOT NULL,
     is_deleted BOOLEAN DEFAULT FALSE,
-    markdown TEXT
+    thread_id VARCHAR(50)
+    active_transcript TEXT,
+    full_transcript TEXT,
+    active_markdown TEXT,
+    full_markdown TEXT,
+
 );

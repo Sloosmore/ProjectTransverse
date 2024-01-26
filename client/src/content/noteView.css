@@ -1,3 +1,13 @@
-.markdown-content li {
-  margin-bottom: 7px; /* Reduce space between list items */
+.transition-sidebar {
+  height: 100%;
+  cursor: pointer;
+}
+
+.transition-sidebar.hidden {
+  width: 20px; /* This is the width of the sliver. You can adjust this value as needed. */
+}
+
+.toggle-sidebar {
+  width: auto;
+  height: 100%;
 }

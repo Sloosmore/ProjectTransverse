@@ -16,6 +16,8 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
+import titleFromID from "./services/titleFromID";
+
 const WS_URL = "ws://localhost:5001/notes-api";
 
 function App() {
@@ -33,9 +35,14 @@ function App() {
   const [noteData, setNotes] = useState([]);
 
   //this is for specific active instace of WS notes
+  //ID of note and not title use titleFromID to get title
   const [noteName, setNoteName] = useState(
     localStorage.getItem("noteName") || ""
   );
+
+  //hide the sidebar while editing notes
+  const [annotating, setAnnotating] = useState(false);
+  console.log(annotating);
 
   useEffect(() => {
     localStorage.setItem("noteName", noteName);
@@ -49,21 +56,30 @@ function App() {
     onMessage: (event) => {
       const wsData = JSON.parse(event.data);
       console.log("WebSocket message received:", wsData);
-      if (wsData.noteRecord) {
+      if (wsData.noteRecords) {
         //this should happen once during notemode init
         console.log("-------======================================-------");
-        console.log(wsData.noteRecord);
-        setNotes([...noteData, wsData.noteRecord]);
+        //set by uuid
+        setNoteName(wsData.note_id);
+        setNotes(wsData.noteRecords);
       }
-      if (wsData.resetState === true) {
+      if (wsData.resetState) {
         resetTranscript();
+        const upDataNotes = noteData.map((record) => {
+          if (record.note_id === noteName) {
+            record.active_transcript += wsData.transcript;
+          }
+          return record;
+        });
+        setNotes(upDataNotes);
       }
       if (wsData.md) {
         //find record and set markdown in that specific file
         //this will update the markdown of a specific record
         const updateMd = noteData.map((record) => {
-          if (record.title === noteName) {
-            record.markdown = wsData.md;
+          //append markdown here
+          if (record.note_id === noteName) {
+            record.active_markdown = wsData.md;
           }
           return record;
         });
@@ -122,15 +138,7 @@ function App() {
       command: "* note mode",
       callback: (name) => {
         resetTranscript();
-        createNewNote(
-          name,
-          transcript,
-          noteData,
-          setNotes,
-          setMode,
-          wsJSON,
-          setNoteName
-        );
+        createNewNote(name, transcript, noteData, setNotes, setMode, wsJSON);
       },
     },
     {
@@ -249,12 +257,15 @@ function App() {
         clearTimeout(timeoutId);
       }
       const backID = setTimeout(() => {
+        title = titleFromID(noteName, noteRecords);
+
         sendJsonMessage({
-          title: noteName,
+          title,
           transcript: transcript,
           init: false,
+          note_id: noteName,
         });
-      }, 2000);
+      }, 1000);
       setTimeoutId(backID);
 
       //restart frontend after 7
@@ -305,7 +316,6 @@ function App() {
     setNotes,
     wsJSON: sendJsonMessage,
     setMode,
-    setNoteName,
   };
 
   const pauseProps = {
@@ -327,23 +337,29 @@ function App() {
     setNotes,
   };
 
+  const annotatingKit = {
+    annotating,
+    setAnnotating,
+  };
 
   return (
     <Router>
       <div className="container-fluid vh-100 d-flex">
         <div className="row flex-grow-1">
-          <div
-            className="col-3 bg-lightgrey p-0 d-flex flex-column"
-            style={{ minWidth: "200px", maxWidth: "250px" }}
-          >
-            <Sidebar
-              docData={docData}
-              noteData={noteData}
-              pauseProps={pauseProps}
-              controlProps={controlProps}
-              eventListeners={eventListeners}
-            />
-          </div>
+          {!annotating && (
+            <div
+              className="col-3 bg-lightgrey p-0 d-flex flex-column"
+              style={{ minWidth: "200px", maxWidth: "250px" }}
+            >
+              <Sidebar
+                docData={docData}
+                noteData={noteData}
+                pauseProps={pauseProps}
+                controlProps={controlProps}
+                eventListeners={eventListeners}
+              />
+            </div>
+          )}
 
           <div className="col">
             <AppRoutes
@@ -352,6 +368,7 @@ function App() {
               noteData={noteData}
               helpModal={setShowHelpModal}
               modeKit={modeKit}
+              annotatingKit={annotatingKit}
             />
           </div>
           <div>
