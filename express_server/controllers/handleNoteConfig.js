@@ -1,13 +1,18 @@
 const path = require("path");
 const fsPromises = require("fs").promises;
+const pool = require("../db/db");
 
-const filePath = path.join(__dirname, "../files/settings/LLMconfig.txt");
+const user_id = "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
 
 const writeLLM = async (req, res) => {
   try {
     console.log("writeLLM");
     const message = req.body["instructions"];
-    await fsPromises.writeFile(filePath, message);
+    await pool.query(
+      `UPDATE "user" SET note_preferences = $1 WHERE user_id = $2`,
+      [message, user_id]
+    );
+
     res.status(201).json({ message: "all good" });
   } catch (error) {
     console.log(`Set LLM Error: ${error}`);
@@ -18,11 +23,15 @@ const writeLLM = async (req, res) => {
 const readLLM = async (req, res) => {
   try {
     console.log("ReadLLM");
-    const instructions = await fsPromises.readFile(filePath, "utf8");
-    console.log(instructions);
+
+    const { rows } = await pool.query(
+      'SELECT note_preferences FROM "user" WHERE user_id = $1',
+      [user_id]
+    );
+    const instructions = rows[0].note_preferences;
     res.status(201).json({ instructions });
   } catch (error) {
-    console.log(`Read LLM Error: ${error}`);
+    console.error(`Read LLM Error: ${error.stack}`);
     res.status(500);
   }
 };

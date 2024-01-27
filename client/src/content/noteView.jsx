@@ -68,7 +68,7 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
   }, [fullTs, status, transcript]);
 
   //use effect that sets editbody to body on load and then appends new markdown to state when added and this state is what
-
+  const [timeoutId, setTimeoutId] = useState(null);
   useEffect(() => {
     if (timeoutId) {
       clearTimeout(timeoutId);

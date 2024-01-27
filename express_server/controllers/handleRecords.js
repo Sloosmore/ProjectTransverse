@@ -1,6 +1,6 @@
 const path = require("path");
 const fsPromises = require("fs").promises;
-const { pool } = require("../db/db");
+const pool = require("../db/db");
 
 const sendTasks = async (req, res) => {
   try {
@@ -57,12 +57,7 @@ const saveToPG = async (req, res) => {
     const saveQueryParams = [markdown, id];
 
     const result = await pool.query(saveQuery, saveQueryParams);
-    const noteRecords = result.rows.map((record) => {
-      return {
-        ...record,
-        status: "inactive",
-      };
-    });
+    console.log(result);
     res.status(201).json({ message: "saved" });
   } catch (error) {
     console.error("Error:", error);

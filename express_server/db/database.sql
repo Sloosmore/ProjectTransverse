@@ -12,6 +12,7 @@ CREATE TABLE "user"(
     refresh_token TEXT,
     date_created DATE NOT NULL,
     is_active BOOLEAN DEFAULT TRUE
+    note_prefferences TEXT
 )
 
 --notetaking prefferences

@@ -1,6 +1,6 @@
 const uuid = require("uuid");
 const { queryAI } = require("../middleware/wsNotes/gptMD");
-const { pool } = require("../db/db");
+const pool = require("../db/db");
 
 async function handleWebSocketConnection(ws, request) {
   const connectMessage = {
