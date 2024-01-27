@@ -36,17 +36,14 @@ function App() {
 
   //this is for specific active instace of WS notes
   //ID of note and not title use titleFromID to get title
-  const [noteName, setNoteName] = useState(
-    localStorage.getItem("noteName") || ""
-  );
+  const [noteID, setNoteID] = useState(localStorage.getItem("noteName") || "");
 
   //hide the sidebar while editing notes
   const [annotating, setAnnotating] = useState(false);
-  console.log(annotating);
 
   useEffect(() => {
-    localStorage.setItem("noteName", noteName);
-  }, [noteName]);
+    localStorage.setItem("noteName", noteID);
+  }, [noteID]);
 
   const { sendJsonMessage, readyState } = useWebSocket(WS_URL, {
     onOpen: () => {
@@ -60,13 +57,13 @@ function App() {
         //this should happen once during notemode init
         console.log("-------======================================-------");
         //set by uuid
-        setNoteName(wsData.note_id);
+        setNoteID(wsData.note_id);
         setNotes(wsData.noteRecords);
       }
       if (wsData.resetState) {
         resetTranscript();
         const upDataNotes = noteData.map((record) => {
-          if (record.note_id === noteName) {
+          if (record.note_id === noteID) {
             record.active_transcript += wsData.transcript;
           }
           return record;
@@ -78,7 +75,7 @@ function App() {
         //this will update the markdown of a specific record
         const updateMd = noteData.map((record) => {
           //append markdown here
-          if (record.note_id === noteName) {
+          if (record.note_id === noteID) {
             record.active_markdown = wsData.md;
           }
           return record;
@@ -257,13 +254,13 @@ function App() {
         clearTimeout(timeoutId);
       }
       const backID = setTimeout(() => {
-        title = titleFromID(noteName, noteRecords);
+        title = titleFromID(noteID, noteRecords);
 
         sendJsonMessage({
           title,
           transcript: transcript,
           init: false,
-          note_id: noteName,
+          note_id: noteID,
         });
       }, 1000);
       setTimeoutId(backID);
@@ -321,7 +318,7 @@ function App() {
   const pauseProps = {
     mode,
     setMode,
-    noteName,
+    noteName: noteID,
     setNotes,
     noteData,
   };

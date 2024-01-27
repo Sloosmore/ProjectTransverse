@@ -5,7 +5,7 @@ import LoadNote from "./noteload";
 import { bifurcateMarkdown, splitMarkdown } from "../services/parseMarkdown";
 import TextToSpeech from "../funcComponents/textToSpeach";
 import "./noteView.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { saveNoteRecord } from "../services/sidebarTasksApi";
 
 function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
   const { noteId } = useParams();
@@ -17,7 +17,10 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
   const [status, setStatus] = useState(location.state.status);
   const [noteID, setNoteID] = useState(location.state.note_id);
   const [selectedText, setSelectedText] = useState("");
-  const [markdown, setMarkdown] = useState(location.state.markdown);
+  const [markdown, setMarkdown] = useState(
+    location.state.full_markdown || location.state.markdown
+  );
+  const [fullTs, setFullTs] = useState(location.state.full_transcript);
   const [activeMarkdown, setActiveMarkdown] = useState("");
 
   const [view, setView] = useState("notes");
@@ -31,24 +34,26 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
       setActiveMarkdown(note[0].active_markdown);
       setStatus(note[0].status);
       setNoteID(note[0].note_id);
+      setFullTs(note[0].full_transcript);
     }
   }, [noteData, noteId]);
   //this will update the glob markdown string
   useEffect(() => {
-    setMarkdown(`${markdown} ${activeMarkdown}`);
+    setMarkdown((prevMarkdown) => prevMarkdown + activeMarkdown);
   }, [activeMarkdown]);
 
   //Grab title
-  const [editbody, setEditbody] = useState("");
 
   //process markdown for implemetaion
-  let [title, body] = bifurcateMarkdown(markdown);
-  let markdownElements = splitMarkdown(editbody);
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [markdownElements, setMarkdownElements] = useState([]);
 
   useEffect(() => {
-    [title, body] = bifurcateMarkdown(markdown);
-    setEditbody(body);
-    markdownElements = splitMarkdown(editbody);
+    const [newTitle, newBody] = bifurcateMarkdown(markdown);
+    setTitle(newTitle);
+    setBody(newBody);
+    setMarkdownElements(splitMarkdown(newBody));
   }, [markdown]);
 
   const handleDoubleClick = (clickedElement, index) => {
@@ -57,7 +62,28 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
     setSelectedText(textFromClickedPoint);
   };
 
+  const [renderTS, setRenderTS] = useState(fullTs);
+  useEffect(() => {
+    setRenderTS(`${fullTs} ${status === "active" ? transcript : ""}`);
+  }, [fullTs, status, transcript]);
+
   //use effect that sets editbody to body on load and then appends new markdown to state when added and this state is what
+
+  useEffect(() => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    const id = setTimeout(() => {
+      saveNoteRecord(noteID, body);
+    }, 5000);
+
+    setTimeoutId(id);
+
+    return () => {
+      clearTimeout(id);
+    };
+  }, [body]);
 
   return (
     <div className="row h-100">
@@ -108,6 +134,7 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
                     onClick={() => setView("transcript")}
                   >
                     <h5>Transcript</h5>
+                    <div className="overflow-auto flex-grow-1 pt-2"></div>
                   </button>
                 </li>
               </ul>
@@ -116,8 +143,8 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
                   className="form-control mt-3 text-secondary"
                   id="exampleFormControlTextarea1"
                   style={{ height: "80vh", overflow: "auto", resize: "none" }}
-                  value={editbody}
-                  onChange={(e) => setEditbody(e.target.value)}
+                  value={body}
+                  onChange={(e) => setBody(e.target.value)}
                 />
               )}
               {view === "transcript" && <div>Transcript View</div>}

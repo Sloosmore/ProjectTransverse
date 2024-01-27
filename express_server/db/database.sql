@@ -14,6 +14,10 @@ CREATE TABLE "user"(
     is_active BOOLEAN DEFAULT TRUE
 )
 
+--notetaking prefferences
+ALTER TABLE "user"
+ADD note_prefferences TEXT;
+
 
 CREATE TABLE note(
     note_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

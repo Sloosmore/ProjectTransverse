@@ -1,5 +1,6 @@
 const path = require("path");
 const fsPromises = require("fs").promises;
+const { pool } = require("../db/db");
 
 const sendTasks = async (req, res) => {
   try {
@@ -31,4 +32,41 @@ const sendNotes = async (req, res) => {
   }
 };
 
-module.exports = { sendTasks, sendNotes };
+const sendNotesFromPG = async (req, res) => {
+  try {
+    console.log("Fetching records...");
+    const result = await pool.query("SELECT * FROM note");
+    const noteRecords = result.rows.map((record) => {
+      return {
+        ...record,
+        status: "inactive",
+      };
+    });
+    res.status(201).json({ noteRecords });
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+const saveToPG = async (req, res) => {
+  try {
+    const { id, markdown } = req.body;
+
+    const saveQuery =
+      "UPDATE note SET full_markdown = $1, date_updated = NOW() WHERE note_id = $2";
+    const saveQueryParams = [markdown, id];
+
+    const result = await pool.query(saveQuery, saveQueryParams);
+    const noteRecords = result.rows.map((record) => {
+      return {
+        ...record,
+        status: "inactive",
+      };
+    });
+    res.status(201).json({ message: "saved" });
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+module.exports = { sendTasks, sendNotes, sendNotesFromPG, saveToPG };
