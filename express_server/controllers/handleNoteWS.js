@@ -1,11 +1,19 @@
 const uuid = require("uuid");
 const { queryAI } = require("../middleware/wsNotes/gptMD");
 const pool = require("../db/db");
+const { appendFullTranscript } = require("../middleware/wsNotes/appendFullTs");
+const fsPromises = require("fs").promises;
+const path = require("path");
+const {
+  fetchActiveTs,
+  clearActiveTS,
+} = require("../middleware/wsNotes/activeTs");
 
 async function handleWebSocketConnection(ws, request) {
   const connectMessage = {
     message: "Connected to WebSocket!",
   };
+  const threshold = 750;
   ws.send(JSON.stringify(connectMessage));
 
   //Append note record to db
@@ -17,6 +25,7 @@ async function handleWebSocketConnection(ws, request) {
       const title = data.title;
       const ts = data.transcript;
       const justActivated = data.init;
+      console.log(`this is the incomming transcript ${ts}`);
 
       //this is loosmore's user ID
       const user = data.user || "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
@@ -40,9 +49,10 @@ async function handleWebSocketConnection(ws, request) {
         const full_transcript = "";
         const active_markdown = "";
         const full_markdown = "";
+        const visable = "true";
 
         const newRecQuery =
-          "INSERT INTO note(note_id, user_id, title, status, date_created, date_updated, is_deleted, active_transcript, full_transcript, active_markdown, full_markdown, thread_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *";
+          "INSERT INTO note(note_id, user_id, title, status, date_created, date_updated, is_deleted, active_transcript, full_transcript, active_markdown, full_markdown, thread_id, visible) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *";
         const newRec = [
           note_id,
           user_id,
@@ -56,6 +66,7 @@ async function handleWebSocketConnection(ws, request) {
           active_markdown,
           full_markdown,
           thread_id,
+          visable,
         ];
 
         try {
@@ -80,94 +91,68 @@ async function handleWebSocketConnection(ws, request) {
         } catch (err) {
           console.error(err);
         }
-      } else {
-        //do this every time:
-        //turn this into a function that takes in transcript
+      } else if (ts) {
+        //get the id of the note which will only be passed when note is Activated
         const id = data.note_id;
 
-        let oldTS = "";
-        const matchIDQueryFull =
-          "Select full_transcript FROM note WHERE note_id = ($1)";
-        const matchedRecordFull = [id];
-
-        try {
-          const res = await pool.query(matchIDQueryFull, matchedRecordFull);
-          oldTS = res.rows[0].full_transcript;
-        } catch (error) {
-          console.error(`Error: ${error}`);
+        //this is what needs to be appended to the full TS and thrown on to the active to see if it needs to be appended
+        //throw on a date if it has a x charecter count
+        let incomingTs;
+        if (ts.length > 40) {
+          const date = new Date();
+          incomingTs = `${ts} \n\n ${date.toISOString()}`;
+        } else {
+          incomingTs = ts;
         }
 
-        const date = new Date();
-        const dateTs = `${ts} \n\n ${date.toISOString()}`;
-        const newTS = oldTS + dateTs;
-
-        const reWriteFTS =
-          "UPDATE note SET full_transcript = $1 WHERE note_id = $2";
-        const reWriteTSParam = [newTS, id];
-
-        try {
-          await pool.query(reWriteFTS, reWriteTSParam);
-        } catch (err) {
-          console.error(err);
-        }
+        const newFullTs = await appendFullTranscript(id, incomingTs);
 
         //send timestamped transcript
-        ws.send(
-          JSON.stringify({
-            resetState: true,
-            transcript: newTS,
-          })
-        );
-
-        let activeTS = "";
-        const matchIDQueryActive =
-          "Select active_transcript FROM note WHERE note_id = ($1)";
-        const matchedRecordActive = [id];
-
-        try {
-          const res = await pool.query(matchIDQueryActive, matchedRecordActive);
-          activeTS = res.rows[0].active_transcript;
-          activeTS += dateTs;
-        } catch (error) {
-          console.error(`Error: ${error}`);
+        if (newFullTs) {
+          ws.send(
+            JSON.stringify({
+              resetState: true,
+              transcript: newFullTs,
+            })
+          );
         }
+
+        //now lets get the active TS to see if it meets the transcription threshold
+        const activeTs = await fetchActiveTs(id, incomingTs);
+
         //only pass the new ts to the AI query when the transcript gets reset it needs to pass the thresehold which it probaly should
-        if (activeTS.length >= 750) {
+
+        if (activeTs && activeTs.length >= threshold) {
           //in theroy the thread ID should be passed into this function
 
-          const res = await queryAI(activeTS);
-          console.log(`AI ${JSON.stringify(res, null, 2)}`);
+          const res = await queryAI(id, activeTS);
+
+          //be able to look at outputs without clouding consol
+          const debugPath = path.join(__dirname, "../logs/debuglog.txt");
+          await fsPromises.appendFile(debugPath, res);
+
+          //console.log(`AI ${JSON.stringify(res, null, 2)}`);
           const md = res["data"][0]["content"][0]["text"]["value"];
-          //insted of updating the MD by adding will now send chuncks to the frontend
 
-          const clear = "";
-          const clearATS =
-            "UPDATE note SET active_transcript = $1, date_updated = NOW() WHERE note_id = $2";
-          const clearATSParam = [clear, id];
+          console.log(`there is new markdown
+          
+          ${md}`);
 
-          try {
-            await pool.query(clearATS, clearATSParam);
-          } catch (err) {
-            console.error(err);
-          }
+          clearTSBool = await clearActiveTS(id);
 
           ws.send(
             JSON.stringify({
               md: md,
             })
           );
-        } else {
-          const updateATS =
-            "UPDATE note SET active_transcript = $1, date_updated = NOW() WHERE note_id = $2";
-          const updateATSParam = [activeTS, id];
-
-          try {
-            await pool.query(updateATS, updateATSParam);
-          } catch (err) {
-            console.error(err);
-          }
-          //write to Active TS
-        }
+        } else if (activeTs) {
+          console.log(
+            `Pooling TS => ${
+              (activeTs.length / threshold) * 100
+            }% of the way to next note`
+          );
+        } else if (activeTs === false)
+          console.log("fetch ts function may not be working");
       }
     } catch (error) {
       console.error(`Error: ${error.message}`);

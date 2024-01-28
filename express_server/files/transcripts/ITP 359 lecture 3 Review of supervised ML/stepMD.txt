@@ -1,9 +1,0 @@
-## Distance in Machine Learning
-2024-01-17T02:24:25.268Z
-- **Euclidean distance**: Distance measured in a straight line between two points in Euclidean space.
-- Distance in machine learning can be challenging to define, especially in cases like determining the distance between two customers or two movies.
-- The measure of distance is a crucial factor in the training of networks, as it is used to minimize the error between the function and the target.
-
-2024-01-17T02:25:25.306Z
-- In classification problems, measuring distance can be more complex, requiring consideration of probabilities.
-- The topic of distance measurement is fundamental and encompasses a field called Measure Theory, a branch of mathematics focused on the measurement of distances between sets, which includes concepts of integrals.

@@ -13,7 +13,7 @@ function NoteList({ notes }) {
       state: {
         title: notes.title,
         id: notes.note_id,
-        markdown: notes.markdown,
+        markdown: notes.full_markdown,
         status: notes.status,
       },
     });

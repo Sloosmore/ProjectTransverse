@@ -18,6 +18,8 @@ async function queryAI(note_id, message) {
     const { rows: noteRow } = await pool.query(grabThreadRec, threadRecParam);
     const { user_id, thread_id } = noteRow[0];
 
+    console.log("message:", message);
+
     const grabPrefRec =
       'SELECT note_preferences FROM "user" WHERE user_id = $1';
     const prefParam = [user_id];
@@ -35,8 +37,7 @@ async function queryAI(note_id, message) {
       });
       const messages = await sendAICall(thread.id, note_preferences);
 
-      const writeThreadID =
-        "UPDATE note_stack SET thread_id = $1 WHERE note_id = $2";
+      const writeThreadID = "UPDATE note SET thread_id = $1 WHERE note_id = $2";
       const threadParam = [thread.id, note_id];
       const res = await pool.query(writeThreadID, threadParam);
 
@@ -78,7 +79,6 @@ const sendAICall = async (threadID, note_preferences) => {
   // Check if the run status is completed
   if (runRetrieve.status === "completed") {
     const messages = await openai.beta.threads.messages.list(threadID);
-    console.log(messages);
     return messages;
   } else {
     // Handling non-completed statuses

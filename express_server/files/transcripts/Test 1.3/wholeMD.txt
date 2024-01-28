@@ -1,7 +1,0 @@
-# Test 1.3 
-
-## Coding and Audiobooks
-<2024-01-18T05:38:44.783Z>
-- **Coding**: Writing instructions for a computer to perform a task.
-- **Audiobook**: A recording of a book being read aloud.
-

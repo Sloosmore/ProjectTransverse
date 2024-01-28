@@ -12,9 +12,4 @@ const pool = new Pool({
   allowExitOnIdle: false,
 });
 
-(async () => {
-  const { rows } = await pool.query('SELECT * FROM "user"');
-  console.log(rows);
-})();
-
 module.exports = pool;

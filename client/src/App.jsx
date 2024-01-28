@@ -254,7 +254,7 @@ function App() {
         clearTimeout(timeoutId);
       }
       const backID = setTimeout(() => {
-        title = titleFromID(noteID, noteRecords);
+        const title = titleFromID(noteID, noteData);
 
         sendJsonMessage({
           title,
@@ -262,19 +262,23 @@ function App() {
           init: false,
           note_id: noteID,
         });
-      }, 1000);
+        SpeechRecognition.startListening({ continuous: true });
+        console.log("sent to backend");
+      }, 2500);
       setTimeoutId(backID);
 
       //restart frontend after 7
       clearTimeout(failsafeTimeoutId);
 
       // Set a new timeout
+      /*
       const resetID = setTimeout(() => {
         setTimeout(() => {
           SpeechRecognition.startListening({ continuous: true });
           console.log("mic restared");
         }, 200);
       }, 7000); // 10 seconds
+    
 
       setFailsafeTimeoutId(resetID);
 
@@ -283,6 +287,7 @@ function App() {
         clearTimeout(resetID);
         clearTimeout(backID); // Using 'id' directly
       };
+        */
     }
   }, [transcript]);
 
@@ -307,6 +312,10 @@ function App() {
       window.removeEventListener("keydown", handleCKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+    console.log(noteData);
+  }, [noteData]);
 
   const controlProps = {
     setDocs,

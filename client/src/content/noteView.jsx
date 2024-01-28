@@ -2,10 +2,11 @@ import { useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import LoadNote from "./noteload";
-import { bifurcateMarkdown, splitMarkdown } from "../services/parseMarkdown";
+import { splitMarkdown } from "../services/parseMarkdown";
 import TextToSpeech from "../funcComponents/textToSpeach";
 import "./noteView.css";
 import { saveNoteRecord } from "../services/sidebarTasksApi";
+import { Button } from "react-bootstrap";
 
 function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
   const { noteId } = useParams();
@@ -20,6 +21,8 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
   const [markdown, setMarkdown] = useState(
     location.state.full_markdown || location.state.markdown
   );
+  const [title, setTitle] = useState(location.state.title);
+
   const [fullTs, setFullTs] = useState(location.state.full_transcript);
   const [activeMarkdown, setActiveMarkdown] = useState("");
 
@@ -30,30 +33,31 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
     const note = noteData.filter((record) => noteId === record.note_id);
     //returns a list of one so index
     if (note.length > 0) {
-      setMarkdown(note[0].markdown);
+      setMarkdown(note[0].full_markdown || note[0].markdown);
       setActiveMarkdown(note[0].active_markdown);
       setStatus(note[0].status);
       setNoteID(note[0].note_id);
       setFullTs(note[0].full_transcript);
+      setTitle(note[0].title);
     }
   }, [noteData, noteId]);
   //this will update the glob markdown string
   useEffect(() => {
-    setMarkdown((prevMarkdown) => prevMarkdown + activeMarkdown);
+    if (activeMarkdown) {
+      setMarkdown((prevMarkdown) => prevMarkdown + activeMarkdown);
+    }
   }, [activeMarkdown]);
 
   //Grab title
 
   //process markdown for implemetaion
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+
   const [markdownElements, setMarkdownElements] = useState([]);
 
   useEffect(() => {
-    const [newTitle, newBody] = bifurcateMarkdown(markdown);
-    setTitle(newTitle);
-    setBody(newBody);
-    setMarkdownElements(splitMarkdown(newBody));
+    console.log(`title ${title}`);
+    console.log(markdown);
+    setMarkdownElements(splitMarkdown(markdown));
   }, [markdown]);
 
   const handleDoubleClick = (clickedElement, index) => {
@@ -75,15 +79,25 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
     }
 
     const id = setTimeout(() => {
-      saveNoteRecord(noteID, body);
-    }, 5000);
+      saveNoteRecord(noteID, markdown);
+    }, 2000);
 
     setTimeoutId(id);
 
     return () => {
       clearTimeout(id);
     };
-  }, [body]);
+  }, [markdown]);
+
+  const [showAlert, setShowAlert] = useState(false);
+
+  const saveNote = () => {
+    saveNoteRecord(noteID, markdown);
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 5000); // hide after 5 second
+  };
 
   return (
     <div className="row h-100">
@@ -139,13 +153,46 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
                 </li>
               </ul>
               {view === "notes" && (
-                <textarea
-                  className="form-control mt-3 text-secondary"
-                  id="exampleFormControlTextarea1"
-                  style={{ height: "80vh", overflow: "auto", resize: "none" }}
-                  value={body}
-                  onChange={(e) => setBody(e.target.value)}
-                />
+                <div>
+                  <textarea
+                    className="form-control mt-3 text-secondary"
+                    id="exampleFormControlTextarea1"
+                    style={{ height: "80vh", overflow: "auto", resize: "none" }}
+                    value={markdown}
+                    onChange={(e) => setMarkdown(e.target.value)}
+                  />
+                  <div
+                    className="mt-2"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Button
+                      variant="outline-primary"
+                      type="button"
+                      onClick={saveNote}
+                    >
+                      Save
+                    </Button>
+                    {showAlert && (
+                      <div
+                        className="alert alert-success"
+                        role="alert"
+                        style={{
+                          padding: "6px",
+                          margin: "0",
+                          paddingLeft: "20px",
+                          paddingRight: "20px",
+                        }}
+                      >
+                        <i className="bi bi-check2-circle me-2"></i>
+                        Saved
+                      </div>
+                    )}
+                  </div>
+                </div>
               )}
               {view === "transcript" && <div>Transcript View</div>}
             </div>
@@ -158,11 +205,11 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
       >
         <div className="mt-4 pb-2 border-bottom row d-flex align-items-center">
           <div className="col">
-            <ReactMarkdown>{title}</ReactMarkdown>
+            <h1>{title}</h1>
           </div>
           <div className="col-3">
             <TextToSpeech
-              markdown={body}
+              markdown={markdown}
               modeKit={modeKit}
               ID={noteID}
               selectedText={selectedText}

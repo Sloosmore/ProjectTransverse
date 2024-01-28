@@ -42,6 +42,7 @@ const sendNotesFromPG = async (req, res) => {
         status: "inactive",
       };
     });
+    console.log("Sending records...");
     res.status(201).json({ noteRecords });
   } catch (error) {
     console.error("Error:", error);
@@ -51,7 +52,7 @@ const sendNotesFromPG = async (req, res) => {
 const saveToPG = async (req, res) => {
   try {
     const { id, markdown } = req.body;
-
+    console.log("Saving to DB...");
     const saveQuery =
       "UPDATE note SET full_markdown = $1, date_updated = NOW() WHERE note_id = $2";
     const saveQueryParams = [markdown, id];
