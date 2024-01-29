@@ -125,12 +125,11 @@ async function handleWebSocketConnection(ws, request) {
         if (activeTs && activeTs.length >= threshold) {
           //in theroy the thread ID should be passed into this function
 
-          const res = await queryAI(id, activeTS);
+          const res = await queryAI(id, activeTs);
 
           //be able to look at outputs without clouding consol
           const debugPath = path.join(__dirname, "../logs/debuglog.txt");
-          await fsPromises.appendFile(debugPath, res);
-
+          await fsPromises.appendFile(debugPath, JSON.stringify(res, null, 2));
           //console.log(`AI ${JSON.stringify(res, null, 2)}`);
           const md = res["data"][0]["content"][0]["text"]["value"];
 
@@ -138,18 +137,28 @@ async function handleWebSocketConnection(ws, request) {
           
           ${md}`);
 
-          clearTSBool = await clearActiveTS(id);
+          //clear active transcript so it can be used later
+          const clearTSBool = await clearActiveTS(id);
+
+          const fullMDQuery =
+            "SELECT full_markdown FROM note WHERE note_id = $1";
+          const mdParams = [id];
+
+          let result = await pool.query(fullMDQuery, mdParams);
+          let fullMd = result.rows[0].full_markdown;
+          fullMd += md;
 
           ws.send(
             JSON.stringify({
-              md: md,
+              md: fullMd,
             })
           );
         } else if (activeTs) {
           console.log(
             `Pooling TS => ${
               (activeTs.length / threshold) * 100
-            }% of the way to next note`
+            }% of the way to next note
+            ${activeTs}`
           );
         } else if (activeTs === false)
           console.log("fetch ts function may not be working");

@@ -10,6 +10,7 @@ export const fetchNoteRecords = async () => {
   return data.noteRecords;
 };
 
+//this needs to be observed further
 export const saveNoteRecord = async (id, markdown) => {
   const response = await fetch("/records-api/notes", {
     method: "POST",

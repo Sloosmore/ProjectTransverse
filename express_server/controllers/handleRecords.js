@@ -53,12 +53,11 @@ const saveToPG = async (req, res) => {
   try {
     const { id, markdown } = req.body;
     console.log("Saving to DB...");
+    console.log(`${markdown}`);
     const saveQuery =
       "UPDATE note SET full_markdown = $1, date_updated = NOW() WHERE note_id = $2";
     const saveQueryParams = [markdown, id];
-
     const result = await pool.query(saveQuery, saveQueryParams);
-    console.log(result);
     res.status(201).json({ message: "saved" });
   } catch (error) {
     console.error("Error:", error);

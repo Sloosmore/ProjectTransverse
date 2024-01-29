@@ -9,7 +9,7 @@ const openAIKey = process.env.OPENAI_KEY;
 
 const openai = new OpenAI({ apiKey: openAIKey });
 
-async function queryAI(note_id, message) {
+async function queryAI(note_id, ts_message) {
   try {
     // Creating a new thread
     const grabThreadRec =
@@ -18,7 +18,7 @@ async function queryAI(note_id, message) {
     const { rows: noteRow } = await pool.query(grabThreadRec, threadRecParam);
     const { user_id, thread_id } = noteRow[0];
 
-    console.log("message:", message);
+    console.log("message:", ts_message);
 
     const grabPrefRec =
       'SELECT note_preferences FROM "user" WHERE user_id = $1';
@@ -31,7 +31,7 @@ async function queryAI(note_id, message) {
         messages: [
           {
             role: "user",
-            content: message,
+            content: ts_message,
           },
         ],
       });
@@ -43,6 +43,10 @@ async function queryAI(note_id, message) {
 
       return messages;
     } else {
+      const message = await openai.beta.threads.messages.create(thread_id, {
+        role: "user",
+        content: ts_message,
+      });
       const messages = await sendAICall(thread_id, note_preferences);
       return messages;
     }

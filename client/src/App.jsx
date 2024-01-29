@@ -15,6 +15,7 @@ import { handleSendLLM } from "./services/setNotepref";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
+import { handleOnMessage } from "./services/wsResponce";
 
 import titleFromID from "./services/titleFromID";
 
@@ -44,54 +45,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem("noteName", noteID);
   }, [noteID]);
-
-  const { sendJsonMessage, readyState } = useWebSocket(WS_URL, {
-    onOpen: () => {
-      console.log("WebSocket connection established.");
-    },
-
-    onMessage: (event) => {
-      const wsData = JSON.parse(event.data);
-      console.log("WebSocket message received:", wsData);
-      if (wsData.noteRecords) {
-        //this should happen once during notemode init
-        console.log("-------======================================-------");
-        //set by uuid
-        setNoteID(wsData.note_id);
-        setNotes(wsData.noteRecords);
-      }
-      if (wsData.resetState) {
-        resetTranscript();
-        const upDataNotes = noteData.map((record) => {
-          if (record.note_id === noteID) {
-            record.active_transcript += wsData.transcript;
-          }
-          return record;
-        });
-        setNotes(upDataNotes);
-      }
-      if (wsData.md) {
-        //find record and set markdown in that specific file
-        //this will update the markdown of a specific record
-        const updateMd = noteData.map((record) => {
-          //append markdown here
-          if (record.note_id === noteID) {
-            record.active_markdown = wsData.md;
-          }
-          return record;
-        });
-        setNotes(updateMd);
-      }
-    },
-
-    onError: (event) => {
-      console.error("WebSocket error observed:", event);
-    },
-    share: true,
-    filter: () => false,
-    retryOnError: true,
-    shouldReconnect: () => true,
-  });
 
   const commands = [
     {
@@ -182,6 +135,31 @@ function App() {
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition({ commands });
+
+  const { sendJsonMessage, readyState } = useWebSocket(WS_URL, {
+    onOpen: () => {
+      console.log("WebSocket connection established.");
+    },
+
+    onMessage: (event) => {
+      handleOnMessage(
+        event,
+        noteData,
+        setNoteID,
+        setNotes,
+        noteID,
+        resetTranscript
+      );
+    },
+
+    onError: (event) => {
+      console.error("WebSocket error observed:", event);
+    },
+    share: true,
+    filter: () => false,
+    retryOnError: true,
+    shouldReconnect: () => true,
+  });
 
   // Mic Failsafe functions -----------------------------------------------------------------------------
   //so timerFailsame does not call UseEffect
