@@ -5,7 +5,7 @@ import LoadNote from "./noteload";
 import { splitMarkdown } from "../services/parseMarkdown";
 import TextToSpeech from "../funcComponents/textToSpeach";
 import "./noteView.css";
-import { saveNoteRecord } from "../services/sidebarTasksApi";
+import { saveNoteMarkdown } from "../services/crudApi";
 import SideNotes from "./sideNotes";
 
 function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
@@ -83,7 +83,7 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
     }
 
     const id = setTimeout(() => {
-      saveNoteRecord(noteID, markdown);
+      saveNoteMarkdown(noteID, markdown);
     }, 2000);
 
     setTimeoutId(id);
@@ -96,7 +96,7 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
   const [showAlert, setShowAlert] = useState(false);
 
   const saveNote = () => {
-    saveNoteRecord(noteID, markdown);
+    saveNoteMarkdown(noteID, markdown);
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);

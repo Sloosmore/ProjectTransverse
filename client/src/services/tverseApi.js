@@ -1,6 +1,6 @@
 // fetchTranscript.js
 import { useState } from "react";
-import { fetchTaskRecords } from "./sidebarTasksApi";
+import { fetchTaskRecords } from "./crudApi";
 
 export const tvrseFunc = (transcript, setData) => {
   fetch(`/tverse-api`, {

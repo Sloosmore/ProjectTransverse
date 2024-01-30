@@ -7,10 +7,9 @@ import Sidebar from "./sidebar/sidebar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import HelpModal from "./modals/help";
-import { fetchTaskRecords, fetchNoteRecords } from "./services/sidebarTasksApi";
+import { fetchNoteRecords } from "./services/crudApi";
 import { AppRoutes } from "./content/routes";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { tvrseFunc } from "./services/tverseAPI";
 import { handleSendLLM } from "./services/setNotepref";
 import SpeechRecognition, {
   useSpeechRecognition,
@@ -277,7 +276,7 @@ function App() {
 
   useEffect(() => {
     //fetchTaskRecords().then(setDocs);
-    fetchNoteRecords().then(setNotes);
+    fetchNoteRecords(true).then(setNotes);
     if (browserSupportsSpeechRecognition) {
       SpeechRecognition.startListening({ continuous: true });
     } else {
