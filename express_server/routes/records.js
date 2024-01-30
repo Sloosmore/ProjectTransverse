@@ -7,7 +7,7 @@ const {
   saveToPG,
 } = require("../controllers/handleRecords");
 
-router.get("/tasks", sendTasks);
+//router.get("/tasks", sendTasks);
 
 //change to sendNotesFromPGSoon
 router.get("/notes", sendNotesFromPG);

@@ -17,13 +17,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/", require("./routes/root"));
 app.use("/tscript-api", require("./routes/tscript"));
-//app.use("/tverse-api", require("./routes/tverse"));
-//app.use("/awaitDoc-api", require("./routes/updateData"));
 
 //put in GET req for notes data
 app.use("/records-api", require("./routes/records"));
-//app.use("/grabDoc-api", require("./routes/sendDoc"));
-app.use("/settings", require("./routes/settings"));
 
 //Web socket for notes
 //----------------------------------------------------------------------
