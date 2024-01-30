@@ -20,6 +20,7 @@ app.use("/tscript-api", require("./routes/tscript"));
 
 //put in GET req for notes data
 app.use("/records-api", require("./routes/records"));
+app.use("/settings", require("./routes/settings"));
 
 //Web socket for notes
 //----------------------------------------------------------------------

@@ -70,7 +70,7 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
         noteData,
         setNotes,
         setMode,
-        wsJSON,
+        wsJSON
       );
     }
   };
@@ -158,7 +158,19 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
               </div>
             </Accordion.Body>
           </Accordion.Item>
-          <Accordion.Item eventKey="1">
+        </Accordion>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
+
+export default ControlModal;
+/* <Accordion.Item eventKey="1">
             <Accordion.Header>Generate Document</Accordion.Header>
             <Accordion.Body>
               <div className="mb-3">
@@ -180,16 +192,4 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
                 Submit
               </Button>
             </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
-
-export default ControlModal;
+          </Accordion.Item> */

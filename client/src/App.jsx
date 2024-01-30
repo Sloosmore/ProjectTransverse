@@ -56,8 +56,8 @@ function App() {
     {
       command: "transverse",
       callback: () => {
-        tvrseFunc(transcript, setDocs);
-        resetTranscript();
+        //tvrseFunc(transcript, setDocs);
+        //resetTranscript();
       },
     },
     {
@@ -276,7 +276,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetchTaskRecords().then(setDocs);
+    //fetchTaskRecords().then(setDocs);
     fetchNoteRecords().then(setNotes);
     if (browserSupportsSpeechRecognition) {
       SpeechRecognition.startListening({ continuous: true });

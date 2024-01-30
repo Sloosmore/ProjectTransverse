@@ -37,4 +37,4 @@ const saveToPG = async (req, res) => {
   }
 };
 
-module.exports = { sendTasks, sendNotes, sendNotesFromPG, saveToPG };
+module.exports = { sendNotesFromPG, saveToPG };
