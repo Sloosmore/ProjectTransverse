@@ -1,6 +1,38 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
+const applyMarkdown = (formatType, markdown, setMarkdown) => {
+  const textarea = document.getElementById("exampleFormControlTextarea1");
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const selectedText = markdown.substring(start, end);
+
+  let markdownSyntax;
+  switch (formatType) {
+    case "bold":
+      markdownSyntax = `**${selectedText}**`;
+      break;
+    case "italic":
+      markdownSyntax = `*${selectedText}*`;
+      break;
+    case "code":
+      markdownSyntax = `\`${selectedText}\``;
+      break;
+    default:
+      markdownSyntax = selectedText;
+  }
+
+  const newMarkdown =
+    markdown.substring(0, start) + markdownSyntax + markdown.substring(end);
+  setMarkdown(newMarkdown);
+
+  // Optional: Reset the selection to the end of the newly formatted text
+  setTimeout(() => {
+    textarea.selectionStart = textarea.selectionEnd =
+      start + markdownSyntax.length;
+  }, 0);
+};
+
 const SideNotes = ({
   annotating,
   setAnnotating,
@@ -101,14 +133,29 @@ const SideNotes = ({
                     )}
                   </div>
                   <div className="col-3 justify-content-between d-flex">
-                    <Button variant="outline-secondary">
-                      <i class="bi bi-type-bold"></i>
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() =>
+                        applyMarkdown("bold", markdown, setMarkdown)
+                      }
+                    >
+                      <i className="bi bi-type-bold"></i>
                     </Button>
-                    <Button variant="outline-secondary">
-                      <i class="bi bi-type-italic "></i>
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() =>
+                        applyMarkdown("italic", markdown, setMarkdown)
+                      }
+                    >
+                      <i className="bi bi-type-italic "></i>
                     </Button>
-                    <Button variant="outline-secondary">
-                      <i class="bi bi-type-underline"></i>
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() =>
+                        applyMarkdown("code", markdown, setMarkdown)
+                      }
+                    >
+                      <i className="bi bi-code-slash"></i>{" "}
                     </Button>
                   </div>
                 </div>
