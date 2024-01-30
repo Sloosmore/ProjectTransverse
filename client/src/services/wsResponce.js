@@ -1,3 +1,6 @@
+import { saveNoteRecord } from "./sidebarTasksApi";
+//this takes two params note ID and markdown
+
 export const handleOnMessage = (
   event,
   noteData,
@@ -32,6 +35,7 @@ export const handleOnMessage = (
       //append markdown here
       if (record.note_id === noteID) {
         record.full_markdown = wsData.md;
+        //saveNoteRecord(record.note_id, record.full_markdown);
       }
       return record;
     });

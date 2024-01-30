@@ -2,6 +2,8 @@ const path = require("path");
 const fsPromises = require("fs").promises;
 const pool = require("../db/db");
 
+const id = "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
+
 const sendTasks = async (req, res) => {
   try {
     console.log("Reading file...");
@@ -35,7 +37,10 @@ const sendNotes = async (req, res) => {
 const sendNotesFromPG = async (req, res) => {
   try {
     console.log("Fetching records...");
-    const result = await pool.query("SELECT * FROM note");
+    const result = await pool.query(
+      "SELECT * FROM note WHERE visible = true AND user_id = $1",
+      [id]
+    );
     const noteRecords = result.rows.map((record) => {
       return {
         ...record,

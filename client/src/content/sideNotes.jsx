@@ -75,36 +75,42 @@ const SideNotes = ({
                   value={markdown}
                   onChange={(e) => setMarkdown(e.target.value)}
                 />
-                <div
-                  className="mt-2"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Button
-                    variant="outline-primary"
-                    type="button"
-                    onClick={saveNote}
-                  >
-                    Save
-                  </Button>
-                  {showAlert && (
-                    <div
-                      className="alert alert-success"
-                      role="alert"
-                      style={{
-                        padding: "6px",
-                        margin: "0",
-                        paddingLeft: "20px",
-                        paddingRight: "20px",
-                      }}
+                <div className="mt-2 row">
+                  <div className="col-9 d-flex align-items-center justify-content-between">
+                    <Button
+                      variant="outline-primary"
+                      type="button"
+                      onClick={saveNote}
                     >
-                      <i className="bi bi-check2-circle me-2"></i>
-                      Saved
-                    </div>
-                  )}
+                      Save
+                    </Button>{" "}
+                    {showAlert && (
+                      <div
+                        className="alert alert-success "
+                        role="alert"
+                        style={{
+                          padding: "6px",
+                          margin: "0",
+                          paddingLeft: "20px",
+                          paddingRight: "20px",
+                        }}
+                      >
+                        <i className="bi bi-check2-circle me-2"></i>
+                        Saved
+                      </div>
+                    )}
+                  </div>
+                  <div className="col-3 justify-content-between d-flex">
+                    <Button variant="outline-secondary">
+                      <i class="bi bi-type-bold"></i>
+                    </Button>
+                    <Button variant="outline-secondary">
+                      <i class="bi bi-type-italic "></i>
+                    </Button>
+                    <Button variant="outline-secondary">
+                      <i class="bi bi-type-underline"></i>
+                    </Button>
+                  </div>
                 </div>
               </div>
             )}
