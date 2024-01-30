@@ -6,6 +6,7 @@ import CmdCenter from "./cmdCenter";
 import { Button, Collapse } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import PausePlay from "./noteStateControl";
+import StorageButton from "./storage";
 
 function Sidebar({ docData, noteData, pauseProps, controlProps }) {
   const [openNotes, setOpenNotes] = useState(false);
@@ -31,9 +32,12 @@ function Sidebar({ docData, noteData, pauseProps, controlProps }) {
     >
       <CmdCenter noteData={noteData} controlProps={controlProps} />
 
+      <StorageButton />
+
       <div className=" justify-content-center mt-2 text-center">
         <PausePlay pauseProps={pauseProps} />
       </div>
+
       <div className="overflow-auto list-container">
         <div
           className="btn btn-light mx-auto text-black-50 d-flex justify-content-between align-items-center py-1 px-3 mt-2"
@@ -51,13 +55,20 @@ function Sidebar({ docData, noteData, pauseProps, controlProps }) {
           <div
             id="example-collapse-text"
             className="overflow-auto"
-            style={{ maxHeight: "500px" }}
+            style={{ maxHeight: "60vh" }}
           >
             <NoteList notes={noteData} />
           </div>
         </Collapse>
+      </div>
+    </div>
+  );
+}
 
-        <div
+export default Sidebar;
+
+//documnets button
+/*<div
           className="btn btn-light mx-auto text-black-50 d-flex justify-content-between align-items-center py-1 px-3 mt-2"
           role="button"
           style={{ width: "85%" }}
@@ -73,14 +84,8 @@ function Sidebar({ docData, noteData, pauseProps, controlProps }) {
           <div
             id="example-collapse-text"
             className="overflow-auto"
-            style={{ maxHeight: "500px" }}
+            style={{ maxHeight: "60vh" }}
           >
             <TaskList tasks={docData} />
           </div>
-        </Collapse>
-      </div>
-    </div>
-  );
-}
-
-export default Sidebar;
+        </Collapse> */

@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Chatroom from "./docView";
 import Noteroom from "./noteView";
 import Home from "./panel";
+import Files from "./files";
 
 export const AppRoutes = ({
   transcript,
@@ -36,5 +37,6 @@ export const AppRoutes = ({
         />
       }
     />
+    <Route path="/files" element={<Files />} />
   </Routes>
 );
