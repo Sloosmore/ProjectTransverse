@@ -42,31 +42,30 @@ async function handleWebSocketConnection(ws, request) {
         const is_deleted = false;
         const thread_id = "";
 
-        const date_created = new Date();
-        const date_updated = new Date();
-
         const active_transcript = "";
         const full_transcript = "";
         const active_markdown = "";
         const full_markdown = "";
-        const visable = "true";
+        const visible = "true";
+        const play_timestamps = [new Date()];
+        const pause_timestamps = [];
 
         const newRecQuery =
-          "INSERT INTO note(note_id, user_id, title, status, date_created, date_updated, is_deleted, active_transcript, full_transcript, active_markdown, full_markdown, thread_id, visible) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *";
+          "INSERT INTO note(note_id, user_id, title, status, date_created, date_updated, is_deleted, active_transcript, full_transcript, active_markdown, full_markdown, thread_id, visible, play_timestamps, pause_timestamps) VALUES($1, $2, $3, $4, NOW(), NOW(), $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *";
         const newRec = [
           note_id,
           user_id,
           title,
           status,
-          date_created,
-          date_updated,
           is_deleted,
           active_transcript,
           full_transcript,
           active_markdown,
           full_markdown,
           thread_id,
-          visable,
+          visible,
+          play_timestamps,
+          pause_timestamps,
         ];
 
         try {
@@ -97,10 +96,30 @@ async function handleWebSocketConnection(ws, request) {
 
         //this is what needs to be appended to the full TS and thrown on to the active to see if it needs to be appended
         //throw on a date if it has a x charecter count
-        let incomingTs;
+        let incomingTs = 0;
         if (ts.length > 40) {
+          //READ FROM DB HERE
+
+          const getLatestDate = `SELECT play_timestamps, pause_timestamps FROM note WHERE note_id = $1`;
+          const latestDate = await pool.query(getLatestDate, [id]);
+
+          const playArray = latestDate.rows[0].play_timestamps;
+          const pauseArray = latestDate.rows[0].pause_timestamps;
+
+          let totTime = 0;
+          for (let i = 0; i < pauseArray.length; i++) {
+            let timeDiferential =
+              new Date(pauseArray[i]).getTime() -
+              new Date(playArray[i]).getTime();
+            totTime += timeDiferential;
+          }
+
+          const lastIndex = playArray.length - 1;
+          const lastDate = new Date(playArray[lastIndex]);
           const date = new Date();
-          incomingTs = `${ts} \n\n ${date.toISOString()}`;
+
+          totTime += date.getTime() - lastDate.getTime();
+          incomingTs = `${ts} \n ${totTime.toISOString()}\n`;
         } else {
           incomingTs = ts;
         }

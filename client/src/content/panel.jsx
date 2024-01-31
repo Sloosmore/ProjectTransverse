@@ -1,7 +1,9 @@
 import "./panel.css";
 import React, { useState, useEffect } from "react";
+import HelpModal from "../modals/help";
 
-function Home({ transcript, helpModal }) {
+function Home({ transcript, helpModalKit }) {
+  const { showHelpModal, setShowHelpModal, closeModal } = helpModalKit;
   const [onload, setLoad] = useState(
     localStorage.getItem("pageLoaded") === "false"
   );
@@ -42,10 +44,13 @@ function Home({ transcript, helpModal }) {
 
       <button
         className="position-absolute bottom-0 end-0 m-4 btn btn-outline-secondary rounded-circle"
-        onClick={() => helpModal(true)}
+        onClick={() => setShowHelpModal(true)}
       >
         <i className="bi bi-question-lg" style={{ fontSize: "1.5rem" }}></i>
       </button>
+      <div>
+        <HelpModal show={showHelpModal} onClose={closeModal} />
+      </div>
     </div>
   );
 }

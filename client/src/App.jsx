@@ -1,12 +1,10 @@
 import "regenerator-runtime";
 import { useState, useEffect } from "react";
-import useWebSocket, { ReadyState } from "react-use-websocket";
+import useWebSocket from "react-use-websocket";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import Sidebar from "./sidebar/sidebar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-import HelpModal from "./modals/help";
+import { BrowserRouter as Router } from "react-router-dom";
 import { fetchNoteRecords } from "./services/crudApi";
 import { AppRoutes } from "./content/routes";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -40,6 +38,9 @@ function App() {
 
   //hide the sidebar while editing notes
   const [annotating, setAnnotating] = useState(false);
+
+  //for editing notes in files link
+  const [showOffCanvasEdit, setOffCanvasEdit] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("noteName", noteID);
@@ -275,8 +276,11 @@ function App() {
   };
 
   useEffect(() => {
-    //fetchTaskRecords().then(setDocs);
     fetchNoteRecords(true).then(setNotes);
+  }, [showOffCanvasEdit]);
+
+  useEffect(() => {
+    //fetchTaskRecords().then(setDocs);
     if (browserSupportsSpeechRecognition) {
       SpeechRecognition.startListening({ continuous: true });
     } else {
@@ -293,6 +297,11 @@ function App() {
   useEffect(() => {
     console.log(noteData);
   }, [noteData]);
+
+  const canvasEdit = {
+    showOffCanvasEdit,
+    setOffCanvasEdit,
+  };
 
   const controlProps = {
     setDocs,
@@ -325,6 +334,12 @@ function App() {
     setAnnotating,
   };
 
+  const helpModalKit = {
+    showHelpModal,
+    setShowHelpModal,
+    closeModal,
+  };
+
   return (
     <Router>
       <div className="container-fluid vh-100 d-flex">
@@ -349,13 +364,12 @@ function App() {
               transcript={transcript}
               docData={docData}
               noteData={noteData}
+              helpModalKit={helpModalKit}
               helpModal={setShowHelpModal}
               modeKit={modeKit}
               annotatingKit={annotatingKit}
+              canvasEdit={canvasEdit}
             />
-          </div>
-          <div>
-            <HelpModal show={showHelpModal} onClose={closeModal} />
           </div>
         </div>
       </div>
@@ -364,3 +378,4 @@ function App() {
 }
 
 export default App;
+//move helpModal into panel

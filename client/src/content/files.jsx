@@ -3,20 +3,23 @@ import { useState, useEffect, useRef } from "react";
 import { fetchNoteRecords } from "../services/crudApi";
 import EditOffcanvas from "./fileEdit";
 
-function Files() {
+//overflow for records
+
+function Files({ canvasEdit }) {
+  const { showOffCanvasEdit, setOffCanvasEdit } = canvasEdit;
   const [files, setFiles] = useState([]);
-  const [showOffCanvas, setOffCanvasShow] = useState(false);
+  //this needs to be in the use effect for use State
   const targetFile = useRef(null);
 
   useEffect(() => {
     fetchNoteRecords(false).then(setFiles);
-  }, [showOffCanvas]);
+  }, [showOffCanvasEdit]);
 
   const handleOffCanvasShow = (file) => {
     targetFile.current = file;
-    setOffCanvasShow(true);
+    setOffCanvasEdit(true);
   };
-  const handleClose = () => setOffCanvasShow(false);
+  const handleClose = () => setOffCanvasEdit(false);
 
   useEffect(() => {
     //grab all files for a specific user
@@ -26,37 +29,40 @@ function Files() {
   return (
     <div className="mt-3 px-3">
       <h1>Files</h1>
-      <table className="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Date Updated</th>
-            <th scope="col">Visible in sidebar</th>
-            <th scope="col">Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {files.map((file, index) => (
-            <tr key={index}>
-              <td className="align-middle">{file.title}</td>
-              <td className="align-middle">{file.date_updated}</td>
-              <td className="align-middle">{file.visible.toString()}</td>
-              <td>
-                <button
-                  className="btn btn-outline-secondary"
-                  onClick={() => {
-                    handleOffCanvasShow(true);
-                  }}
-                >
-                  <i className="bi bi-pencil-square"></i>
-                </button>
-              </td>
+      <div className="table-responsive">
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Date Updated</th>
+              <th scope="col">Visible in sidebar</th>
+              <th scope="col">Edit</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody style={{ maxHeight: "80vh", overflow: "auto" }}>
+            {files.map((file, index) => (
+              <tr key={index}>
+                <td className="align-middle">{file.title}</td>
+                <td className="align-middle">{file.date_updated}</td>
+                <td className="align-middle">{file.visible.toString()}</td>
+                <td className="align-middle">
+                  <button
+                    className="btn btn-outline-secondary"
+                    onClick={() => {
+                      handleOffCanvasShow(file);
+                    }}
+                  >
+                    <i className="bi bi-pencil-square"></i>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       <EditOffcanvas
-        show={showOffCanvas}
+        canvasEdit={canvasEdit}
         handleClose={handleClose}
         file={targetFile.current}
       />

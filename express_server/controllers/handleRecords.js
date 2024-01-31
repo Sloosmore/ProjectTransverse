@@ -6,13 +6,15 @@ const sendNotesFromPG = async (req, res) => {
   try {
     const { visibleNotes } = req.query;
     let result;
-    console.log(visibleNotes);
-    if (visibleNotes === true) {
+    console.log(typeof visibleNotes);
+    if (visibleNotes === "true") {
+      console.log("hereeeeeeeee");
       const noteQuery =
-        "SELECT * FROM note WHERE visible = $1 AND user_id = $2";
+        "SELECT * FROM note WHERE visible = $1 AND user_id = $2 AND is_deleted = false";
       result = await pool.query(noteQuery, [visibleNotes, id]);
     } else {
-      const noteQuery = "SELECT * FROM note WHERE user_id = $1";
+      const noteQuery =
+        "SELECT * FROM note WHERE user_id = $1 AND is_deleted = false";
       result = await pool.query(noteQuery, [id]);
     }
     const noteRecords = result.rows.map((record) => {
@@ -38,7 +40,7 @@ const updateMarkdownToPG = async (req, res) => {
       "UPDATE note SET full_markdown = $1, date_updated = NOW() WHERE note_id = $2";
     const mdQueryParams = [markdown, id];
     const result = await pool.query(mdQuery, mdQueryParams);
-    res.status(200).json({ message: "saved" });
+    res.status(200).json({ message: `saved markdown ${markdown}` });
   } catch (error) {
     res.sendStatus(401);
     console.error("Error:", error);
@@ -54,7 +56,7 @@ const updateTitleToPG = async (req, res) => {
       "UPDATE note SET title = $1, date_updated = NOW() WHERE note_id = $2";
     const titleQueryParams = [title, id];
     const result = await pool.query(titleQuery, titleQueryParams);
-    res.status(200).json({ message: "saved" });
+    res.status(200).json({ message: `saved title ${title}` });
   } catch (error) {
     res.sendStatus(401);
     console.error("Error:", error);
@@ -69,7 +71,7 @@ const updateVisibilityPG = async (req, res) => {
     const visQuery = `UPDATE note SET visible = $1, date_updated = NOW(), status = 'inactive' WHERE note_id = $2`;
     const visQueryParams = [visible, id];
     const result = await pool.query(visQuery, visQueryParams);
-    res.status(200).json({ message: "saved" });
+    res.status(200).json({ message: `saved ${visible}` });
   } catch (error) {
     res.sendStatus(401);
     console.error("Error:", error);

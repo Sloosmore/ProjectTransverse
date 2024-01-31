@@ -10,14 +10,11 @@ CREATE TABLE "user"(
     provider_id VARCHAR(255) NOT NULL,
     access_token TEXT,
     refresh_token TEXT,
-    date_created DATE NOT NULL,
+    date_created TIMESTAMP NOT NULL,
     is_active BOOLEAN DEFAULT TRUE
     note_prefferences TEXT
 )
 
---notetaking prefferences
-ALTER TABLE "user"
-ADD note_prefferences TEXT;
 
 
 CREATE TABLE note(
@@ -26,13 +23,14 @@ CREATE TABLE note(
     title VARCHAR(255) NOT NULL,
     "status" VARCHAR(10) NOT NULL,
     visible BOOLEAN NOT NULL,
-    date_created DATE NOT NULL,
-    date_updated DATE NOT NULL,
+    date_created TIMESTAMP NOT NULL,
+    date_updated TIMESTAMP NOT NULL,
     is_deleted BOOLEAN DEFAULT FALSE,
     thread_id VARCHAR(50)
     active_transcript TEXT,
     full_transcript TEXT,
     active_markdown TEXT,
     full_markdown TEXT,
-
+    play_timestamps TIMESTAMP[],
+    pause_timestamps TIMESTAMP[],
 );

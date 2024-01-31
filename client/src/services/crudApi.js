@@ -29,7 +29,6 @@ export const saveNoteMarkdown = async (id, markdown) => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ' + token // Uncomment this line if you need to send a token
     },
     body: JSON.stringify({ id, markdown }),
   });
@@ -43,7 +42,6 @@ export const updateTitle = async (id, title) => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ' + token // Uncomment this line if you need to send a token
     },
     body: JSON.stringify({ id, title }),
   });
@@ -58,7 +56,6 @@ export const updateVis = async (id, visible) => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      // 'Authorization': 'Bearer ' + token // Uncomment this line if you need to send a token
     },
     body: JSON.stringify({ id, visible }),
   });

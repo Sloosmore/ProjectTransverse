@@ -8,9 +8,10 @@ export const AppRoutes = ({
   transcript,
   docData,
   noteData,
-  helpModal,
+  helpModalKit,
   modeKit,
   annotatingKit,
+  canvasEdit,
 }) => (
   <Routes>
     <Route
@@ -33,10 +34,10 @@ export const AppRoutes = ({
       element={
         <Home
           transcript={transcript ? transcript.slice(-300) : ""}
-          helpModal={helpModal}
+          helpModalKit={helpModalKit}
         />
       }
     />
-    <Route path="/files" element={<Files />} />
+    <Route path="/files" element={<Files canvasEdit={canvasEdit} />} />
   </Routes>
 );

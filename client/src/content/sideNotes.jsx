@@ -115,7 +115,7 @@ const SideNotes = ({
                       onClick={saveNote}
                     >
                       Save
-                    </Button>{" "}
+                    </Button>
                     {showAlert && (
                       <div
                         className="alert alert-success "
