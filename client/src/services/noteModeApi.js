@@ -4,8 +4,7 @@ export const createNewNote = (
   noteData,
   setNotes,
   setMode,
-  wsJSON,
-  
+  wsJSON
 ) => {
   console.log(name);
   const noteMatch = noteData.filter((record) => {
@@ -17,11 +16,11 @@ export const createNewNote = (
     });
     setNotes(statusUpdate);
   }
+  //this may be blocking
   setMode("note");
   wsJSON({
     title: name,
     transcript: transcript,
     init: true,
   });
-
 };

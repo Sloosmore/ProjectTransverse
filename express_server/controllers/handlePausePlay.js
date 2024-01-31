@@ -11,9 +11,10 @@ const pauseAppend = async (req, res) => {
     pauseArray.push(date);
 
     const updatePauseQuery =
-      "UPDATE note SET pause_timestamps = $1 WHERE note_id = $2";
+      "UPDATE note SET pause_timestamps = $1, status = 'inactive', date_updated = NOW() WHERE note_id = $2";
     const updatePauseParam = [pauseArray, id];
     const upRestult = await pool.query(updatePauseQuery, updatePauseParam);
+    res.status(201).json({ message: `pause updated ${upRestult}` });
   } catch (error) {
     console.log(`pauseAppend: ${error}`);
     res.status(500);
@@ -30,9 +31,10 @@ const playAppend = async (req, res) => {
     playArray.push(date);
 
     const updatePlayQuery =
-      "UPDATE note SET play_timestamps = $1 WHERE note_id = $2";
+      "UPDATE note SET play_timestamps = $1, status = 'active', date_updated = NOW() WHERE note_id = $2";
     const updatePlayParam = [playArray, id];
     const upRestult = await pool.query(updatePlayQuery, updatePlayParam);
+    res.status(201).json({ message: `play updated ${upRestult}` });
   } catch (error) {
     console.log(`pauseAppend: ${error}`);
     res.status(500);

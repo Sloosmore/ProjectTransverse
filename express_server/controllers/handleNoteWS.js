@@ -47,6 +47,7 @@ async function handleWebSocketConnection(ws, request) {
         const active_markdown = "";
         const full_markdown = "";
         const visible = "true";
+        //this may not be needed... but need to make sure that this happens before play does
         const play_timestamps = [new Date()];
         const pause_timestamps = [];
 

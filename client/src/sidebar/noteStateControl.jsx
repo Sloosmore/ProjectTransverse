@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import titleFromID from "../services/titleFromID";
+import { onPause, onPlay } from "../services/pausePlay";
 
 function PausePlay({ pauseProps }) {
   const { mode, setMode, noteName, setNotes, noteData } = pauseProps;
+  //noteName = ID
   const [button, setButton] = useState();
 
   useEffect(() => {
@@ -25,6 +27,15 @@ function PausePlay({ pauseProps }) {
       setNotes(updatedRecords);
     }
   }, [mode]);
+
+  useEffect(() => {
+    if (button === "pause") {
+      //we need to test if this already appends note
+      onPause(noteName);
+    } else if (button === "play ") {
+      onPlay(noteName);
+    }
+  }, [setButton]);
 
   return (
     <div className="d-flex justify-content-center">
