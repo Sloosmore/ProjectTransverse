@@ -7,6 +7,7 @@ export const createNewNote = (
   wsJSON
 ) => {
   console.log(name);
+  //notes are being deactivated in the backend so could just fetch insted of filter after send responce
   const noteMatch = noteData.filter((record) => {
     return record.title === name;
   });

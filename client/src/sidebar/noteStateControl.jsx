@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import titleFromID from "../services/titleFromID";
 import { onPause, onPlay } from "../services/pausePlay";
+import { fetchNoteRecords } from "../services/crudApi";
 
 function PausePlay({ pauseProps }) {
   const { mode, setMode, noteName, setNotes, noteData } = pauseProps;
@@ -11,37 +12,21 @@ function PausePlay({ pauseProps }) {
   useEffect(() => {
     if (mode === "note") {
       setButton("pause");
-      const updatedRecords = noteData.map((record) => {
-        if (record.note_id === noteName) {
-          return { ...record, status: "active" };
-        } else {
-          return record;
-        }
-      });
-      setNotes(updatedRecords);
     } else if (mode === "default" && noteName) {
       setButton("play");
-      const updatedRecords = noteData.map((record) => {
-        return { ...record, status: "inactive" };
-      });
-      setNotes(updatedRecords);
     }
   }, [mode]);
-
-  useEffect(() => {
-    if (button === "pause") {
-      //we need to test if this already appends note
-      onPause(noteName);
-    } else if (button === "play ") {
-      onPlay(noteName);
-    }
-  }, [setButton]);
 
   return (
     <div className="d-flex justify-content-center">
       {button === "pause" ? (
         <div
-          onClick={() => setMode("default")}
+          onClick={() => {
+            onPause(noteName)
+              .then(() => fetchNoteRecords(true))
+              .then((data) => setNotes(data));
+            setMode("default");
+          }}
           className="btn btn-light d-flex d-flex justify-content-between align-items-center py-1 px-3 text-black-50 "
           style={{ width: "85%" }}
           role="button"
@@ -54,7 +39,12 @@ function PausePlay({ pauseProps }) {
         </div>
       ) : button === "play" ? (
         <div
-          onClick={() => setMode("note")}
+          onClick={() => {
+            onPlay(noteName)
+              .then(() => fetchNoteRecords(true))
+              .then((data) => setNotes(data));
+            setMode("note");
+          }}
           style={{ width: "85%" }}
           className="btn btn-light d-flex align-d-flex justify-content-between align-items-center py-1 px-3 text-black-50 "
           role="button"

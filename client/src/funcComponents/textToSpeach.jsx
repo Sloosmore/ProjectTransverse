@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Button, Dropdown } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import "./tts.css";
 import { convertMarkdownToText } from "../services/parseMarkdown";
-import { mark } from "regenerator-runtime";
 
 const TextToSpeech = ({ markdown, modeKit, ID, selectedText }) => {
   const text = convertMarkdownToText(markdown);

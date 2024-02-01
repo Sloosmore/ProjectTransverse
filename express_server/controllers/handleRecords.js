@@ -6,9 +6,7 @@ const sendNotesFromPG = async (req, res) => {
   try {
     const { visibleNotes } = req.query;
     let result;
-    console.log(typeof visibleNotes);
     if (visibleNotes === "true") {
-      console.log("hereeeeeeeee");
       const noteQuery =
         "SELECT * FROM note WHERE visible = $1 AND user_id = $2 AND is_deleted = false";
       result = await pool.query(noteQuery, [visibleNotes, id]);

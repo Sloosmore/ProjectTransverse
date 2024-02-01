@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
-import Chatroom from "./docView";
-import Noteroom from "./noteView";
+import Chatroom from "./docs/docView";
+import Noteroom from "./notes/noteView";
 import Home from "./panel";
-import Files from "./files";
+import Files from "./files/files";
 
 export const AppRoutes = ({
   transcript,

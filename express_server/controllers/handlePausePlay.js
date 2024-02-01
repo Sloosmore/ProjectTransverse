@@ -1,5 +1,15 @@
 const pool = require("../db/db");
 
+const readUserRecordsFromNoteID = async (note_id) => {
+  const idQuery = "SELECT user_id FROM note WHERE note_id = $1";
+  const idRes = await pool.query(idQuery, [note_id]);
+  const user_id = idRes.rows[0].user_id;
+
+  const readQuery = "SELECT * FROM note WHERE user_id = $1";
+  const { rows } = await pool.query(readQuery, [user_id]);
+  return rows;
+};
+
 const pauseAppend = async (req, res) => {
   try {
     const { id } = req.body;
@@ -14,6 +24,7 @@ const pauseAppend = async (req, res) => {
       "UPDATE note SET pause_timestamps = $1, status = 'inactive', date_updated = NOW() WHERE note_id = $2";
     const updatePauseParam = [pauseArray, id];
     const upRestult = await pool.query(updatePauseQuery, updatePauseParam);
+
     res.status(201).json({ message: `pause updated ${upRestult}` });
   } catch (error) {
     console.log(`pauseAppend: ${error}`);
