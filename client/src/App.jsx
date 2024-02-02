@@ -242,7 +242,7 @@ function App() {
         });
         SpeechRecognition.startListening({ continuous: true });
         console.log("sent to backend");
-      }, 2500);
+      }, 3500);
       setTimeoutId(backID);
 
       //restart frontend after 7

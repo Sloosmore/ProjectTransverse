@@ -1,10 +1,11 @@
 const pool = require("../db/db");
+const { deactivateRecords } = require("../middleware/wsNotes/deactivateNotes");
 
 const id = "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
 
 const sendNotesFromPG = async (req, res) => {
   try {
-    const { visibleNotes } = req.query;
+    const { visibleNotes, resume } = req.query;
     let result;
     if (visibleNotes === "true") {
       const noteQuery =
@@ -15,12 +16,14 @@ const sendNotesFromPG = async (req, res) => {
         "SELECT * FROM note WHERE user_id = $1 AND is_deleted = false";
       result = await pool.query(noteQuery, [id]);
     }
-    const noteRecords = result.rows.map((record) => {
-      return {
-        ...record,
-        status: "inactive",
-      };
-    });
+    let noteRecords = result.rows;
+    if (!resume) {
+      console.log("resume not sent!");
+      //**this is the issue**//
+
+      const user = data.user || "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
+      noteRecords = await deactivateRecords(user);
+    }
     console.log("Sending records...");
     res.status(200).json({ noteRecords });
   } catch (error) {
@@ -61,6 +64,18 @@ const updateTitleToPG = async (req, res) => {
   }
 };
 
+//UP STATUS (INACTIVE)
+const upInactiveStatus = async (req, res) => {
+  try {
+    const user = "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
+    const noteRecords = await deactivateRecords(user);
+    res.status(200).json({ noteRecords });
+  } catch (err) {
+    res.sendStatus(401);
+    console.error("Error:", err);
+  }
+};
+
 //UP VISIBILITY
 const updateVisibilityPG = async (req, res) => {
   try {
@@ -96,5 +111,6 @@ module.exports = {
   updateTitleToPG,
   updateVisibilityPG,
   delNotePG,
+  upInactiveStatus,
 };
 //

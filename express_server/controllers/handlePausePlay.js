@@ -16,19 +16,20 @@ const pauseAppend = async (req, res) => {
     const getPauseQuery =
       "SELECT pause_timestamps FROM note WHERE note_id = $1";
     const getResult = await pool.query(getPauseQuery, [id]);
-    const pauseArray = getResult.rows[0].pause_timestamps;
-    const date = new Date();
-    pauseArray.push(date);
+    if (!getResult.rows[0]) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+    const pauseArray = [...getResult.rows[0].pause_timestamps, new Date()];
 
     const updatePauseQuery =
       "UPDATE note SET pause_timestamps = $1, status = 'inactive', date_updated = NOW() WHERE note_id = $2";
     const updatePauseParam = [pauseArray, id];
-    const upRestult = await pool.query(updatePauseQuery, updatePauseParam);
+    await pool.query(updatePauseQuery, updatePauseParam);
 
-    res.status(201).json({ message: `pause updated ${upRestult}` });
+    res.status(201).json({ message: "Pause updated" });
   } catch (error) {
     console.log(`pauseAppend: ${error}`);
-    res.status(500);
+    res.status(500).json({ message: "An error occurred" });
   }
 };
 
@@ -37,18 +38,20 @@ const playAppend = async (req, res) => {
     const { id } = req.body;
     const getPlayQuery = "SELECT play_timestamps FROM note WHERE note_id = $1";
     const getResult = await pool.query(getPlayQuery, [id]);
-    const playArray = getResult.rows[0].play_timestamps;
-    const date = new Date();
-    playArray.push(date);
+    if (!getResult.rows[0]) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+    const playArray = [...getResult.rows[0].play_timestamps, new Date()];
 
     const updatePlayQuery =
       "UPDATE note SET play_timestamps = $1, status = 'active', date_updated = NOW() WHERE note_id = $2";
     const updatePlayParam = [playArray, id];
-    const upRestult = await pool.query(updatePlayQuery, updatePlayParam);
-    res.status(201).json({ message: `play updated ${upRestult}` });
+    await pool.query(updatePlayQuery, updatePlayParam);
+
+    res.status(201).json({ message: "Play updated" });
   } catch (error) {
-    console.log(`pauseAppend: ${error}`);
-    res.status(500);
+    console.log(`playAppend: ${error}`);
+    res.status(500).json({ message: "An error occurred" });
   }
 };
 

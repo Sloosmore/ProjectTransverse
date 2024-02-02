@@ -8,12 +8,13 @@ const {
   fetchActiveTs,
   clearActiveTS,
 } = require("../middleware/wsNotes/activeTs");
+const { deactivateRecords } = require("../middleware/wsNotes/deactivateNotes");
 
 async function handleWebSocketConnection(ws, request) {
   const connectMessage = {
     message: "Connected to WebSocket!",
   };
-  const threshold = 750;
+  const threshold = 10000000;
   ws.send(JSON.stringify(connectMessage));
 
   //Append note record to db
@@ -32,10 +33,6 @@ async function handleWebSocketConnection(ws, request) {
 
       if (justActivated) {
         const user_id = user;
-
-        const inactiveQuery =
-          "UPDATE note SET status = $1, date_updated = NOW() WHERE user_id = $2 RETURNING *";
-        const inactiveValues = ["inactive", user_id];
 
         const note_id = uuid.v4();
         const status = "active";
@@ -71,11 +68,8 @@ async function handleWebSocketConnection(ws, request) {
 
         try {
           //deactivate records
-          const { rows: inactiveRows } = await pool.query(
-            inactiveQuery,
-            inactiveValues
-          );
-          const inactiveRecords = inactiveRows;
+
+          const inactiveRecords = await deactivateRecords(user);
 
           //send new record
           const { rows: newRecRows } = await pool.query(newRecQuery, newRec);
@@ -100,6 +94,8 @@ async function handleWebSocketConnection(ws, request) {
         let incomingTs = 0;
         if (ts.length > 40) {
           //READ FROM DB HERE
+          // if playarray > pause array we are in play
+          // if pauseArray = play array we are in paus
 
           const getLatestDate = `SELECT play_timestamps, pause_timestamps FROM note WHERE note_id = $1`;
           const latestDate = await pool.query(getLatestDate, [id]);
@@ -108,23 +104,42 @@ async function handleWebSocketConnection(ws, request) {
           const pauseArray = latestDate.rows[0].pause_timestamps;
 
           let totTime = 0;
+
           for (let i = 0; i < pauseArray.length; i++) {
             let timeDiferential =
               new Date(pauseArray[i]).getTime() -
               new Date(playArray[i]).getTime();
             totTime += timeDiferential;
           }
+          //if in play mode (most of the time)
+          if (pauseArray.length < playArray.length) {
+            const lastIndex = playArray.length - 1;
+            const lastDate = new Date(playArray[lastIndex]);
+            const date = new Date();
+            const mostUpdate = date.getTime() - lastDate.getTime();
+            totTime += mostUpdate;
+          }
 
-          const lastIndex = playArray.length - 1;
-          const lastDate = new Date(playArray[lastIndex]);
-          const date = new Date();
+          let hours = Math.floor(totTime / 3600000);
+          let minutes = Math.floor((totTime % 3600000) / 60000);
+          let seconds = Math.floor(((totTime % 3600000) % 60000) / 1000);
 
-          totTime += date.getTime() - lastDate.getTime();
-          incomingTs = `${ts} \n ${totTime.toISOString()}\n`;
+          // Pad the minutes and seconds with leading zeros, if necessary
+          minutes = minutes.toString().padStart(2, "0");
+          seconds = seconds.toString().padStart(2, "0");
+
+          let formattedTime = `${minutes}:${seconds}`;
+          // If hours is not zero, prepend it to the formatted time
+          if (hours > 0) {
+            hours = hours.toString().padStart(2, "0");
+            formattedTime = `${hours}:${formattedTime}`;
+          }
+
+          incomingTs = `${ts} \n\n ${formattedTime}\n`;
         } else {
           incomingTs = ts;
         }
-
+        //this is what I need to check out
         const newFullTs = await appendFullTranscript(id, incomingTs);
 
         //send timestamped transcript

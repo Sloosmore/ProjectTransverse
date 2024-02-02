@@ -6,6 +6,7 @@ const {
   updateTitleToPG,
   updateVisibilityPG,
   delNotePG,
+  upInactiveStatus,
 } = require("../controllers/handleRecords");
 
 const { pauseAppend, playAppend } = require("../controllers/handlePausePlay");
@@ -19,6 +20,9 @@ router.get("/notes", sendNotesFromPG);
 
 //UPDATE MD
 router.put("/notes-markdown", updateMarkdownToPG);
+
+//UPDATE Statis
+router.put("/notes-deactivate", upInactiveStatus);
 
 //UPDATE Title
 router.put("/notes-title", updateTitleToPG);

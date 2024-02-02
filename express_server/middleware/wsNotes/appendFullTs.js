@@ -22,7 +22,9 @@ const appendFullTranscript = async (id, newTsChunk) => {
   }
 
   //combine both the new ts and the old TS
+  //this should seperate each new section
   const newfullTs = fullTs + newTsChunk;
+  console.log;
   const reWriteFTS = "UPDATE note SET full_transcript = $1 WHERE note_id = $2";
   const reWriteTSParam = [newfullTs, id];
 

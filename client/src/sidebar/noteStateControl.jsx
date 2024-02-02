@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import titleFromID from "../services/titleFromID";
 import { onPause, onPlay } from "../services/pausePlay";
-import { fetchNoteRecords } from "../services/crudApi";
+import { fetchNoteRecords, deactivateNotes } from "../services/crudApi";
 
 function PausePlay({ pauseProps }) {
   const { mode, setMode, noteName, setNotes, noteData } = pauseProps;
@@ -14,8 +14,15 @@ function PausePlay({ pauseProps }) {
       setButton("pause");
     } else if (mode === "default" && noteName) {
       setButton("play");
+      //Deactivate the notes for good meause
     }
   }, [mode]);
+
+  useEffect(() => {
+    deactivateNotes().then((data) => {
+      setNotes(data);
+    });
+  }, []);
 
   return (
     <div className="d-flex justify-content-center">
@@ -24,8 +31,10 @@ function PausePlay({ pauseProps }) {
           onClick={() => {
             onPause(noteName)
               .then(() => fetchNoteRecords(true))
-              .then((data) => setNotes(data));
-            setMode("default");
+              .then((data) => {
+                setNotes(data);
+                setMode("default");
+              });
           }}
           className="btn btn-light d-flex d-flex justify-content-between align-items-center py-1 px-3 text-black-50 "
           style={{ width: "85%" }}
@@ -41,7 +50,7 @@ function PausePlay({ pauseProps }) {
         <div
           onClick={() => {
             onPlay(noteName)
-              .then(() => fetchNoteRecords(true))
+              .then(() => fetchNoteRecords(true, true))
               .then((data) => setNotes(data));
             setMode("note");
           }}

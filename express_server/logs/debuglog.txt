@@ -9051,4 +9051,496 @@
       "metadata": {}
     }
   ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_0UeMkGmiqsEgf63OIbQSXQHh/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_Qu44B3DIfdqjvUHfbLf8hi9j",
+        "object": "thread.message",
+        "created_at": 1706857070,
+        "thread_id": "thread_0UeMkGmiqsEgf63OIbQSXQHh",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Need for a Business Co-Founder\n2024-02-02T06:57:10.463Z\n- Technical co-founder is just as qualified to handle bureaucratic tasks and taxes.\n- Emphasizes the importance of having someone willing to adopt business tasks with excitement on the founding team.\n\n## Essentiality of Business Co-Founder\n2024-02-02T06:57:30.472Z\n- Discusses the misconception about the essentiality of a business co-founder.\n- Mentions the example of big companies with only technical founders, like Google.\n\n## Pressure from Investors\n2024-02-02T06:57:47.960Z\n- Technical founders receiving advice from investors about the need for a business co-founder.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "run_id": "run_TwoCd6mpICrTwzP2RGh6GRgk",
+        "metadata": {}
+      },
+      {
+        "id": "msg_FMT6wfPClhuMfF3tF3vtmUkV",
+        "object": "thread.message",
+        "created_at": 1706857068,
+        "thread_id": "thread_0UeMkGmiqsEgf63OIbQSXQHh",
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "so many of you have seen our video do you need a taco founder I think we can summarize that as yes yes now a far more complicated question do you need a business co-founder it would seem like these are you know yeah okay you know bureaucratic filling out forms pain taxes every year sale but a technical co-founder is just as qualified to do this are smart human tasks yeah and so we have seen lots of cases where everyone on the team may have a technical degree yes but there's still a clear right man that it is for a business person to learn how to code as a business person I can attest to this fact but I think that you know you brought up a really good point having the ability to do these tasks is different from having the appetite to do this yes I can definitely reply yes I think this is extremely important right and I think that when we're looking into this question it could be a technical person it can be non-technical person you need someone on your founding team who's willing to adopt these tasks and do them yeah with excitement if you are a technical person and you happen to be solving your own problem the idea that you would need a business co-founder is not only confusing because you know let's see you're building a debt tool like your business customer and so I think that this idea oh the business person the NBA is a central that's not like it's possible that the technical person is essential in the business person is not essential I think the other thing that we think about a lot is let's say you don't want to believe our Theory big companies and ask yourself do their exist big companies that have only technical founders questionable companies on the stock market Google is obviously to technical Founders yes in video about this counter does a co-founder or not yet like you know that and then if you look in the YC portfolio you know Dropbox yep hey Google sounds pretty legit \n 2024-02-02T06:57:10.463Z\ndoctors and hospitals you might help that there's someone who's a doctor what I will say though is that like don't let yourself be held back by these fake limitations \n 2024-02-02T06:57:30.472Z\nclose off this thinking I think the reason we got a lot of request in this video I think it was from technical Founders yeah that had been told by like investors you need yes yes \n 2024-02-02T06:57:47.960Z\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "assistant_id": null,
+        "run_id": null,
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_Qu44B3DIfdqjvUHfbLf8hi9j",
+    "last_id": "msg_FMT6wfPClhuMfF3tF3vtmUkV",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_Qu44B3DIfdqjvUHfbLf8hi9j",
+      "object": "thread.message",
+      "created_at": 1706857070,
+      "thread_id": "thread_0UeMkGmiqsEgf63OIbQSXQHh",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Need for a Business Co-Founder\n2024-02-02T06:57:10.463Z\n- Technical co-founder is just as qualified to handle bureaucratic tasks and taxes.\n- Emphasizes the importance of having someone willing to adopt business tasks with excitement on the founding team.\n\n## Essentiality of Business Co-Founder\n2024-02-02T06:57:30.472Z\n- Discusses the misconception about the essentiality of a business co-founder.\n- Mentions the example of big companies with only technical founders, like Google.\n\n## Pressure from Investors\n2024-02-02T06:57:47.960Z\n- Technical founders receiving advice from investors about the need for a business co-founder.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "run_id": "run_TwoCd6mpICrTwzP2RGh6GRgk",
+      "metadata": {}
+    },
+    {
+      "id": "msg_FMT6wfPClhuMfF3tF3vtmUkV",
+      "object": "thread.message",
+      "created_at": 1706857068,
+      "thread_id": "thread_0UeMkGmiqsEgf63OIbQSXQHh",
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "so many of you have seen our video do you need a taco founder I think we can summarize that as yes yes now a far more complicated question do you need a business co-founder it would seem like these are you know yeah okay you know bureaucratic filling out forms pain taxes every year sale but a technical co-founder is just as qualified to do this are smart human tasks yeah and so we have seen lots of cases where everyone on the team may have a technical degree yes but there's still a clear right man that it is for a business person to learn how to code as a business person I can attest to this fact but I think that you know you brought up a really good point having the ability to do these tasks is different from having the appetite to do this yes I can definitely reply yes I think this is extremely important right and I think that when we're looking into this question it could be a technical person it can be non-technical person you need someone on your founding team who's willing to adopt these tasks and do them yeah with excitement if you are a technical person and you happen to be solving your own problem the idea that you would need a business co-founder is not only confusing because you know let's see you're building a debt tool like your business customer and so I think that this idea oh the business person the NBA is a central that's not like it's possible that the technical person is essential in the business person is not essential I think the other thing that we think about a lot is let's say you don't want to believe our Theory big companies and ask yourself do their exist big companies that have only technical founders questionable companies on the stock market Google is obviously to technical Founders yes in video about this counter does a co-founder or not yet like you know that and then if you look in the YC portfolio you know Dropbox yep hey Google sounds pretty legit \n 2024-02-02T06:57:10.463Z\ndoctors and hospitals you might help that there's someone who's a doctor what I will say though is that like don't let yourself be held back by these fake limitations \n 2024-02-02T06:57:30.472Z\nclose off this thinking I think the reason we got a lot of request in this video I think it was from technical Founders yeah that had been told by like investors you need yes yes \n 2024-02-02T06:57:47.960Z\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "assistant_id": null,
+      "run_id": null,
+      "metadata": {}
+    }
+  ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_0UeMkGmiqsEgf63OIbQSXQHh/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_7ggISED8FSIDRo23hMU3opY6",
+        "object": "thread.message",
+        "created_at": 1706857150,
+        "thread_id": "thread_0UeMkGmiqsEgf63OIbQSXQHh",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Investor Feedback on Business Co-Founder\n2024-02-02T06:58:06.349Z\n- Investors suggesting a business co-founder might be indicating a perception of deficiency in the founder's willingness to do the work.\n\n## Quality of Work & Skills\n2024-02-02T06:58:20.502Z\n- Emphasizes that the need for a business co-founder doesn't imply a lack of skills but may be related to the perceived quality of work and company setup.\n\n## Importance of Team Composition\n2024-02-02T06:59:05.468Z\n- Disputes the notion of a \"magical formula\" for co-founder composition and advises against blindly following advice on co-founder necessity.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "run_id": "run_nR5tcdJmw1FaVZk1mgqSXYkX",
+        "metadata": {}
+      },
+      {
+        "id": "msg_ZTwaoNULK3oTrCS5U1FuWev8",
+        "object": "thread.message",
+        "created_at": 1706857145,
+        "thread_id": "thread_0UeMkGmiqsEgf63OIbQSXQHh",
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "and I think a lot of times when investors give I found her that feedback which is you need a business co-founder they're actually giving you direct feedback on what they see as a deficiency in your appetite to do the work yes yes \n 2024-02-02T06:58:06.349Z\n40 that you did the work the quality of your picture the quality of how you set up your company but it doesn't mean you don't have the skills to do it yeah \n 2024-02-02T06:58:20.502Z\nyou might have to talk to your customeryou could hire somebody does you can hire an engineer who does you know but I do think that don't believe this idea that there's some magic with like one business person plus one type person equals yes and I think sometimes people have a lot of Our advice on what you need a co-founder full stop \n 2024-02-02T06:59:05.468Z\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "assistant_id": null,
+        "run_id": null,
+        "metadata": {}
+      },
+      {
+        "id": "msg_Qu44B3DIfdqjvUHfbLf8hi9j",
+        "object": "thread.message",
+        "created_at": 1706857070,
+        "thread_id": "thread_0UeMkGmiqsEgf63OIbQSXQHh",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Need for a Business Co-Founder\n2024-02-02T06:57:10.463Z\n- Technical co-founder is just as qualified to handle bureaucratic tasks and taxes.\n- Emphasizes the importance of having someone willing to adopt business tasks with excitement on the founding team.\n\n## Essentiality of Business Co-Founder\n2024-02-02T06:57:30.472Z\n- Discusses the misconception about the essentiality of a business co-founder.\n- Mentions the example of big companies with only technical founders, like Google.\n\n## Pressure from Investors\n2024-02-02T06:57:47.960Z\n- Technical founders receiving advice from investors about the need for a business co-founder.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "run_id": "run_TwoCd6mpICrTwzP2RGh6GRgk",
+        "metadata": {}
+      },
+      {
+        "id": "msg_FMT6wfPClhuMfF3tF3vtmUkV",
+        "object": "thread.message",
+        "created_at": 1706857068,
+        "thread_id": "thread_0UeMkGmiqsEgf63OIbQSXQHh",
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "so many of you have seen our video do you need a taco founder I think we can summarize that as yes yes now a far more complicated question do you need a business co-founder it would seem like these are you know yeah okay you know bureaucratic filling out forms pain taxes every year sale but a technical co-founder is just as qualified to do this are smart human tasks yeah and so we have seen lots of cases where everyone on the team may have a technical degree yes but there's still a clear right man that it is for a business person to learn how to code as a business person I can attest to this fact but I think that you know you brought up a really good point having the ability to do these tasks is different from having the appetite to do this yes I can definitely reply yes I think this is extremely important right and I think that when we're looking into this question it could be a technical person it can be non-technical person you need someone on your founding team who's willing to adopt these tasks and do them yeah with excitement if you are a technical person and you happen to be solving your own problem the idea that you would need a business co-founder is not only confusing because you know let's see you're building a debt tool like your business customer and so I think that this idea oh the business person the NBA is a central that's not like it's possible that the technical person is essential in the business person is not essential I think the other thing that we think about a lot is let's say you don't want to believe our Theory big companies and ask yourself do their exist big companies that have only technical founders questionable companies on the stock market Google is obviously to technical Founders yes in video about this counter does a co-founder or not yet like you know that and then if you look in the YC portfolio you know Dropbox yep hey Google sounds pretty legit \n 2024-02-02T06:57:10.463Z\ndoctors and hospitals you might help that there's someone who's a doctor what I will say though is that like don't let yourself be held back by these fake limitations \n 2024-02-02T06:57:30.472Z\nclose off this thinking I think the reason we got a lot of request in this video I think it was from technical Founders yeah that had been told by like investors you need yes yes \n 2024-02-02T06:57:47.960Z\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "assistant_id": null,
+        "run_id": null,
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_7ggISED8FSIDRo23hMU3opY6",
+    "last_id": "msg_FMT6wfPClhuMfF3tF3vtmUkV",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_7ggISED8FSIDRo23hMU3opY6",
+      "object": "thread.message",
+      "created_at": 1706857150,
+      "thread_id": "thread_0UeMkGmiqsEgf63OIbQSXQHh",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Investor Feedback on Business Co-Founder\n2024-02-02T06:58:06.349Z\n- Investors suggesting a business co-founder might be indicating a perception of deficiency in the founder's willingness to do the work.\n\n## Quality of Work & Skills\n2024-02-02T06:58:20.502Z\n- Emphasizes that the need for a business co-founder doesn't imply a lack of skills but may be related to the perceived quality of work and company setup.\n\n## Importance of Team Composition\n2024-02-02T06:59:05.468Z\n- Disputes the notion of a \"magical formula\" for co-founder composition and advises against blindly following advice on co-founder necessity.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "run_id": "run_nR5tcdJmw1FaVZk1mgqSXYkX",
+      "metadata": {}
+    },
+    {
+      "id": "msg_ZTwaoNULK3oTrCS5U1FuWev8",
+      "object": "thread.message",
+      "created_at": 1706857145,
+      "thread_id": "thread_0UeMkGmiqsEgf63OIbQSXQHh",
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "and I think a lot of times when investors give I found her that feedback which is you need a business co-founder they're actually giving you direct feedback on what they see as a deficiency in your appetite to do the work yes yes \n 2024-02-02T06:58:06.349Z\n40 that you did the work the quality of your picture the quality of how you set up your company but it doesn't mean you don't have the skills to do it yeah \n 2024-02-02T06:58:20.502Z\nyou might have to talk to your customeryou could hire somebody does you can hire an engineer who does you know but I do think that don't believe this idea that there's some magic with like one business person plus one type person equals yes and I think sometimes people have a lot of Our advice on what you need a co-founder full stop \n 2024-02-02T06:59:05.468Z\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "assistant_id": null,
+      "run_id": null,
+      "metadata": {}
+    },
+    {
+      "id": "msg_Qu44B3DIfdqjvUHfbLf8hi9j",
+      "object": "thread.message",
+      "created_at": 1706857070,
+      "thread_id": "thread_0UeMkGmiqsEgf63OIbQSXQHh",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Need for a Business Co-Founder\n2024-02-02T06:57:10.463Z\n- Technical co-founder is just as qualified to handle bureaucratic tasks and taxes.\n- Emphasizes the importance of having someone willing to adopt business tasks with excitement on the founding team.\n\n## Essentiality of Business Co-Founder\n2024-02-02T06:57:30.472Z\n- Discusses the misconception about the essentiality of a business co-founder.\n- Mentions the example of big companies with only technical founders, like Google.\n\n## Pressure from Investors\n2024-02-02T06:57:47.960Z\n- Technical founders receiving advice from investors about the need for a business co-founder.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "run_id": "run_TwoCd6mpICrTwzP2RGh6GRgk",
+      "metadata": {}
+    },
+    {
+      "id": "msg_FMT6wfPClhuMfF3tF3vtmUkV",
+      "object": "thread.message",
+      "created_at": 1706857068,
+      "thread_id": "thread_0UeMkGmiqsEgf63OIbQSXQHh",
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "so many of you have seen our video do you need a taco founder I think we can summarize that as yes yes now a far more complicated question do you need a business co-founder it would seem like these are you know yeah okay you know bureaucratic filling out forms pain taxes every year sale but a technical co-founder is just as qualified to do this are smart human tasks yeah and so we have seen lots of cases where everyone on the team may have a technical degree yes but there's still a clear right man that it is for a business person to learn how to code as a business person I can attest to this fact but I think that you know you brought up a really good point having the ability to do these tasks is different from having the appetite to do this yes I can definitely reply yes I think this is extremely important right and I think that when we're looking into this question it could be a technical person it can be non-technical person you need someone on your founding team who's willing to adopt these tasks and do them yeah with excitement if you are a technical person and you happen to be solving your own problem the idea that you would need a business co-founder is not only confusing because you know let's see you're building a debt tool like your business customer and so I think that this idea oh the business person the NBA is a central that's not like it's possible that the technical person is essential in the business person is not essential I think the other thing that we think about a lot is let's say you don't want to believe our Theory big companies and ask yourself do their exist big companies that have only technical founders questionable companies on the stock market Google is obviously to technical Founders yes in video about this counter does a co-founder or not yet like you know that and then if you look in the YC portfolio you know Dropbox yep hey Google sounds pretty legit \n 2024-02-02T06:57:10.463Z\ndoctors and hospitals you might help that there's someone who's a doctor what I will say though is that like don't let yourself be held back by these fake limitations \n 2024-02-02T06:57:30.472Z\nclose off this thinking I think the reason we got a lot of request in this video I think it was from technical Founders yeah that had been told by like investors you need yes yes \n 2024-02-02T06:57:47.960Z\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "assistant_id": null,
+      "run_id": null,
+      "metadata": {}
+    }
+  ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_yR4oZdCMQPAeXMDU2RS8itak/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_i8wzQJI3QD2lpUWRJ9rIjoQr",
+        "object": "thread.message",
+        "created_at": 1706857032,
+        "thread_id": "thread_yR4oZdCMQPAeXMDU2RS8itak",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Do You Need a Business Co-Founder?\n2024-02-02T06:57:10.463Z\n- Technical co-founder: A person who possesses the technical skills required to develop a product or service within a business.\n- Business co-founder: An individual who contributes business acumen, such as market knowledge, management skills, and financial expertise, to a startup.\n- It is emphasized that having the ability to perform business tasks is distinct from having the willingness or enthusiasm to carry out these tasks.\n- The importance of having a founding team member who is eager to undertake business-related responsibilities is highlighted, regardless of their technical or non-technical background.\n\n## Essential Roles in Founding Teams\n2024-02-02T06:57:10.463Z\n- The necessity of different skills within a founding team, whether technical or business-oriented, is discussed.\n- The consideration of whether a technical person or a business co-founder is more essential to the success of a startup is analyzed.\n- Examples of successful companies with varying founder compositions, such as Google and Dropbox, are cited as evidence for the potential success of different founding team configurations.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "run_id": "run_njVtg2e90zAQJSZcaLWp3ztK",
+        "metadata": {}
+      },
+      {
+        "id": "msg_yD4eTJya7lchifd3GsYUd9kE",
+        "object": "thread.message",
+        "created_at": 1706857030,
+        "thread_id": "thread_yR4oZdCMQPAeXMDU2RS8itak",
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "so many of you have seen our video do you need a taco founder I think we can summarize that as yes yes now a far more complicated question do you need a business co-founder it would seem like these are you know yeah okay you know bureaucratic filling out forms pain taxes every year sale but a technical co-founder is just as qualified to do this are smart human tasks yeah and so we have seen lots of cases where everyone on the team may have a technical degree yes but there's still a clear right man that it is for a business person to learn how to code as a business person I can attest to this fact but I think that you know you brought up a really good point having the ability to do these tasks is different from having the appetite to do this yes I can definitely reply yes I think this is extremely important right and I think that when we're looking into this question it could be a technical person it can be non-technical person you need someone on your founding team who's willing to adopt these tasks and do them yeah with excitement if you are a technical person and you happen to be solving your own problem the idea that you would need a business co-founder is not only confusing because you know let's see you're building a debt tool like your business customer and so I think that this idea oh the business person the NBA is a central that's not like it's possible that the technical person is essential in the business person is not essential I think the other thing that we think about a lot is let's say you don't want to believe our Theory big companies and ask yourself do their exist big companies that have only technical founders questionable companies on the stock market Google is obviously to technical Founders yes in video about this counter does a co-founder or not yet like you know that and then if you look in the YC portfolio you know Dropbox yep hey Google sounds pretty legit \n 2024-02-02T06:57:10.463Z\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "assistant_id": null,
+        "run_id": null,
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_i8wzQJI3QD2lpUWRJ9rIjoQr",
+    "last_id": "msg_yD4eTJya7lchifd3GsYUd9kE",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_i8wzQJI3QD2lpUWRJ9rIjoQr",
+      "object": "thread.message",
+      "created_at": 1706857032,
+      "thread_id": "thread_yR4oZdCMQPAeXMDU2RS8itak",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Do You Need a Business Co-Founder?\n2024-02-02T06:57:10.463Z\n- Technical co-founder: A person who possesses the technical skills required to develop a product or service within a business.\n- Business co-founder: An individual who contributes business acumen, such as market knowledge, management skills, and financial expertise, to a startup.\n- It is emphasized that having the ability to perform business tasks is distinct from having the willingness or enthusiasm to carry out these tasks.\n- The importance of having a founding team member who is eager to undertake business-related responsibilities is highlighted, regardless of their technical or non-technical background.\n\n## Essential Roles in Founding Teams\n2024-02-02T06:57:10.463Z\n- The necessity of different skills within a founding team, whether technical or business-oriented, is discussed.\n- The consideration of whether a technical person or a business co-founder is more essential to the success of a startup is analyzed.\n- Examples of successful companies with varying founder compositions, such as Google and Dropbox, are cited as evidence for the potential success of different founding team configurations.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "run_id": "run_njVtg2e90zAQJSZcaLWp3ztK",
+      "metadata": {}
+    },
+    {
+      "id": "msg_yD4eTJya7lchifd3GsYUd9kE",
+      "object": "thread.message",
+      "created_at": 1706857030,
+      "thread_id": "thread_yR4oZdCMQPAeXMDU2RS8itak",
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "so many of you have seen our video do you need a taco founder I think we can summarize that as yes yes now a far more complicated question do you need a business co-founder it would seem like these are you know yeah okay you know bureaucratic filling out forms pain taxes every year sale but a technical co-founder is just as qualified to do this are smart human tasks yeah and so we have seen lots of cases where everyone on the team may have a technical degree yes but there's still a clear right man that it is for a business person to learn how to code as a business person I can attest to this fact but I think that you know you brought up a really good point having the ability to do these tasks is different from having the appetite to do this yes I can definitely reply yes I think this is extremely important right and I think that when we're looking into this question it could be a technical person it can be non-technical person you need someone on your founding team who's willing to adopt these tasks and do them yeah with excitement if you are a technical person and you happen to be solving your own problem the idea that you would need a business co-founder is not only confusing because you know let's see you're building a debt tool like your business customer and so I think that this idea oh the business person the NBA is a central that's not like it's possible that the technical person is essential in the business person is not essential I think the other thing that we think about a lot is let's say you don't want to believe our Theory big companies and ask yourself do their exist big companies that have only technical founders questionable companies on the stock market Google is obviously to technical Founders yes in video about this counter does a co-founder or not yet like you know that and then if you look in the YC portfolio you know Dropbox yep hey Google sounds pretty legit \n 2024-02-02T06:57:10.463Z\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "assistant_id": null,
+      "run_id": null,
+      "metadata": {}
+    }
+  ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_Xu0JnXlSsgIpmAPkJ9ctPKKf/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_lRtU8LdVHDREePw0mFjgJlqi",
+        "object": "thread.message",
+        "created_at": 1706857052,
+        "thread_id": "thread_Xu0JnXlSsgIpmAPkJ9ctPKKf",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Do you need a business co-founder?\n2024-02-02T06:57:10.463Z\n- Technical co-founder: A co-founder with expertise in technology, often responsible for the development and maintenance of the technical aspects of a business.\n- Business co-founder: A co-founder with expertise in business operations, marketing, finance, and other non-technical aspects of running a business.\n- Importance of willingness: It's crucial for a founding team member to be willing and enthusiastic about adopting various business tasks, regardless of technical or non-technical background.\n- Essential roles: Highlighting that in some cases, a technical person might be essential while a business person might not, and vice versa.\n\n## Founders of big companies\n2024-02-02T06:57:30.472Z\n- Questioning limitations: Encouraging not to be held back by perceived limitations, such as the need for specific types of co-founders.\n- Examples of successful big companies: Mentioning examples like Google, which had two technical founders, showcasing that successful companies may not necessarily conform to a specific founder structure.\n- Encouragement to pursue goals: Emphasizing that limitations should not hinder entrepreneurial pursuits.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "run_id": "run_DH6Rh8Ojic43x6IdHZ2O9Mx7",
+        "metadata": {}
+      },
+      {
+        "id": "msg_mantMVm7BkHOe8mdgJvM8CrM",
+        "object": "thread.message",
+        "created_at": 1706857050,
+        "thread_id": "thread_Xu0JnXlSsgIpmAPkJ9ctPKKf",
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "so many of you have seen our video do you need a taco founder I think we can summarize that as yes yes now a far more complicated question do you need a business co-founder it would seem like these are you know yeah okay you know bureaucratic filling out forms pain taxes every year sale but a technical co-founder is just as qualified to do this are smart human tasks yeah and so we have seen lots of cases where everyone on the team may have a technical degree yes but there's still a clear right man that it is for a business person to learn how to code as a business person I can attest to this fact but I think that you know you brought up a really good point having the ability to do these tasks is different from having the appetite to do this yes I can definitely reply yes I think this is extremely important right and I think that when we're looking into this question it could be a technical person it can be non-technical person you need someone on your founding team who's willing to adopt these tasks and do them yeah with excitement if you are a technical person and you happen to be solving your own problem the idea that you would need a business co-founder is not only confusing because you know let's see you're building a debt tool like your business customer and so I think that this idea oh the business person the NBA is a central that's not like it's possible that the technical person is essential in the business person is not essential I think the other thing that we think about a lot is let's say you don't want to believe our Theory big companies and ask yourself do their exist big companies that have only technical founders questionable companies on the stock market Google is obviously to technical Founders yes in video about this counter does a co-founder or not yet like you know that and then if you look in the YC portfolio you know Dropbox yep hey Google sounds pretty legit \n 2024-02-02T06:57:10.463Z\ndoctors and hospitals you might help that there's someone who's a doctor what I will say though is that like don't let yourself be held back by these fake limitations \n 2024-02-02T06:57:30.472Z\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "assistant_id": null,
+        "run_id": null,
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_lRtU8LdVHDREePw0mFjgJlqi",
+    "last_id": "msg_mantMVm7BkHOe8mdgJvM8CrM",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_lRtU8LdVHDREePw0mFjgJlqi",
+      "object": "thread.message",
+      "created_at": 1706857052,
+      "thread_id": "thread_Xu0JnXlSsgIpmAPkJ9ctPKKf",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Do you need a business co-founder?\n2024-02-02T06:57:10.463Z\n- Technical co-founder: A co-founder with expertise in technology, often responsible for the development and maintenance of the technical aspects of a business.\n- Business co-founder: A co-founder with expertise in business operations, marketing, finance, and other non-technical aspects of running a business.\n- Importance of willingness: It's crucial for a founding team member to be willing and enthusiastic about adopting various business tasks, regardless of technical or non-technical background.\n- Essential roles: Highlighting that in some cases, a technical person might be essential while a business person might not, and vice versa.\n\n## Founders of big companies\n2024-02-02T06:57:30.472Z\n- Questioning limitations: Encouraging not to be held back by perceived limitations, such as the need for specific types of co-founders.\n- Examples of successful big companies: Mentioning examples like Google, which had two technical founders, showcasing that successful companies may not necessarily conform to a specific founder structure.\n- Encouragement to pursue goals: Emphasizing that limitations should not hinder entrepreneurial pursuits.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "run_id": "run_DH6Rh8Ojic43x6IdHZ2O9Mx7",
+      "metadata": {}
+    },
+    {
+      "id": "msg_mantMVm7BkHOe8mdgJvM8CrM",
+      "object": "thread.message",
+      "created_at": 1706857050,
+      "thread_id": "thread_Xu0JnXlSsgIpmAPkJ9ctPKKf",
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "so many of you have seen our video do you need a taco founder I think we can summarize that as yes yes now a far more complicated question do you need a business co-founder it would seem like these are you know yeah okay you know bureaucratic filling out forms pain taxes every year sale but a technical co-founder is just as qualified to do this are smart human tasks yeah and so we have seen lots of cases where everyone on the team may have a technical degree yes but there's still a clear right man that it is for a business person to learn how to code as a business person I can attest to this fact but I think that you know you brought up a really good point having the ability to do these tasks is different from having the appetite to do this yes I can definitely reply yes I think this is extremely important right and I think that when we're looking into this question it could be a technical person it can be non-technical person you need someone on your founding team who's willing to adopt these tasks and do them yeah with excitement if you are a technical person and you happen to be solving your own problem the idea that you would need a business co-founder is not only confusing because you know let's see you're building a debt tool like your business customer and so I think that this idea oh the business person the NBA is a central that's not like it's possible that the technical person is essential in the business person is not essential I think the other thing that we think about a lot is let's say you don't want to believe our Theory big companies and ask yourself do their exist big companies that have only technical founders questionable companies on the stock market Google is obviously to technical Founders yes in video about this counter does a co-founder or not yet like you know that and then if you look in the YC portfolio you know Dropbox yep hey Google sounds pretty legit \n 2024-02-02T06:57:10.463Z\ndoctors and hospitals you might help that there's someone who's a doctor what I will say though is that like don't let yourself be held back by these fake limitations \n 2024-02-02T06:57:30.472Z\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "assistant_id": null,
+      "run_id": null,
+      "metadata": {}
+    }
+  ]
 }

@@ -5,12 +5,12 @@ export const fetchTaskRecords = async () => {
 };
 
 //Grabs Note Records and distingueshes if the note visble or not
-export const fetchNoteRecords = async (visibleNotes) => {
+export const fetchNoteRecords = async (visibleNotes, resume) => {
   if (visibleNotes === true) {
   } else {
   }
   const response = await fetch(
-    `/records-api/notes?visibleNotes=${visibleNotes}`,
+    `/records-api/notes?visibleNotes=${visibleNotes}&resume=${resume}`,
     {
       method: "GET",
       headers: {
@@ -36,6 +36,18 @@ export const saveNoteMarkdown = async (id, markdown) => {
   console.log(data);
 };
 
+export const deactivateNotes = async (id, markdown) => {
+  const response = await fetch("/records-api/notes-deactivate", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    //body: JSON.stringify({ id,  }),
+  });
+  const data = await response.json();
+  return data.noteRecords;
+};
+
 //UP TITLE
 export const updateTitle = async (id, title) => {
   const response = await fetch("/records-api/notes-title", {
@@ -50,7 +62,6 @@ export const updateTitle = async (id, title) => {
 };
 
 //UP VISIBILITY
-
 export const updateVis = async (id, visible) => {
   const response = await fetch("/records-api/notes-visiblity", {
     method: "PUT",
