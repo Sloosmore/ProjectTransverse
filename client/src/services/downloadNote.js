@@ -1,5 +1,5 @@
-export const sendDownload = (noteID, radioValue) => {
-  const format = radios[radioValue].name; // Get the selected format
+export const sendDownload = ({ noteID }, format) => {
+  console.log(format);
 
   fetch("/records-api/notes-download", {
     method: "POST",

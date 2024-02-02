@@ -10,6 +10,8 @@ const {
 
 const { pauseAppend, playAppend } = require("../controllers/handlePausePlay");
 
+const { downloadNote } = require("../controllers/handleNoteDownload");
+
 //router.get("/tasks", sendTasks);
 
 //change to sendNotesFromPGSoon
@@ -32,5 +34,8 @@ router.put("/notes-pause", pauseAppend);
 
 //DELETE
 router.delete("/notes", delNotePG);
+
+//POST Download
+router.post("/notes-download", downloadNote);
 
 module.exports = router;

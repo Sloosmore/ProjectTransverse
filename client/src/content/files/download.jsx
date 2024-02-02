@@ -5,13 +5,13 @@ import { sendDownload } from "../../services/downloadNote.js";
 
 const radios = [{ name: "Word" }, { name: "PDF" }];
 
-function DownloadMd(noteID, format) {
+function DownloadMd(noteID) {
   const [radioValue, setRadioValue] = useState(0); // Initialize with 0
 
   return (
     <div className="row mb-3">
       <div className="col">
-        <ButtonGroup toggle>
+        <ButtonGroup>
           {radios.map((radio, idx) => (
             <ToggleButton
               key={idx}
@@ -29,7 +29,7 @@ function DownloadMd(noteID, format) {
       <div className="col justify-content-end d-flex">
         <Button
           variant="secondary"
-          onClick={() => sendDownload(noteID, format)}
+          onClick={() => sendDownload(noteID, radios[radioValue].name)}
         >
           Download
         </Button>
