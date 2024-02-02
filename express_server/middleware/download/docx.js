@@ -1,26 +1,40 @@
-const { Paragraph, TextRun } = require("docx");
+const { Paragraph, TextRun, ShadingType } = require("docx");
+
 // Function to create TextRun with markdown styling
 function createTextRun(text) {
   let bold = false;
   let italic = false;
-  let highlight = false;
+  let shading = null;
+  let highlight = null;
 
-  if (text.startsWith("**") && text.endsWith("**")) {
+  const boldRegex = /\*\*(.*?)\*\*/g;
+  const italicRegex = /\*(.*?)\*/g;
+  const shadingRegex = /==(.+?)==/g;
+
+  if (boldRegex.test(text)) {
     bold = true;
-    text = text.slice(2, -2);
-  } else if (text.startsWith("*") && text.endsWith("*")) {
+    text = text.replace(boldRegex, "$1");
+  }
+  if (italicRegex.test(text)) {
     italic = true;
-    text = text.slice(1, -1);
-  } else if (text.startsWith("==") && text.endsWith("==")) {
-    highlight = true;
-    text = text.slice(2, -2);
+    text = text.replace(italicRegex, "$1");
+  }
+  if (shadingRegex.test(text)) {
+    shading = {
+      type: ShadingType.CLEAR,
+      color: "000000",
+      fill: "FFFF00",
+    };
+    text = text.replace(shadingRegex, "$1");
+    //highlight = "FFFF00";
   }
 
   return new TextRun({
     text: text,
     bold: bold,
     italics: italic,
-    highlight: highlight ? { color: "yellow" } : undefined,
+    highlight: highlight,
+    shading: shading,
   });
 }
 
@@ -28,61 +42,65 @@ function createTextRun(text) {
 function parseMarkdownDocx(markdown) {
   const lines = markdown.split("\n");
   const docElements = [];
-  let currentBullets = [];
+  let inBulletList = false;
+  let bulletText = "";
 
   lines.forEach((line) => {
     if (line.startsWith("# ")) {
       // H1 Header
+      addBulletParagraph();
       docElements.push(
         new Paragraph({ text: line.slice(2), heading: "Heading1" })
       );
     } else if (line.startsWith("## ")) {
       // H2 Header
+      addBulletParagraph();
       docElements.push(
         new Paragraph({ text: line.slice(3), heading: "Heading2" })
       );
     } else if (line.startsWith("- ")) {
       // Bullet point
-      currentBullets.push(line.substring(2));
+      addBulletParagraph();
+      bulletText = line.substring(2);
+      inBulletList = true;
+    } else if (inBulletList && line.trim() !== "") {
+      // Continue bullet point in the next line
+      bulletText += "\n" + line;
     } else {
-      if (currentBullets.length > 0) {
-        // Add bullet points as a paragraph
-        const bulletParagraphs = currentBullets.map(
-          (bullet) =>
-            new Paragraph({
-              text: bullet,
-              bullet: {
-                level: 0, // Indentation level
-              },
-            })
-        );
-        docElements.push(...bulletParagraphs);
-        currentBullets = [];
-      }
-
-      if (line.trim() !== "") {
-        // Split the line by spaces to handle bold or italic
-        const words = line.split(/(\*\*.*?\*\*|\*.*?\*)/).filter(Boolean);
-        const runs = words.map((word) => createTextRun(word));
-
-        // Add regular text as a paragraph
-        docElements.push(new Paragraph({ children: runs }));
-      }
+      // Regular text
+      addBulletParagraph();
+      processFormattedText(line);
     }
   });
 
-  // In case the last lines are bullet points
-  if (currentBullets.length > 0) {
-    const bulletParagraphs = currentBullets.map(
-      (bullet) =>
+  // Add any remaining bullet point
+  addBulletParagraph();
+
+  function processFormattedText(text) {
+    const runs = text
+      .split(/(\*\*.*?\*\*|\*.*?\*|==.*?==)/)
+      .filter(Boolean)
+      .map((word) => createTextRun(word));
+    docElements.push(new Paragraph({ children: runs }));
+  }
+
+  function addBulletParagraph() {
+    if (inBulletList && bulletText.trim() !== "") {
+      const bulletRuns = bulletText
+        .split(/(\*\*.*?\*\*|\*.*?\*|==.*?==)/)
+        .filter(Boolean)
+        .map((word) => createTextRun(word));
+      docElements.push(
         new Paragraph({
-          text: bullet,
+          children: bulletRuns,
           bullet: {
-            level: 0, // Indentation level
+            level: 0,
           },
         })
-    );
-    docElements.push(...bulletParagraphs);
+      );
+      bulletText = "";
+      inBulletList = false;
+    }
   }
 
   return docElements;

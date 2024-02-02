@@ -1,5 +1,8 @@
 export const sendDownload = ({ noteID }, format) => {
   console.log(format);
+  if (format.toLowerCase() === "word") {
+    format = "docx";
+  }
 
   fetch("/records-api/notes-download", {
     method: "POST",

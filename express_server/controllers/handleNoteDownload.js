@@ -13,17 +13,12 @@ const downloadNote = async (req, res) => {
     const md = rows[0].full_markdown;
 
     // Convert ==highlighted text== to appropriate format
-    const customMarkdown = md.replace(/==(.+?)==/g, (match, p1) => {
-      if (format === "PDF") {
+    let customMarkdown = md;
+    if (format === "PDF") {
+      customMarkdown = md.replace(/==(.+?)==/g, (match, p1) => {
         // For PDF, convert to HTML with a span tag
         return `<span class="highlight">${p1}</span>`;
-      } else if (format === "Word") {
-        // For Word, return the text as is; formatting will be handled later
-        return p1;
-      }
-      return match;
-    });
-    if (format === "PDF") {
+      });
       // Convert Markdown to HTML
       console.log(customMarkdown);
       const html = marked(customMarkdown);
@@ -55,9 +50,9 @@ const downloadNote = async (req, res) => {
       res.contentType("application/pdf");
       console.log("sending pdf...");
       res.send(pdf);
-    } else if (format === "Word") {
+    } else if (format === "docx") {
       // Create a new Word document
-      const docSections = processMarkdown(customMarkdown);
+      const docSections = parseMarkdownDocx(customMarkdown);
 
       // Create the document with the processed sections
       const doc = new Document({
@@ -76,6 +71,7 @@ const downloadNote = async (req, res) => {
       res.contentType(
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       );
+      res.attachment("file.docx");
       console.log("sending pdf...");
       res.send(buffer);
     }

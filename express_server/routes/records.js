@@ -35,7 +35,7 @@ router.put("/notes-pause", pauseAppend);
 //DELETE
 router.delete("/notes", delNotePG);
 
-//POST Download
+//POST Download MD
 router.post("/notes-download", downloadNote);
 
 module.exports = router;
