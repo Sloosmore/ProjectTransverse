@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import titleFromID from "../services/titleFromID";
 import { onPause, onPlay } from "../services/pausePlay";
-import { fetchNoteRecords, deactivateNotes } from "../services/crudApi";
+import { fetchNoteRecords } from "../services/crudApi";
 
 function PausePlay({ pauseProps }) {
   const { mode, setMode, noteName, setNotes, noteData } = pauseProps;
@@ -17,12 +17,6 @@ function PausePlay({ pauseProps }) {
       //Deactivate the notes for good meause
     }
   }, [mode]);
-
-  useEffect(() => {
-    deactivateNotes().then((data) => {
-      setNotes(data);
-    });
-  }, []);
 
   return (
     <div className="d-flex justify-content-center">

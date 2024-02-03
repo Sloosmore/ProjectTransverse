@@ -13,7 +13,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { handleOnMessage } from "./services/wsResponce";
-
+import { deactivateNotes } from "./services/crudApi";
 import titleFromID from "./services/titleFromID";
 
 const WS_URL = "ws://localhost:5001/notes-api";
@@ -286,6 +286,11 @@ function App() {
     } else {
       console.log("this very bad how did you end up here");
     }
+
+    //if deactivate any active notes
+    deactivateNotes().then((data) => {
+      setNotes(data);
+    });
 
     window.addEventListener("keydown", handleCKeyDown);
     // Cleanup function to remove the event listener when the component unmounts

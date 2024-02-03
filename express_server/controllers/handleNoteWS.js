@@ -14,7 +14,7 @@ async function handleWebSocketConnection(ws, request) {
   const connectMessage = {
     message: "Connected to WebSocket!",
   };
-  const threshold = 10000000;
+  const threshold = 750;
   ws.send(JSON.stringify(connectMessage));
 
   //Append note record to db
