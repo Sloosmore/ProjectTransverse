@@ -1,5 +1,4 @@
 // fetchTranscript.js
-import { useState } from "react";
 import { fetchTaskRecords } from "./crudApi";
 
 export const tvrseFunc = (transcript, setData) => {

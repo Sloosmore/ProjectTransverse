@@ -1,6 +1,6 @@
 import { createNewNote } from "./noteModeApi";
 import { tvrseFunc } from "./tverseAPI";
-import { handleOnMessage } from "./wsResponce";
+//import { handleOnMessage } from "./wsResponce";
 
 export const getCommands = (
   resetTranscript,

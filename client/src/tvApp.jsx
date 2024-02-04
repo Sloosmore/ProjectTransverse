@@ -4,7 +4,6 @@ import useWebSocket from "react-use-websocket";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import Sidebar from "./sidebar/sidebar";
-import { fetchNoteRecords } from "./services/crudApi";
 import { AppRoutes } from "./content/routes";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { handleSendLLM } from "./services/setNotepref";
@@ -12,7 +11,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { handleOnMessage } from "./services/wsResponce";
-import { deactivateNotes } from "./services/crudApi";
+import { deactivateNotes, fetchNoteRecords } from "./services/crudApi";
 import titleFromID from "./services/titleFromID";
 
 const WS_URL = "ws://localhost:5001/notes-api";

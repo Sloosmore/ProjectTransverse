@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./sidebar.css";
-import TaskList from "./task_list";
+//import TaskList from "./task_list";
 import NoteList from "./note_list";
 import CmdCenter from "./cmdCenter";
 import { Button, Collapse } from "react-bootstrap";
