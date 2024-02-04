@@ -1,14 +1,27 @@
-const pool = require("../../db/db");
+const supabase = require("../../db/supabase");
 
 const deactivateRecords = async (user) => {
   const user_id = user;
-  const inactiveQuery =
-    "UPDATE note SET status = $1, date_updated = NOW() WHERE user_id = $2 RETURNING *";
-  const inactiveValues = ["inactive", user_id];
-  const { rows: inactiveRows } = await pool.query(
-    inactiveQuery,
-    inactiveValues
-  );
+
+  const { error: updateError } = await supabase
+    .from("note")
+    .update({ status: "inactive", date_updated: new Date() })
+    .eq("user_id", user_id);
+
+  if (updateError) {
+    throw updateError;
+  }
+
+  const { data: inactiveRows, error: selectError } = await supabase
+    .from("note")
+    .select("*")
+    .eq("user_id", user_id)
+    .eq("status", "inactive");
+
+  if (selectError) {
+    throw selectError;
+  }
+
   return inactiveRows;
 };
 

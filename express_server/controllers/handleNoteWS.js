@@ -9,12 +9,13 @@ const {
   clearActiveTS,
 } = require("../middleware/wsNotes/activeTs");
 const { deactivateRecords } = require("../middleware/wsNotes/deactivateNotes");
+const supabase = require("../db/supabase");
 
 async function handleWebSocketConnection(ws, request) {
   const connectMessage = {
     message: "Connected to WebSocket!",
   };
-  const threshold = 750;
+  const threshold = 0;
   ws.send(JSON.stringify(connectMessage));
 
   //Append note record to db
@@ -72,18 +73,41 @@ async function handleWebSocketConnection(ws, request) {
           const inactiveRecords = await deactivateRecords(user);
 
           //send new record
-          const { rows: newRecRows } = await pool.query(newRecQuery, newRec);
-          const record = newRecRows[0];
+          const { data: record, error: insertError } = await supabase
+            .from("note")
+            .insert({
+              note_id,
+              user_id,
+              title,
+              status,
+              date_created: new Date(),
+              date_updated: new Date(),
+              is_deleted,
+              active_transcript,
+              full_transcript,
+              active_markdown,
+              full_markdown,
+              thread_id,
+              visible,
+              play_timestamps,
+              pause_timestamps,
+            })
+            .select();
+
+          if (insertError) {
+            throw insertError;
+          }
 
           // send returned records from DB so frontend can set the notes
+
           ws.send(
             JSON.stringify({
-              noteRecords: [record, ...inactiveRecords],
+              noteRecords: [record[0], ...inactiveRecords],
               note_id,
             })
           );
         } catch (err) {
-          console.error(err);
+          console.error(`the error is happening at record ${err}`);
         }
       } else if (ts) {
         //get the id of the note which will only be passed when note is Activated
@@ -97,11 +121,23 @@ async function handleWebSocketConnection(ws, request) {
           // if playarray > pause array we are in play
           // if pauseArray = play array we are in paus
 
-          const getLatestDate = `SELECT play_timestamps, pause_timestamps FROM note WHERE note_id = $1`;
-          const latestDate = await pool.query(getLatestDate, [id]);
+          const { data: latestDate, error } = await supabase
+            .from("note")
+            .select("play_timestamps, pause_timestamps")
+            .eq("note_id", id);
 
-          const playArray = latestDate.rows[0].play_timestamps;
-          const pauseArray = latestDate.rows[0].pause_timestamps;
+          if (error) {
+            throw error;
+          }
+
+          if (latestDate.length === 0) {
+            // Handle the case where no data is found
+            console.error("No data found for the given note_id.");
+            return;
+          }
+
+          const playArray = latestDate[0].play_timestamps;
+          const pauseArray = latestDate[0].pause_timestamps;
 
           let totTime = 0;
 
@@ -110,6 +146,7 @@ async function handleWebSocketConnection(ws, request) {
               new Date(pauseArray[i]).getTime() -
               new Date(playArray[i]).getTime();
             totTime += timeDiferential;
+            console.log(totTime);
           }
           //if in play mode (most of the time)
           if (pauseArray.length < playArray.length) {
@@ -118,6 +155,7 @@ async function handleWebSocketConnection(ws, request) {
             const date = new Date();
             const mostUpdate = date.getTime() - lastDate.getTime();
             totTime += mostUpdate;
+            console.log(totTime);
           }
 
           let hours = Math.floor(totTime / 3600000);
@@ -175,13 +213,17 @@ async function handleWebSocketConnection(ws, request) {
           //clear active transcript so it can be used later
           const clearTSBool = await clearActiveTS(id);
 
-          const fullMDQuery =
-            "SELECT full_markdown FROM note WHERE note_id = $1";
-          const mdParams = [id];
+          const { data: fullMdResult, error } = await supabase
+            .from("note")
+            .select("full_markdown")
+            .eq("note_id", id);
 
-          let result = await pool.query(fullMDQuery, mdParams);
-          let fullMd = result.rows[0].full_markdown;
-          fullMd += md;
+          if (error) {
+            throw error;
+          }
+
+          let fullMd = fullMdResult[0].full_markdown;
+          fullMd += "\n" + md;
 
           ws.send(
             JSON.stringify({

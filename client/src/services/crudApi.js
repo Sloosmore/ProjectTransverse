@@ -36,7 +36,7 @@ export const saveNoteMarkdown = async (id, markdown) => {
   console.log(data);
 };
 
-export const deactivateNotes = async (id, markdown) => {
+export const deactivateNotes = async () => {
   const response = await fetch("/records-api/notes-deactivate", {
     method: "PUT",
     headers: {

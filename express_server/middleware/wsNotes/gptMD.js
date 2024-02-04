@@ -1,8 +1,6 @@
 require("dotenv").config();
 const OpenAI = require("openai");
-const fsPromises = require("fs").promises;
-const path = require("path");
-const pool = require("../../db/db");
+const supabase = require("../../db/supabase");
 
 const ts2md_id = "asst_fnBdBUj9ef4kdeq1B9uCEYNZ";
 const openAIKey = process.env.OPENAI_KEY;
@@ -11,21 +9,31 @@ const openai = new OpenAI({ apiKey: openAIKey });
 
 async function queryAI(note_id, ts_message) {
   try {
-    // Creating a new thread
-    const grabThreadRec =
-      "SELECT user_id, thread_id FROM note WHERE note_id = $1";
-    const threadRecParam = [note_id];
-    const { rows: noteRow } = await pool.query(grabThreadRec, threadRecParam);
-    const { user_id, thread_id } = noteRow[0];
+    const { data: note, error: noteError } = await supabase
+      .from("note")
+      .select("user_id, thread_id")
+      .eq("note_id", note_id)
+      .single();
+    if (noteError) {
+      throw noteError;
+    }
+    const { user_id, thread_id } = note;
 
     console.log("message:", ts_message);
 
-    const grabPrefRec =
-      'SELECT note_preferences FROM "user" WHERE user_id = $1';
-    const prefParam = [user_id];
-    const { rows: userRow } = await pool.query(grabPrefRec, prefParam);
-    const { note_preferences } = userRow[0];
+    const { data: user, error: userError } = await supabase
+      .from("user")
+      .select("note_preferences")
+      .eq("user_id", user_id)
+      .single();
 
+    if (userError) {
+      throw userError;
+    }
+
+    const { note_preferences } = user;
+
+    // Creating a new thread if doesn't exist
     if (!thread_id) {
       const thread = await openai.beta.threads.create({
         messages: [
@@ -37,9 +45,14 @@ async function queryAI(note_id, ts_message) {
       });
       const messages = await sendAICall(thread.id, note_preferences);
 
-      const writeThreadID = "UPDATE note SET thread_id = $1 WHERE note_id = $2";
-      const threadParam = [thread.id, note_id];
-      const res = await pool.query(writeThreadID, threadParam);
+      const { error } = await supabase
+        .from("note")
+        .update({ thread_id: thread.id })
+        .eq("note_id", note_id);
+
+      if (error) {
+        throw error;
+      }
 
       return messages;
     } else {
@@ -86,6 +99,6 @@ const sendAICall = async (threadID, note_preferences) => {
     return messages;
   } else {
     // Handling non-completed statuses
-    throw new Error(`Run status: ${run.status}`);
+    throw new Error(`Run status: ${runRetrieve.status}`);
   }
 };

@@ -1,46 +1,47 @@
 const pool = require("../../db/db");
+const supabase = require("../../db/supabase");
 
 const fetchActiveTs = async (id, incomingTs) => {
-  let activeTS = "";
-  const matchIDQueryActive =
-    "Select active_transcript FROM note WHERE note_id = ($1)";
-  const matchedRecordActive = [id];
-
   try {
-    const res = await pool.query(matchIDQueryActive, matchedRecordActive);
-    if (res.rows.length === 0) {
+    const { data: note, error } = await supabase
+      .from("note")
+      .select("active_transcript")
+      .eq("note_id", id)
+      .single();
+    if (error) {
+      throw error;
+    }
+    if (!note) {
       console.error(`Note with ID ${id} not found`);
       return false;
     }
-    activeTS = res.rows[0].active_transcript;
-    activeTS = activeTS + incomingTs;
+    const activeTS = note.active_transcript + incomingTs;
+
+    const { error: updateError } = await supabase
+      .from("note")
+      .update({ active_transcript: activeTS, date_updated: new Date() })
+      .eq("note_id", id);
+    if (updateError) {
+      throw updateError;
+    }
+
+    return activeTS;
   } catch (error) {
     console.error(`Error: ${error}`);
-    false;
-  }
-
-  const updateATS =
-    "UPDATE note SET active_transcript = $1, date_updated = NOW() WHERE note_id = $2";
-  const updateATSParam = [activeTS, id];
-
-  try {
-    await pool.query(updateATS, updateATSParam);
-    return activeTS;
-  } catch (err) {
-    console.error(err);
     return false;
   }
-  //write to Active TS
 };
 
 const clearActiveTS = async (id) => {
-  const clearATS =
-    "UPDATE note SET active_transcript = $1, date_updated = NOW() WHERE note_id = $2";
-  const clearATSParam = ["", id];
-
   try {
-    const res = await pool.query(clearATS, clearATSParam);
-    if (res.rowCount === 0) {
+    const { data, error } = await supabase
+      .from("note")
+      .update({ active_transcript: "", date_updated: new Date() })
+      .eq("note_id", id);
+    if (error) {
+      throw error;
+    }
+    if (!data || data.length === 0) {
       console.error(`Note with ID ${id} not found`);
       return false;
     }

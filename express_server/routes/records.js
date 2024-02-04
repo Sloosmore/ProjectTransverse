@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const {
-  sendNotesFromPG,
-  updateMarkdownToPG,
-  updateTitleToPG,
-  updateVisibilityPG,
-  delNotePG,
+  sendNotesFromSB,
+  updateMarkdownToSB,
+  updateTitleToSB,
+  updateVisibilitySB,
+  delNoteSB,
   upInactiveStatus,
 } = require("../controllers/handleRecords");
 
@@ -16,19 +16,19 @@ const { downloadNote } = require("../controllers/handleNoteDownload");
 //router.get("/tasks", sendTasks);
 
 //change to sendNotesFromPGSoon
-router.get("/notes", sendNotesFromPG);
+router.get("/notes", sendNotesFromSB);
 
 //UPDATE MD
-router.put("/notes-markdown", updateMarkdownToPG);
+router.put("/notes-markdown", updateMarkdownToSB);
 
 //UPDATE Statis
 router.put("/notes-deactivate", upInactiveStatus);
 
 //UPDATE Title
-router.put("/notes-title", updateTitleToPG);
+router.put("/notes-title", updateTitleToSB);
 
 //UPDATE Vis
-router.put("/notes-visiblity", updateVisibilityPG);
+router.put("/notes-visiblity", updateVisibilitySB);
 
 //UPDATE Play
 router.put("/notes-play", playAppend);
@@ -37,7 +37,7 @@ router.put("/notes-play", playAppend);
 router.put("/notes-pause", pauseAppend);
 
 //DELETE
-router.delete("/notes", delNotePG);
+router.delete("/notes", delNoteSB);
 
 //POST Download MD
 router.post("/notes-download", downloadNote);

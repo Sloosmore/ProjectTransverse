@@ -1,4 +1,6 @@
 const pool = require("../db/db");
+const supabase = require("../db/supabase");
+
 const { marked } = require("marked");
 const puppeteer = require("puppeteer");
 const { parseMarkdownDocx } = require("../middleware/download/docx");
@@ -6,11 +8,18 @@ const { Document, Packer } = require("docx");
 const downloadNote = async (req, res) => {
   try {
     const { noteID, format } = req.body;
-    console.log(`This is the format: ${format}`);
 
-    const queryMD = "SELECT full_markdown FROM note WHERE note_id = $1";
-    const { rows } = await pool.query(queryMD, [noteID]);
-    const md = rows[0].full_markdown;
+    console.log(`This is the format: ${format}`);
+    const { data: mdResult, error } = await supabase
+      .from("note")
+      .select("full_markdown")
+      .eq("note_id", noteID);
+
+    if (error) {
+      throw error;
+    }
+
+    const md = mdResult[0].full_markdown;
 
     // Convert ==highlighted text== to appropriate format
     let customMarkdown = md;

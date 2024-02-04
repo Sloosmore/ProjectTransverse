@@ -5,14 +5,14 @@ import { onPause, onPlay } from "../services/pausePlay";
 import { fetchNoteRecords } from "../services/crudApi";
 
 function PausePlay({ pauseProps }) {
-  const { mode, setMode, noteName, setNotes, noteData } = pauseProps;
-  //noteName = ID
+  const { mode, setMode, noteID, setNotes, noteData } = pauseProps;
+  //noteID = ID
   const [button, setButton] = useState();
 
   useEffect(() => {
     if (mode === "note") {
       setButton("pause");
-    } else if (mode === "default" && noteName) {
+    } else if (mode === "default" && noteID) {
       setButton("play");
       //Deactivate the notes for good meause
     }
@@ -23,7 +23,7 @@ function PausePlay({ pauseProps }) {
       {button === "pause" ? (
         <div
           onClick={() => {
-            onPause(noteName)
+            onPause(noteID)
               .then(() => fetchNoteRecords(true))
               .then((data) => {
                 setNotes(data);
@@ -43,7 +43,7 @@ function PausePlay({ pauseProps }) {
       ) : button === "play" ? (
         <div
           onClick={() => {
-            onPlay(noteName)
+            onPlay(noteID)
               .then(() => fetchNoteRecords(true, true))
               .then((data) => setNotes(data));
             setMode("note");
@@ -62,7 +62,7 @@ function PausePlay({ pauseProps }) {
       ) : null}
       <ReactTooltip
         place="right"
-        content={titleFromID(noteName, noteData)}
+        content={titleFromID(noteID, noteData)}
         id="play-tooltip"
         className="bg-light text-black-50 border"
       />

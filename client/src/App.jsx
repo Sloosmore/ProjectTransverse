@@ -4,7 +4,6 @@ import useWebSocket from "react-use-websocket";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import Sidebar from "./sidebar/sidebar";
-import { BrowserRouter as Router } from "react-router-dom";
 import { fetchNoteRecords } from "./services/crudApi";
 import { AppRoutes } from "./content/routes";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -242,7 +241,7 @@ function App() {
         });
         SpeechRecognition.startListening({ continuous: true });
         console.log("sent to backend");
-      }, 3500);
+      }, 4000);
       setTimeoutId(backID);
 
       //restart frontend after 7
@@ -276,10 +275,6 @@ function App() {
   };
 
   useEffect(() => {
-    fetchNoteRecords(true).then(setNotes);
-  }, [showOffCanvasEdit]);
-
-  useEffect(() => {
     //fetchTaskRecords().then(setDocs);
     if (browserSupportsSpeechRecognition) {
       SpeechRecognition.startListening({ continuous: true });
@@ -300,6 +295,10 @@ function App() {
   }, []);
 
   useEffect(() => {
+    fetchNoteRecords(true).then(setNotes);
+  }, [showOffCanvasEdit]);
+
+  useEffect(() => {
     console.log(noteData);
   }, [noteData]);
 
@@ -318,7 +317,7 @@ function App() {
   const pauseProps = {
     mode,
     setMode,
-    noteName: noteID,
+    noteID,
     setNotes,
     noteData,
   };
@@ -346,39 +345,37 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="container-fluid vh-100 d-flex">
-        <div className="row flex-grow-1">
-          {!annotating && (
-            <div
-              className="col-3 bg-lightgrey p-0 d-flex flex-column"
-              style={{ minWidth: "200px", maxWidth: "250px" }}
-            >
-              <Sidebar
-                docData={docData}
-                noteData={noteData}
-                pauseProps={pauseProps}
-                controlProps={controlProps}
-                eventListeners={eventListeners}
-              />
-            </div>
-          )}
-
-          <div className="col">
-            <AppRoutes
-              transcript={transcript}
+    <div className="container-fluid vh-100 d-flex">
+      <div className="row flex-grow-1">
+        {!annotating && (
+          <div
+            className="col-3 bg-lightgrey p-0 d-flex flex-column"
+            style={{ minWidth: "200px", maxWidth: "250px" }}
+          >
+            <Sidebar
               docData={docData}
               noteData={noteData}
-              helpModalKit={helpModalKit}
-              helpModal={setShowHelpModal}
-              modeKit={modeKit}
-              annotatingKit={annotatingKit}
-              canvasEdit={canvasEdit}
+              pauseProps={pauseProps}
+              controlProps={controlProps}
+              eventListeners={eventListeners}
             />
           </div>
+        )}
+
+        <div className="col">
+          <AppRoutes
+            transcript={transcript}
+            docData={docData}
+            noteData={noteData}
+            helpModalKit={helpModalKit}
+            helpModal={setShowHelpModal}
+            modeKit={modeKit}
+            annotatingKit={annotatingKit}
+            canvasEdit={canvasEdit}
+          />
         </div>
       </div>
-    </Router>
+    </div>
   );
 }
 

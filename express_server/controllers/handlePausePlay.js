@@ -1,5 +1,7 @@
 const pool = require("../db/db");
+const supabase = require("../db/supabase");
 
+/*
 const readUserRecordsFromNoteID = async (note_id) => {
   const idQuery = "SELECT user_id FROM note WHERE note_id = $1";
   const idRes = await pool.query(idQuery, [note_id]);
@@ -8,23 +10,35 @@ const readUserRecordsFromNoteID = async (note_id) => {
   const readQuery = "SELECT * FROM note WHERE user_id = $1";
   const { rows } = await pool.query(readQuery, [user_id]);
   return rows;
-};
+};*/
 
 const pauseAppend = async (req, res) => {
   try {
     const { id } = req.body;
-    const getPauseQuery =
-      "SELECT pause_timestamps FROM note WHERE note_id = $1";
-    const getResult = await pool.query(getPauseQuery, [id]);
-    if (!getResult.rows[0]) {
+    const { data: note, error } = await supabase
+      .from("note")
+      .select("pause_timestamps")
+      .eq("note_id", id)
+      .single();
+    if (error) {
+      throw error;
+    }
+    if (!note) {
       return res.status(404).json({ message: "Note not found" });
     }
-    const pauseArray = [...getResult.rows[0].pause_timestamps, new Date()];
+    const pauseArray = [...note.pause_timestamps, new Date()];
 
-    const updatePauseQuery =
-      "UPDATE note SET pause_timestamps = $1, status = 'inactive', date_updated = NOW() WHERE note_id = $2";
-    const updatePauseParam = [pauseArray, id];
-    await pool.query(updatePauseQuery, updatePauseParam);
+    const { error: updateError } = await supabase
+      .from("note")
+      .update({
+        pause_timestamps: pauseArray,
+        status: "inactive",
+        date_updated: new Date(),
+      })
+      .eq("note_id", id);
+    if (updateError) {
+      throw updateError;
+    }
 
     res.status(201).json({ message: "Pause updated" });
   } catch (error) {
@@ -36,17 +50,30 @@ const pauseAppend = async (req, res) => {
 const playAppend = async (req, res) => {
   try {
     const { id } = req.body;
-    const getPlayQuery = "SELECT play_timestamps FROM note WHERE note_id = $1";
-    const getResult = await pool.query(getPlayQuery, [id]);
-    if (!getResult.rows[0]) {
+    const { data: note, error } = await supabase
+      .from("note")
+      .select("play_timestamps")
+      .eq("note_id", id)
+      .single();
+    if (error) {
+      throw error;
+    }
+    if (!note) {
       return res.status(404).json({ message: "Note not found" });
     }
-    const playArray = [...getResult.rows[0].play_timestamps, new Date()];
+    const playArray = [...note.play_timestamps, new Date()];
 
-    const updatePlayQuery =
-      "UPDATE note SET play_timestamps = $1, status = 'active', date_updated = NOW() WHERE note_id = $2";
-    const updatePlayParam = [playArray, id];
-    await pool.query(updatePlayQuery, updatePlayParam);
+    const { error: updateError } = await supabase
+      .from("note")
+      .update({
+        play_timestamps: playArray,
+        status: "active",
+        date_updated: new Date(),
+      })
+      .eq("note_id", id);
+    if (updateError) {
+      throw updateError;
+    }
 
     res.status(201).json({ message: "Play updated" });
   } catch (error) {
