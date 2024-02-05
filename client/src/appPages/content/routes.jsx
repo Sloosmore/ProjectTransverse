@@ -15,7 +15,7 @@ export const AppRoutes = ({
 }) => (
   <Routes>
     <Route
-      path="/n/:noteId"
+      path="/:noteId"
       element={
         <Noteroom
           noteData={noteData}
@@ -24,10 +24,6 @@ export const AppRoutes = ({
           annotatingKit={annotatingKit}
         />
       }
-    />
-    <Route
-      path="/c/:taskId"
-      element={<Chatroom docData={docData} transcript={transcript} />}
     />
     <Route
       path="/"

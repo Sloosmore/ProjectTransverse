@@ -174,12 +174,13 @@ const SideNotes = ({
             )}
             {view === "transcript" && (
               <div style={{ overflow: "auto", maxHeight: "85vh" }}>
-                {fullTs.split("\n").map((line, index) => (
-                  <React.Fragment key={index}>
-                    {line}
-                    <br />
-                  </React.Fragment>
-                ))}
+                {fullTs &&
+                  fullTs.split("\n").map((line, index) => (
+                    <React.Fragment key={index}>
+                      {line}
+                      <br />
+                    </React.Fragment>
+                  ))}
                 {status === "active" && transcript}
               </div>
             )}

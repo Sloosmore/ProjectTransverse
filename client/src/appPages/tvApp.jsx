@@ -2,7 +2,7 @@ import "regenerator-runtime";
 import { useState, useEffect } from "react";
 import useWebSocket from "react-use-websocket";
 import "bootstrap/dist/css/bootstrap.css";
-import "./App.css";
+import "../App.css";
 import Sidebar from "./sidebar/sidebar";
 import { AppRoutes } from "./content/routes";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -200,6 +200,7 @@ function TransverseApp() {
   // ------------------------------------------------------------------------------------------------
 
   if (!browserSupportsSpeechRecognition) {
+    console.log("Browser doesnt support speech recognition.");
     return <span>Browser doesn't support speech recognition.</span>;
   }
 

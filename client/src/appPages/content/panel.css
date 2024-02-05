@@ -1,7 +1,7 @@
 .donut {
-  width: 200px;
-  height: 200px;
-  border: 10px solid lightgray;
+  width: 250px;
+  height: 250px;
+  border: 12px solid lightgray;
   border-radius: 50%;
   box-sizing: border-box;
   background-color: transparent;

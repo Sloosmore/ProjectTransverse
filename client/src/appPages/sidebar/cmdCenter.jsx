@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import transverseImage from "../assets/TvsLogo.svg";
+import transverseImage from "../../assets/TvsLogo.svg";
 import { Link } from "react-router-dom";
 import ControlModal from "../modals/ControlModal";
 function CmdCenter({ noteData, controlProps }) {
@@ -7,7 +7,6 @@ function CmdCenter({ noteData, controlProps }) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
 
   return (
     <div className="pl-2 pr-2">
@@ -17,7 +16,7 @@ function CmdCenter({ noteData, controlProps }) {
           role="button"
           style={{ width: "85%" }}
         >
-          <Link to="/">
+          <Link to="/n">
             <img src={transverseImage} alt="" />
           </Link>
         </div>

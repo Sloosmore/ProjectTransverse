@@ -12,7 +12,7 @@ function PausePlay({ pauseProps }) {
   useEffect(() => {
     if (mode === "note") {
       setButton("pause");
-    } else if (mode === "default" && noteID) {
+    } else if (mode === "default" || noteID) {
       setButton("play");
       //Deactivate the notes for good meause
     }
