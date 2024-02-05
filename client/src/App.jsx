@@ -14,28 +14,3 @@ function App() {
 }
 
 export default App;
-/*
-  <Routes>
-    <Route
-      path="/n/:noteId"
-      element={
-        <Noteroom
-          noteData={noteData}
-          transcript={transcript}
-          modeKit={modeKit}
-          annotatingKit={annotatingKit}
-        />
-      }
-    />
-    <Route
-      path="/n"
-      element={
-        <Home
-          transcript={transcript ? transcript.slice(-300) : ""}
-          helpModalKit={helpModalKit}
-        />
-      }
-    />
-    <Route path="/n/files" element={<Files canvasEdit={canvasEdit} />} />
-  </Routes>
-*/
