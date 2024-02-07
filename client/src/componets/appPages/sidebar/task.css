@@ -1,0 +1,71 @@
+.btn-rounded {
+  border-radius: 50px; /* You can adjust this value to get the desired curvature */
+  width: 85%;
+  padding-top: 3px; /* You can adjust this value to get the desired padding */
+  padding-bottom: 3px;
+}
+
+.green-circle {
+  height: 10px;
+  width: 10px;
+  background-color: rgb(84, 204, 84);
+  border-radius: 50%;
+  display: inline-block;
+}
+.red-circle {
+  height: 10px;
+  width: 10px;
+  background-color: rgb(255, 75, 75);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.text-span {
+  text-align: center;
+}
+
+@keyframes radiate {
+  0% {
+    box-shadow: 0 0 0 0 rgba(128, 128, 128, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(128, 128, 128, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(128, 128, 128, 0);
+  }
+}
+.grey-circle {
+  height: 10px;
+  width: 10px;
+  background-color: rgb(128, 128, 128);
+  border-radius: 50%;
+  display: inline-block;
+  animation: radiate 4s infinite;
+}
+
+.active-circle {
+  height: 10px;
+  width: 10px;
+  background-color: rgb(84, 204, 84);
+  border-radius: 50%;
+  display: inline-block;
+  animation: radiate 4s infinite;
+}
+
+.inactive-circle {
+  height: 10px;
+  width: 10px;
+  background-color: rgba(128, 128, 128, 0.7);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.playback-circle {
+  height: 10px;
+  width: 10px;
+  background-color: rgb(204, 84, 84);
+  border-radius: 50%;
+  display: inline-block;
+  animation: radiate 4s infinite;
+}
