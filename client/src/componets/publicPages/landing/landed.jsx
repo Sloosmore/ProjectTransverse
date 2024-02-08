@@ -7,8 +7,11 @@ import ReactMarkdown from "react-markdown";
 import LoadLine from "./load";
 import { mdList, titlesList } from "./markDownSample";
 import grey from "../../../assets/greyTv.svg";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../../hooks/auth";
 
 export function BlockText() {
+  const { user } = useAuth();
   const [textValue, setTextValue] = useState("loading");
   const [randList, setRandList] = useState();
 
@@ -63,22 +66,26 @@ export function BlockText() {
             )}
           </div>
           <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3 ">
-            <button
-              type="button"
-              className="btn btn-lg px-4 me-md-2 gradient-bg"
-            >
-              Sign up
-            </button>
-            <button
-              type="button"
-              className="px-4 btn-custom d-flex align-items-center justify-content-center"
-            >
-              Log in
-              <i
-                className="bi bi-arrow-right-short ms-1"
-                style={{ fontSize: "1.5rem" }}
-              ></i>
-            </button>
+            <Link to="/login">
+              <button
+                type="button"
+                className="btn btn-lg px-4 me-md-2 gradient-bg"
+              >
+                {(user && "Log in") || "Sign up"}
+              </button>
+            </Link>
+            <Link to="/about">
+              <button
+                type="button"
+                className="px-4 btn-custom d-flex align-items-center justify-content-center"
+              >
+                Learn more
+                <i
+                  className="bi bi-arrow-right-short ms-1"
+                  style={{ fontSize: "1.5rem" }}
+                ></i>
+              </button>
+            </Link>
           </div>
         </div>
         <div className="col-lg-4 offset-lg-1 p-0 shadow-lg img-fluid rounded ">

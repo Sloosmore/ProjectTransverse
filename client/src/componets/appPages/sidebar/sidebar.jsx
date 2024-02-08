@@ -27,7 +27,7 @@ function Sidebar({ docData, noteData, pauseProps, controlProps }) {
   //this is the sidebar bar
   return (
     <div
-      className="flex-column d-flex h-100 position-relative"
+      className="flex-column h-100 position-relative "
       style={{ height: "100%" }}
     >
       <CmdCenter noteData={noteData} controlProps={controlProps} />
@@ -60,6 +60,19 @@ function Sidebar({ docData, noteData, pauseProps, controlProps }) {
             <NoteList notes={noteData} />
           </div>
         </Collapse>
+        <div className="position-absolute bottom-0 w-100 text-center mb-3">
+          <div
+            className="btn btn-light mx-auto text-black-50 d-flex justify-content-between align-items-center py-1 px-3 mt-2"
+            role="button"
+            style={{ width: "85%" }}
+          >
+            <i
+              class="bi bi-person-fill align-left"
+              style={{ fontSize: "1.5rem" }}
+            ></i>
+            <span className="mx-auto">Profile</span>
+          </div>
+        </div>
       </div>
     </div>
   );
