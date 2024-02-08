@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Accordion, Button } from "react-bootstrap";
-import { handleSendLLM } from "../services/setNotepref";
+import { handleSendLLM, fetchLLMpref } from "../services/setNotepref";
 import { createNewNote } from "../services/noteModeApi";
 import { tvrseFunc } from "../services/tverseAPI";
 
@@ -20,27 +20,11 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
       setShowAlert(false);
     }, 5000); // hide after 5 second
   };
-  //grab LLM prefferences
-  const fetchLLMpref = () => {
-    fetch("/settings/notes", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((body) => {
-        console.log(body["instructions"]);
-        setTextareaValue(body.instructions);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
+
   // Call fetchData when the modal opens
   useEffect(() => {
     if (show) {
-      fetchLLMpref();
+      fetchLLMpref(setTextareaValue);
       console.log(textareaValue);
     }
   }, [show]);
@@ -50,13 +34,6 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
       handleSendLLM(preferences);
     }
   }, [preferences]);
-
-  const [docPrompt, setDocPrompt] = useState("");
-
-  const sendDoc = () => {
-    tvrseFunc(docPrompt, setDocs);
-    setDocPrompt("");
-  };
 
   //Local Note Name (defined globally in use effect function)
   const [localNoteName, localNoteNameSet] = useState("");
@@ -192,4 +169,13 @@ export default ControlModal;
                 Submit
               </Button>
             </Accordion.Body>
-          </Accordion.Item> */
+          </Accordion.Item> 
+          
+          
+          
+  const [docPrompt, setDocPrompt] = useState("");
+
+  const sendDoc = () => {
+    tvrseFunc(docPrompt, setDocs);
+    setDocPrompt("");
+  };*/

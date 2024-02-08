@@ -20,7 +20,6 @@ function App() {
             }
           />
           <Route path="/*" element={<PublicRoutes />} />
-          {/* <Route element={<notFound */}
         </Routes>
       </AuthProvider>
     </BrowserRouter>
