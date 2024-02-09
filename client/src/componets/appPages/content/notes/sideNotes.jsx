@@ -5,7 +5,7 @@ const applyMarkdown = (formatType, markdown, setMarkdown) => {
   const textarea = document.getElementById("exampleFormControlTextarea1");
   const start = textarea.selectionStart;
   const end = textarea.selectionEnd;
-  const selectedText = markdown.substring(start, end);
+  let selectedText = markdown.substring(start, end);
 
   let markdownSyntax;
   switch (formatType) {
@@ -20,6 +20,21 @@ const applyMarkdown = (formatType, markdown, setMarkdown) => {
       break;
     case "highlight":
       markdownSyntax = `==${selectedText}==`;
+      break;
+    case "clear":
+      const syntaxes = ["**", "*", "`", "=="];
+      syntaxes.forEach((syntax) => {
+        while (
+          selectedText.startsWith(syntax) &&
+          selectedText.endsWith(syntax)
+        ) {
+          selectedText = selectedText.substring(
+            syntax.length,
+            selectedText.length - syntax.length
+          );
+        }
+      });
+      markdownSyntax = selectedText;
       break;
     default:
       markdownSyntax = selectedText;
@@ -52,7 +67,9 @@ const SideNotes = ({
   return (
     <div
       style={{ height: "100vh" }}
-      className={`${annotating ? "col-7" : "col-auto"} transition-sidebar 
+      className={`${
+        annotating ? "col-lg-7 col" : "col-auto"
+      } transition-sidebar 
 `}
     >
       <div className="row h-100">
@@ -111,7 +128,7 @@ const SideNotes = ({
                   onChange={(e) => setMarkdown(e.target.value)}
                 />
                 <div className="mt-2 row">
-                  <div className="col-8 d-flex align-items-center justify-content-between">
+                  <div className="col d-flex align-items-center justify-content-between">
                     <Button
                       variant="outline-primary"
                       type="button"
@@ -135,7 +152,7 @@ const SideNotes = ({
                       </div>
                     )}
                   </div>
-                  <div className="col-4 justify-content-between d-flex">
+                  <div className="col-lg-5 col-md-6 col-sm-8 justify-content-between d-flex">
                     <Button
                       variant="outline-secondary"
                       onClick={() =>
@@ -167,6 +184,14 @@ const SideNotes = ({
                       }
                     >
                       <i className="bi bi-code-slash"></i>{" "}
+                    </Button>
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() =>
+                        applyMarkdown("clear", markdown, setMarkdown)
+                      }
+                    >
+                      <i className="bi bi-eraser"></i>{" "}
                     </Button>
                   </div>
                 </div>

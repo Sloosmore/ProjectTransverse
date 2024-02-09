@@ -122,13 +122,15 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
       />
 
       <div
-        className={`d-flex flex-column vh-100 ms-2 pe-5 text-secondary col `}
+        className={`d-flex flex-column vh-100 ms-2 pe-5 text-secondary  ${
+          annotating ? "col-md-auto col-lg" : "col"
+        }`}
       >
-        <div className="mt-4 pb-2 border-bottom row d-flex align-items-center">
-          <div className="col">
+        <div className="mt-4 pb-2 border-bottom row d-flex align-items-center flex-lg-row">
+          <div className="col-xl">
             <h1>{title}</h1>
           </div>
-          <div className="col-3">
+          <div className="col-xl-3 pe-0">
             <TextToSpeech
               markdown={markdown}
               modeKit={modeKit}

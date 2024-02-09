@@ -96,7 +96,7 @@ const TextToSpeech = ({ markdown, modeKit, ID, selectedText }) => {
   return (
     <>
       {mode !== "note" && (
-        <div className="container my-3">
+        <div className=" ms-3">
           <div className="d-flex justify-content-end align-items-center">
             {started && !speaking && (
               <button className="text-secondary btn" onClick={handleReset}>
