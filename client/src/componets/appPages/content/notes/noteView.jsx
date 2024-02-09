@@ -35,12 +35,12 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
     //returns a list of one so index
     if (note.length > 0) {
       setMarkdown(note[0].full_markdown || note[0].markdown);
-
       //setActiveMarkdown(note[0].active_markdown);
       setStatus(note[0].status);
       setNoteID(note[0].note_id);
       setFullTs(note[0].full_transcript);
       setTitle(note[0].title);
+      console.log("noteID", note[0].note_id);
     }
   }, [noteData, noteId]);
   //this will update the glob markdown string
@@ -83,7 +83,7 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
     }
 
     const id = setTimeout(() => {
-      saveNoteMarkdown(noteID, markdown);
+      saveNoteMarkdown(noteID || noteId, markdown);
     }, 2000);
 
     setTimeoutId(id);

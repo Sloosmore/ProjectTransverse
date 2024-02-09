@@ -5,17 +5,16 @@ export const fetchTaskRecords = async () => {
 };
 
 //Grabs Note Records and distingueshes if the note visble or not
-export const fetchNoteRecords = async (visibleNotes, resume) => {
-  if (visibleNotes === true) {
-  } else {
-  }
+export const fetchNoteRecords = async (session, visibleNotes, resume) => {
+  const token = session.access_token;
+  // if !resume deactivate records
   const response = await fetch(
     `/records-api/notes?visibleNotes=${visibleNotes}&resume=${resume}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        // 'Authorization': 'Bearer ' + token // Uncomment this line if you need to send a token
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -23,24 +22,13 @@ export const fetchNoteRecords = async (visibleNotes, resume) => {
   return data.noteRecords;
 };
 
-//UP MARKDOWN
-export const saveNoteMarkdown = async (id, markdown) => {
-  const response = await fetch("/records-api/notes-markdown", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ id, markdown }),
-  });
-  const data = await response.json();
-  console.log(data);
-};
-
-export const deactivateNotes = async () => {
+export const deactivateNotes = async (session) => {
+  const token = session.access_token;
   const response = await fetch("/records-api/notes-deactivate", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
     },
     //body: JSON.stringify({ id,  }),
   });
@@ -48,33 +36,47 @@ export const deactivateNotes = async () => {
   return data.noteRecords;
 };
 
-//UP TITLE
-export const updateTitle = async (id, title) => {
+//UP MARKDOWN (no auth needed for MVP)
+export const saveNoteMarkdown = async (note_id, markdown) => {
+  console.log(note_id);
+  const response = await fetch("/records-api/notes-markdown", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ note_id, markdown }),
+  });
+  const data = await response.json();
+  console.log(data);
+};
+
+//UP TITLE (no auth needed for MVP)
+export const updateTitle = async (note_id, title) => {
   const response = await fetch("/records-api/notes-title", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ id, title }),
+    body: JSON.stringify({ note_id, title }),
   });
   const data = await response.json();
   console.log(data);
 };
 
-//UP VISIBILITY
-export const updateVis = async (id, visible) => {
+//UP VISIBILITY (no auth needed for MVP)
+export const updateVis = async (note_id, visible) => {
   const response = await fetch("/records-api/notes-visiblity", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ id, visible }),
+    body: JSON.stringify({ note_id, visible }),
   });
   const data = await response.json();
   console.log(data);
 };
 
-//DEL ID'd
+//DEL ID'd (no auth needed for MVP)
 export const deleteRecord = async (note_id) => {
   const response = await fetch(`/records-api/notes?note_id=${note_id}`, {
     method: "DELETE",

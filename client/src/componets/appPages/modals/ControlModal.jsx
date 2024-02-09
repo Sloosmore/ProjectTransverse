@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Modal, Accordion, Button } from "react-bootstrap";
 import { handleSendLLM, fetchLLMpref } from "../services/setNotepref";
 import { createNewNote } from "../services/noteModeApi";
-import { tvrseFunc } from "../services/tverseAPI";
+import { useAuth } from "../../../hooks/auth";
 
 function ControlModal({ show, handleClose, noteData, controlProps }) {
+  const { session } = useAuth();
   const { setDocs, setNotes, wsJSON, setMode } = controlProps;
   //LLM preffereences
   const [preferences, setPreferences] = useState(null);
@@ -24,14 +25,14 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
   // Call fetchData when the modal opens
   useEffect(() => {
     if (show) {
-      fetchLLMpref(setTextareaValue);
+      fetchLLMpref(setTextareaValue, session);
       console.log(textareaValue);
     }
   }, [show]);
   //send preff over on submit
   useEffect(() => {
     if (preferences) {
-      handleSendLLM(preferences);
+      handleSendLLM(preferences, session);
     }
   }, [preferences]);
 
@@ -41,13 +42,15 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
   const startNotes = () => {
     if (localNoteName) {
       const transcript = "";
+      console.log(session);
       createNewNote(
         localNoteName,
         transcript,
         noteData,
         setNotes,
         setMode,
-        wsJSON
+        wsJSON,
+        session
       );
     }
   };
@@ -147,7 +150,9 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
 }
 
 export default ControlModal;
-/* <Accordion.Item eventKey="1">
+/* 
+import { tvrseFunc } from "../services/tverseAPI";
+<Accordion.Item eventKey="1">
             <Accordion.Header>Generate Document</Accordion.Header>
             <Accordion.Body>
               <div className="mb-3">

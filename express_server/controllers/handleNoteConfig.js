@@ -2,12 +2,13 @@ const path = require("path");
 const fsPromises = require("fs").promises;
 const pool = require("../db/db");
 const supabase = require("../db/supabase");
-
-const user_id = "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
+const { getUserIdFromToken } = require("../middleware/authDecodeJWS");
 
 const writeLLM = async (req, res) => {
   try {
     console.log("writeLLM");
+    const token = req.headers.authorization.split(" ")[1];
+    const user_id = getUserIdFromToken(token);
     const message = req.body["instructions"];
     const { error } = await supabase
       .from("user")
@@ -28,6 +29,10 @@ const writeLLM = async (req, res) => {
 const readLLM = async (req, res) => {
   try {
     console.log("ReadLLM");
+
+    // Extract the token from the Authorization header
+    const token = req.headers.authorization.split(" ")[1];
+    const user_id = getUserIdFromToken(token);
 
     const { data: message, error } = await supabase
       .from("user")

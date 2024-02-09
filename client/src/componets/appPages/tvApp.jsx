@@ -13,10 +13,12 @@ import SpeechRecognition, {
 import { handleOnMessage } from "./services/wsResponce";
 import { deactivateNotes, fetchNoteRecords } from "./services/crudApi";
 import titleFromID from "./services/titleFromID";
+import { useAuth } from "../../hooks/auth";
 
 const WS_URL = "ws://localhost:5001/notes-api";
 
 function TransverseApp() {
+  const { session } = useAuth();
   //this is for help
   const [showHelpModal, setShowHelpModal] = useState(false);
   const closeModal = () => setShowHelpModal(false);
@@ -86,7 +88,15 @@ function TransverseApp() {
       command: "* note mode",
       callback: (name) => {
         resetTranscript();
-        createNewNote(name, transcript, noteData, setNotes, setMode, wsJSON);
+        createNewNote(
+          name,
+          transcript,
+          noteData,
+          setNotes,
+          setMode,
+          wsJSON,
+          session
+        );
       },
     },
     {
@@ -238,6 +248,7 @@ function TransverseApp() {
           transcript: transcript,
           init: false,
           note_id: noteID,
+          token: session.access_token,
         });
         SpeechRecognition.startListening({ continuous: true });
         console.log("sent to backend");
@@ -283,7 +294,7 @@ function TransverseApp() {
     }
 
     //if deactivate any active notes
-    deactivateNotes().then((data) => {
+    deactivateNotes(session).then((data) => {
       setNotes(data);
     });
 
@@ -295,7 +306,7 @@ function TransverseApp() {
   }, []);
 
   useEffect(() => {
-    fetchNoteRecords(true).then(setNotes);
+    fetchNoteRecords(session, true).then(setNotes);
   }, [showOffCanvasEdit]);
 
   useEffect(() => {

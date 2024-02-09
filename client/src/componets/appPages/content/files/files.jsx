@@ -2,17 +2,19 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { fetchNoteRecords } from "../../services/crudApi";
 import EditOffcanvas from "./fileEdit";
+import { useAuth } from "../../../../hooks/auth";
 
 //overflow for records
 
 function Files({ canvasEdit }) {
+  const { session } = useAuth();
   const { showOffCanvasEdit, setOffCanvasEdit } = canvasEdit;
   const [files, setFiles] = useState([]);
   //this needs to be in the use effect for use State
   const targetFile = useRef(null);
 
   useEffect(() => {
-    fetchNoteRecords(false).then(setFiles);
+    fetchNoteRecords(session, false).then(setFiles);
   }, [showOffCanvasEdit]);
 
   const handleOffCanvasShow = (file) => {

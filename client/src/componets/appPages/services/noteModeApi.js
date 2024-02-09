@@ -4,7 +4,8 @@ export const createNewNote = (
   noteData,
   setNotes,
   setMode,
-  wsJSON
+  wsJSON,
+  session
 ) => {
   console.log(name);
   //notes are being deactivated in the backend so could just fetch insted of filter after send responce
@@ -23,5 +24,6 @@ export const createNewNote = (
     title: name,
     transcript: transcript,
     init: true,
+    token: session.access_token,
   });
 };

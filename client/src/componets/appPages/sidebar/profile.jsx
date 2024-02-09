@@ -4,8 +4,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 
 function Profile() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useAuth();
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
 
   const toggleOpen = () => setIsOpen(!isOpen);
   return (

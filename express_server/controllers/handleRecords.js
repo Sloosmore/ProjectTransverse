@@ -1,6 +1,7 @@
 const pool = require("../db/db");
 const { deactivateRecords } = require("../middleware/wsNotes/deactivateNotes");
 const supabase = require("../db/supabase");
+const { getUserIdFromToken } = require("../middleware/authDecodeJWS");
 
 const id = "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
 
@@ -112,23 +113,25 @@ const delNotePG = async (req, res) => {
 };
 */
 
-//GET notes
+//GET notes AUTH
 const sendNotesFromSB = async (req, res) => {
   try {
     const { visibleNotes, resume } = req.query;
+    const token = req.headers.authorization.split(" ")[1];
+    const user_id = getUserIdFromToken(token);
     let result;
     if (visibleNotes === "true") {
       result = await supabase
         .from("note")
         .select("*")
         .eq("visible", visibleNotes)
-        .eq("user_id", id)
+        .eq("user_id", user_id)
         .eq("is_deleted", false);
     } else {
       result = await supabase
         .from("note")
         .select("*")
-        .eq("user_id", id)
+        .eq("user_id", user_id)
         .eq("is_deleted", false);
     }
     let noteRecords = result.data;
@@ -136,8 +139,7 @@ const sendNotesFromSB = async (req, res) => {
       console.log("resume not sent!");
       //**this is the issue**//
 
-      const user = data.user || "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
-      noteRecords = await deactivateRecords(user);
+      noteRecords = await deactivateRecords(user_id);
     }
     console.log("Sending records...");
     res.status(200).json({ noteRecords });
@@ -146,56 +148,17 @@ const sendNotesFromSB = async (req, res) => {
   }
 };
 
-//UP MD
-const updateMarkdownToSB = async (req, res) => {
-  try {
-    const { id, markdown } = req.body;
-    console.log("Updating Markdown to DB...");
-
-    //console.log(`${markdown}`);
-    const result = await supabase
-      .from("note")
-      .update({ full_markdown: markdown, date_updated: new Date() })
-      .eq("note_id", id);
-    if (result.error) {
-      throw result.error;
-    }
-    res.status(200).json({ message: `saved markdown ${markdown}` });
-  } catch (error) {
-    res.sendStatus(401);
-    console.error("Error:", error);
-  }
-};
-
-//UP TITLE
-const updateTitleToSB = async (req, res) => {
-  try {
-    const { id, title } = req.body;
-    console.log("Updating title to DB...");
-    const result = await supabase
-      .from("note")
-      .update({ title: title, date_updated: new Date() })
-      .eq("note_id", id);
-    if (result.error) {
-      throw result.error;
-    }
-    res.status(200).json({ message: `saved title ${title}` });
-  } catch (error) {
-    res.sendStatus(401);
-    console.error("Error:", error);
-  }
-};
-
-//UP STATUS (TO INACTIVE)
+//UP STATUS (TO INACTIVE) AUTH
 const upInactiveStatus = async (req, res) => {
   try {
-    const user = "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
+    const token = req.headers.authorization.split(" ")[1];
+    const user_id = getUserIdFromToken(token);
 
     // Update the status of the notes
     const { error: updateError } = await supabase
       .from("note")
       .update({ status: "inactive" })
-      .eq("user_id", user);
+      .eq("user_id", user_id);
 
     if (updateError) {
       throw updateError;
@@ -205,7 +168,7 @@ const upInactiveStatus = async (req, res) => {
     const { data: noteRecords, error: selectError } = await supabase
       .from("note")
       .select("*")
-      .eq("user_id", user)
+      .eq("user_id", user_id)
       .eq("status", "inactive")
       .eq("is_deleted", false);
 
@@ -220,10 +183,51 @@ const upInactiveStatus = async (req, res) => {
   }
 };
 
-//UP VIS
+//UP MD (no auth needed for MVP)
+const updateMarkdownToSB = async (req, res) => {
+  try {
+    const { note_id, markdown } = req.body;
+    console.log("Updating Markdown to DB...");
+    console.log("note_id", note_id);
+
+    //console.log(`${markdown}`);
+    const result = await supabase
+      .from("note")
+      .update({ full_markdown: markdown, date_updated: new Date() })
+      .eq("note_id", note_id);
+    if (result.error) {
+      throw result.error;
+    }
+    res.status(200).json({ message: `saved markdown ${markdown}` });
+  } catch (error) {
+    res.sendStatus(401);
+    console.error("Save markdown error error:", error);
+  }
+};
+
+//UP TITLE (no auth needed for MVP)
+const updateTitleToSB = async (req, res) => {
+  try {
+    const { note_id, title } = req.body;
+    console.log("Updating title to DB...");
+    const result = await supabase
+      .from("note")
+      .update({ title: title, date_updated: new Date() })
+      .eq("note_id", note_id);
+    if (result.error) {
+      throw result.error;
+    }
+    res.status(200).json({ message: `saved title ${title}` });
+  } catch (error) {
+    res.sendStatus(401);
+    console.error("Error:", error);
+  }
+};
+
+//UP VIS (no auth needed for MVP)
 const updateVisibilitySB = async (req, res) => {
   try {
-    const { id, visible } = req.body;
+    const { note_id, visible } = req.body;
     const result = await supabase
       .from("note")
       .update({
@@ -231,7 +235,7 @@ const updateVisibilitySB = async (req, res) => {
         date_updated: new Date(),
         status: "inactive",
       })
-      .eq("note_id", id);
+      .eq("note_id", note_id);
     if (result.error) {
       throw result.error;
     }
@@ -242,7 +246,7 @@ const updateVisibilitySB = async (req, res) => {
   }
 };
 
-//DEL
+//DEL (no auth needed for MVP)
 const delNoteSB = async (req, res) => {
   try {
     const { note_id } = req.query;

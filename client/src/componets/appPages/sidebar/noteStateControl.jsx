@@ -3,8 +3,10 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import titleFromID from "../services/titleFromID";
 import { onPause, onPlay } from "../services/pausePlay";
 import { fetchNoteRecords } from "../services/crudApi";
+import { useAuth } from "../../../hooks/auth";
 
 function PausePlay({ pauseProps }) {
+  const { session } = useAuth();
   const { mode, setMode, noteID, setNotes, noteData } = pauseProps;
   //noteID = ID
   const [button, setButton] = useState();
@@ -24,7 +26,7 @@ function PausePlay({ pauseProps }) {
         <div
           onClick={() => {
             onPause(noteID)
-              .then(() => fetchNoteRecords(true))
+              .then(() => fetchNoteRecords(session, true))
               .then((data) => {
                 setNotes(data);
                 setMode("default");
@@ -44,7 +46,7 @@ function PausePlay({ pauseProps }) {
         <div
           onClick={() => {
             onPlay(noteID)
-              .then(() => fetchNoteRecords(true, true))
+              .then(() => fetchNoteRecords(session, true, true))
               .then((data) => setNotes(data));
             setMode("note");
           }}

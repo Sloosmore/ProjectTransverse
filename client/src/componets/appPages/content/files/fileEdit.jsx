@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Toast } from "react-bootstrap";
 import DownloadMd from "./download";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 import {
   updateTitle,
@@ -131,7 +132,15 @@ function EditOffcanvas({ canvasEdit, handleClose, file }) {
 
           <div className=" row">
             <div className="col">
-              <Button variant="outline-dark">Export to Notion</Button>
+              <Button variant="outline-dark" data-tooltip-id="notion-tooltip">
+                Export to Notion
+              </Button>
+              <ReactTooltip
+                place="bottom"
+                id="notion-tooltip"
+                className="bg-light text-black-50 border"
+                content="Comming Soon"
+              />
             </div>
             <div className="col justify-content-end d-flex">
               <Button

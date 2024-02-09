@@ -1,8 +1,11 @@
-export const handleSendLLM = (instructions) => {
+export const handleSendLLM = (instructions, session) => {
+  const token = session.access_token;
+
   fetch("/settings/notes", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
     },
     body: JSON.stringify({ instructions }),
   })
@@ -13,11 +16,13 @@ export const handleSendLLM = (instructions) => {
     });
 };
 
-export const fetchLLMpref = (setTextareaValue) => {
+export const fetchLLMpref = (setTextareaValue, session) => {
+  const token = session.access_token;
   fetch("/settings/notes", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
     },
   })
     .then((response) => response.json())

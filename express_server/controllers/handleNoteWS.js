@@ -10,12 +10,13 @@ const {
 } = require("../middleware/wsNotes/activeTs");
 const { deactivateRecords } = require("../middleware/wsNotes/deactivateNotes");
 const supabase = require("../db/supabase");
+const { getUserIdFromToken } = require("../middleware/authDecodeJWS");
 
 async function handleWebSocketConnection(ws, request) {
   const connectMessage = {
     message: "Connected to WebSocket!",
   };
-  const threshold = 0;
+  const threshold = 500;
   ws.send(JSON.stringify(connectMessage));
 
   //Append note record to db
@@ -30,7 +31,9 @@ async function handleWebSocketConnection(ws, request) {
       console.log(`this is the incomming transcript ${ts}`);
 
       //this is loosmore's user ID
-      const user = data.user || "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
+      const token = data.token;
+      const user =
+        getUserIdFromToken(token) || "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
 
       if (justActivated) {
         const user_id = user;
@@ -111,7 +114,7 @@ async function handleWebSocketConnection(ws, request) {
         }
       } else if (ts) {
         //get the id of the note which will only be passed when note is Activated
-        const id = data.note_id;
+        const note_id = data.note_id;
 
         //this is what needs to be appended to the full TS and thrown on to the active to see if it needs to be appended
         //throw on a date if it has a x charecter count
@@ -124,7 +127,7 @@ async function handleWebSocketConnection(ws, request) {
           const { data: latestDate, error } = await supabase
             .from("note")
             .select("play_timestamps, pause_timestamps")
-            .eq("note_id", id);
+            .eq("note_id", note_id);
 
           if (error) {
             throw error;
@@ -178,7 +181,7 @@ async function handleWebSocketConnection(ws, request) {
           incomingTs = ts;
         }
         //this is what I need to check out
-        const newFullTs = await appendFullTranscript(id, incomingTs);
+        const newFullTs = await appendFullTranscript(note_id, incomingTs);
 
         //send timestamped transcript
         if (newFullTs) {
@@ -191,14 +194,14 @@ async function handleWebSocketConnection(ws, request) {
         }
 
         //now lets get the active TS to see if it meets the transcription threshold
-        const activeTs = await fetchActiveTs(id, incomingTs);
+        const activeTs = await fetchActiveTs(note_id, incomingTs);
 
         //only pass the new ts to the AI query when the transcript gets reset it needs to pass the thresehold which it probaly should
 
         if (activeTs && activeTs.length >= threshold) {
           //in theroy the thread ID should be passed into this function
 
-          const res = await queryAI(id, activeTs);
+          const res = await queryAI(note_id, activeTs);
 
           //be able to look at outputs without clouding consol
           const debugPath = path.join(__dirname, "../logs/debuglog.txt");
@@ -211,12 +214,12 @@ async function handleWebSocketConnection(ws, request) {
           ${md}`);
 
           //clear active transcript so it can be used later
-          const clearTSBool = await clearActiveTS(id);
+          const clearTSBool = await clearActiveTS(note_id);
 
           const { data: fullMdResult, error } = await supabase
             .from("note")
             .select("full_markdown")
-            .eq("note_id", id);
+            .eq("note_id", note_id);
 
           if (error) {
             throw error;
