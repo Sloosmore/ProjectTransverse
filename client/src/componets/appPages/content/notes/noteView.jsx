@@ -61,12 +61,14 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
   useEffect(() => {
     console.log(`title ${title}`);
     console.log(markdown);
-    setMarkdownElements(splitMarkdown(markdown));
+    const splitMd = splitMarkdown(markdown);
+    setMarkdownElements(splitMd);
   }, [markdown]);
 
   const handleDoubleClick = (clickedElement, index) => {
     // You can either play from the clicked element or accumulate text from this point
     const textFromClickedPoint = markdownElements.slice(index).join("\n\n");
+    console.log(index, textFromClickedPoint);
     setSelectedText(textFromClickedPoint);
   };
 
@@ -141,7 +143,9 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
             <MarkdownElement
               key={index}
               element={element}
-              handleDoubleClick={handleDoubleClick}
+              handleDoubleClick={() => {
+                handleDoubleClick(element, index);
+              }}
             />
           ))}
           {status === "active" && <LoadNote />}

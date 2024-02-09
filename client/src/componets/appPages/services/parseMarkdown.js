@@ -18,15 +18,19 @@ export const splitMarkdown = (markdownText) => {
     const splitByParagraphs = markdownText.split("\n\n");
 
     // Check if the text was split into more than one part
-    if (splitByParagraphs.length > 1) {
+    if (splitByParagraphs.length > 2) {
+      console.log("split by paragraph");
+      console.log(splitByParagraphs);
       return splitByParagraphs;
     }
 
     // If not, fallback to splitting by '##' (level-2 headings)
-    return markdownText
+    const markdown = markdownText
       .split("##")
       .map((part) => part.trim())
       .filter((part) => part !== "");
+
+    return markdown;
   } else {
     return [];
   }
