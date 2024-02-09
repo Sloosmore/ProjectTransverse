@@ -36,7 +36,9 @@ function Files({ canvasEdit }) {
           <thead>
             <tr>
               <th scope="col">Title</th>
-              <th scope="col">Date Updated</th>
+              <th scope="col" className="d-none d-md-table-cell">
+                Date Updated
+              </th>
               <th scope="col">Visible in sidebar</th>
               <th scope="col">Edit</th>
             </tr>
@@ -45,7 +47,9 @@ function Files({ canvasEdit }) {
             {files.map((file, index) => (
               <tr key={index}>
                 <td className="align-middle">{file.title}</td>
-                <td className="align-middle">{file.date_updated}</td>
+                <td className="align-middle d-none d-md-table-cell">
+                  {file.date_updated}
+                </td>
                 <td className="align-middle">{file.visible.toString()}</td>
                 <td className="align-middle">
                   <button
