@@ -14,6 +14,7 @@ import { handleOnMessage } from "./services/wsResponce";
 import { deactivateNotes, fetchNoteRecords } from "./services/crudApi";
 import titleFromID from "./services/titleFromID";
 import { useAuth } from "../../hooks/auth";
+import SupportedToast from "./supportedBrowser";
 
 const WS_URL = "ws://localhost:5001/notes-api";
 
@@ -279,12 +280,6 @@ function TransverseApp() {
     }
   }, [transcript]);
 
-  const handleCKeyDown = (event) => {
-    if (event.key === "c") {
-      resetTranscript();
-    }
-  };
-
   useEffect(() => {
     //fetchTaskRecords().then(setDocs);
     if (browserSupportsSpeechRecognition) {
@@ -297,12 +292,6 @@ function TransverseApp() {
     deactivateNotes(session).then((data) => {
       setNotes(data);
     });
-
-    window.addEventListener("keydown", handleCKeyDown);
-    // Cleanup function to remove the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("keydown", handleCKeyDown);
-    };
   }, []);
 
   useEffect(() => {
@@ -323,6 +312,7 @@ function TransverseApp() {
     setNotes,
     wsJSON: sendJsonMessage,
     setMode,
+    resetTranscript,
   };
 
   const pauseProps = {
@@ -331,10 +321,6 @@ function TransverseApp() {
     noteID,
     setNotes,
     noteData,
-  };
-
-  const eventListeners = {
-    handleCKeyDown,
   };
 
   const modeKit = {
@@ -368,7 +354,6 @@ function TransverseApp() {
               noteData={noteData}
               pauseProps={pauseProps}
               controlProps={controlProps}
-              eventListeners={eventListeners}
             />
           </div>
         )}
@@ -386,6 +371,7 @@ function TransverseApp() {
           />
         </div>
       </div>
+      <SupportedToast />
     </div>
   );
 }

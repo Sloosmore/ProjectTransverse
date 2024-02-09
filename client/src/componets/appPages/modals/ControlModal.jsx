@@ -6,7 +6,7 @@ import { useAuth } from "../../../hooks/auth";
 
 function ControlModal({ show, handleClose, noteData, controlProps }) {
   const { session } = useAuth();
-  const { setDocs, setNotes, wsJSON, setMode } = controlProps;
+  const { setDocs, setNotes, wsJSON, setMode, resetTranscript } = controlProps;
   //LLM preffereences
   const [preferences, setPreferences] = useState(null);
   //Value of LLMPref text box
@@ -140,11 +140,19 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
           </Accordion.Item>
         </Accordion>
       </Modal.Body>
-      <Modal.Footer>
+      <div className="d-flex p-3 border-top">
+        <Button
+          variant="secondary"
+          className="me-auto"
+          onClick={() => resetTranscript()}
+        >
+          Clear Transcript
+        </Button>
+
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-      </Modal.Footer>
+      </div>
     </Modal>
   );
 }
