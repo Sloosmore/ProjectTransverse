@@ -35,7 +35,6 @@ const SupportedToast = () => {
         }
       }
       setShowWarning(true);
-      console.log(browserName);
     }, 1000);
 
     setTimeout(() => {

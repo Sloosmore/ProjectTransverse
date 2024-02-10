@@ -4,9 +4,7 @@ const { logEvents, logger } = require("./middleware/infoTracking/logEvents");
 const errorHandler = require("./middleware/infoTracking/errorHandle");
 const http = require("http");
 const server = http.createServer(app);
-const supabase = require("./db/supabase");
 
-//const chokidar = require("chokidar");
 const PORT = process.env.PORT || 5001;
 
 app.use(logger);

@@ -18,7 +18,7 @@ export default defineConfig({
 
       "/notes-api": {
         target: "ws://localhost:5001",
-        ws: true, // Add this line to handle WebSocket connections
+        ws: true,
       },
     },
   },
