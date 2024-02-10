@@ -1,6 +1,6 @@
 const handleTscript = async (req, res) => {
   try {
-    console.log(req.body);
+    //console.log(req.body);
 
     res.status(201).json({ message: "all good" });
   } catch (error) {

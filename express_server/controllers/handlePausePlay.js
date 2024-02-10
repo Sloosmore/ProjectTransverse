@@ -26,7 +26,8 @@ const pauseAppend = async (req, res) => {
     if (!note) {
       return res.status(404).json({ message: "Note not found" });
     }
-    const pauseArray = [...note.pause_timestamps, new Date()];
+    const newDate = new Date();
+    const pauseArray = [...note.pause_timestamps, newDate];
 
     const { error: updateError } = await supabase
       .from("note")
@@ -61,7 +62,9 @@ const playAppend = async (req, res) => {
     if (!note) {
       return res.status(404).json({ message: "Note not found" });
     }
-    const playArray = [...note.play_timestamps, new Date()];
+    const newDate = new Date();
+
+    const playArray = [...note.play_timestamps, newDate];
 
     const { error: updateError } = await supabase
       .from("note")

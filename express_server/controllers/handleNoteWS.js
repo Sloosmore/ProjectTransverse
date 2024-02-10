@@ -28,7 +28,7 @@ async function handleWebSocketConnection(ws, request) {
       const title = data.title;
       const ts = data.transcript;
       const justActivated = data.init;
-      console.log(`this is the incomming transcript ${ts}`);
+      //console.log(`this is the incomming transcript ${ts}`);
 
       //this is loosmore's user ID
       const token = data.token;
@@ -141,22 +141,39 @@ async function handleWebSocketConnection(ws, request) {
 
           const playArray = latestDate[0].play_timestamps;
           const pauseArray = latestDate[0].pause_timestamps;
+          console.log("playArray", playArray);
+          console.log("pauseArray", pauseArray);
 
           let totTime = 0;
 
+          //this should loop for the lenth of pause array
           for (let i = 0; i < pauseArray.length; i++) {
             let timeDiferential =
               new Date(pauseArray[i]).getTime() -
               new Date(playArray[i]).getTime();
             totTime += timeDiferential;
-            console.log(totTime);
+            console.log("Step ", i, "Time", totTime);
           }
+
           //if in play mode (most of the time)
           if (pauseArray.length < playArray.length) {
             const lastIndex = playArray.length - 1;
-            const lastDate = new Date(playArray[lastIndex]);
-            const date = new Date();
-            const mostUpdate = date.getTime() - lastDate.getTime();
+            console.log(playArray[lastIndex]);
+            let lastDate = new Date(playArray[lastIndex]);
+
+            const timezoneOffsetMilliseconds =
+              new Date().getTimezoneOffset() * 60 * 1000;
+
+            // Subtract the timezone offset from lastDate
+            lastDate = new Date(
+              lastDate.getTime() - timezoneOffsetMilliseconds
+            );
+
+            const now = new Date();
+
+            console.log("lastDate ", lastDate, "date", now);
+            const mostUpdate = now.getTime() - lastDate.getTime();
+
             totTime += mostUpdate;
             console.log(totTime);
           }
@@ -168,6 +185,10 @@ async function handleWebSocketConnection(ws, request) {
           // Pad the minutes and seconds with leading zeros, if necessary
           minutes = minutes.toString().padStart(2, "0");
           seconds = seconds.toString().padStart(2, "0");
+
+          if (seconds % 10 === 0) {
+            seconds = seconds.padEnd(2, "0");
+          }
 
           let formattedTime = `${minutes}:${seconds}`;
           // If hours is not zero, prepend it to the formatted time
@@ -209,9 +230,7 @@ async function handleWebSocketConnection(ws, request) {
           //console.log(`AI ${JSON.stringify(res, null, 2)}`);
           const md = res["data"][0]["content"][0]["text"]["value"];
 
-          console.log(`there is new markdown
-          
-          ${md}`);
+          //console.log(`there is new markdown${md}`);
 
           //clear active transcript so it can be used later
           const clearTSBool = await clearActiveTS(note_id);

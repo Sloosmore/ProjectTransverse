@@ -1,5 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "../landing/blockText.css";
 
 const ComingSoon = () => {
   const location = useLocation();
@@ -16,6 +18,11 @@ const ComingSoon = () => {
     >
       <h1>The {page} page is coming soon</h1>
       <p>When I say mvp I really mean mvp</p>
+      <Link to="/">
+        <button type="button" className="btn btn-lg px-4 me-md-2 gradient-bg">
+          Go back Home
+        </button>
+      </Link>
     </div>
   );
 };
