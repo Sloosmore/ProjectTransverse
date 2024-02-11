@@ -10,13 +10,13 @@ const server = http.createServer(app);
 
 const PORT = process.env.PORT || 5001;
 
-app.use(logger);
-
 app.use(
   cors({
     origin: corsOrigins,
   })
 );
+
+app.use(logger);
 
 // For parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
