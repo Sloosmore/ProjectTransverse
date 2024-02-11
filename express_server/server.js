@@ -4,10 +4,19 @@ const { logEvents, logger } = require("./middleware/infoTracking/logEvents");
 const errorHandler = require("./middleware/infoTracking/errorHandle");
 const http = require("http");
 const server = http.createServer(app);
+require("dotenv").config();
+const corsOrigins = process.env.CORS_ORIGINS.split(",");
+const cors = require("cors");
 
 const PORT = process.env.PORT || 5001;
 
 app.use(logger);
+
+app.use(
+  cors({
+    origin: corsOrigins,
+  })
+);
 
 // For parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
