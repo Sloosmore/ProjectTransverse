@@ -10,11 +10,7 @@ const server = http.createServer(app);
 
 const PORT = process.env.PORT || 5001;
 
-app.use(
-  cors({
-    origin: corsOrigins,
-  })
-);
+app.use(cors());
 
 app.use(logger);
 
