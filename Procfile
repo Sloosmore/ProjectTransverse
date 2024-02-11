@@ -1,1 +1,0 @@
-worker: cd express_server && node server.js
