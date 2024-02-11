@@ -5,7 +5,7 @@ import HelpModal from "../modals/help";
 function Home({ transcript, helpModalKit }) {
   const { showHelpModal, setShowHelpModal, closeModal } = helpModalKit;
   const [onload, setLoad] = useState(
-    localStorage.getItem("pageLoaded") === "false"
+    localStorage.getItem("pageLoaded") === "true"
   );
 
   useEffect(() => {
