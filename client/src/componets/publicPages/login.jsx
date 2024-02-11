@@ -3,7 +3,6 @@ import { supabaseClient } from "../../config/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
 import "./login.css";
-import { v4 as uuidv4 } from "uuid";
 import { useAuth } from "../../hooks/auth";
 
 function Login() {
