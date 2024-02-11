@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import TransverseApp from "./componets/appPages/tvApp.jsx";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import PublicRoutes from "./componets/publicPages/publicRouter.jsx";
-import { AuthProvider } from "./hooks/auth.jsx";
+import AuthProvider from "./hooks/auth.jsx";
 import ProtectedRoute from "./componets/appPages/protectedRoute.jsx";
 
 function App() {

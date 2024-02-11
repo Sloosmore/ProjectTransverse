@@ -8,7 +8,7 @@ const AuthContext = createContext({
   signOut: () => {},
 });
 
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -49,6 +49,8 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export default AuthProvider;
 
 // Export the useAuth hook
 export const useAuth = () => {
