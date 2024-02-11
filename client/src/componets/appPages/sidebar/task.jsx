@@ -1,6 +1,6 @@
 import "./task.css";
 
-function Task({ name, state }) {
+function Task({ name, state, shadow }) {
   const taskColor = {
     complete: "green",
     error: "red",
@@ -18,9 +18,11 @@ function Task({ name, state }) {
   );
 
   return (
-    <div className="text-center mt-3 d-grid pt-2">
+    <div className={`text-center mt-3 d-grid pt-2 `}>
       <div
-        className="btn btn-light btn-rounded mx-auto text-black-50"
+        className={`btn btn-light btn-rounded mx-auto text-black-50 ${
+          shadow && "shadow"
+        }`}
         role="button"
       >
         {task}

@@ -16,7 +16,7 @@ import titleFromID from "./services/titleFromID";
 import { useAuth } from "../../hooks/auth";
 import SupportedToast from "./supportedBrowser";
 
-const WS_URL = "ws://localhost:5001/notes-api";
+const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 
 function TransverseApp() {
   const { session } = useAuth();

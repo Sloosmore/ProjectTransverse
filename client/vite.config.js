@@ -1,25 +1,38 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import dotenv from "dotenv";
 
+dotenv.config();
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    host: true,
-    port: 5173,
-    proxy: {
-      // proxy requests that start with /api to the target server
-      "/tscript-api": "http://localhost:5001",
-      "/tverse-api": "http://localhost:5001",
-      "/awaitDoc-api": "http://localhost:5001",
-      "/records-api": "http://localhost:5001",
-      "/grabDoc-api": "http://localhost:5001",
-      "/settings": "http://localhost:5001",
+let config;
 
-      "/notes-api": {
-        target: "ws://localhost:5001",
-        ws: true,
+if (process.env.NODE_ENV === "production") {
+  // Production config
+  config = defineConfig({
+    plugins: [react()],
+    // other production-specific config...
+  });
+} else {
+  // Development config
+  config = defineConfig({
+    plugins: [react()],
+    server: {
+      host: true,
+      port: 5173,
+      proxy: {
+        "/tscript-api": process.env.VITE_HTTP_SERVER_URL,
+        "/tverse-api": process.env.VITE_HTTP_SERVER_URL,
+        "/awaitDoc-api": process.env.VITE_HTTP_SERVER_URL,
+        "/records-api": process.env.VITE_HTTP_SERVER_URL,
+        "/grabDoc-api": process.env.VITE_HTTP_SERVER_URL,
+        "/settings": process.env.VITE_HTTP_SERVER_URL,
+        "/notes-api": {
+          target: process.env.VITE_WS_SERVER_URL,
+          ws: true,
+        },
       },
     },
-  },
-});
+  });
+}
+
+export default config;
