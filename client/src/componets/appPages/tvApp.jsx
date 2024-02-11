@@ -219,7 +219,7 @@ function TransverseApp() {
 
   useEffect(() => {
     if (mode === "default") {
-      fetch(`/tscript-api`, {
+      fetch(`${import.meta.env.VITE_BASE_URL}/tscript-api`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -2,7 +2,7 @@
 import { fetchTaskRecords } from "./crudApi";
 
 export const tvrseFunc = (transcript, setData) => {
-  fetch(`/tverse-api`, {
+  fetch(`${import.meta.env.VITE_BASE_URL}/tverse-api`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

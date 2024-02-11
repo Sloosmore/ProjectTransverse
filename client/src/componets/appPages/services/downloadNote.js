@@ -4,7 +4,7 @@ export const sendDownload = ({ noteID }, format) => {
     format = "docx";
   }
 
-  fetch("/records-api/notes-download", {
+  fetch(`${import.meta.env.VITE_BASE_URL}/records-api/notes-download`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

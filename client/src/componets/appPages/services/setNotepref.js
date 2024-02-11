@@ -1,7 +1,7 @@
 export const handleSendLLM = (instructions, session) => {
   const token = session.access_token;
 
-  fetch("/settings/notes", {
+  fetch(`${import.meta.env.VITE_BASE_URL}/settings/notes`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -18,7 +18,7 @@ export const handleSendLLM = (instructions, session) => {
 
 export const fetchLLMpref = (setTextareaValue, session) => {
   const token = session.access_token;
-  fetch("/settings/notes", {
+  fetch(`${import.meta.env.VITE_BASE_URL}/settings/notes`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

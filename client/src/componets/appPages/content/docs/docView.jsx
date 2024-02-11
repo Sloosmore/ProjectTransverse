@@ -10,7 +10,7 @@ function Chatroom() {
 
   useEffect(() => {
     setLoad(true);
-    fetch(`/grabDoc-api/?filename=${filename}`)
+    fetch(`${import.meta.env.VITE_BASE_URL}/grabDoc-api/?filename=${filename}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
