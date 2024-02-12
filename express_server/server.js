@@ -3,7 +3,6 @@ const app = express();
 const { logEvents, logger } = require("./middleware/infoTracking/logEvents");
 const errorHandler = require("./middleware/infoTracking/errorHandle");
 require("dotenv").config();
-const corsOrigins = process.env.CORS_ORIGINS.split(",");
 const cors = require("cors");
 const http = require("http");
 const server = http.createServer(app);
@@ -12,7 +11,7 @@ const PORT = process.env.PORT || 5001;
 
 app.use(
   cors({
-    origin: corsOrigins,
+    origin: process.env.CORS_ORIGINS,
   })
 );
 
