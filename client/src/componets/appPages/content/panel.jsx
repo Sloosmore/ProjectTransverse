@@ -4,21 +4,13 @@ import HelpModal from "../modals/help";
 
 function Home({ transcript, helpModalKit }) {
   const { showHelpModal, setShowHelpModal, closeModal } = helpModalKit;
-  const [onload, setLoad] = useState(
-    localStorage.getItem("pageLoaded") === "true"
-  );
-
-  useEffect(() => {
-    if (onload) {
-      localStorage.setItem("pageLoaded", "true");
-    }
-  }, [onload]);
+  const [onload, setLoad] = useState(true);
 
   useEffect(() => {
     if (onload && transcript) {
       setTimeout(() => {
         setLoad(false);
-      }, 2000);
+      }, 1500);
     }
   }, [transcript]);
   return (
@@ -34,7 +26,10 @@ function Home({ transcript, helpModalKit }) {
           {onload ? (
             <>
               <h1 className="mt-5">Welcome to Transverse!</h1>
-              <h3>Say help or press the question mark box to get started</h3>
+              <h4>
+                Say help or press the question mark box to get started or start
+                talking if you know what you're doing
+              </h4>
             </>
           ) : (
             <h1 className="mt-5">{transcript}</h1>
@@ -56,3 +51,12 @@ function Home({ transcript, helpModalKit }) {
 }
 
 export default Home;
+/*  const [onload, setLoad] = useState(
+    localStorage.getItem("pageLoaded") === "true"
+  );
+
+  useEffect(() => {
+    if (onload) {
+      localStorage.setItem("pageLoaded", "true");
+    }
+  }, [onload]); */

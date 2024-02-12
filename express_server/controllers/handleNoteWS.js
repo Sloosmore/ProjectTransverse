@@ -25,6 +25,11 @@ async function handleWebSocketConnection(ws, request) {
     try {
       const data = JSON.parse(message);
 
+      if (data.ping === true) {
+        ws.send(JSON.stringify({ pong: true }));
+        return;
+      }
+
       const title = data.title;
       const ts = data.transcript;
       const justActivated = data.init;

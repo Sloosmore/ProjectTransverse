@@ -9,9 +9,10 @@ const server = http.createServer(app);
 
 const PORT = process.env.PORT || 5001;
 
+const corsOrigins = process.env.CORS_ORIGINS.split(",");
 app.use(
   cors({
-    origin: process.env.CORS_ORIGINS,
+    origin: corsOrigins,
   })
 );
 

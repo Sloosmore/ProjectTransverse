@@ -287,11 +287,19 @@ function TransverseApp() {
     } else {
       console.log("this very bad how did you end up here");
     }
+    const ping = setInterval(() => {
+      sendJsonMessage({ ping: true });
+      console.log("ping");
+    }, 30000);
 
     //if deactivate any active notes
     deactivateNotes(session).then((data) => {
       setNotes(data);
     });
+
+    return () => {
+      clearInterval(ping);
+    };
   }, []);
 
   useEffect(() => {
