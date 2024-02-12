@@ -60,7 +60,6 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
 
   useEffect(() => {
     console.log(`title ${title}`);
-    console.log(markdown);
     const splitMd = splitMarkdown(markdown);
     setMarkdownElements(splitMd);
   }, [markdown]);

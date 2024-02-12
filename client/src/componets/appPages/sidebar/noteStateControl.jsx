@@ -14,7 +14,6 @@ function PausePlay({ pauseProps }) {
 
   useEffect(() => {
     setViewTitle(titleFromID(noteID, noteData));
-    console.log(titleFromID(noteID, noteData));
   }, [noteID, noteData]);
 
   useEffect(() => {

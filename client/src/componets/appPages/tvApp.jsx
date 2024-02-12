@@ -306,10 +306,11 @@ function TransverseApp() {
     fetchNoteRecords(session, true).then(setNotes);
   }, [showOffCanvasEdit]);
 
+  /*
   useEffect(() => {
     console.log(noteData);
   }, [noteData]);
-
+*/
   const canvasEdit = {
     showOffCanvasEdit,
     setOffCanvasEdit,
