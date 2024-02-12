@@ -10,6 +10,12 @@ function PausePlay({ pauseProps }) {
   const { mode, setMode, noteID, setNotes, noteData } = pauseProps;
   //noteID = ID
   const [button, setButton] = useState();
+  const [viewTitle, setViewTitle] = useState();
+
+  useEffect(() => {
+    setViewTitle(titleFromID(noteID, noteData));
+    console.log(titleFromID(noteID, noteData));
+  }, [noteID, noteData]);
 
   useEffect(() => {
     if (mode === "note") {
@@ -63,8 +69,9 @@ function PausePlay({ pauseProps }) {
         </div>
       ) : null}
       <ReactTooltip
+        key={viewTitle}
         place="right"
-        content={titleFromID(noteID, noteData)}
+        content={viewTitle || titleFromID(noteID, noteData)}
         id="play-tooltip"
         className="bg-light text-black-50 border"
       />
