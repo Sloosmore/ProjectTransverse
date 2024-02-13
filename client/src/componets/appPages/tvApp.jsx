@@ -14,8 +14,9 @@ import { handleOnMessage } from "./services/wsResponce";
 import { deactivateNotes, fetchNoteRecords } from "./services/crudApi";
 import titleFromID from "./services/titleFromID";
 import { useAuth } from "../../hooks/auth";
-import SupportedToast from "./supportedBrowser";
+import SupportedToast from "./support/supportedBrowser";
 import NoAudioSupport from "./support/noSupport";
+import SubmitToast from "./modalsToast/submitToast";
 
 const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 
@@ -43,6 +44,9 @@ function TransverseApp() {
 
   //for editing notes in files link
   const [showOffCanvasEdit, setOffCanvasEdit] = useState(false);
+
+  const [activeToast, setActiveToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
     localStorage.setItem("noteName", noteID);
@@ -259,25 +263,6 @@ function TransverseApp() {
 
       //restart frontend after 7
       clearTimeout(failsafeTimeoutId);
-
-      // Set a new timeout
-      /*
-      const resetID = setTimeout(() => {
-        setTimeout(() => {
-          SpeechRecognition.startListening({ continuous: true });
-          console.log("mic restared");
-        }, 200);
-      }, 7000); // 10 seconds
-    
-
-      setFailsafeTimeoutId(resetID);
-
-      // Clean up function
-      return () => {
-        clearTimeout(resetID);
-        clearTimeout(backID); // Using 'id' directly
-      };
-        */
     }
   }, [transcript]);
 
@@ -323,6 +308,8 @@ function TransverseApp() {
     wsJSON: sendJsonMessage,
     setMode,
     resetTranscript,
+    setActiveToast,
+    setToastMessage,
   };
 
   const pauseProps = {
@@ -349,6 +336,13 @@ function TransverseApp() {
     showHelpModal,
     setShowHelpModal,
     closeModal,
+  };
+
+  const submitToastKit = {
+    setActiveToast,
+    setToastMessage,
+    activeToast,
+    toastMessage,
   };
 
   return (
@@ -382,6 +376,7 @@ function TransverseApp() {
         </div>
       </div>
       <SupportedToast />
+      <SubmitToast {...submitToastKit} />
     </div>
   );
 }
