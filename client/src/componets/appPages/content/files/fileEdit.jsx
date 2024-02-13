@@ -12,7 +12,7 @@ import {
   saveNoteMarkdown,
   deleteRecord,
 } from "../../services/crudApi";
-
+//
 const updateNote = (file, markdown, visible, title, noteID, setShowAlert) => {
   if (file) {
     saveNoteMarkdown(noteID, markdown);
