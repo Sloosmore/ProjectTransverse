@@ -15,6 +15,7 @@ import { deactivateNotes, fetchNoteRecords } from "./services/crudApi";
 import titleFromID from "./services/titleFromID";
 import { useAuth } from "../../hooks/auth";
 import SupportedToast from "./supportedBrowser";
+import NoAudioSupport from "./support/noSupport";
 
 const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 
@@ -212,7 +213,7 @@ function TransverseApp() {
 
   if (!browserSupportsSpeechRecognition) {
     console.log("Browser doesnt support speech recognition.");
-    return <span>Browser doesn't support speech recognition.</span>;
+    return <NoAudioSupport />;
   }
 
   const [timeoutId, setTimeoutId] = useState(null);
