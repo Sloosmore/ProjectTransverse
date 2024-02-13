@@ -4,3 +4,4 @@ audiologs
 .env
 files/transcripts
 files/docs
+logs/reqLog
