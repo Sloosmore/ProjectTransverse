@@ -51,7 +51,6 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
   const startNotes = () => {
     if (localNoteName) {
       const transcript = "";
-      console.log(session);
       createNewNote(
         localNoteName,
         transcript,
@@ -98,7 +97,7 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
                   ></textarea>
                 </div>
                 <div className="row align-items-center">
-                  <div className="col-3">
+                  <div className="col">
                     <Button
                       variant="primary"
                       type="button"
@@ -107,7 +106,7 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
                       Submit
                     </Button>
                   </div>
-                  <div className="col-8">
+                  <div className="col-lg-6 col-sm-9 ms-auto">
                     {showAlert && (
                       <div
                         className="alert alert-success"

@@ -9,7 +9,7 @@ import PausePlay from "./noteStateControl";
 import StorageButton from "./storage";
 import Profile from "./profile";
 
-function Sidebar({ Dropdown, noteData, pauseProps, controlProps }) {
+function Sidebar({ Dropdown, noteData, pauseProps, controlProps, profileKit }) {
   const [openNotes, setOpenNotes] = useState(false);
   const [openTasks, setOpenTasks] = useState(false);
 
@@ -61,7 +61,7 @@ function Sidebar({ Dropdown, noteData, pauseProps, controlProps }) {
             <NoteList notes={noteData} />
           </div>
         </Collapse>
-        <Profile />
+        <Profile profileKit={profileKit} />
       </div>
     </div>
   );

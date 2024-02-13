@@ -224,6 +224,7 @@ function TransverseApp() {
 
   useEffect(() => {
     if (mode === "default") {
+      /*
       fetch(`${import.meta.env.VITE_BASE_URL}/tscript-api`, {
         method: "POST",
         headers: {
@@ -241,6 +242,7 @@ function TransverseApp() {
         .catch((err) => {
           console.log(err);
         });
+        */
     } else if (mode === "note") {
       //send to backend after 2 sec
       if (timeoutId) {
@@ -345,6 +347,10 @@ function TransverseApp() {
     toastMessage,
   };
 
+  const profileKit = {
+    SpeechRecognition,
+  };
+
   return (
     <div className="container-fluid vh-100 d-flex">
       <div className="row flex-grow-1">
@@ -358,6 +364,7 @@ function TransverseApp() {
               noteData={noteData}
               pauseProps={pauseProps}
               controlProps={controlProps}
+              profileKit={profileKit}
             />
           </div>
         )}

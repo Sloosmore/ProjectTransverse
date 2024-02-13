@@ -2,11 +2,19 @@ import React, { useState } from "react";
 import { useAuth } from "../../../hooks/auth";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
-function Profile() {
+function Profile({ profileKit }) {
   const [isOpen, setIsOpen] = useState(false);
   const { user, signOut } = useAuth();
 
+  const { SpeechRecognition } = profileKit;
+
   const toggleOpen = () => setIsOpen(!isOpen);
+
+  const logOut = () => {
+    signOut();
+    SpeechRecognition.stopListening();
+  };
+
   return (
     <>
       <div
@@ -41,7 +49,7 @@ function Profile() {
               <div
                 className="dropdown-item text-black-50 d-flex justify-content-between align-items-center btn"
                 role="button"
-                onClick={signOut}
+                onClick={() => logOut()}
               >
                 <i className="bi bi-escape align-left"></i>
                 <span className="mx-auto"> Log out</span>

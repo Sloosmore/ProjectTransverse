@@ -37,7 +37,6 @@ function Login() {
               // handle error appropriately
             }
           }
-          console.log(session);
           navigate("/n"); // replace '/n' with the path you want to navigate to
         }
       }
