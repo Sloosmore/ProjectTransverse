@@ -270,7 +270,7 @@ async function handleWebSocketConnection(ws, request) {
         } else if (activeTs) {
           console.log(
             `Pooling TS => ${
-              (activeTs.length / threshold) * 100
+              (activeTs.length / frequency) * 100
             }% of the way to next note
             ${activeTs}`
           );

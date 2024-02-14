@@ -39257,4 +39257,1822 @@
       "metadata": {}
     }
   ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_eg9dUbu3A8YczRsPMOOjS3Kj/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_5ozTc4EojdDtMeL0RTt3kqqY",
+        "object": "thread.message",
+        "created_at": 1707891467,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_IHsV2q0L3cHYwzBr1PfJkSNz",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Stanford University Announcements - Tomorrow\n\n- Office hours are shifted due to a lecture at 4:30 pm at Clark.\n- The lecture will cover brain metabolic abnormalities in sociopathic humans and violent criminals.\n- The speaker is a renowned expert in this area.\n- The material is anticipated to be very interesting.\n\n## Directed Readings\n\n- Will be offered for those interested in exploring course topics further.\n- Interested individuals should wait until the summer to express interest.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+        "object": "thread.message",
+        "created_at": 1707891465,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "Stanford University variety of announcements tomorrow office hours are shifted because at 4:30 there's a really interesting lecture over at Clark this guy is one of the experts on the whole notion that there are brain metabolic abnormalities in sociopathic humans violent criminals he's got the distinction machine \n\n 00:45\nvertical dysfunction and extremely violent individuals I have no idea if he's a good lecture or not the material is going to be really interesting so that's something that probably should be caught Friday again is not going to be video tape or just audio tape for a number of reasons \n\n 01:09\ninterested some directed readings with people that are that will be essentially more of an exploration of some of the topics in the course here so if you are interested do not send me anything whatsoever until it's the summer and that point \n\n 01:31\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_5ozTc4EojdDtMeL0RTt3kqqY",
+    "last_id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_5ozTc4EojdDtMeL0RTt3kqqY",
+      "object": "thread.message",
+      "created_at": 1707891467,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_IHsV2q0L3cHYwzBr1PfJkSNz",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Stanford University Announcements - Tomorrow\n\n- Office hours are shifted due to a lecture at 4:30 pm at Clark.\n- The lecture will cover brain metabolic abnormalities in sociopathic humans and violent criminals.\n- The speaker is a renowned expert in this area.\n- The material is anticipated to be very interesting.\n\n## Directed Readings\n\n- Will be offered for those interested in exploring course topics further.\n- Interested individuals should wait until the summer to express interest.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+      "object": "thread.message",
+      "created_at": 1707891465,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "Stanford University variety of announcements tomorrow office hours are shifted because at 4:30 there's a really interesting lecture over at Clark this guy is one of the experts on the whole notion that there are brain metabolic abnormalities in sociopathic humans violent criminals he's got the distinction machine \n\n 00:45\nvertical dysfunction and extremely violent individuals I have no idea if he's a good lecture or not the material is going to be really interesting so that's something that probably should be caught Friday again is not going to be video tape or just audio tape for a number of reasons \n\n 01:09\ninterested some directed readings with people that are that will be essentially more of an exploration of some of the topics in the course here so if you are interested do not send me anything whatsoever until it's the summer and that point \n\n 01:31\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    }
+  ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_eg9dUbu3A8YczRsPMOOjS3Kj/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_ATTIV7TeTNiQaZhGTHkLx6Sp",
+        "object": "thread.message",
+        "created_at": 1707891582,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_oMqvMH8KJvcBqVVx5El07fMa",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## CV Transcript and Coursework Posting\n\n- CV transcript will be posted on the coursework for more details.\n- The transcript may include information on language use techniques, behavior genetics, and evidence from studies such as William syndrome and selective language influence disorders.\n- It may also cover the investigation of language abnormalities in families, adoption studies, and the genetic influence on dyslexia and learning disorders.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_qARDoPMpIRwSepaNYjsCohX5",
+        "object": "thread.message",
+        "created_at": 1707891581,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "CV transcript anything I need to know but it'll be posted on the coursework is to more details about it ok Google \n\n 02:15\nof language use in general there's usual types of techniques from Behavior genetics the first is looking for covariance of certain language abnormalities in certain families and the evidence for that is clear with William syndrome with a selective language \n\n 02:44\ninfluence disorders then going to our usual deal of looking at adopted individuals twins identical twins \n\n 03:01\nthings like vocabulary complexity ability to spell Skillet phonology things of that sort in general the evidence is pretty poor for a strong genetic Road load on dyslexia on learning disorders of that type of course \n\n 03:26\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_5ozTc4EojdDtMeL0RTt3kqqY",
+        "object": "thread.message",
+        "created_at": 1707891467,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_IHsV2q0L3cHYwzBr1PfJkSNz",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Stanford University Announcements - Tomorrow\n\n- Office hours are shifted due to a lecture at 4:30 pm at Clark.\n- The lecture will cover brain metabolic abnormalities in sociopathic humans and violent criminals.\n- The speaker is a renowned expert in this area.\n- The material is anticipated to be very interesting.\n\n## Directed Readings\n\n- Will be offered for those interested in exploring course topics further.\n- Interested individuals should wait until the summer to express interest.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+        "object": "thread.message",
+        "created_at": 1707891465,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "Stanford University variety of announcements tomorrow office hours are shifted because at 4:30 there's a really interesting lecture over at Clark this guy is one of the experts on the whole notion that there are brain metabolic abnormalities in sociopathic humans violent criminals he's got the distinction machine \n\n 00:45\nvertical dysfunction and extremely violent individuals I have no idea if he's a good lecture or not the material is going to be really interesting so that's something that probably should be caught Friday again is not going to be video tape or just audio tape for a number of reasons \n\n 01:09\ninterested some directed readings with people that are that will be essentially more of an exploration of some of the topics in the course here so if you are interested do not send me anything whatsoever until it's the summer and that point \n\n 01:31\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_ATTIV7TeTNiQaZhGTHkLx6Sp",
+    "last_id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_ATTIV7TeTNiQaZhGTHkLx6Sp",
+      "object": "thread.message",
+      "created_at": 1707891582,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_oMqvMH8KJvcBqVVx5El07fMa",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## CV Transcript and Coursework Posting\n\n- CV transcript will be posted on the coursework for more details.\n- The transcript may include information on language use techniques, behavior genetics, and evidence from studies such as William syndrome and selective language influence disorders.\n- It may also cover the investigation of language abnormalities in families, adoption studies, and the genetic influence on dyslexia and learning disorders.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_qARDoPMpIRwSepaNYjsCohX5",
+      "object": "thread.message",
+      "created_at": 1707891581,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "CV transcript anything I need to know but it'll be posted on the coursework is to more details about it ok Google \n\n 02:15\nof language use in general there's usual types of techniques from Behavior genetics the first is looking for covariance of certain language abnormalities in certain families and the evidence for that is clear with William syndrome with a selective language \n\n 02:44\ninfluence disorders then going to our usual deal of looking at adopted individuals twins identical twins \n\n 03:01\nthings like vocabulary complexity ability to spell Skillet phonology things of that sort in general the evidence is pretty poor for a strong genetic Road load on dyslexia on learning disorders of that type of course \n\n 03:26\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_5ozTc4EojdDtMeL0RTt3kqqY",
+      "object": "thread.message",
+      "created_at": 1707891467,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_IHsV2q0L3cHYwzBr1PfJkSNz",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Stanford University Announcements - Tomorrow\n\n- Office hours are shifted due to a lecture at 4:30 pm at Clark.\n- The lecture will cover brain metabolic abnormalities in sociopathic humans and violent criminals.\n- The speaker is a renowned expert in this area.\n- The material is anticipated to be very interesting.\n\n## Directed Readings\n\n- Will be offered for those interested in exploring course topics further.\n- Interested individuals should wait until the summer to express interest.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+      "object": "thread.message",
+      "created_at": 1707891465,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "Stanford University variety of announcements tomorrow office hours are shifted because at 4:30 there's a really interesting lecture over at Clark this guy is one of the experts on the whole notion that there are brain metabolic abnormalities in sociopathic humans violent criminals he's got the distinction machine \n\n 00:45\nvertical dysfunction and extremely violent individuals I have no idea if he's a good lecture or not the material is going to be really interesting so that's something that probably should be caught Friday again is not going to be video tape or just audio tape for a number of reasons \n\n 01:09\ninterested some directed readings with people that are that will be essentially more of an exploration of some of the topics in the course here so if you are interested do not send me anything whatsoever until it's the summer and that point \n\n 01:31\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    }
+  ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_eg9dUbu3A8YczRsPMOOjS3Kj/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_CjyopU64KoOb8IW1T7XdB5yj",
+        "object": "thread.message",
+        "created_at": 1707891679,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_JDRGdRpchTdjKN27L3v4BGJT",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Language Disorders and Genetic Markers\n\n- A family with severe language generation and speech problems led to the search for a genetic marker.\n- The marker turned out to be a transcription factor with a mutation in this family.\n- The issues observed were related to both cognitive aspects and the mechanical level of articulation.\n- The mutation was found to be preferentially expressed in the basal ganglia, playing a role in gesturing and facial processing.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_9ZNH16YlL7isqaAMQoMUG1Uv",
+        "object": "thread.message",
+        "created_at": 1707891678,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "language disorders of language invery specific linguistic problem running through it language generation speech this family had severe problems with it classic looking for a genetic marker \n\n 04:03\nwhich turned out to be a transcription factor and a mutation in it in this family would immediately became clear is this theme over and over again with languages so far as there's a problem in this family is it at the cognitive level of what language is about symbolically or is it just getting your lips and tongues and articulating and that much more mechanical level \n\n 04:35\nwhat you see is it is preferentially expressed in that part of the brain we heard about the other day the basal ganglia that area that's playing a role in gesturing when you're speaking playing a role in facial processity that sort of stuff and the fact that it was found so heavily expression \n\n 05:03\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_ATTIV7TeTNiQaZhGTHkLx6Sp",
+        "object": "thread.message",
+        "created_at": 1707891582,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_oMqvMH8KJvcBqVVx5El07fMa",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## CV Transcript and Coursework Posting\n\n- CV transcript will be posted on the coursework for more details.\n- The transcript may include information on language use techniques, behavior genetics, and evidence from studies such as William syndrome and selective language influence disorders.\n- It may also cover the investigation of language abnormalities in families, adoption studies, and the genetic influence on dyslexia and learning disorders.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_qARDoPMpIRwSepaNYjsCohX5",
+        "object": "thread.message",
+        "created_at": 1707891581,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "CV transcript anything I need to know but it'll be posted on the coursework is to more details about it ok Google \n\n 02:15\nof language use in general there's usual types of techniques from Behavior genetics the first is looking for covariance of certain language abnormalities in certain families and the evidence for that is clear with William syndrome with a selective language \n\n 02:44\ninfluence disorders then going to our usual deal of looking at adopted individuals twins identical twins \n\n 03:01\nthings like vocabulary complexity ability to spell Skillet phonology things of that sort in general the evidence is pretty poor for a strong genetic Road load on dyslexia on learning disorders of that type of course \n\n 03:26\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_5ozTc4EojdDtMeL0RTt3kqqY",
+        "object": "thread.message",
+        "created_at": 1707891467,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_IHsV2q0L3cHYwzBr1PfJkSNz",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Stanford University Announcements - Tomorrow\n\n- Office hours are shifted due to a lecture at 4:30 pm at Clark.\n- The lecture will cover brain metabolic abnormalities in sociopathic humans and violent criminals.\n- The speaker is a renowned expert in this area.\n- The material is anticipated to be very interesting.\n\n## Directed Readings\n\n- Will be offered for those interested in exploring course topics further.\n- Interested individuals should wait until the summer to express interest.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+        "object": "thread.message",
+        "created_at": 1707891465,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "Stanford University variety of announcements tomorrow office hours are shifted because at 4:30 there's a really interesting lecture over at Clark this guy is one of the experts on the whole notion that there are brain metabolic abnormalities in sociopathic humans violent criminals he's got the distinction machine \n\n 00:45\nvertical dysfunction and extremely violent individuals I have no idea if he's a good lecture or not the material is going to be really interesting so that's something that probably should be caught Friday again is not going to be video tape or just audio tape for a number of reasons \n\n 01:09\ninterested some directed readings with people that are that will be essentially more of an exploration of some of the topics in the course here so if you are interested do not send me anything whatsoever until it's the summer and that point \n\n 01:31\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_CjyopU64KoOb8IW1T7XdB5yj",
+    "last_id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_CjyopU64KoOb8IW1T7XdB5yj",
+      "object": "thread.message",
+      "created_at": 1707891679,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_JDRGdRpchTdjKN27L3v4BGJT",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Language Disorders and Genetic Markers\n\n- A family with severe language generation and speech problems led to the search for a genetic marker.\n- The marker turned out to be a transcription factor with a mutation in this family.\n- The issues observed were related to both cognitive aspects and the mechanical level of articulation.\n- The mutation was found to be preferentially expressed in the basal ganglia, playing a role in gesturing and facial processing.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_9ZNH16YlL7isqaAMQoMUG1Uv",
+      "object": "thread.message",
+      "created_at": 1707891678,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "language disorders of language invery specific linguistic problem running through it language generation speech this family had severe problems with it classic looking for a genetic marker \n\n 04:03\nwhich turned out to be a transcription factor and a mutation in it in this family would immediately became clear is this theme over and over again with languages so far as there's a problem in this family is it at the cognitive level of what language is about symbolically or is it just getting your lips and tongues and articulating and that much more mechanical level \n\n 04:35\nwhat you see is it is preferentially expressed in that part of the brain we heard about the other day the basal ganglia that area that's playing a role in gesturing when you're speaking playing a role in facial processity that sort of stuff and the fact that it was found so heavily expression \n\n 05:03\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_ATTIV7TeTNiQaZhGTHkLx6Sp",
+      "object": "thread.message",
+      "created_at": 1707891582,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_oMqvMH8KJvcBqVVx5El07fMa",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## CV Transcript and Coursework Posting\n\n- CV transcript will be posted on the coursework for more details.\n- The transcript may include information on language use techniques, behavior genetics, and evidence from studies such as William syndrome and selective language influence disorders.\n- It may also cover the investigation of language abnormalities in families, adoption studies, and the genetic influence on dyslexia and learning disorders.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_qARDoPMpIRwSepaNYjsCohX5",
+      "object": "thread.message",
+      "created_at": 1707891581,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "CV transcript anything I need to know but it'll be posted on the coursework is to more details about it ok Google \n\n 02:15\nof language use in general there's usual types of techniques from Behavior genetics the first is looking for covariance of certain language abnormalities in certain families and the evidence for that is clear with William syndrome with a selective language \n\n 02:44\ninfluence disorders then going to our usual deal of looking at adopted individuals twins identical twins \n\n 03:01\nthings like vocabulary complexity ability to spell Skillet phonology things of that sort in general the evidence is pretty poor for a strong genetic Road load on dyslexia on learning disorders of that type of course \n\n 03:26\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_5ozTc4EojdDtMeL0RTt3kqqY",
+      "object": "thread.message",
+      "created_at": 1707891467,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_IHsV2q0L3cHYwzBr1PfJkSNz",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Stanford University Announcements - Tomorrow\n\n- Office hours are shifted due to a lecture at 4:30 pm at Clark.\n- The lecture will cover brain metabolic abnormalities in sociopathic humans and violent criminals.\n- The speaker is a renowned expert in this area.\n- The material is anticipated to be very interesting.\n\n## Directed Readings\n\n- Will be offered for those interested in exploring course topics further.\n- Interested individuals should wait until the summer to express interest.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+      "object": "thread.message",
+      "created_at": 1707891465,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "Stanford University variety of announcements tomorrow office hours are shifted because at 4:30 there's a really interesting lecture over at Clark this guy is one of the experts on the whole notion that there are brain metabolic abnormalities in sociopathic humans violent criminals he's got the distinction machine \n\n 00:45\nvertical dysfunction and extremely violent individuals I have no idea if he's a good lecture or not the material is going to be really interesting so that's something that probably should be caught Friday again is not going to be video tape or just audio tape for a number of reasons \n\n 01:09\ninterested some directed readings with people that are that will be essentially more of an exploration of some of the topics in the course here so if you are interested do not send me anything whatsoever until it's the summer and that point \n\n 01:31\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    }
+  ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_eg9dUbu3A8YczRsPMOOjS3Kj/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_diY5M2OB49IZbvIovErhcjBr",
+        "object": "thread.message",
+        "created_at": 1707891756,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_RKYXoX6hufklRITh7clIAajz",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Aspects of Language Production and FoxP2 Gene\n\n- In the realm of language, there are a variety of cognitive impairments observed.\n- Inquiry into the role of the FoxP2 gene in other species has raised questions about its function in various cognitive aspects.\n- Studies in animals where the gene has been knocked out show reduced and simpler vocalization.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_0WAVgEwwGKDGzsejtVeB7jLt",
+        "object": "thread.message",
+        "created_at": 1707891754,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "your aspects of language production again it's gotten Messier since then cuz these folks have a variety of cognitive impairments and the realm of language so of course immediately what we need to be asking is what's Fox P2 doing and other species \n\n 05:30\nWilson all sorts of things large and small it is very very widespread but importantly a different version than you find and humans it is immensely conserved which is to say you see the same version so what does it do handful of studies and animals where the gene has been knocked out it has been removed where you now have mice that do not have the Gene and what you see is there's less vocalization and simpler vocalization \n\n 06:20\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_CjyopU64KoOb8IW1T7XdB5yj",
+        "object": "thread.message",
+        "created_at": 1707891679,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_JDRGdRpchTdjKN27L3v4BGJT",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Language Disorders and Genetic Markers\n\n- A family with severe language generation and speech problems led to the search for a genetic marker.\n- The marker turned out to be a transcription factor with a mutation in this family.\n- The issues observed were related to both cognitive aspects and the mechanical level of articulation.\n- The mutation was found to be preferentially expressed in the basal ganglia, playing a role in gesturing and facial processing.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_9ZNH16YlL7isqaAMQoMUG1Uv",
+        "object": "thread.message",
+        "created_at": 1707891678,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "language disorders of language invery specific linguistic problem running through it language generation speech this family had severe problems with it classic looking for a genetic marker \n\n 04:03\nwhich turned out to be a transcription factor and a mutation in it in this family would immediately became clear is this theme over and over again with languages so far as there's a problem in this family is it at the cognitive level of what language is about symbolically or is it just getting your lips and tongues and articulating and that much more mechanical level \n\n 04:35\nwhat you see is it is preferentially expressed in that part of the brain we heard about the other day the basal ganglia that area that's playing a role in gesturing when you're speaking playing a role in facial processity that sort of stuff and the fact that it was found so heavily expression \n\n 05:03\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_ATTIV7TeTNiQaZhGTHkLx6Sp",
+        "object": "thread.message",
+        "created_at": 1707891582,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_oMqvMH8KJvcBqVVx5El07fMa",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## CV Transcript and Coursework Posting\n\n- CV transcript will be posted on the coursework for more details.\n- The transcript may include information on language use techniques, behavior genetics, and evidence from studies such as William syndrome and selective language influence disorders.\n- It may also cover the investigation of language abnormalities in families, adoption studies, and the genetic influence on dyslexia and learning disorders.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_qARDoPMpIRwSepaNYjsCohX5",
+        "object": "thread.message",
+        "created_at": 1707891581,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "CV transcript anything I need to know but it'll be posted on the coursework is to more details about it ok Google \n\n 02:15\nof language use in general there's usual types of techniques from Behavior genetics the first is looking for covariance of certain language abnormalities in certain families and the evidence for that is clear with William syndrome with a selective language \n\n 02:44\ninfluence disorders then going to our usual deal of looking at adopted individuals twins identical twins \n\n 03:01\nthings like vocabulary complexity ability to spell Skillet phonology things of that sort in general the evidence is pretty poor for a strong genetic Road load on dyslexia on learning disorders of that type of course \n\n 03:26\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_5ozTc4EojdDtMeL0RTt3kqqY",
+        "object": "thread.message",
+        "created_at": 1707891467,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_IHsV2q0L3cHYwzBr1PfJkSNz",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Stanford University Announcements - Tomorrow\n\n- Office hours are shifted due to a lecture at 4:30 pm at Clark.\n- The lecture will cover brain metabolic abnormalities in sociopathic humans and violent criminals.\n- The speaker is a renowned expert in this area.\n- The material is anticipated to be very interesting.\n\n## Directed Readings\n\n- Will be offered for those interested in exploring course topics further.\n- Interested individuals should wait until the summer to express interest.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+        "object": "thread.message",
+        "created_at": 1707891465,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "Stanford University variety of announcements tomorrow office hours are shifted because at 4:30 there's a really interesting lecture over at Clark this guy is one of the experts on the whole notion that there are brain metabolic abnormalities in sociopathic humans violent criminals he's got the distinction machine \n\n 00:45\nvertical dysfunction and extremely violent individuals I have no idea if he's a good lecture or not the material is going to be really interesting so that's something that probably should be caught Friday again is not going to be video tape or just audio tape for a number of reasons \n\n 01:09\ninterested some directed readings with people that are that will be essentially more of an exploration of some of the topics in the course here so if you are interested do not send me anything whatsoever until it's the summer and that point \n\n 01:31\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_diY5M2OB49IZbvIovErhcjBr",
+    "last_id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_diY5M2OB49IZbvIovErhcjBr",
+      "object": "thread.message",
+      "created_at": 1707891756,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_RKYXoX6hufklRITh7clIAajz",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Aspects of Language Production and FoxP2 Gene\n\n- In the realm of language, there are a variety of cognitive impairments observed.\n- Inquiry into the role of the FoxP2 gene in other species has raised questions about its function in various cognitive aspects.\n- Studies in animals where the gene has been knocked out show reduced and simpler vocalization.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_0WAVgEwwGKDGzsejtVeB7jLt",
+      "object": "thread.message",
+      "created_at": 1707891754,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "your aspects of language production again it's gotten Messier since then cuz these folks have a variety of cognitive impairments and the realm of language so of course immediately what we need to be asking is what's Fox P2 doing and other species \n\n 05:30\nWilson all sorts of things large and small it is very very widespread but importantly a different version than you find and humans it is immensely conserved which is to say you see the same version so what does it do handful of studies and animals where the gene has been knocked out it has been removed where you now have mice that do not have the Gene and what you see is there's less vocalization and simpler vocalization \n\n 06:20\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_CjyopU64KoOb8IW1T7XdB5yj",
+      "object": "thread.message",
+      "created_at": 1707891679,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_JDRGdRpchTdjKN27L3v4BGJT",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Language Disorders and Genetic Markers\n\n- A family with severe language generation and speech problems led to the search for a genetic marker.\n- The marker turned out to be a transcription factor with a mutation in this family.\n- The issues observed were related to both cognitive aspects and the mechanical level of articulation.\n- The mutation was found to be preferentially expressed in the basal ganglia, playing a role in gesturing and facial processing.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_9ZNH16YlL7isqaAMQoMUG1Uv",
+      "object": "thread.message",
+      "created_at": 1707891678,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "language disorders of language invery specific linguistic problem running through it language generation speech this family had severe problems with it classic looking for a genetic marker \n\n 04:03\nwhich turned out to be a transcription factor and a mutation in it in this family would immediately became clear is this theme over and over again with languages so far as there's a problem in this family is it at the cognitive level of what language is about symbolically or is it just getting your lips and tongues and articulating and that much more mechanical level \n\n 04:35\nwhat you see is it is preferentially expressed in that part of the brain we heard about the other day the basal ganglia that area that's playing a role in gesturing when you're speaking playing a role in facial processity that sort of stuff and the fact that it was found so heavily expression \n\n 05:03\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_ATTIV7TeTNiQaZhGTHkLx6Sp",
+      "object": "thread.message",
+      "created_at": 1707891582,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_oMqvMH8KJvcBqVVx5El07fMa",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## CV Transcript and Coursework Posting\n\n- CV transcript will be posted on the coursework for more details.\n- The transcript may include information on language use techniques, behavior genetics, and evidence from studies such as William syndrome and selective language influence disorders.\n- It may also cover the investigation of language abnormalities in families, adoption studies, and the genetic influence on dyslexia and learning disorders.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_qARDoPMpIRwSepaNYjsCohX5",
+      "object": "thread.message",
+      "created_at": 1707891581,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "CV transcript anything I need to know but it'll be posted on the coursework is to more details about it ok Google \n\n 02:15\nof language use in general there's usual types of techniques from Behavior genetics the first is looking for covariance of certain language abnormalities in certain families and the evidence for that is clear with William syndrome with a selective language \n\n 02:44\ninfluence disorders then going to our usual deal of looking at adopted individuals twins identical twins \n\n 03:01\nthings like vocabulary complexity ability to spell Skillet phonology things of that sort in general the evidence is pretty poor for a strong genetic Road load on dyslexia on learning disorders of that type of course \n\n 03:26\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_5ozTc4EojdDtMeL0RTt3kqqY",
+      "object": "thread.message",
+      "created_at": 1707891467,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_IHsV2q0L3cHYwzBr1PfJkSNz",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Stanford University Announcements - Tomorrow\n\n- Office hours are shifted due to a lecture at 4:30 pm at Clark.\n- The lecture will cover brain metabolic abnormalities in sociopathic humans and violent criminals.\n- The speaker is a renowned expert in this area.\n- The material is anticipated to be very interesting.\n\n## Directed Readings\n\n- Will be offered for those interested in exploring course topics further.\n- Interested individuals should wait until the summer to express interest.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+      "object": "thread.message",
+      "created_at": 1707891465,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "Stanford University variety of announcements tomorrow office hours are shifted because at 4:30 there's a really interesting lecture over at Clark this guy is one of the experts on the whole notion that there are brain metabolic abnormalities in sociopathic humans violent criminals he's got the distinction machine \n\n 00:45\nvertical dysfunction and extremely violent individuals I have no idea if he's a good lecture or not the material is going to be really interesting so that's something that probably should be caught Friday again is not going to be video tape or just audio tape for a number of reasons \n\n 01:09\ninterested some directed readings with people that are that will be essentially more of an exploration of some of the topics in the course here so if you are interested do not send me anything whatsoever until it's the summer and that point \n\n 01:31\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    }
+  ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_eg9dUbu3A8YczRsPMOOjS3Kj/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_UoL4pl3PXKnNuNUuhplz2DUL",
+        "object": "thread.message",
+        "created_at": 1707891838,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_glfEcpwh5P31xLlIQgRTqVd9",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Evolutionary Aspects of FoxP2 Gene\n\n- The FoxP2 gene is expressed in motor parts of the brain in other species.\n- Recent genetic changes related to FoxP2 have emerged within the last couple of hundred thousand years.\n- These changes have been positively selected for in human evolution, indicating its crucial role in human development.\n- As a transcription factor, it regulates genes that are fairly differentiated from other primate genes, enriching its significance in the genetic network.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_KkyZAC2rSz4agijv8e3KfoOt",
+        "object": "thread.message",
+        "created_at": 1707891837,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "so would you do something and it's expressed in motor parts of the brain preferentially in these other species so the super conserved version \n\n 06:47\ndifferences and they emerged very recently best estimates are the last couple of hundred thousand years each one of the changes extremely positively selected for whatever this Gene is about once it sort of went on the human path it changed next interesting thing about it in so far is as it is a transcription Factor when you look at the genes that it regulates so this is now taking our one step further our old genetic Network deal when you look Downstream what genes have regulate they tend to be fairly differentiated from other Prime \n\n 07:42\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_diY5M2OB49IZbvIovErhcjBr",
+        "object": "thread.message",
+        "created_at": 1707891756,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_RKYXoX6hufklRITh7clIAajz",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Aspects of Language Production and FoxP2 Gene\n\n- In the realm of language, there are a variety of cognitive impairments observed.\n- Inquiry into the role of the FoxP2 gene in other species has raised questions about its function in various cognitive aspects.\n- Studies in animals where the gene has been knocked out show reduced and simpler vocalization.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_0WAVgEwwGKDGzsejtVeB7jLt",
+        "object": "thread.message",
+        "created_at": 1707891754,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "your aspects of language production again it's gotten Messier since then cuz these folks have a variety of cognitive impairments and the realm of language so of course immediately what we need to be asking is what's Fox P2 doing and other species \n\n 05:30\nWilson all sorts of things large and small it is very very widespread but importantly a different version than you find and humans it is immensely conserved which is to say you see the same version so what does it do handful of studies and animals where the gene has been knocked out it has been removed where you now have mice that do not have the Gene and what you see is there's less vocalization and simpler vocalization \n\n 06:20\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_CjyopU64KoOb8IW1T7XdB5yj",
+        "object": "thread.message",
+        "created_at": 1707891679,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_JDRGdRpchTdjKN27L3v4BGJT",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Language Disorders and Genetic Markers\n\n- A family with severe language generation and speech problems led to the search for a genetic marker.\n- The marker turned out to be a transcription factor with a mutation in this family.\n- The issues observed were related to both cognitive aspects and the mechanical level of articulation.\n- The mutation was found to be preferentially expressed in the basal ganglia, playing a role in gesturing and facial processing.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_9ZNH16YlL7isqaAMQoMUG1Uv",
+        "object": "thread.message",
+        "created_at": 1707891678,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "language disorders of language invery specific linguistic problem running through it language generation speech this family had severe problems with it classic looking for a genetic marker \n\n 04:03\nwhich turned out to be a transcription factor and a mutation in it in this family would immediately became clear is this theme over and over again with languages so far as there's a problem in this family is it at the cognitive level of what language is about symbolically or is it just getting your lips and tongues and articulating and that much more mechanical level \n\n 04:35\nwhat you see is it is preferentially expressed in that part of the brain we heard about the other day the basal ganglia that area that's playing a role in gesturing when you're speaking playing a role in facial processity that sort of stuff and the fact that it was found so heavily expression \n\n 05:03\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_ATTIV7TeTNiQaZhGTHkLx6Sp",
+        "object": "thread.message",
+        "created_at": 1707891582,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_oMqvMH8KJvcBqVVx5El07fMa",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## CV Transcript and Coursework Posting\n\n- CV transcript will be posted on the coursework for more details.\n- The transcript may include information on language use techniques, behavior genetics, and evidence from studies such as William syndrome and selective language influence disorders.\n- It may also cover the investigation of language abnormalities in families, adoption studies, and the genetic influence on dyslexia and learning disorders.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_qARDoPMpIRwSepaNYjsCohX5",
+        "object": "thread.message",
+        "created_at": 1707891581,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "CV transcript anything I need to know but it'll be posted on the coursework is to more details about it ok Google \n\n 02:15\nof language use in general there's usual types of techniques from Behavior genetics the first is looking for covariance of certain language abnormalities in certain families and the evidence for that is clear with William syndrome with a selective language \n\n 02:44\ninfluence disorders then going to our usual deal of looking at adopted individuals twins identical twins \n\n 03:01\nthings like vocabulary complexity ability to spell Skillet phonology things of that sort in general the evidence is pretty poor for a strong genetic Road load on dyslexia on learning disorders of that type of course \n\n 03:26\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_5ozTc4EojdDtMeL0RTt3kqqY",
+        "object": "thread.message",
+        "created_at": 1707891467,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_IHsV2q0L3cHYwzBr1PfJkSNz",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Stanford University Announcements - Tomorrow\n\n- Office hours are shifted due to a lecture at 4:30 pm at Clark.\n- The lecture will cover brain metabolic abnormalities in sociopathic humans and violent criminals.\n- The speaker is a renowned expert in this area.\n- The material is anticipated to be very interesting.\n\n## Directed Readings\n\n- Will be offered for those interested in exploring course topics further.\n- Interested individuals should wait until the summer to express interest.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+        "object": "thread.message",
+        "created_at": 1707891465,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "Stanford University variety of announcements tomorrow office hours are shifted because at 4:30 there's a really interesting lecture over at Clark this guy is one of the experts on the whole notion that there are brain metabolic abnormalities in sociopathic humans violent criminals he's got the distinction machine \n\n 00:45\nvertical dysfunction and extremely violent individuals I have no idea if he's a good lecture or not the material is going to be really interesting so that's something that probably should be caught Friday again is not going to be video tape or just audio tape for a number of reasons \n\n 01:09\ninterested some directed readings with people that are that will be essentially more of an exploration of some of the topics in the course here so if you are interested do not send me anything whatsoever until it's the summer and that point \n\n 01:31\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_UoL4pl3PXKnNuNUuhplz2DUL",
+    "last_id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_UoL4pl3PXKnNuNUuhplz2DUL",
+      "object": "thread.message",
+      "created_at": 1707891838,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_glfEcpwh5P31xLlIQgRTqVd9",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Evolutionary Aspects of FoxP2 Gene\n\n- The FoxP2 gene is expressed in motor parts of the brain in other species.\n- Recent genetic changes related to FoxP2 have emerged within the last couple of hundred thousand years.\n- These changes have been positively selected for in human evolution, indicating its crucial role in human development.\n- As a transcription factor, it regulates genes that are fairly differentiated from other primate genes, enriching its significance in the genetic network.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_KkyZAC2rSz4agijv8e3KfoOt",
+      "object": "thread.message",
+      "created_at": 1707891837,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "so would you do something and it's expressed in motor parts of the brain preferentially in these other species so the super conserved version \n\n 06:47\ndifferences and they emerged very recently best estimates are the last couple of hundred thousand years each one of the changes extremely positively selected for whatever this Gene is about once it sort of went on the human path it changed next interesting thing about it in so far is as it is a transcription Factor when you look at the genes that it regulates so this is now taking our one step further our old genetic Network deal when you look Downstream what genes have regulate they tend to be fairly differentiated from other Prime \n\n 07:42\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_diY5M2OB49IZbvIovErhcjBr",
+      "object": "thread.message",
+      "created_at": 1707891756,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_RKYXoX6hufklRITh7clIAajz",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Aspects of Language Production and FoxP2 Gene\n\n- In the realm of language, there are a variety of cognitive impairments observed.\n- Inquiry into the role of the FoxP2 gene in other species has raised questions about its function in various cognitive aspects.\n- Studies in animals where the gene has been knocked out show reduced and simpler vocalization.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_0WAVgEwwGKDGzsejtVeB7jLt",
+      "object": "thread.message",
+      "created_at": 1707891754,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "your aspects of language production again it's gotten Messier since then cuz these folks have a variety of cognitive impairments and the realm of language so of course immediately what we need to be asking is what's Fox P2 doing and other species \n\n 05:30\nWilson all sorts of things large and small it is very very widespread but importantly a different version than you find and humans it is immensely conserved which is to say you see the same version so what does it do handful of studies and animals where the gene has been knocked out it has been removed where you now have mice that do not have the Gene and what you see is there's less vocalization and simpler vocalization \n\n 06:20\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_CjyopU64KoOb8IW1T7XdB5yj",
+      "object": "thread.message",
+      "created_at": 1707891679,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_JDRGdRpchTdjKN27L3v4BGJT",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Language Disorders and Genetic Markers\n\n- A family with severe language generation and speech problems led to the search for a genetic marker.\n- The marker turned out to be a transcription factor with a mutation in this family.\n- The issues observed were related to both cognitive aspects and the mechanical level of articulation.\n- The mutation was found to be preferentially expressed in the basal ganglia, playing a role in gesturing and facial processing.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_9ZNH16YlL7isqaAMQoMUG1Uv",
+      "object": "thread.message",
+      "created_at": 1707891678,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "language disorders of language invery specific linguistic problem running through it language generation speech this family had severe problems with it classic looking for a genetic marker \n\n 04:03\nwhich turned out to be a transcription factor and a mutation in it in this family would immediately became clear is this theme over and over again with languages so far as there's a problem in this family is it at the cognitive level of what language is about symbolically or is it just getting your lips and tongues and articulating and that much more mechanical level \n\n 04:35\nwhat you see is it is preferentially expressed in that part of the brain we heard about the other day the basal ganglia that area that's playing a role in gesturing when you're speaking playing a role in facial processity that sort of stuff and the fact that it was found so heavily expression \n\n 05:03\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_ATTIV7TeTNiQaZhGTHkLx6Sp",
+      "object": "thread.message",
+      "created_at": 1707891582,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_oMqvMH8KJvcBqVVx5El07fMa",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## CV Transcript and Coursework Posting\n\n- CV transcript will be posted on the coursework for more details.\n- The transcript may include information on language use techniques, behavior genetics, and evidence from studies such as William syndrome and selective language influence disorders.\n- It may also cover the investigation of language abnormalities in families, adoption studies, and the genetic influence on dyslexia and learning disorders.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_qARDoPMpIRwSepaNYjsCohX5",
+      "object": "thread.message",
+      "created_at": 1707891581,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "CV transcript anything I need to know but it'll be posted on the coursework is to more details about it ok Google \n\n 02:15\nof language use in general there's usual types of techniques from Behavior genetics the first is looking for covariance of certain language abnormalities in certain families and the evidence for that is clear with William syndrome with a selective language \n\n 02:44\ninfluence disorders then going to our usual deal of looking at adopted individuals twins identical twins \n\n 03:01\nthings like vocabulary complexity ability to spell Skillet phonology things of that sort in general the evidence is pretty poor for a strong genetic Road load on dyslexia on learning disorders of that type of course \n\n 03:26\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_5ozTc4EojdDtMeL0RTt3kqqY",
+      "object": "thread.message",
+      "created_at": 1707891467,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_IHsV2q0L3cHYwzBr1PfJkSNz",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Stanford University Announcements - Tomorrow\n\n- Office hours are shifted due to a lecture at 4:30 pm at Clark.\n- The lecture will cover brain metabolic abnormalities in sociopathic humans and violent criminals.\n- The speaker is a renowned expert in this area.\n- The material is anticipated to be very interesting.\n\n## Directed Readings\n\n- Will be offered for those interested in exploring course topics further.\n- Interested individuals should wait until the summer to express interest.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+      "object": "thread.message",
+      "created_at": 1707891465,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "Stanford University variety of announcements tomorrow office hours are shifted because at 4:30 there's a really interesting lecture over at Clark this guy is one of the experts on the whole notion that there are brain metabolic abnormalities in sociopathic humans violent criminals he's got the distinction machine \n\n 00:45\nvertical dysfunction and extremely violent individuals I have no idea if he's a good lecture or not the material is going to be really interesting so that's something that probably should be caught Friday again is not going to be video tape or just audio tape for a number of reasons \n\n 01:09\ninterested some directed readings with people that are that will be essentially more of an exploration of some of the topics in the course here so if you are interested do not send me anything whatsoever until it's the summer and that point \n\n 01:31\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    }
+  ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_eg9dUbu3A8YczRsPMOOjS3Kj/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_ho11TDHbYRyPrsNPAir1LsEY",
+        "object": "thread.message",
+        "created_at": 1707891928,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_8xLyb2Qxe83Cd8LP8zsvotUJ",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Evolutionary Advancements and FoxP2 Gene Study\n\n- Evolutionary pressures on hominids in the last couple of hundred thousand years have led to significant genetic changes.\n- An intriguing study involved knocking out the FoxP2 gene in mice and introducing the human version, leading to notable effects.\n- The human version of FoxP2 has undergone major selection and regulates genes crucial to unique human capabilities, providing further evidence for genetic components in language development.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_Qup6s4FEY4LuM45Xj9lv4SFT",
+        "object": "thread.message",
+        "created_at": 1707891927,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "that Evolution was doing some pretty stringent things on and hominids in the last couple of hundred thousand years now what you do is one of the all-time cool studies which was last year which you take mice and you knock out their Fox p2g and now you stick in the human version and \n\n 08:11\nMickey Mouse okay people were listening what you wind up seeing is it's probably the Disney people probably are working on it and that's going to be the end of Life as We Know It when they let those ones lose what you get when you over Express when you express the human foxes \n\n 08:39\nfigure out what this transcription Factor \n\n 08:47\nMajor League selection that has gone on for the human version and for the genes that regulate fairly recently it is no surprise that this Gene is Central to such a different unique thing that we're doing more evidence for genetic components to language \n\n 09:12\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_UoL4pl3PXKnNuNUuhplz2DUL",
+        "object": "thread.message",
+        "created_at": 1707891838,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_glfEcpwh5P31xLlIQgRTqVd9",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Evolutionary Aspects of FoxP2 Gene\n\n- The FoxP2 gene is expressed in motor parts of the brain in other species.\n- Recent genetic changes related to FoxP2 have emerged within the last couple of hundred thousand years.\n- These changes have been positively selected for in human evolution, indicating its crucial role in human development.\n- As a transcription factor, it regulates genes that are fairly differentiated from other primate genes, enriching its significance in the genetic network.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_KkyZAC2rSz4agijv8e3KfoOt",
+        "object": "thread.message",
+        "created_at": 1707891837,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "so would you do something and it's expressed in motor parts of the brain preferentially in these other species so the super conserved version \n\n 06:47\ndifferences and they emerged very recently best estimates are the last couple of hundred thousand years each one of the changes extremely positively selected for whatever this Gene is about once it sort of went on the human path it changed next interesting thing about it in so far is as it is a transcription Factor when you look at the genes that it regulates so this is now taking our one step further our old genetic Network deal when you look Downstream what genes have regulate they tend to be fairly differentiated from other Prime \n\n 07:42\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_diY5M2OB49IZbvIovErhcjBr",
+        "object": "thread.message",
+        "created_at": 1707891756,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_RKYXoX6hufklRITh7clIAajz",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Aspects of Language Production and FoxP2 Gene\n\n- In the realm of language, there are a variety of cognitive impairments observed.\n- Inquiry into the role of the FoxP2 gene in other species has raised questions about its function in various cognitive aspects.\n- Studies in animals where the gene has been knocked out show reduced and simpler vocalization.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_0WAVgEwwGKDGzsejtVeB7jLt",
+        "object": "thread.message",
+        "created_at": 1707891754,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "your aspects of language production again it's gotten Messier since then cuz these folks have a variety of cognitive impairments and the realm of language so of course immediately what we need to be asking is what's Fox P2 doing and other species \n\n 05:30\nWilson all sorts of things large and small it is very very widespread but importantly a different version than you find and humans it is immensely conserved which is to say you see the same version so what does it do handful of studies and animals where the gene has been knocked out it has been removed where you now have mice that do not have the Gene and what you see is there's less vocalization and simpler vocalization \n\n 06:20\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_CjyopU64KoOb8IW1T7XdB5yj",
+        "object": "thread.message",
+        "created_at": 1707891679,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_JDRGdRpchTdjKN27L3v4BGJT",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Language Disorders and Genetic Markers\n\n- A family with severe language generation and speech problems led to the search for a genetic marker.\n- The marker turned out to be a transcription factor with a mutation in this family.\n- The issues observed were related to both cognitive aspects and the mechanical level of articulation.\n- The mutation was found to be preferentially expressed in the basal ganglia, playing a role in gesturing and facial processing.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_9ZNH16YlL7isqaAMQoMUG1Uv",
+        "object": "thread.message",
+        "created_at": 1707891678,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "language disorders of language invery specific linguistic problem running through it language generation speech this family had severe problems with it classic looking for a genetic marker \n\n 04:03\nwhich turned out to be a transcription factor and a mutation in it in this family would immediately became clear is this theme over and over again with languages so far as there's a problem in this family is it at the cognitive level of what language is about symbolically or is it just getting your lips and tongues and articulating and that much more mechanical level \n\n 04:35\nwhat you see is it is preferentially expressed in that part of the brain we heard about the other day the basal ganglia that area that's playing a role in gesturing when you're speaking playing a role in facial processity that sort of stuff and the fact that it was found so heavily expression \n\n 05:03\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_ATTIV7TeTNiQaZhGTHkLx6Sp",
+        "object": "thread.message",
+        "created_at": 1707891582,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_oMqvMH8KJvcBqVVx5El07fMa",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## CV Transcript and Coursework Posting\n\n- CV transcript will be posted on the coursework for more details.\n- The transcript may include information on language use techniques, behavior genetics, and evidence from studies such as William syndrome and selective language influence disorders.\n- It may also cover the investigation of language abnormalities in families, adoption studies, and the genetic influence on dyslexia and learning disorders.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_qARDoPMpIRwSepaNYjsCohX5",
+        "object": "thread.message",
+        "created_at": 1707891581,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "CV transcript anything I need to know but it'll be posted on the coursework is to more details about it ok Google \n\n 02:15\nof language use in general there's usual types of techniques from Behavior genetics the first is looking for covariance of certain language abnormalities in certain families and the evidence for that is clear with William syndrome with a selective language \n\n 02:44\ninfluence disorders then going to our usual deal of looking at adopted individuals twins identical twins \n\n 03:01\nthings like vocabulary complexity ability to spell Skillet phonology things of that sort in general the evidence is pretty poor for a strong genetic Road load on dyslexia on learning disorders of that type of course \n\n 03:26\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_5ozTc4EojdDtMeL0RTt3kqqY",
+        "object": "thread.message",
+        "created_at": 1707891467,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": "run_IHsV2q0L3cHYwzBr1PfJkSNz",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Stanford University Announcements - Tomorrow\n\n- Office hours are shifted due to a lecture at 4:30 pm at Clark.\n- The lecture will cover brain metabolic abnormalities in sociopathic humans and violent criminals.\n- The speaker is a renowned expert in this area.\n- The material is anticipated to be very interesting.\n\n## Directed Readings\n\n- Will be offered for those interested in exploring course topics further.\n- Interested individuals should wait until the summer to express interest.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+        "object": "thread.message",
+        "created_at": 1707891465,
+        "assistant_id": null,
+        "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "Stanford University variety of announcements tomorrow office hours are shifted because at 4:30 there's a really interesting lecture over at Clark this guy is one of the experts on the whole notion that there are brain metabolic abnormalities in sociopathic humans violent criminals he's got the distinction machine \n\n 00:45\nvertical dysfunction and extremely violent individuals I have no idea if he's a good lecture or not the material is going to be really interesting so that's something that probably should be caught Friday again is not going to be video tape or just audio tape for a number of reasons \n\n 01:09\ninterested some directed readings with people that are that will be essentially more of an exploration of some of the topics in the course here so if you are interested do not send me anything whatsoever until it's the summer and that point \n\n 01:31\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_ho11TDHbYRyPrsNPAir1LsEY",
+    "last_id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_ho11TDHbYRyPrsNPAir1LsEY",
+      "object": "thread.message",
+      "created_at": 1707891928,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_8xLyb2Qxe83Cd8LP8zsvotUJ",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Evolutionary Advancements and FoxP2 Gene Study\n\n- Evolutionary pressures on hominids in the last couple of hundred thousand years have led to significant genetic changes.\n- An intriguing study involved knocking out the FoxP2 gene in mice and introducing the human version, leading to notable effects.\n- The human version of FoxP2 has undergone major selection and regulates genes crucial to unique human capabilities, providing further evidence for genetic components in language development.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_Qup6s4FEY4LuM45Xj9lv4SFT",
+      "object": "thread.message",
+      "created_at": 1707891927,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "that Evolution was doing some pretty stringent things on and hominids in the last couple of hundred thousand years now what you do is one of the all-time cool studies which was last year which you take mice and you knock out their Fox p2g and now you stick in the human version and \n\n 08:11\nMickey Mouse okay people were listening what you wind up seeing is it's probably the Disney people probably are working on it and that's going to be the end of Life as We Know It when they let those ones lose what you get when you over Express when you express the human foxes \n\n 08:39\nfigure out what this transcription Factor \n\n 08:47\nMajor League selection that has gone on for the human version and for the genes that regulate fairly recently it is no surprise that this Gene is Central to such a different unique thing that we're doing more evidence for genetic components to language \n\n 09:12\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_UoL4pl3PXKnNuNUuhplz2DUL",
+      "object": "thread.message",
+      "created_at": 1707891838,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_glfEcpwh5P31xLlIQgRTqVd9",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Evolutionary Aspects of FoxP2 Gene\n\n- The FoxP2 gene is expressed in motor parts of the brain in other species.\n- Recent genetic changes related to FoxP2 have emerged within the last couple of hundred thousand years.\n- These changes have been positively selected for in human evolution, indicating its crucial role in human development.\n- As a transcription factor, it regulates genes that are fairly differentiated from other primate genes, enriching its significance in the genetic network.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_KkyZAC2rSz4agijv8e3KfoOt",
+      "object": "thread.message",
+      "created_at": 1707891837,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "so would you do something and it's expressed in motor parts of the brain preferentially in these other species so the super conserved version \n\n 06:47\ndifferences and they emerged very recently best estimates are the last couple of hundred thousand years each one of the changes extremely positively selected for whatever this Gene is about once it sort of went on the human path it changed next interesting thing about it in so far is as it is a transcription Factor when you look at the genes that it regulates so this is now taking our one step further our old genetic Network deal when you look Downstream what genes have regulate they tend to be fairly differentiated from other Prime \n\n 07:42\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_diY5M2OB49IZbvIovErhcjBr",
+      "object": "thread.message",
+      "created_at": 1707891756,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_RKYXoX6hufklRITh7clIAajz",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Aspects of Language Production and FoxP2 Gene\n\n- In the realm of language, there are a variety of cognitive impairments observed.\n- Inquiry into the role of the FoxP2 gene in other species has raised questions about its function in various cognitive aspects.\n- Studies in animals where the gene has been knocked out show reduced and simpler vocalization.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_0WAVgEwwGKDGzsejtVeB7jLt",
+      "object": "thread.message",
+      "created_at": 1707891754,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "your aspects of language production again it's gotten Messier since then cuz these folks have a variety of cognitive impairments and the realm of language so of course immediately what we need to be asking is what's Fox P2 doing and other species \n\n 05:30\nWilson all sorts of things large and small it is very very widespread but importantly a different version than you find and humans it is immensely conserved which is to say you see the same version so what does it do handful of studies and animals where the gene has been knocked out it has been removed where you now have mice that do not have the Gene and what you see is there's less vocalization and simpler vocalization \n\n 06:20\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_CjyopU64KoOb8IW1T7XdB5yj",
+      "object": "thread.message",
+      "created_at": 1707891679,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_JDRGdRpchTdjKN27L3v4BGJT",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Language Disorders and Genetic Markers\n\n- A family with severe language generation and speech problems led to the search for a genetic marker.\n- The marker turned out to be a transcription factor with a mutation in this family.\n- The issues observed were related to both cognitive aspects and the mechanical level of articulation.\n- The mutation was found to be preferentially expressed in the basal ganglia, playing a role in gesturing and facial processing.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_9ZNH16YlL7isqaAMQoMUG1Uv",
+      "object": "thread.message",
+      "created_at": 1707891678,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "language disorders of language invery specific linguistic problem running through it language generation speech this family had severe problems with it classic looking for a genetic marker \n\n 04:03\nwhich turned out to be a transcription factor and a mutation in it in this family would immediately became clear is this theme over and over again with languages so far as there's a problem in this family is it at the cognitive level of what language is about symbolically or is it just getting your lips and tongues and articulating and that much more mechanical level \n\n 04:35\nwhat you see is it is preferentially expressed in that part of the brain we heard about the other day the basal ganglia that area that's playing a role in gesturing when you're speaking playing a role in facial processity that sort of stuff and the fact that it was found so heavily expression \n\n 05:03\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_ATTIV7TeTNiQaZhGTHkLx6Sp",
+      "object": "thread.message",
+      "created_at": 1707891582,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_oMqvMH8KJvcBqVVx5El07fMa",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## CV Transcript and Coursework Posting\n\n- CV transcript will be posted on the coursework for more details.\n- The transcript may include information on language use techniques, behavior genetics, and evidence from studies such as William syndrome and selective language influence disorders.\n- It may also cover the investigation of language abnormalities in families, adoption studies, and the genetic influence on dyslexia and learning disorders.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_qARDoPMpIRwSepaNYjsCohX5",
+      "object": "thread.message",
+      "created_at": 1707891581,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "CV transcript anything I need to know but it'll be posted on the coursework is to more details about it ok Google \n\n 02:15\nof language use in general there's usual types of techniques from Behavior genetics the first is looking for covariance of certain language abnormalities in certain families and the evidence for that is clear with William syndrome with a selective language \n\n 02:44\ninfluence disorders then going to our usual deal of looking at adopted individuals twins identical twins \n\n 03:01\nthings like vocabulary complexity ability to spell Skillet phonology things of that sort in general the evidence is pretty poor for a strong genetic Road load on dyslexia on learning disorders of that type of course \n\n 03:26\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_5ozTc4EojdDtMeL0RTt3kqqY",
+      "object": "thread.message",
+      "created_at": 1707891467,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": "run_IHsV2q0L3cHYwzBr1PfJkSNz",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Stanford University Announcements - Tomorrow\n\n- Office hours are shifted due to a lecture at 4:30 pm at Clark.\n- The lecture will cover brain metabolic abnormalities in sociopathic humans and violent criminals.\n- The speaker is a renowned expert in this area.\n- The material is anticipated to be very interesting.\n\n## Directed Readings\n\n- Will be offered for those interested in exploring course topics further.\n- Interested individuals should wait until the summer to express interest.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_s00BDfLkY0aQeoxuo81CL2i1",
+      "object": "thread.message",
+      "created_at": 1707891465,
+      "assistant_id": null,
+      "thread_id": "thread_eg9dUbu3A8YczRsPMOOjS3Kj",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "Stanford University variety of announcements tomorrow office hours are shifted because at 4:30 there's a really interesting lecture over at Clark this guy is one of the experts on the whole notion that there are brain metabolic abnormalities in sociopathic humans violent criminals he's got the distinction machine \n\n 00:45\nvertical dysfunction and extremely violent individuals I have no idea if he's a good lecture or not the material is going to be really interesting so that's something that probably should be caught Friday again is not going to be video tape or just audio tape for a number of reasons \n\n 01:09\ninterested some directed readings with people that are that will be essentially more of an exploration of some of the topics in the course here so if you are interested do not send me anything whatsoever until it's the summer and that point \n\n 01:31\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    }
+  ]
 }

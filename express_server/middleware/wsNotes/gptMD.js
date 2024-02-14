@@ -11,13 +11,13 @@ async function queryAI(note_id, ts_message) {
   try {
     const { data: note, error: noteError } = await supabase
       .from("note")
-      .select("user_id, thread_id")
+      .select("user_id, thread_id", "title")
       .eq("note_id", note_id)
       .single();
     if (noteError) {
       throw noteError;
     }
-    const { user_id, thread_id } = note;
+    const { user_id, thread_id, title } = note;
 
     console.log("message:", ts_message);
 
@@ -33,6 +33,8 @@ async function queryAI(note_id, ts_message) {
 
     const { note_preferences } = user;
 
+    const user_prompt = `Here is the user's note title: ${title} and preferences on notetaking: ${note_preferences}`;
+
     // Creating a new thread if doesn't exist
     if (!thread_id) {
       const thread = await openai.beta.threads.create({
@@ -43,7 +45,7 @@ async function queryAI(note_id, ts_message) {
           },
         ],
       });
-      const messages = await sendAICall(thread.id, note_preferences);
+      const messages = await sendAICall(thread.id, user_prompt);
 
       const { error } = await supabase
         .from("note")
@@ -60,7 +62,7 @@ async function queryAI(note_id, ts_message) {
         role: "user",
         content: ts_message,
       });
-      const messages = await sendAICall(thread_id, note_preferences);
+      const messages = await sendAICall(thread_id, user_prompt);
       return messages;
     }
   } catch (error) {

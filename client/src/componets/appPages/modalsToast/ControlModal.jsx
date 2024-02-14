@@ -149,7 +149,7 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
                         type="email"
                         className="form-control "
                         id="exampleFormControlInput1"
-                        placeholder="Intro To CS Class 1"
+                        placeholder="The title is important! It will help with prompting."
                         onChange={(e) => localNoteNameSet(e.target.value)}
                       />
                     </div>
@@ -163,6 +163,7 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
                       </Button>
                     </div>
                   </div>
+                  <div></div>
                 </div>
               </Accordion.Body>
             </Accordion.Item>
