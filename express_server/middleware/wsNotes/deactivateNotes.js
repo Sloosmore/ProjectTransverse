@@ -16,7 +16,8 @@ const deactivateRecords = async (user) => {
     .from("note")
     .select("*")
     .eq("user_id", user_id)
-    .eq("status", "inactive");
+    .eq("status", "inactive")
+    .eq("is_deleted", false);
 
   if (selectError) {
     throw selectError;

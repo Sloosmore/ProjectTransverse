@@ -76,7 +76,7 @@ async function handleWebSocketConnection(ws, request) {
 
         try {
           //deactivate records
-
+          //grabs all the notes and not just the ones that are deleted
           const inactiveRecords = await deactivateRecords(user);
 
           //send new record
