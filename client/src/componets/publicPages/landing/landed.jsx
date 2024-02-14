@@ -29,7 +29,7 @@ export function BlockText() {
 
       // Clear the timeout when the interval is cleared
       return () => clearTimeout(timeoutId);
-    }, 6000);
+    }, 3500);
 
     // Clear the interval when the component is unmounted
     return () => clearInterval(intervalId);
