@@ -4,13 +4,23 @@ import HelpModal from "../modalsToast/help";
 
 function Home({ transcript, helpModalKit }) {
   const { showHelpModal, setShowHelpModal, closeModal } = helpModalKit;
-  const [onload, setLoad] = useState(true);
+  const [onload, setLoad] = useState(
+    localStorage.getItem("pageLoaded") !== null
+      ? localStorage.getItem("pageLoaded") === "true"
+      : false
+  );
+
+  useEffect(() => {
+    if (onload) {
+      localStorage.setItem("pageLoaded", onload);
+    }
+  }, [onload]);
 
   useEffect(() => {
     if (onload && transcript) {
       setTimeout(() => {
-        setLoad(false);
-      }, 1500);
+        setLoad("false");
+      }, 2000);
     }
   }, [transcript]);
   return (
@@ -23,17 +33,15 @@ function Home({ transcript, helpModalKit }) {
         <div className="text-secondary text-center">
           <div className="donut mx-auto d-block mb-2"></div>
           <br />
-          {onload ? (
+          {(onload === "true" && (
             <>
               <h1 className="mt-5">Welcome to Transverse!</h1>
               <h4>
                 Say help or press the question mark box to get started or start
-                talking if you know what you're doing
+                talking if you know what you're doing.
               </h4>
             </>
-          ) : (
-            <h1 className="mt-5">{transcript}</h1>
-          )}
+          )) || <h1 className="mt-5">{transcript}</h1>}
         </div>
       </div>
 
@@ -51,12 +59,3 @@ function Home({ transcript, helpModalKit }) {
 }
 
 export default Home;
-/*  const [onload, setLoad] = useState(
-    localStorage.getItem("pageLoaded") === "true"
-  );
-
-  useEffect(() => {
-    if (onload) {
-      localStorage.setItem("pageLoaded", "true");
-    }
-  }, [onload]); */

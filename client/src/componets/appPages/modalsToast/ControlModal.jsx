@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Accordion, Button } from "react-bootstrap";
+import { Modal, Accordion, Button, Form } from "react-bootstrap";
 import { handleSendLLM, fetchLLMpref } from "../services/setNotepref";
 import { createNewNote } from "../services/noteModeApi";
 import { useAuth } from "../../../hooks/auth";
@@ -16,15 +16,17 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
     setToastMessage,
   } = controlProps;
   //LLM preffereences
-  const [preferences, setPreferences] = useState(null);
+  const [preferences, setPreferences] = useState("");
   //Value of LLMPref text box
   const [textareaValue, setTextareaValue] = useState("");
+
+  const [frequency, setFrequency] = useState(0);
 
   const [showAlert, setShowAlert] = useState(false);
 
   //Set prefferences when called
   const handleSubmitLLM = () => {
-    setPreferences(textareaValue);
+    handleSendLLM(textareaValue, frequency, session);
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
@@ -34,16 +36,10 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
   // Call fetchData when the modal opens
   useEffect(() => {
     if (show) {
-      fetchLLMpref(setTextareaValue, session);
-      console.log(textareaValue);
+      fetchLLMpref(setTextareaValue, setFrequency, session);
     }
   }, [show]);
   //send preff over on submit
-  useEffect(() => {
-    if (preferences) {
-      handleSendLLM(preferences, session);
-    }
-  }, [preferences]);
 
   //Local Note Name (defined globally in use effect function)
   const [localNoteName, localNoteNameSet] = useState("");
@@ -82,21 +78,37 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
               <Accordion.Header>Set Prefferences</Accordion.Header>
               <Accordion.Body>
                 <div className="mb-3">
-                  <label
-                    htmlFor="exampleFormControlTextarea1"
-                    className="form-label"
-                  >
+                  <label htmlFor="prefTextArea" className="form-label">
                     Notetaking Preferences
                   </label>
                   <textarea
                     className="form-control"
-                    id="exampleFormControlTextarea1"
+                    id="prefTextArea"
                     rows="6"
                     value={textareaValue || ""}
                     onChange={(e) => setTextareaValue(e.target.value)}
                   ></textarea>
+
+                  <label htmlFor="freqRange" className="my-3 mt-4">
+                    Note Frequency (minutes)
+                  </label>
+                  <input
+                    type="range"
+                    className="form-range"
+                    min="350"
+                    max="1500"
+                    step="5"
+                    id="freqRange"
+                    value={frequency}
+                    onChange={(e) => setFrequency(e.target.value)}
+                  ></input>
+                  <div className="d-flex justify-content-between mb-4 mt-1 pb-2 border-bottom">
+                    <div>Quicker (1m)</div>
+                    <div>Average (3m)</div>
+                    <div>Slower (5m)</div>
+                  </div>
                 </div>
-                <div className="row align-items-center">
+                <div className="row align-items-center mt-2">
                   <div className="col">
                     <Button
                       variant="primary"
