@@ -1,4 +1,4 @@
-export const handleSendLLM = (instructions, session) => {
+export const handleSendLLM = (instructions, frequency, session) => {
   const token = session.access_token;
 
   fetch(`${import.meta.env.VITE_BASE_URL}/settings/notes`, {
@@ -7,7 +7,7 @@ export const handleSendLLM = (instructions, session) => {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
     },
-    body: JSON.stringify({ instructions }),
+    body: JSON.stringify({ instructions, frequency }),
   })
     .then((response) => response.json())
     .then((data) => console.log(data))
@@ -16,7 +16,7 @@ export const handleSendLLM = (instructions, session) => {
     });
 };
 
-export const fetchLLMpref = (setTextareaValue, session) => {
+export const fetchLLMpref = (setTextareaValue, setFrequency, session) => {
   const token = session.access_token;
   fetch(`${import.meta.env.VITE_BASE_URL}/settings/notes`, {
     method: "GET",
@@ -27,8 +27,8 @@ export const fetchLLMpref = (setTextareaValue, session) => {
   })
     .then((response) => response.json())
     .then((body) => {
-      console.log(body["instructions"]);
       setTextareaValue(body.instructions);
+      setFrequency(body.frequency);
     })
     .catch((error) => {
       console.error("Error:", error);

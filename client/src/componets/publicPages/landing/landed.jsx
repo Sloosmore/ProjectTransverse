@@ -25,7 +25,7 @@ export function BlockText() {
       setTextValue("loading");
       const timeoutId = setTimeout(() => {
         setTextValue("done");
-      }, 2500);
+      }, 1500);
 
       // Clear the timeout when the interval is cleared
       return () => clearTimeout(timeoutId);

@@ -30,6 +30,9 @@ function Login() {
                 email: supabaseUser.email,
                 is_active: true,
                 date_created: new Date(),
+                note_preferences:
+                  "Use a bullet point style with a subtitle schema (##). For more complex subjects include analogies.",
+                note_frequency: 700,
               });
 
             if (insertError) {

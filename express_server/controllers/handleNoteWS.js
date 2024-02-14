@@ -16,7 +16,6 @@ async function handleWebSocketConnection(ws, request) {
   const connectMessage = {
     message: "Connected to WebSocket!",
   };
-  const threshold = 500;
   ws.send(JSON.stringify(connectMessage));
 
   //Append note record to db
@@ -224,7 +223,18 @@ async function handleWebSocketConnection(ws, request) {
 
         //only pass the new ts to the AI query when the transcript gets reset it needs to pass the thresehold which it probaly should
 
-        if (activeTs && activeTs.length >= threshold) {
+        const { data: message, error } = await supabase
+          .from("user")
+          .select("note_frequency")
+          .eq("user_id", user);
+
+        const frequency = message[0].note_frequency || 700;
+
+        if (error) {
+          throw error;
+        }
+
+        if (activeTs && activeTs.length >= frequency) {
           //in theroy the thread ID should be passed into this function
 
           const res = await queryAI(note_id, activeTs);
