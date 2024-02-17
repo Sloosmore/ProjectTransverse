@@ -1,9 +1,9 @@
 import React from "react";
-import TransverseApp from "./componets/appPages/tvApp.jsx";
+import TransverseApp from "./components/appPages/tvApp.jsx";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import PublicRoutes from "./componets/publicPages/publicRouter.jsx";
+import PublicRoutes from "./components/publicPages/publicRouter.jsx";
 import AuthProvider from "./hooks/auth.jsx";
-import ProtectedRoute from "./componets/appPages/protectedRoute.jsx";
+import ProtectedRoute from "./components/appPages/protectedRoute.jsx";
 
 function App() {
   return (
