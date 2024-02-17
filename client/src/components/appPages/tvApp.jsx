@@ -1,7 +1,6 @@
 import "regenerator-runtime";
 import { useState, useEffect } from "react";
 import useWebSocket from "react-use-websocket";
-import "bootstrap/dist/css/bootstrap.css";
 import "./tvApp.css";
 import Sidebar from "./sidebar/sidebar";
 import { AppRoutes } from "./content/routes";

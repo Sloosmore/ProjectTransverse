@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.css";
 import React from "react";
 import TranverseNote from "../../../assets/TransverseNote.png";
 import "./blockText.css";
@@ -41,7 +40,7 @@ export function BlockText() {
       style={{ overflowX: "hidden", backgroundColor: "#F7F9FB" }}
     >
       <div className="row min-vh-100 py-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 ">
-        <div className="col-lg-7 p-3 p-lg-5 pt-lg-3 d-flex flex-column">
+        <div className="col-lg-5 p-3 p-lg-5 pt-lg-3 d-flex flex-column">
           <img
             src={grey}
             alt=""
@@ -65,14 +64,16 @@ export function BlockText() {
               <ReactMarkdown>{mdList[randList]}</ReactMarkdown>
             )}
           </div>
-          <div className="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3 ">
+          <div className="d-grid  gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3 ">
             <Link to="/login">
-              <button
-                type="button"
-                className="btn btn-lg px-4 me-md-2 gradient-bg"
-              >
-                {(user && "Log in") || "Sign up"}
-              </button>
+              <div className="text-white">
+                <button
+                  type="button"
+                  className="px-4 me-md-2  bg-gradient-to-r from-blue-700 to-fuchsia-600 hover:from-transparent hover:bg-white hover:text-purple-600 hover:bg-transparent py-2 rounded-md"
+                >
+                  {(user && "Log in") || "Sign up"}
+                </button>
+              </div>
             </Link>
             <Link to="/about">
               <button
@@ -88,7 +89,7 @@ export function BlockText() {
             </Link>
           </div>
         </div>
-        <div className="col-lg-4 offset-lg-1 p-0 shadow-lg img-fluid rounded ">
+        <div className="col-lg-6 offset-lg-1 p-0 shadow-lg img-fluid rounded ">
           <img
             className=" bg-light rounded"
             src={TranverseNote}

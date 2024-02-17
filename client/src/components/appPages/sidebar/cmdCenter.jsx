@@ -9,8 +9,8 @@ function CmdCenter({ noteData, controlProps }) {
   const handleShow = () => setShow(true);
 
   return (
-    <div className="pl-2 pr-2">
-      <div className="text-center d-grid border-5 mt-3">
+    <div className="">
+      <div className="text-center d-grid mt-3">
         <div
           className="btn btn-light mx-auto text-black-50 d-inline-block text-center py-3 px-3"
           role="button"
@@ -31,7 +31,7 @@ function CmdCenter({ noteData, controlProps }) {
               className="bi bi-three-dots bi-2x align-left"
               style={{ fontSize: "1.5rem" }}
             ></i>
-            <span className="mx-auto">Control Center</span>
+            <span className="mx-auto text">Control Center</span>
           </div>
         </div>
       </div>

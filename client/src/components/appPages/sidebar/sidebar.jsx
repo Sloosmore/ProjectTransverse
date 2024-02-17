@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./sidebar.css";
 //import TaskList from "./task_list";
 import NoteList from "./note_list";
@@ -7,7 +6,8 @@ import { Button, Collapse } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import PausePlay from "./noteStateControl";
 import StorageButton from "./storage";
-import Profile from "./profile";
+import Profile from "./profile/profile";
+import ProfDropdown from "./profile/dropdown";
 
 function Sidebar({ Dropdown, noteData, pauseProps, controlProps, profileKit }) {
   const [openNotes, setOpenNotes] = useState(false);
@@ -28,7 +28,7 @@ function Sidebar({ Dropdown, noteData, pauseProps, controlProps, profileKit }) {
   //this is the sidebar bar
   return (
     <div
-      className="flex-column h-100 position-relative "
+      className="flex-col h-100 position-relative "
       style={{ height: "100%" }}
     >
       <CmdCenter noteData={noteData} controlProps={controlProps} />
@@ -61,6 +61,8 @@ function Sidebar({ Dropdown, noteData, pauseProps, controlProps, profileKit }) {
             <NoteList notes={noteData} />
           </div>
         </Collapse>
+      </div>
+      <div className="absolute bottom-0 w-full mb-3">
         <Profile profileKit={profileKit} />
       </div>
     </div>

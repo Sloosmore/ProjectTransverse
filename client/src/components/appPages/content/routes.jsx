@@ -1,9 +1,8 @@
 import { Routes, Route } from "react-router-dom";
-import Chatroom from "./docs/docView";
 import Noteroom from "./notes/noteView";
 import Home from "./panel";
 import Files from "./files/files";
-
+import Testing from "./edit/testing";
 export const AppRoutes = ({
   transcript,
   docData,
@@ -35,5 +34,6 @@ export const AppRoutes = ({
       }
     />
     <Route path="/files" element={<Files canvasEdit={canvasEdit} />} />
+    <Route path="/edit" element={<Testing />} />
   </Routes>
 );

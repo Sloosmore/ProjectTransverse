@@ -19,9 +19,14 @@ const ComingSoon = () => {
       <h1>The {page} page is coming soon</h1>
       <p>When I say mvp I really mean mvp</p>
       <Link to="/">
-        <button type="button" className="btn btn-lg px-4 me-md-2 gradient-bg">
-          Go back Home
-        </button>
+        <div className="text-white">
+          <button
+            type="button"
+            className="px-4 me-md-2  bg-gradient-to-r from-blue-700 to-fuchsia-600 hover:from-transparent hover:bg-white hover:text-purple-600 hover:bg-transparent py-2 rounded-md"
+          >
+            Go back Home
+          </button>
+        </div>
       </Link>
     </div>
   );
