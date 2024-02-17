@@ -14,7 +14,7 @@ function CmdCenter({ noteData, controlProps }) {
         <div
           className="btn btn-light mx-auto text-black-50 d-inline-block text-center py-3 px-3"
           role="button"
-          style={{ width: "85%" }}
+          style={{ width: "100%" }}
         >
           <Link to="/n">
             <img src={transverseImage} alt="" />
@@ -24,7 +24,6 @@ function CmdCenter({ noteData, controlProps }) {
           <div
             className="btn btn-light mx-auto text-black-50 d-flex justify-content-between align-items-center py-1 px-3 mt-2"
             role="button"
-            style={{ width: "85%" }}
             onClick={handleShow}
           >
             <i

@@ -5,8 +5,12 @@ export const createNewNote = (
   setNotes,
   setMode,
   wsJSON,
-  session
+  session,
+  SpeechRecognition
 ) => {
+  //turn on the mike
+  SpeechRecognition.startListening({ continuous: true });
+
   console.log(name);
   //notes are being deactivated in the backend so could just fetch insted of filter after send responce
   const noteMatch = noteData.filter((record) => {

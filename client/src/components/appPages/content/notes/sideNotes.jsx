@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
-import { applyMarkdown } from "../../services/applyMD";
+import { applyMarkdown } from "../../services/noteConfig/applyMD";
 
 const SideNotes = ({
   annotating,

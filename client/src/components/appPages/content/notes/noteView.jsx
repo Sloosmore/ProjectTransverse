@@ -1,7 +1,7 @@
 import { useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LoadNote from "./noteload";
-import { splitMarkdown } from "../../services/parseMarkdown";
+import { splitMarkdown } from "../../services/noteConfig/parseMarkdown";
 import TextToSpeech from "../../funcComponents/textToSpeach";
 import "./noteView.css";
 import { saveNoteMarkdown } from "../../services/crudApi";

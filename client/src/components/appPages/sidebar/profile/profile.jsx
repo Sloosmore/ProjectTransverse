@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import { useAuth } from "../../../../hooks/auth";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import ProfDropdown from "./dropdown";
+import ControlModal from "../../modalsToast/ControlModal";
 
-function Profile({ profileKit }) {
+function Profile({ profileKit, noteData, controlProps }) {
   const { user, signOut } = useAuth();
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const { SpeechRecognition } = profileKit;
 
@@ -15,7 +20,13 @@ function Profile({ profileKit }) {
 
   return (
     <>
-      <ProfDropdown logOut={logOut} />
+      <ProfDropdown logOut={logOut} handleShow={handleShow} />
+      <ControlModal
+        show={show}
+        handleClose={handleClose}
+        noteData={noteData}
+        controlProps={controlProps}
+      />
     </>
   );
 }

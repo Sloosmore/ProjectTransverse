@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import "./tts.css";
-import { convertMarkdownToText } from "../services/parseMarkdown";
+import { convertMarkdownToText } from "../services/noteConfig/parseMarkdown";
 
 const TextToSpeech = ({ markdown, modeKit, ID, selectedText }) => {
   const text = convertMarkdownToText(markdown);

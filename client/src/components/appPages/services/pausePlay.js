@@ -1,4 +1,5 @@
 export const onPause = async (id) => {
+  //turn off the mike
   const response = await fetch(
     `${import.meta.env.VITE_BASE_URL}/records-api/notes-pause`,
     {

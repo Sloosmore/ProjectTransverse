@@ -13,7 +13,6 @@ function StorageButton() {
         <div
           className="btn btn-light mx-auto text-black-50 d-flex justify-content-between align-items-center py-1 px-3 mt-2"
           role="button"
-          style={{ width: "85%" }}
         >
           <i
             className="bi bi-folder bi-2x align-left"

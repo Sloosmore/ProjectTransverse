@@ -11,7 +11,7 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import { handleOnMessage } from "./services/wsResponce";
 import { deactivateNotes, fetchNoteRecords } from "./services/crudApi";
-import titleFromID from "./services/titleFromID";
+import titleFromID from "./services/noteConfig/titleFromID";
 import { useAuth } from "../../hooks/auth";
 import SupportedToast from "./support/supportedBrowser";
 import NoAudioSupport from "./support/noSupport";
@@ -179,7 +179,7 @@ function TransverseApp() {
 
   useEffect(() => {
     console.log("listening effect triggered");
-    if (!listening) {
+    if (!listening && mode === "note") {
       setTimeout(() => {
         SpeechRecognition.startListening({ continuous: true });
         console.log("Restart after trgger");
@@ -269,11 +269,6 @@ function TransverseApp() {
 
   useEffect(() => {
     //fetchTaskRecords().then(setDocs);
-    if (browserSupportsSpeechRecognition) {
-      SpeechRecognition.startListening({ continuous: true });
-    } else {
-      console.log("this very bad how did you end up here");
-    }
     const ping = setInterval(() => {
       sendJsonMessage({ ping: true });
       console.log("ping");
@@ -311,6 +306,8 @@ function TransverseApp() {
     resetTranscript,
     setActiveToast,
     setToastMessage,
+    SpeechRecognition,
+    setNoteID,
   };
 
   const pauseProps = {
@@ -319,6 +316,7 @@ function TransverseApp() {
     noteID,
     setNotes,
     noteData,
+    SpeechRecognition,
   };
 
   const modeKit = {

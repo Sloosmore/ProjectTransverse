@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import Task from "../sidebar/task";
 import { useState } from "react";
-import { applyMarkdown } from "../services/applyMD";
+import { applyMarkdown } from "../services/noteConfig/applyMD";
 import MarkdownElement from "../content/notes/md";
 
 function HelpModal({ show, onClose }) {

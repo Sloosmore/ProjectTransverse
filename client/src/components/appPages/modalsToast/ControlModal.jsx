@@ -14,7 +14,9 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
     resetTranscript,
     setActiveToast,
     setToastMessage,
+    SpeechRecognition,
   } = controlProps;
+
   //LLM preffereences
   const [preferences, setPreferences] = useState("");
   //Value of LLMPref text box
@@ -54,7 +56,8 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
         setNotes,
         setMode,
         wsJSON,
-        session
+        session,
+        SpeechRecognition
       );
       //toast
       handleClose();
