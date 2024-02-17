@@ -26,10 +26,7 @@ function Home({ transcript, helpModalKit }) {
   return (
     <div>
       <div className="text-center"></div>
-      <div
-        className="d-flex align-items-center justify-content-center"
-        style={{ height: "100vh" }}
-      >
+      <div className="d-flex align-items-center justify-content-center">
         <div className="text-secondary text-center">
           <div className="donut mx-auto d-block mb-2"></div>
           <br />
@@ -44,8 +41,13 @@ function Home({ transcript, helpModalKit }) {
           )) || <h1 className="mt-5">{transcript}</h1>}
         </div>
       </div>
+    </div>
+  );
+}
 
-      <button
+export default Home;
+
+/*<button
         className="position-absolute bottom-0 end-0 m-4 btn btn-outline-secondary rounded-circle"
         onClick={() => setShowHelpModal(true)}
       >
@@ -53,9 +55,4 @@ function Home({ transcript, helpModalKit }) {
       </button>
       <div>
         <HelpModal show={showHelpModal} onClose={closeModal} />
-      </div>
-    </div>
-  );
-}
-
-export default Home;
+      </div> */

@@ -9,9 +9,9 @@ import { handleSendLLM } from "./services/setNotepref";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import { handleOnMessage } from "./services/wsResponce";
+import { handleOnMessage } from "./services/noteWebsockets/wsResponce";
 import { deactivateNotes, fetchNoteRecords } from "./services/crudApi";
-import titleFromID from "./services/noteConfig/titleFromID";
+import titleFromID from "./services/frontendNoteConfig/titleFromID";
 import { useAuth } from "../../hooks/auth";
 import SupportedToast from "./support/supportedBrowser";
 import NoAudioSupport from "./support/noSupport";
@@ -36,7 +36,7 @@ function TransverseApp() {
 
   //this is for specific active instace of WS notes
   //ID of note and not title use titleFromID to get title
-  const [noteID, setNoteID] = useState(localStorage.getItem("noteName") || "");
+  const [noteID, setNoteID] = useState(localStorage.getItem("noteID") || "");
 
   //hide the sidebar while editing notes
   const [annotating, setAnnotating] = useState(false);
@@ -44,11 +44,15 @@ function TransverseApp() {
   //for editing notes in files link
   const [showOffCanvasEdit, setOffCanvasEdit] = useState(false);
 
+  //for new note toast
   const [activeToast, setActiveToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
+  //this is for note field
+  const [newNoteField, setNewNoteField] = useState(false);
+
   useEffect(() => {
-    localStorage.setItem("noteName", noteID);
+    localStorage.setItem("noteID", noteID);
   }, [noteID]);
 
   const commands = [
@@ -221,28 +225,9 @@ function TransverseApp() {
 
   const [timeoutId, setTimeoutId] = useState(null);
 
+  //core logic for note mode
   useEffect(() => {
-    if (mode === "default") {
-      /*
-      fetch(`${import.meta.env.VITE_BASE_URL}/tscript-api`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ transcript }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw Error(
-              `Server returned ${response.status}: ${response.statusText}`
-            );
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-        */
-    } else if (mode === "note") {
+    if (mode === "note") {
       //send to backend after 2 sec
       if (timeoutId) {
         clearTimeout(timeoutId);
@@ -267,6 +252,7 @@ function TransverseApp() {
     }
   }, [transcript]);
 
+  //ping pong to keep WS connection alive
   useEffect(() => {
     //fetchTaskRecords().then(setDocs);
     const ping = setInterval(() => {
@@ -307,7 +293,8 @@ function TransverseApp() {
     setActiveToast,
     setToastMessage,
     SpeechRecognition,
-    setNoteID,
+    newNoteField,
+    setNewNoteField,
   };
 
   const pauseProps = {
@@ -317,6 +304,9 @@ function TransverseApp() {
     setNotes,
     noteData,
     SpeechRecognition,
+    setNewNoteField,
+    newNoteField,
+    setNoteID,
   };
 
   const modeKit = {
@@ -366,7 +356,7 @@ function TransverseApp() {
           </div>
         )}
 
-        <div className="col">
+        <div className="col ms-0">
           <AppRoutes
             transcript={transcript}
             docData={docData}
@@ -376,6 +366,7 @@ function TransverseApp() {
             modeKit={modeKit}
             annotatingKit={annotatingKit}
             canvasEdit={canvasEdit}
+            controlProps={controlProps}
           />
         </div>
       </div>

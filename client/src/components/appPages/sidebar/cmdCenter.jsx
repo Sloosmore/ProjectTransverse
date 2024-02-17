@@ -20,19 +20,6 @@ function CmdCenter({ noteData, controlProps }) {
             <img src={transverseImage} alt="" />
           </Link>
         </div>
-        <div>
-          <div
-            className="btn btn-light mx-auto text-black-50 d-flex justify-content-between align-items-center py-1 px-3 mt-2"
-            role="button"
-            onClick={handleShow}
-          >
-            <i
-              className="bi bi-three-dots bi-2x align-left"
-              style={{ fontSize: "1.5rem" }}
-            ></i>
-            <span className="mx-auto text">Control Center</span>
-          </div>
-        </div>
       </div>
       <ControlModal
         show={show}
@@ -45,3 +32,18 @@ function CmdCenter({ noteData, controlProps }) {
 }
 
 export default CmdCenter;
+
+/*
+<div>
+          <div
+            className="btn btn-light mx-auto text-black-50 d-flex justify-content-between align-items-center py-1 px-3 mt-2"
+            role="button"
+            onClick={handleShow}
+          >
+            <i
+              className="bi bi-three-dots bi-2x align-left"
+              style={{ fontSize: "1.5rem" }}
+            ></i>
+            <span className="mx-auto text">Control Center</span>
+          </div>
+        </div>*/

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import titleFromID from "../../services/noteConfig/titleFromID";
+import titleFromID from "../../services/frontendNoteConfig/titleFromID";
 import { onPause, onPlay } from "../../services/pausePlay";
 import { fetchNoteRecords } from "../../services/crudApi";
 import { useAuth } from "../../../../hooks/auth";
 import EndNote from "./endNote";
+import NewNote from "./newNote";
 
 function PausePlay({ pauseProps }) {
   const { session } = useAuth();
@@ -15,6 +16,8 @@ function PausePlay({ pauseProps }) {
     setNotes,
     noteData,
     SpeechRecognition,
+    setNewNoteField,
+    newNoteField,
     setNoteID,
   } = pauseProps;
   //noteID = ID
@@ -32,9 +35,9 @@ function PausePlay({ pauseProps }) {
       setRecStatus("play");
       //Deactivate the notes for good meause
     } else {
-      setRecStatus("play");
+      setRecStatus("new");
     }
-  }, [mode]);
+  }, [mode, noteID]);
 
   return (
     <div className="">
@@ -59,7 +62,7 @@ function PausePlay({ pauseProps }) {
             ></i>
             <span className="mx-auto ps-2">Pause</span>
           </div>
-          <EndNote />
+          <EndNote setNoteID={setNoteID} />
         </div>
       ) : recStatus === "play" ? (
         <div className="flex flex-row justify-between">
@@ -81,10 +84,15 @@ function PausePlay({ pauseProps }) {
             ></i>
             <span className="mx-auto ps-2">Capture</span>
           </div>
-          <EndNote />
+          <EndNote setNoteID={setNoteID} />
         </div>
       ) : recStatus === "new" ? (
-        <></>
+        <>
+          <NewNote
+            setNewNoteField={setNewNoteField}
+            newNoteField={newNoteField}
+          />
+        </>
       ) : null}
       <ReactTooltip
         key={viewTitle}

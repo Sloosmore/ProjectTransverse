@@ -31,7 +31,10 @@ function Files({ canvasEdit }) {
   return (
     <div className="mt-3 px-3">
       <h1>Files</h1>
-      <div className="table-responsive">
+      <div
+        className="table-responsive h-128 overflow-auto"
+        style={{ height: "85vh" }}
+      >
         <table className="table table-hover">
           <thead>
             <tr>
@@ -43,7 +46,7 @@ function Files({ canvasEdit }) {
               <th scope="col">Edit</th>
             </tr>
           </thead>
-          <tbody style={{ maxHeight: "80vh", overflow: "auto" }}>
+          <tbody className="">
             {files.map((file, index) => (
               <tr key={index}>
                 <td className="align-middle">{file.title}</td>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Accordion, Button, Form } from "react-bootstrap";
 import { handleSendLLM, fetchLLMpref } from "../services/setNotepref";
-import { createNewNote } from "../services/noteModeApi";
+import { createNewNote } from "../services/noteWebsockets/noteModeApi";
 import { useAuth } from "../../../hooks/auth";
 
 function ControlModal({ show, handleClose, noteData, controlProps }) {
