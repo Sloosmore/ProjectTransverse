@@ -229,6 +229,13 @@ function TransverseApp() {
 
   const [timeoutId, setTimeoutId] = useState(null);
 
+  useEffect(() => {
+    if (mode === "default") {
+      SpeechRecognition.stopListening();
+      console.log("not listening");
+    }
+  }, [mode]);
+
   //core logic for note mode
   useEffect(() => {
     if (mode === "note") {

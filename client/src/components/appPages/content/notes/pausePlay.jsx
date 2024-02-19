@@ -64,7 +64,6 @@ function Record({ pauseProps, localNoteID }) {
                 .then((data) => {
                   setNotes(data);
                   setMode("default");
-                  SpeechRecognition.stopListening();
                 });
             }}
             className="bg-gray-100 inline-flex justify-center ps-3.5 pe-3.5 py-3 text-sm font-semibold text-gray-500 hover:bg-gray-200 rounded-md"
@@ -82,7 +81,6 @@ function Record({ pauseProps, localNoteID }) {
                 .then((data) => {
                   setNotes(data);
                   setMode("default");
-                  SpeechRecognition.stopListening();
                 });
               setNoteID(null);
               endNoteToast();
@@ -147,7 +145,9 @@ function Record({ pauseProps, localNoteID }) {
             ></i>
           </button>
           <button
-            onClick={() => setNoteID()}
+            onClick={() => {
+              setNoteID();
+            }}
             className=" inline-flex justify-center  px-4 py-4 text-sm font-semibold text-gray-500 hover:bg-gray-200 my-auto rounded-md"
           >
             <i
@@ -177,9 +177,7 @@ function Record({ pauseProps, localNoteID }) {
             ></i>
           </button>
         </div>
-      ) : (
-        "lololo"
-      )}
+      ) : null}
       <ReactTooltip
         key={viewTitle}
         place="left"
