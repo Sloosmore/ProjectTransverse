@@ -20,16 +20,16 @@ function Noteroom({
   const { annotating, setAnnotating } = annotatingKit;
 
   //needs to be edited
-
-  const [status, setStatus] = useState(location.state.status);
-  const [noteID, setNoteID] = useState(location.state.note_id);
+  //only will naviate to this page automatically if note is active so it is a nice little trick
+  const [status, setStatus] = useState(location.state?.status || "active");
+  const [noteID, setNoteID] = useState(location.state?.note_id || noteId);
   const [selectedText, setSelectedText] = useState("");
   const [markdown, setMarkdown] = useState(
-    location.state.full_markdown || location.state.markdown
+    location.state?.full_markdown || location.state?.markdown
   );
-  const [title, setTitle] = useState(location.state.title);
+  const [title, setTitle] = useState(location.state?.title);
 
-  const [fullTs, setFullTs] = useState(location.state.full_transcript);
+  const [fullTs, setFullTs] = useState(location.state?.full_transcript);
   //this is the incomming markdown
   //const [activeMarkdown, setActiveMarkdown] = useState("");
 

@@ -16,10 +16,13 @@ import { useAuth } from "../../hooks/auth";
 import SupportedToast from "./support/supportedBrowser";
 import NoAudioSupport from "./support/noSupport";
 import SubmitToast from "./modalsToast/submitToast";
+import { useNavigate } from "react-router-dom";
 
 const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 
 function TransverseApp() {
+  const navigate = useNavigate();
+
   const { session } = useAuth();
   //this is for help
   const [showHelpModal, setShowHelpModal] = useState(false);
@@ -165,7 +168,8 @@ function TransverseApp() {
         setNoteID,
         setNotes,
         noteID,
-        resetTranscript
+        resetTranscript,
+        navigate
       );
     },
 

@@ -1,4 +1,5 @@
 import { saveNoteMarkdown } from "../crudApi";
+import { useNavigate } from "react-router-dom";
 //this takes two params note ID and markdown
 
 export const handleOnMessage = (
@@ -7,7 +8,8 @@ export const handleOnMessage = (
   setNoteID,
   setNotes,
   noteID,
-  resetTranscript
+  resetTranscript,
+  navigate
 ) => {
   const wsData = JSON.parse(event.data);
   console.log("WebSocket message received:", wsData);
@@ -17,6 +19,7 @@ export const handleOnMessage = (
     //set by uuid
     setNoteID(wsData.note_id);
     setNotes(wsData.noteRecords);
+    navigate(`/n/${wsData.note_id}`);
   }
   if (wsData.resetState) {
     resetTranscript();

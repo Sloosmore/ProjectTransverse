@@ -3,13 +3,9 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import TopProfile from "./profile";
 import icon from "../../../../assets/TransverseIcon.svg";
 import { Link } from "react-router-dom";
-
-const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
+import { useAuth } from "../../../../hooks/auth";
+import ControlModal from "../../modalsToast/ControlModal";
+import { useState } from "react";
 
 const userNavigation = [
   { name: "Your Profile", href: "#" },
@@ -22,6 +18,18 @@ function classNames(...classes) {
 }
 
 function AppNav({ profileKit, controlProps, noteData }) {
+  const { SpeechRecognition } = profileKit;
+
+  const { user, signOut } = useAuth();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const logOut = () => {
+    signOut();
+    SpeechRecognition.stopListening();
+  };
+
   return (
     <>
       <Disclosure as="nav" className="bg-white shadow-sm">
@@ -48,7 +56,7 @@ function AppNav({ profileKit, controlProps, noteData }) {
                 </div>
                 <div className="-mr-2 flex md:hidden">
                   {/* Mobile menu button */}
-                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-gray-200 p-2 text-gray-700 hover:bg-gray-300 hover:text-black focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-200">
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>
                     {open ? (
@@ -62,14 +70,10 @@ function AppNav({ profileKit, controlProps, noteData }) {
             </div>
 
             <Disclosure.Panel className="md:hidden">
-              <div className="border-t border-gray-700 pb-3 pt-4">
+              <div className="border-t border-gray-200 pb-3 pt-4">
                 <div className="flex items-center px-4">
-                  <div className="flex-shrink-0">
-                    <img
-                      className="h-10 w-10 rounded-full"
-                      src={user.imageUrl}
-                      alt=""
-                    />
+                  <div className="flex-shrink-0 text-gray-500">
+                    <i className="bi bi-person-circle "></i>
                   </div>
                   <div className="ml-3">
                     <div className="text-base font-medium leading-none text-white">
@@ -81,22 +85,32 @@ function AppNav({ profileKit, controlProps, noteData }) {
                   </div>
                 </div>
                 <div className="mt-3 space-y-1 px-4">
-                  {userNavigation.map((item) => (
-                    <Disclosure.Button
-                      key={item.name}
-                      as="a"
-                      href={item.href}
-                      className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                    >
-                      {item.name}
-                    </Disclosure.Button>
-                  ))}
+                  <Disclosure.Button
+                    as="a"
+                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                    onClick={() => handleShow()}
+                  >
+                    Account Settings
+                  </Disclosure.Button>
+                  <Disclosure.Button
+                    as="a"
+                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                    onClick={() => logOut()}
+                  >
+                    Log Out
+                  </Disclosure.Button>
                 </div>
               </div>
             </Disclosure.Panel>
           </>
         )}
       </Disclosure>
+      <ControlModal
+        show={show}
+        handleClose={handleClose}
+        noteData={noteData}
+        controlProps={controlProps}
+      />
     </>
   );
 }

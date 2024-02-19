@@ -68,11 +68,11 @@ function SubmitNewNote({ controlProps, noteData }) {
   return (
     <>
       {newNoteField && (
-        <div className="w-5/6 mx-auto z-20 relative">
+        <div className="w-full mx-auto z-20 relative">
           <div className="absolute inset-0 blur-shadow "></div>
           <div
             ref={noteRef}
-            className={`w-5/6 mx-auto z-10 transition-opacity duration-300 p-5 `}
+            className={`lg:w-3/4 md:w-5/6 sm:w-11/12 mx-auto z-10 transition-opacity duration-300 p-5 `}
           >
             <div className=" flex flex-row overflow-hidden bg-white [&:has(textarea:focus)]:border-token-border-xheavy shadow-lg flex flex-col w-full dark:border-token-border-heavy flex-grow relative border border-token-border-heavy rounded-2xl bg-token-main-surface-primary shadow-lg">
               <input
