@@ -279,6 +279,12 @@ function TransverseApp() {
     console.log(noteData);
   }, [noteData]);
 */
+  const submitToastKit = {
+    setActiveToast,
+    setToastMessage,
+    activeToast,
+    toastMessage,
+  };
   const canvasEdit = {
     showOffCanvasEdit,
     setOffCanvasEdit,
@@ -307,6 +313,7 @@ function TransverseApp() {
     setNewNoteField,
     newNoteField,
     setNoteID,
+    submitToastKit,
   };
 
   const modeKit = {
@@ -327,23 +334,45 @@ function TransverseApp() {
     closeModal,
   };
 
-  const submitToastKit = {
-    setActiveToast,
-    setToastMessage,
-    activeToast,
-    toastMessage,
-  };
-
   const profileKit = {
     SpeechRecognition,
   };
 
+  const newNoteButtonkit = {
+    setNewNoteField,
+    newNoteField,
+    noteID,
+  };
+
   return (
-    <div className="container-fluid vh-100 d-flex">
-      <div className="row flex-grow-1">
-        {!annotating && (
+    <div className=" vh-100  h-full">
+      <div className="h-full">
+        <AppRoutes
+          transcript={transcript}
+          docData={docData}
+          noteData={noteData}
+          helpModalKit={helpModalKit}
+          helpModal={setShowHelpModal}
+          modeKit={modeKit}
+          annotatingKit={annotatingKit}
+          canvasEdit={canvasEdit}
+          controlProps={controlProps}
+          newNoteButtonkit={newNoteButtonkit}
+          profileKit={profileKit}
+          pauseProps={pauseProps}
+        />
+      </div>
+      <SupportedToast />
+      <SubmitToast {...submitToastKit} />
+    </div>
+  );
+}
+
+export default TransverseApp;
+//move helpModal into panel
+/*        {!annotating && (
           <div
-            className="col-3 bg-lightgrey p-0 d-flex flex-column"
+            className="col-3 bg-lightgrey p-0 d-flex flex-column h-full"
             style={{ minWidth: "200px", maxWidth: "250px" }}
           >
             <Sidebar
@@ -355,26 +384,4 @@ function TransverseApp() {
             />
           </div>
         )}
-
-        <div className="col ms-0">
-          <AppRoutes
-            transcript={transcript}
-            docData={docData}
-            noteData={noteData}
-            helpModalKit={helpModalKit}
-            helpModal={setShowHelpModal}
-            modeKit={modeKit}
-            annotatingKit={annotatingKit}
-            canvasEdit={canvasEdit}
-            controlProps={controlProps}
-          />
-        </div>
-      </div>
-      <SupportedToast />
-      <SubmitToast {...submitToastKit} />
-    </div>
-  );
-}
-
-export default TransverseApp;
-//move helpModal into panel
+ */

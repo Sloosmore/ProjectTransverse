@@ -8,7 +8,13 @@ import { saveNoteMarkdown } from "../../services/crudApi";
 import SideNotes from "./sideNotes";
 import MarkdownElement from "./md";
 
-function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
+function Noteroom({
+  noteData,
+  modeKit,
+  annotatingKit,
+  transcript,
+  pauseProps,
+}) {
   const { noteId } = useParams();
   const location = useLocation();
   const { annotating, setAnnotating } = annotatingKit;
@@ -105,7 +111,7 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
   };
 
   return (
-    <div className="row h-100">
+    <div className="row h-full">
       <SideNotes
         annotating={annotating}
         setAnnotating={setAnnotating}
@@ -118,10 +124,12 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
         transcript={transcript}
         status={status}
         fullTs={fullTs}
+        pauseProps={pauseProps}
+        localNoteID={noteID}
       />
 
       <div
-        className={`d-flex flex-column vh-100 ms-2 pe-5 text-secondary  ${
+        className={`d-flex flex-column ms-2 pe-5 text-secondary h-full ${
           annotating ? "col-md-auto col-lg" : "col"
         }`}
       >
@@ -129,7 +137,7 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
           <div className="col-xl">
             <h1>{title}</h1>
           </div>
-          <div className="col-xl-3 pe-0">
+          <div className="col-xl-3 pe-0 mt-auto me-lg-5">
             <TextToSpeech
               markdown={markdown}
               modeKit={modeKit}
@@ -139,7 +147,7 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
           </div>
         </div>
 
-        <div className="overflow-auto flex-grow-1 pt-2">
+        <div className="overflow-auto h-full pt-2 ">
           {markdownElements.map((element, index) => (
             <MarkdownElement
               key={index}

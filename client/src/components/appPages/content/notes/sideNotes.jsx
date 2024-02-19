@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import { applyMarkdown } from "../../services/frontendNoteConfig/applyMD";
+import Record from "./pausePlay";
 
 const SideNotes = ({
   annotating,
@@ -14,16 +15,17 @@ const SideNotes = ({
   status,
   transcript,
   fullTs,
+  pauseProps,
+  localNoteID,
 }) => {
   return (
     <div
-      style={{ height: "100vh" }}
-      className={`${
+      className={` h-full ${
         annotating ? "col-lg-7 col" : "col-auto"
       } transition-sidebar 
 `}
     >
-      <div className="row h-100">
+      <div className="row h-full">
         <div
           className={`toggle-sidebar d-flex align-items-center col-1 ${
             annotating && "bg-lightgrey"
@@ -45,36 +47,40 @@ const SideNotes = ({
           )}
         </div>
         {annotating && (
-          <div className="col-10 ms-4 text-secondary">
-            <ul className="nav nav-underline mt-5">
-              <li className="nav-item">
+          <div className="col-10 ms-4 text-secondary ">
+            <div className="flex flex-row mt-5 items-center">
+              <div className="flex my-auto space-x-4">
                 <button
-                  className={`nav-link text-secondary ${
-                    view === "notes" ? "active" : ""
+                  className={`${
+                    view === "notes"
+                      ? "text-secondary underline underline-offset-4"
+                      : "text-secondary"
                   }`}
                   onClick={() => setView("notes")}
                 >
-                  <h5>Notes</h5>
+                  <div>Notes</div>
                 </button>
-              </li>
-              <li className="nav-item">
                 <button
-                  className={`nav-link text-secondary ${
-                    view === "transcript" ? "active" : ""
+                  className={`${
+                    view === "transcript"
+                      ? "text-secondar underline underline-offset-4"
+                      : "text-secondary"
                   }`}
                   onClick={() => setView("transcript")}
                 >
-                  <h5>Transcript</h5>
-                  <div className="overflow-auto flex-grow-1 pt-2"></div>
+                  <div>Transcript</div>
                 </button>
-              </li>
-            </ul>
+              </div>
+              <div className="ml-auto">
+                <Record pauseProps={pauseProps} localNoteID={localNoteID} />
+              </div>
+            </div>
             {view === "notes" && (
               <div>
                 <textarea
                   className="form-control mt-3 text-secondary"
                   id="exampleFormControlTextarea1"
-                  style={{ height: "80vh", overflow: "auto", resize: "none" }}
+                  style={{ height: "70vh", overflow: "auto", resize: "none" }}
                   value={markdown}
                   onChange={(e) => setMarkdown(e.target.value)}
                 />
@@ -149,15 +155,17 @@ const SideNotes = ({
               </div>
             )}
             {view === "transcript" && (
-              <div style={{ overflow: "auto", maxHeight: "85vh" }}>
-                {fullTs &&
-                  fullTs.split("\n").map((line, index) => (
-                    <React.Fragment key={index}>
-                      {line}
-                      <br />
-                    </React.Fragment>
-                  ))}
-                {status === "active" && transcript}
+              <div className="h-full">
+                <div style={{ height: "80vh", overflow: "auto" }}>
+                  {fullTs &&
+                    fullTs.split("\n").map((line, index) => (
+                      <React.Fragment key={index}>
+                        {line}
+                        <br />
+                      </React.Fragment>
+                    ))}
+                  {status === "active" && transcript}
+                </div>
               </div>
             )}
           </div>

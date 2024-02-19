@@ -41075,4 +41075,553 @@
       "metadata": {}
     }
   ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_dOI0X1Etg4rfjNPGwG4iBNE8/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_uA9QrxClmJsPrenqDZ8cBZgF",
+        "object": "thread.message",
+        "created_at": 1708311492,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+        "run_id": "run_jqUXKbwGMWX15YwAsQDevcUM",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Linda Weinman's Entrepreneurial Journey\n- 1995: Linda Weinman acquires linda.com for graphic design experimentation and showcasing student work.\n- 2002: Realizes the potential for online teaching and transitions to virtual platform.\n- Linda’s story exemplifies counter-conventional entrepreneurial mindsets.\n\nAnalogy: Linda's journey is like a blank canvas where she experimented with different tools, eventually creating a masterpiece.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_45CTrqIQDinKl1HXmH0Cn1nZ",
+        "object": "thread.message",
+        "created_at": 1708311491,
+        "assistant_id": null,
+        "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "in 1995 a graphic design teacher named Linda weinman and also an aspiring entrepreneur decided to get the website linda.com she did so because she needed a Sandbox to play in with the new graphic design tools that were being developed at that time Photoshop illustrator and many more and she needed a place to put her students work so all could see it well she put that website together and the business began to grow and in 2002 she discovered it could be much much more so she moved all of her teaching online later \n\n 01:01\nUS dollars Linda is the poster child for what I call the counter conventional mindsets of entrepreneurs so I want to tell you about these mindsets today and here we go so number one why do I call you \n\n 01:26\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_uA9QrxClmJsPrenqDZ8cBZgF",
+    "last_id": "msg_45CTrqIQDinKl1HXmH0Cn1nZ",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_uA9QrxClmJsPrenqDZ8cBZgF",
+      "object": "thread.message",
+      "created_at": 1708311492,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+      "run_id": "run_jqUXKbwGMWX15YwAsQDevcUM",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Linda Weinman's Entrepreneurial Journey\n- 1995: Linda Weinman acquires linda.com for graphic design experimentation and showcasing student work.\n- 2002: Realizes the potential for online teaching and transitions to virtual platform.\n- Linda’s story exemplifies counter-conventional entrepreneurial mindsets.\n\nAnalogy: Linda's journey is like a blank canvas where she experimented with different tools, eventually creating a masterpiece.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_45CTrqIQDinKl1HXmH0Cn1nZ",
+      "object": "thread.message",
+      "created_at": 1708311491,
+      "assistant_id": null,
+      "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "in 1995 a graphic design teacher named Linda weinman and also an aspiring entrepreneur decided to get the website linda.com she did so because she needed a Sandbox to play in with the new graphic design tools that were being developed at that time Photoshop illustrator and many more and she needed a place to put her students work so all could see it well she put that website together and the business began to grow and in 2002 she discovered it could be much much more so she moved all of her teaching online later \n\n 01:01\nUS dollars Linda is the poster child for what I call the counter conventional mindsets of entrepreneurs so I want to tell you about these mindsets today and here we go so number one why do I call you \n\n 01:26\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    }
+  ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_dOI0X1Etg4rfjNPGwG4iBNE8/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_utCJI3ENmAJvqiidN8hK304J",
+        "object": "thread.message",
+        "created_at": 1708311621,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+        "run_id": "run_3Lq2ceyOq0lEpWXxt6hShvUE",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Unconventional Mindsets in Entrepreneurship\n- Challenge conventional business teachings about strategy, marketing, risk, and more.\n- Mindset influences an entrepreneur's response to opportunities.\n- Example of Arnold Correa, who reinvented his business to become a leading provider despite disregarding traditional rules.\n\nAnalogy: Entrepreneurship is like dancing to a new tune, where sometimes breaking the rules leads to the most extraordinary moves.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_3oQO4p0OK7v3shgMPGMCHR8e",
+        "object": "thread.message",
+        "created_at": 1708311620,
+        "assistant_id": null,
+        "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "better done in big companies today they fly in the face of much of what we teach at London Business School and other business schools about strategy about marketing about risk and about much more now you might say John what do you mean by mindset a mindset of course is up here \n\n 01:56\nwe determines the response we make to that something that comes our way and know something says we entrepreneurs call them are opportunities \n\n 02:09\na Brazilian entrepreneur named Arnold Correa built a wonderful business that today is called atmo digital by disregarding those rules he had already reinvented his business twice to become a major provider of event management and Production Services in the training room of all my stores and could we build a satellite uplink so we can send all this wonderful stuff to the stores so what did he say he said yes we can do that even though we know nothing about satellite technology had never \n\n 02:26\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_uA9QrxClmJsPrenqDZ8cBZgF",
+        "object": "thread.message",
+        "created_at": 1708311492,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+        "run_id": "run_jqUXKbwGMWX15YwAsQDevcUM",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Linda Weinman's Entrepreneurial Journey\n- 1995: Linda Weinman acquires linda.com for graphic design experimentation and showcasing student work.\n- 2002: Realizes the potential for online teaching and transitions to virtual platform.\n- Linda’s story exemplifies counter-conventional entrepreneurial mindsets.\n\nAnalogy: Linda's journey is like a blank canvas where she experimented with different tools, eventually creating a masterpiece.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_45CTrqIQDinKl1HXmH0Cn1nZ",
+        "object": "thread.message",
+        "created_at": 1708311491,
+        "assistant_id": null,
+        "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "in 1995 a graphic design teacher named Linda weinman and also an aspiring entrepreneur decided to get the website linda.com she did so because she needed a Sandbox to play in with the new graphic design tools that were being developed at that time Photoshop illustrator and many more and she needed a place to put her students work so all could see it well she put that website together and the business began to grow and in 2002 she discovered it could be much much more so she moved all of her teaching online later \n\n 01:01\nUS dollars Linda is the poster child for what I call the counter conventional mindsets of entrepreneurs so I want to tell you about these mindsets today and here we go so number one why do I call you \n\n 01:26\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_utCJI3ENmAJvqiidN8hK304J",
+    "last_id": "msg_45CTrqIQDinKl1HXmH0Cn1nZ",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_utCJI3ENmAJvqiidN8hK304J",
+      "object": "thread.message",
+      "created_at": 1708311621,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+      "run_id": "run_3Lq2ceyOq0lEpWXxt6hShvUE",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Unconventional Mindsets in Entrepreneurship\n- Challenge conventional business teachings about strategy, marketing, risk, and more.\n- Mindset influences an entrepreneur's response to opportunities.\n- Example of Arnold Correa, who reinvented his business to become a leading provider despite disregarding traditional rules.\n\nAnalogy: Entrepreneurship is like dancing to a new tune, where sometimes breaking the rules leads to the most extraordinary moves.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_3oQO4p0OK7v3shgMPGMCHR8e",
+      "object": "thread.message",
+      "created_at": 1708311620,
+      "assistant_id": null,
+      "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "better done in big companies today they fly in the face of much of what we teach at London Business School and other business schools about strategy about marketing about risk and about much more now you might say John what do you mean by mindset a mindset of course is up here \n\n 01:56\nwe determines the response we make to that something that comes our way and know something says we entrepreneurs call them are opportunities \n\n 02:09\na Brazilian entrepreneur named Arnold Correa built a wonderful business that today is called atmo digital by disregarding those rules he had already reinvented his business twice to become a major provider of event management and Production Services in the training room of all my stores and could we build a satellite uplink so we can send all this wonderful stuff to the stores so what did he say he said yes we can do that even though we know nothing about satellite technology had never \n\n 02:26\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_uA9QrxClmJsPrenqDZ8cBZgF",
+      "object": "thread.message",
+      "created_at": 1708311492,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+      "run_id": "run_jqUXKbwGMWX15YwAsQDevcUM",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Linda Weinman's Entrepreneurial Journey\n- 1995: Linda Weinman acquires linda.com for graphic design experimentation and showcasing student work.\n- 2002: Realizes the potential for online teaching and transitions to virtual platform.\n- Linda’s story exemplifies counter-conventional entrepreneurial mindsets.\n\nAnalogy: Linda's journey is like a blank canvas where she experimented with different tools, eventually creating a masterpiece.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_45CTrqIQDinKl1HXmH0Cn1nZ",
+      "object": "thread.message",
+      "created_at": 1708311491,
+      "assistant_id": null,
+      "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "in 1995 a graphic design teacher named Linda weinman and also an aspiring entrepreneur decided to get the website linda.com she did so because she needed a Sandbox to play in with the new graphic design tools that were being developed at that time Photoshop illustrator and many more and she needed a place to put her students work so all could see it well she put that website together and the business began to grow and in 2002 she discovered it could be much much more so she moved all of her teaching online later \n\n 01:01\nUS dollars Linda is the poster child for what I call the counter conventional mindsets of entrepreneurs so I want to tell you about these mindsets today and here we go so number one why do I call you \n\n 01:26\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    }
+  ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_dOI0X1Etg4rfjNPGwG4iBNE8/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_7S0dFsiDA9rfIAPOqKFH92J7",
+        "object": "thread.message",
+        "created_at": 1708311675,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+        "run_id": "run_H8RSk5oWFvTwpkpRporCbByt",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Adaptive Entrepreneurship\n- Arnold Correa's response to Walmart's request for TV screens on the sales floor led to another business reinvention.\n- Arnold consistently adapted his business by embracing new customer requests that stretched beyond his core competencies.\n\nAnalogy: Entrepreneurship is like being a chameleon, adapting to the changing environment and thriving in diverse situations.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_h0WT92L4NsgCJHi27wy1ie67",
+        "object": "thread.message",
+        "created_at": 1708311674,
+        "assistant_id": null,
+        "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "several years later some of his other customers one of them in particular Walmart said well you know it's nice that we have all of these these television screens in the back room of the store but wouldn't it be cool if we had them on the sales floor because then we could run average \n\n 02:49\nin that aisle and what did Arnold say to that request yes we can do that over a period of years Arnold reinvented his business fundamentally four different times by saying when a customer wanted something new that lay outside his core competencies yes we can the second one I want to tell you about I call problems today \n\n 03:21\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_utCJI3ENmAJvqiidN8hK304J",
+        "object": "thread.message",
+        "created_at": 1708311621,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+        "run_id": "run_3Lq2ceyOq0lEpWXxt6hShvUE",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Unconventional Mindsets in Entrepreneurship\n- Challenge conventional business teachings about strategy, marketing, risk, and more.\n- Mindset influences an entrepreneur's response to opportunities.\n- Example of Arnold Correa, who reinvented his business to become a leading provider despite disregarding traditional rules.\n\nAnalogy: Entrepreneurship is like dancing to a new tune, where sometimes breaking the rules leads to the most extraordinary moves.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_3oQO4p0OK7v3shgMPGMCHR8e",
+        "object": "thread.message",
+        "created_at": 1708311620,
+        "assistant_id": null,
+        "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "better done in big companies today they fly in the face of much of what we teach at London Business School and other business schools about strategy about marketing about risk and about much more now you might say John what do you mean by mindset a mindset of course is up here \n\n 01:56\nwe determines the response we make to that something that comes our way and know something says we entrepreneurs call them are opportunities \n\n 02:09\na Brazilian entrepreneur named Arnold Correa built a wonderful business that today is called atmo digital by disregarding those rules he had already reinvented his business twice to become a major provider of event management and Production Services in the training room of all my stores and could we build a satellite uplink so we can send all this wonderful stuff to the stores so what did he say he said yes we can do that even though we know nothing about satellite technology had never \n\n 02:26\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_uA9QrxClmJsPrenqDZ8cBZgF",
+        "object": "thread.message",
+        "created_at": 1708311492,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+        "run_id": "run_jqUXKbwGMWX15YwAsQDevcUM",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Linda Weinman's Entrepreneurial Journey\n- 1995: Linda Weinman acquires linda.com for graphic design experimentation and showcasing student work.\n- 2002: Realizes the potential for online teaching and transitions to virtual platform.\n- Linda’s story exemplifies counter-conventional entrepreneurial mindsets.\n\nAnalogy: Linda's journey is like a blank canvas where she experimented with different tools, eventually creating a masterpiece.",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_45CTrqIQDinKl1HXmH0Cn1nZ",
+        "object": "thread.message",
+        "created_at": 1708311491,
+        "assistant_id": null,
+        "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "in 1995 a graphic design teacher named Linda weinman and also an aspiring entrepreneur decided to get the website linda.com she did so because she needed a Sandbox to play in with the new graphic design tools that were being developed at that time Photoshop illustrator and many more and she needed a place to put her students work so all could see it well she put that website together and the business began to grow and in 2002 she discovered it could be much much more so she moved all of her teaching online later \n\n 01:01\nUS dollars Linda is the poster child for what I call the counter conventional mindsets of entrepreneurs so I want to tell you about these mindsets today and here we go so number one why do I call you \n\n 01:26\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_7S0dFsiDA9rfIAPOqKFH92J7",
+    "last_id": "msg_45CTrqIQDinKl1HXmH0Cn1nZ",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_7S0dFsiDA9rfIAPOqKFH92J7",
+      "object": "thread.message",
+      "created_at": 1708311675,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+      "run_id": "run_H8RSk5oWFvTwpkpRporCbByt",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Adaptive Entrepreneurship\n- Arnold Correa's response to Walmart's request for TV screens on the sales floor led to another business reinvention.\n- Arnold consistently adapted his business by embracing new customer requests that stretched beyond his core competencies.\n\nAnalogy: Entrepreneurship is like being a chameleon, adapting to the changing environment and thriving in diverse situations.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_h0WT92L4NsgCJHi27wy1ie67",
+      "object": "thread.message",
+      "created_at": 1708311674,
+      "assistant_id": null,
+      "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "several years later some of his other customers one of them in particular Walmart said well you know it's nice that we have all of these these television screens in the back room of the store but wouldn't it be cool if we had them on the sales floor because then we could run average \n\n 02:49\nin that aisle and what did Arnold say to that request yes we can do that over a period of years Arnold reinvented his business fundamentally four different times by saying when a customer wanted something new that lay outside his core competencies yes we can the second one I want to tell you about I call problems today \n\n 03:21\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_utCJI3ENmAJvqiidN8hK304J",
+      "object": "thread.message",
+      "created_at": 1708311621,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+      "run_id": "run_3Lq2ceyOq0lEpWXxt6hShvUE",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Unconventional Mindsets in Entrepreneurship\n- Challenge conventional business teachings about strategy, marketing, risk, and more.\n- Mindset influences an entrepreneur's response to opportunities.\n- Example of Arnold Correa, who reinvented his business to become a leading provider despite disregarding traditional rules.\n\nAnalogy: Entrepreneurship is like dancing to a new tune, where sometimes breaking the rules leads to the most extraordinary moves.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_3oQO4p0OK7v3shgMPGMCHR8e",
+      "object": "thread.message",
+      "created_at": 1708311620,
+      "assistant_id": null,
+      "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "better done in big companies today they fly in the face of much of what we teach at London Business School and other business schools about strategy about marketing about risk and about much more now you might say John what do you mean by mindset a mindset of course is up here \n\n 01:56\nwe determines the response we make to that something that comes our way and know something says we entrepreneurs call them are opportunities \n\n 02:09\na Brazilian entrepreneur named Arnold Correa built a wonderful business that today is called atmo digital by disregarding those rules he had already reinvented his business twice to become a major provider of event management and Production Services in the training room of all my stores and could we build a satellite uplink so we can send all this wonderful stuff to the stores so what did he say he said yes we can do that even though we know nothing about satellite technology had never \n\n 02:26\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_uA9QrxClmJsPrenqDZ8cBZgF",
+      "object": "thread.message",
+      "created_at": 1708311492,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+      "run_id": "run_jqUXKbwGMWX15YwAsQDevcUM",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Linda Weinman's Entrepreneurial Journey\n- 1995: Linda Weinman acquires linda.com for graphic design experimentation and showcasing student work.\n- 2002: Realizes the potential for online teaching and transitions to virtual platform.\n- Linda’s story exemplifies counter-conventional entrepreneurial mindsets.\n\nAnalogy: Linda's journey is like a blank canvas where she experimented with different tools, eventually creating a masterpiece.",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_45CTrqIQDinKl1HXmH0Cn1nZ",
+      "object": "thread.message",
+      "created_at": 1708311491,
+      "assistant_id": null,
+      "thread_id": "thread_dOI0X1Etg4rfjNPGwG4iBNE8",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "in 1995 a graphic design teacher named Linda weinman and also an aspiring entrepreneur decided to get the website linda.com she did so because she needed a Sandbox to play in with the new graphic design tools that were being developed at that time Photoshop illustrator and many more and she needed a place to put her students work so all could see it well she put that website together and the business began to grow and in 2002 she discovered it could be much much more so she moved all of her teaching online later \n\n 01:01\nUS dollars Linda is the poster child for what I call the counter conventional mindsets of entrepreneurs so I want to tell you about these mindsets today and here we go so number one why do I call you \n\n 01:26\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    }
+  ]
 }

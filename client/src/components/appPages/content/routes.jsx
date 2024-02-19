@@ -3,6 +3,8 @@ import Noteroom from "./notes/noteView";
 import Home from "./panel";
 import Files from "./files/files";
 import BottomConent from "./bottom/bottomContent";
+import TopProfile from "./top/profile";
+import AppNav from "./top/appNav";
 export const AppRoutes = ({
   transcript,
   docData,
@@ -12,8 +14,16 @@ export const AppRoutes = ({
   annotatingKit,
   canvasEdit,
   controlProps,
+  newNoteButtonkit,
+  profileKit,
+  pauseProps,
 }) => (
   <div className="h-full relative overflow-hidden">
+    <AppNav
+      profileKit={profileKit}
+      controlProps={controlProps}
+      noteData={noteData}
+    />
     <Routes>
       <Route
         path="/:noteId"
@@ -23,11 +33,12 @@ export const AppRoutes = ({
             transcript={transcript}
             modeKit={modeKit}
             annotatingKit={annotatingKit}
+            pauseProps={pauseProps}
           />
         }
       />
       <Route
-        path="/"
+        path="/oldIndex"
         element={
           <Home
             transcript={transcript ? transcript.slice(-300) : ""}
@@ -35,7 +46,12 @@ export const AppRoutes = ({
           />
         }
       />
-      <Route path="/files" element={<Files canvasEdit={canvasEdit} />} />
+      <Route
+        path="/"
+        element={
+          <Files canvasEdit={canvasEdit} newNoteButtonkit={newNoteButtonkit} />
+        }
+      />
     </Routes>
     <BottomConent
       helpModalKit={helpModalKit}
