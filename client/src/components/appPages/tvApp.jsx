@@ -1,7 +1,6 @@
 import "regenerator-runtime";
 import { useState, useEffect } from "react";
 import useWebSocket from "react-use-websocket";
-import "bootstrap/dist/css/bootstrap.css";
 import "./tvApp.css";
 import Sidebar from "./sidebar/sidebar";
 import { AppRoutes } from "./content/routes";
@@ -10,17 +9,20 @@ import { handleSendLLM } from "./services/setNotepref";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import { handleOnMessage } from "./services/wsResponce";
+import { handleOnMessage } from "./services/noteWebsockets/wsResponce";
 import { deactivateNotes, fetchNoteRecords } from "./services/crudApi";
-import titleFromID from "./services/titleFromID";
+import titleFromID from "./services/frontendNoteConfig/titleFromID";
 import { useAuth } from "../../hooks/auth";
 import SupportedToast from "./support/supportedBrowser";
 import NoAudioSupport from "./support/noSupport";
 import SubmitToast from "./modalsToast/submitToast";
+import { useNavigate } from "react-router-dom";
 
 const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 
 function TransverseApp() {
+  const navigate = useNavigate();
+
   const { session } = useAuth();
   //this is for help
   const [showHelpModal, setShowHelpModal] = useState(false);
@@ -37,7 +39,7 @@ function TransverseApp() {
 
   //this is for specific active instace of WS notes
   //ID of note and not title use titleFromID to get title
-  const [noteID, setNoteID] = useState(localStorage.getItem("noteName") || "");
+  const [noteID, setNoteID] = useState(localStorage.getItem("noteID") || "");
 
   //hide the sidebar while editing notes
   const [annotating, setAnnotating] = useState(false);
@@ -45,11 +47,15 @@ function TransverseApp() {
   //for editing notes in files link
   const [showOffCanvasEdit, setOffCanvasEdit] = useState(false);
 
+  //for new note toast
   const [activeToast, setActiveToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
+  //this is for note field
+  const [newNoteField, setNewNoteField] = useState(false);
+
   useEffect(() => {
-    localStorage.setItem("noteName", noteID);
+    localStorage.setItem("noteID", noteID);
   }, [noteID]);
 
   const commands = [
@@ -162,7 +168,8 @@ function TransverseApp() {
         setNoteID,
         setNotes,
         noteID,
-        resetTranscript
+        resetTranscript,
+        navigate
       );
     },
 
@@ -177,41 +184,17 @@ function TransverseApp() {
 
   // Mic Failsafe functions -----------------------------------------------------------------------------
   //so timerFailsame does not call UseEffect
-
+  /*
   useEffect(() => {
     console.log("listening effect triggered");
-    if (!listening) {
+    if (!listening && mode === "note") {
       setTimeout(() => {
         SpeechRecognition.startListening({ continuous: true });
         console.log("Restart after trgger");
       }, 100);
     }
   }, [listening]);
-
-  const [failsafeTimeoutId, setFailsafeTimeoutId] = useState(null);
-
-  useEffect(() => {
-    if (mode === "note") {
-      if (failsafeTimeoutId) {
-        clearTimeout(failsafeTimeoutId);
-      }
-
-      // Set a new timeout
-      const id = setTimeout(() => {
-        setTimeout(() => {
-          SpeechRecognition.startListening({ continuous: true });
-          console.log("mic restared");
-        }, 200);
-      }, 7000); // 10 seconds
-
-      setFailsafeTimeoutId(id);
-
-      // Clean up function
-      return () => {
-        clearTimeout(id); // Using 'id' directly
-      };
-    }
-  }, [transcript]);
+*/
 
   // ------------------------------------------------------------------------------------------------
 
@@ -224,26 +207,14 @@ function TransverseApp() {
 
   useEffect(() => {
     if (mode === "default") {
-      /*
-      fetch(`${import.meta.env.VITE_BASE_URL}/tscript-api`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ transcript }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw Error(
-              `Server returned ${response.status}: ${response.statusText}`
-            );
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-        */
-    } else if (mode === "note") {
+      SpeechRecognition.stopListening();
+      console.log("not listening");
+    }
+  }, [mode]);
+
+  //core logic for note mode
+  useEffect(() => {
+    if (mode === "note") {
       //send to backend after 2 sec
       if (timeoutId) {
         clearTimeout(timeoutId);
@@ -262,19 +233,12 @@ function TransverseApp() {
         console.log("sent to backend");
       }, 4000);
       setTimeoutId(backID);
-
-      //restart frontend after 7
-      clearTimeout(failsafeTimeoutId);
     }
   }, [transcript]);
 
+  //ping pong to keep WS connection alive
   useEffect(() => {
     //fetchTaskRecords().then(setDocs);
-    if (browserSupportsSpeechRecognition) {
-      SpeechRecognition.startListening({ continuous: true });
-    } else {
-      console.log("this very bad how did you end up here");
-    }
     const ping = setInterval(() => {
       sendJsonMessage({ ping: true });
       console.log("ping");
@@ -299,6 +263,12 @@ function TransverseApp() {
     console.log(noteData);
   }, [noteData]);
 */
+  const submitToastKit = {
+    setActiveToast,
+    setToastMessage,
+    activeToast,
+    toastMessage,
+  };
   const canvasEdit = {
     showOffCanvasEdit,
     setOffCanvasEdit,
@@ -312,6 +282,9 @@ function TransverseApp() {
     resetTranscript,
     setActiveToast,
     setToastMessage,
+    SpeechRecognition,
+    newNoteField,
+    setNewNoteField,
   };
 
   const pauseProps = {
@@ -320,6 +293,11 @@ function TransverseApp() {
     noteID,
     setNotes,
     noteData,
+    SpeechRecognition,
+    setNewNoteField,
+    newNoteField,
+    setNoteID,
+    submitToastKit,
   };
 
   const modeKit = {
@@ -340,23 +318,45 @@ function TransverseApp() {
     closeModal,
   };
 
-  const submitToastKit = {
-    setActiveToast,
-    setToastMessage,
-    activeToast,
-    toastMessage,
-  };
-
   const profileKit = {
     SpeechRecognition,
   };
 
+  const newNoteButtonkit = {
+    setNewNoteField,
+    newNoteField,
+    noteID,
+  };
+
   return (
-    <div className="container-fluid vh-100 d-flex">
-      <div className="row flex-grow-1">
-        {!annotating && (
+    <div className=" vh-100  h-full">
+      <div className="h-full">
+        <AppRoutes
+          transcript={transcript}
+          docData={docData}
+          noteData={noteData}
+          helpModalKit={helpModalKit}
+          helpModal={setShowHelpModal}
+          modeKit={modeKit}
+          annotatingKit={annotatingKit}
+          canvasEdit={canvasEdit}
+          controlProps={controlProps}
+          newNoteButtonkit={newNoteButtonkit}
+          profileKit={profileKit}
+          pauseProps={pauseProps}
+        />
+      </div>
+      <SupportedToast />
+      <SubmitToast {...submitToastKit} />
+    </div>
+  );
+}
+
+export default TransverseApp;
+//move helpModal into panel
+/*        {!annotating && (
           <div
-            className="col-3 bg-lightgrey p-0 d-flex flex-column"
+            className="col-3 bg-lightgrey p-0 d-flex flex-column h-full"
             style={{ minWidth: "200px", maxWidth: "250px" }}
           >
             <Sidebar
@@ -368,25 +368,4 @@ function TransverseApp() {
             />
           </div>
         )}
-
-        <div className="col">
-          <AppRoutes
-            transcript={transcript}
-            docData={docData}
-            noteData={noteData}
-            helpModalKit={helpModalKit}
-            helpModal={setShowHelpModal}
-            modeKit={modeKit}
-            annotatingKit={annotatingKit}
-            canvasEdit={canvasEdit}
-          />
-        </div>
-      </div>
-      <SupportedToast />
-      <SubmitToast {...submitToastKit} />
-    </div>
-  );
-}
-
-export default TransverseApp;
-//move helpModal into panel
+ */

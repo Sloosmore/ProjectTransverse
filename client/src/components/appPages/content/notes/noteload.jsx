@@ -1,5 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-
 function LoadNote() {
   return (
     <div className="mt-4 mb-5">

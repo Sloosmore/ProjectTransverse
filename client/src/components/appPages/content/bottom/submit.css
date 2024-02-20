@@ -1,0 +1,17 @@
+.blur-shadow::before {
+  content: "";
+  position: absolute;
+  top: -20%; /* Extend beyond the top edge of the container */
+  left: -20%; /* Extend beyond the left edge of the container */
+  right: -20%; /* Extend beyond the right edge of the container */
+  bottom: -20%; /* Extend beyond the bottom edge of the container */
+  background: radial-gradient(
+    at center,
+    /* Center the gradient in the middle of the element */
+      rgba(255, 255, 255, 1) 20%,
+    /* Start with fully opaque (solid color) closer to the center */
+      rgba(255, 255, 255, 0) 100%
+      /* End with fully transparent further from the center */
+  );
+  z-index: -1;
+}

@@ -5,7 +5,7 @@ const deactivateRecords = async (user) => {
 
   const { error: updateError } = await supabase
     .from("note")
-    .update({ status: "inactive", date_updated: new Date() })
+    .update({ status: "inactive" })
     .eq("user_id", user_id);
 
   if (updateError) {

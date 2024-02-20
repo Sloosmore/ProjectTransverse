@@ -1,29 +1,35 @@
 import { useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LoadNote from "./noteload";
-import { splitMarkdown } from "../../services/parseMarkdown";
+import { splitMarkdown } from "../../services/frontendNoteConfig/parseMarkdown";
 import TextToSpeech from "../../funcComponents/textToSpeach";
 import "./noteView.css";
 import { saveNoteMarkdown } from "../../services/crudApi";
 import SideNotes from "./sideNotes";
 import MarkdownElement from "./md";
 
-function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
+function Noteroom({
+  noteData,
+  modeKit,
+  annotatingKit,
+  transcript,
+  pauseProps,
+}) {
   const { noteId } = useParams();
   const location = useLocation();
   const { annotating, setAnnotating } = annotatingKit;
 
   //needs to be edited
-
-  const [status, setStatus] = useState(location.state.status);
-  const [noteID, setNoteID] = useState(location.state.note_id);
+  //only will naviate to this page automatically if note is active so it is a nice little trick
+  const [status, setStatus] = useState(location.state?.status || "active");
+  const [noteID, setNoteID] = useState(location.state?.note_id || noteId);
   const [selectedText, setSelectedText] = useState("");
   const [markdown, setMarkdown] = useState(
-    location.state.full_markdown || location.state.markdown
+    location.state?.full_markdown || location.state?.markdown
   );
-  const [title, setTitle] = useState(location.state.title);
+  const [title, setTitle] = useState(location.state?.title);
 
-  const [fullTs, setFullTs] = useState(location.state.full_transcript);
+  const [fullTs, setFullTs] = useState(location.state?.full_transcript);
   //this is the incomming markdown
   //const [activeMarkdown, setActiveMarkdown] = useState("");
 
@@ -105,7 +111,9 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
   };
 
   return (
-    <div className="row h-100">
+    <div
+      className={`row h-full ${!annotating && `lg:px-40 md:px-20 sm:px-10`}`}
+    >
       <SideNotes
         annotating={annotating}
         setAnnotating={setAnnotating}
@@ -118,18 +126,21 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
         transcript={transcript}
         status={status}
         fullTs={fullTs}
+        pauseProps={pauseProps}
+        localNoteID={noteID}
       />
 
       <div
-        className={`d-flex flex-column vh-100 ms-2 pe-5 text-secondary  ${
+        className={`d-flex flex-column ms-2 pe-5 text-secondary h-full ${
           annotating ? "col-md-auto col-lg" : "col"
-        }`}
+        }
+        `}
       >
         <div className="mt-4 pb-2 border-bottom row d-flex align-items-center flex-lg-row">
           <div className="col-xl">
             <h1>{title}</h1>
           </div>
-          <div className="col-xl-3 pe-0">
+          <div className="col-xl-3 pe-0 mt-auto me-lg-5">
             <TextToSpeech
               markdown={markdown}
               modeKit={modeKit}
@@ -139,7 +150,7 @@ function Noteroom({ noteData, modeKit, annotatingKit, transcript }) {
           </div>
         </div>
 
-        <div className="overflow-auto flex-grow-1 pt-2">
+        <div className="overflow-auto h-full pt-2 list-disc list-inside styled-list">
           {markdownElements.map((element, index) => (
             <MarkdownElement
               key={index}

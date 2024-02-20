@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Accordion, Button, Form } from "react-bootstrap";
 import { handleSendLLM, fetchLLMpref } from "../services/setNotepref";
-import { createNewNote } from "../services/noteModeApi";
+import { createNewNote } from "../services/noteWebsockets/noteModeApi";
 import { useAuth } from "../../../hooks/auth";
+import icon from "../../../assets/TransverseIcon.svg";
 
 function ControlModal({ show, handleClose, noteData, controlProps }) {
   const { session } = useAuth();
@@ -14,7 +15,9 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
     resetTranscript,
     setActiveToast,
     setToastMessage,
+    SpeechRecognition,
   } = controlProps;
+
   //LLM preffereences
   const [preferences, setPreferences] = useState("");
   //Value of LLMPref text box
@@ -54,7 +57,8 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
         setNotes,
         setMode,
         wsJSON,
-        session
+        session,
+        SpeechRecognition
       );
       //toast
       handleClose();
@@ -133,40 +137,6 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
                 </div>
               </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item eventKey="2">
-              <Accordion.Header>Take Notes</Accordion.Header>
-              <Accordion.Body>
-                <div className="mb-3">
-                  <label
-                    htmlFor="exampleFormControlInput1"
-                    className="form-label"
-                  >
-                    Note Title
-                  </label>
-                  <div className="row">
-                    <div className="col-9">
-                      <input
-                        type="email"
-                        className="form-control "
-                        id="exampleFormControlInput1"
-                        placeholder="The title is important! It will help with prompting."
-                        onChange={(e) => localNoteNameSet(e.target.value)}
-                      />
-                    </div>
-                    <div className="col-2 justify-content-right">
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        onClick={startNotes}
-                      >
-                        Submit
-                      </Button>
-                    </div>
-                  </div>
-                  <div></div>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
           </Accordion>
         </Modal.Body>
         <div className="d-flex p-3 border-top">
@@ -213,6 +183,40 @@ import { tvrseFunc } from "../services/tverseAPI";
               </Button>
             </Accordion.Body>
           </Accordion.Item> 
+                      <Accordion.Item eventKey="2">
+              <Accordion.Header>Take Notes</Accordion.Header>
+              <Accordion.Body>
+                <div className="mb-3">
+                  <label
+                    htmlFor="exampleFormControlInput1"
+                    className="form-label"
+                  >
+                    Note Title
+                  </label>
+                  <div className="row">
+                    <div className="col-9">
+                      <input
+                        type="email"
+                        className="form-control "
+                        id="exampleFormControlInput1"
+                        placeholder="The title is important! It will help with prompting."
+                        onChange={(e) => localNoteNameSet(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-2 justify-content-right">
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        onClick={startNotes}
+                      >
+                        Submit
+                      </Button>
+                    </div>
+                  </div>
+                  <div></div>
+                </div>
+              </Accordion.Body>
+            </Accordion.Item>
           
           
           

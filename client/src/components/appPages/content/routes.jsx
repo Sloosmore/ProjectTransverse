@@ -1,9 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import Chatroom from "./docs/docView";
 import Noteroom from "./notes/noteView";
 import Home from "./panel";
 import Files from "./files/files";
-
+import BottomConent from "./bottom/bottomContent";
+import TopProfile from "./top/profile";
+import AppNav from "./top/appNav";
 export const AppRoutes = ({
   transcript,
   docData,
@@ -12,28 +13,50 @@ export const AppRoutes = ({
   modeKit,
   annotatingKit,
   canvasEdit,
+  controlProps,
+  newNoteButtonkit,
+  profileKit,
+  pauseProps,
 }) => (
-  <Routes>
-    <Route
-      path="/:noteId"
-      element={
-        <Noteroom
-          noteData={noteData}
-          transcript={transcript}
-          modeKit={modeKit}
-          annotatingKit={annotatingKit}
-        />
-      }
+  <div className="h-full relative overflow-hidden">
+    <AppNav
+      profileKit={profileKit}
+      controlProps={controlProps}
+      noteData={noteData}
     />
-    <Route
-      path="/"
-      element={
-        <Home
-          transcript={transcript ? transcript.slice(-300) : ""}
-          helpModalKit={helpModalKit}
-        />
-      }
+    <Routes>
+      <Route
+        path="/:noteId"
+        element={
+          <Noteroom
+            noteData={noteData}
+            transcript={transcript}
+            modeKit={modeKit}
+            annotatingKit={annotatingKit}
+            pauseProps={pauseProps}
+          />
+        }
+      />
+      <Route
+        path="/oldIndex"
+        element={
+          <Home
+            transcript={transcript ? transcript.slice(-300) : ""}
+            helpModalKit={helpModalKit}
+          />
+        }
+      />
+      <Route
+        path="/"
+        element={
+          <Files canvasEdit={canvasEdit} newNoteButtonkit={newNoteButtonkit} />
+        }
+      />
+    </Routes>
+    <BottomConent
+      helpModalKit={helpModalKit}
+      controlProps={controlProps}
+      noteData={noteData}
     />
-    <Route path="/files" element={<Files canvasEdit={canvasEdit} />} />
-  </Routes>
+  </div>
 );
