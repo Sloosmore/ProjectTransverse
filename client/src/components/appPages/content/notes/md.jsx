@@ -15,7 +15,11 @@ const MarkdownElement = ({ element, index, handleDoubleClick }) => {
   const transformedElement = DOMPurify.sanitize(replaceWithMarkTags(element));
 
   return (
-    <div key={index} onDoubleClick={() => handleDoubleClick(element)}>
+    <div
+      key={index}
+      onDoubleClick={() => handleDoubleClick(element)}
+      className=""
+    >
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}

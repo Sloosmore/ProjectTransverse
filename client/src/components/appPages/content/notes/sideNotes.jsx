@@ -26,14 +26,10 @@ const SideNotes = ({
 `}
     >
       <div className="row h-full">
-        <div
-          className={`toggle-sidebar d-flex align-items-center col-1 ${
-            annotating && "bg-lightgrey"
-          }`}
-        >
+        <div className={`toggle-sidebar d-flex align-items-center col-1 `}>
           {annotating && (
             <i
-              className="bi bi-caret-right text-white"
+              className="bi bi-caret-right text-gray-500 me-3"
               style={{ fontSize: "2rem" }}
               onClick={() => setAnnotating(!annotating)}
             ></i>

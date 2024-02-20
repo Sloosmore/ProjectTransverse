@@ -111,7 +111,9 @@ function Noteroom({
   };
 
   return (
-    <div className="row h-full">
+    <div
+      className={`row h-full ${!annotating && `lg:px-40 md:px-20 sm:px-10`}`}
+    >
       <SideNotes
         annotating={annotating}
         setAnnotating={setAnnotating}
@@ -131,7 +133,8 @@ function Noteroom({
       <div
         className={`d-flex flex-column ms-2 pe-5 text-secondary h-full ${
           annotating ? "col-md-auto col-lg" : "col"
-        }`}
+        }
+        `}
       >
         <div className="mt-4 pb-2 border-bottom row d-flex align-items-center flex-lg-row">
           <div className="col-xl">
@@ -147,7 +150,7 @@ function Noteroom({
           </div>
         </div>
 
-        <div className="overflow-auto h-full pt-2 ">
+        <div className="overflow-auto h-full pt-2 list-disc list-inside styled-list">
           {markdownElements.map((element, index) => (
             <MarkdownElement
               key={index}

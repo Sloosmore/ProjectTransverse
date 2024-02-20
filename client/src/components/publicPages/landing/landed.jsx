@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import LoadLine from "./load";
 import { mdList, titlesList } from "./markDownSample";
-import grey from "../../../assets/greyTv.svg";
+import grey from "../../../assets/greyFull.png";
+import Open from "../../../assets/TScreenshotOpen.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../hooks/auth";
 
@@ -36,24 +37,24 @@ export function BlockText() {
 
   return (
     <div
-      className=" justify-content-center align-items-center vh-100 bg-light shadow-lg px-5 px-lg-0"
-      style={{ overflowX: "hidden", backgroundColor: "#F7F9FB" }}
+      className="flex h-screen w-screen bg-light shadow-lg px-5 px-lg-0 "
+      style={{ overflowX: "hidden", overflowY: "hidden" }}
     >
-      <div className="row min-vh-100 py-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 ">
-        <div className="col-lg-5 p-3 p-lg-5 pt-lg-3 d-flex flex-column">
+      <div className=" py-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 lg:flex">
+        <div className="grow p-lg-5 pt-lg-3 xl:w-[120rem] lg:w-[110rem] ">
           <img
             src={grey}
             alt=""
             style={{
-              width: "3rem",
-              height: "3rem",
+              width: "12rem",
+              height: "auto",
               position: "absolute",
-              top: "20px",
-              left: "25px",
+              top: "35px",
+              left: "35px",
             }}
           />
 
-          <p className="text-black-50 mt-sm-5">V1.0 in beta now</p>
+          <p className="text-black-50 mt-20 lg:mt-5">V1.1 in beta now</p>
           <h1 className=" fw-bold lh-1 gradient-text pb-2 pe-2 w-100">
             Take notes your way in {titlesList[randList]}
           </h1>
@@ -64,7 +65,7 @@ export function BlockText() {
               <ReactMarkdown>{mdList[randList]}</ReactMarkdown>
             )}
           </div>
-          <div className="d-grid  gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3 ">
+          <div className="flex  gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3 ">
             <Link to="/login">
               <div className="text-white">
                 <button
@@ -89,12 +90,12 @@ export function BlockText() {
             </Link>
           </div>
         </div>
-        <div className="col-lg-6 offset-lg-1 p-0 shadow-lg img-fluid rounded ">
+        <div className=" w-[200%] sm:w-[100%] ">
           <img
-            className=" bg-light rounded"
-            src={TranverseNote}
+            className=" rounded shadow-xl ml-auto ring-2 ring-gray-200 ring-opacity-50"
+            src={Open}
             alt=""
-            width="840"
+            width={"100%"}
           />
         </div>
       </div>

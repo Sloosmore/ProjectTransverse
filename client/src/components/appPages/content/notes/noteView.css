@@ -11,3 +11,8 @@
   width: auto;
   height: 100%;
 }
+
+div.styled-list ul,
+div.styled-list ol {
+  list-style-type: disc;
+}

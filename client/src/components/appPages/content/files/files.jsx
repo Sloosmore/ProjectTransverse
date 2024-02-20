@@ -39,6 +39,7 @@ function Files({ canvasEdit, newNoteButtonkit }) {
     });
   };
 
+  const [searchTerm, setSearchTerm] = useState("");
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState(null);
 
@@ -55,8 +56,14 @@ function Files({ canvasEdit, newNoteButtonkit }) {
       let aValue = a[sortField];
       let bValue = b[sortField];
 
+      // Convert to Date objects if the values are dates
+      if (sortField === "date_updated") {
+        aValue = new Date(aValue);
+        bValue = new Date(bValue);
+      }
+
       // Convert to lowercase if the values are strings
-      if (typeof aValue === "string") {
+      else if (typeof aValue === "string") {
         aValue = aValue.toLowerCase();
       }
       if (typeof bValue === "string") {
@@ -64,31 +71,44 @@ function Files({ canvasEdit, newNoteButtonkit }) {
       }
 
       if (aValue < bValue) {
-        return sortDirection === "asc" ? -1 : 1;
+        return sortDirection === "asc" ? 1 : -1;
       }
       if (aValue > bValue) {
-        return sortDirection === "asc" ? 1 : -1;
+        return sortDirection === "asc" ? -1 : 1;
       }
       return 0;
     });
   }
 
+  if (searchTerm !== "") {
+    sortedFiles = sortedFiles.filter((file) =>
+      file.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+
   return (
     <div className="mt-3 px-6 lg:px-40 md:px-20 sm:px-10 flex-column h-full ">
-      <div className="mb-4 mt-3 ">
+      <div className="mb-4 mt-3 flex justify-between align-center">
         <FileNewNote
           setNewNoteField={setNewNoteField}
           newNoteField={newNoteField}
+        />
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="lg:w-1/3 md:w-1/2 w-7/12 py-2 px-3 border border-gray-300 rounded-md shrink shadow-sm"
         />
       </div>
       <table className="w-full mb-2 ">
         <thead className="flex-col">
           <tr>
             <th
-              className="ps-3 md:w-[52.5%] cursor-pointer hover:text-gray-500"
+              className="ps-3 md:w-[64.5%] cursor-pointer hover:text-gray-500"
               onClick={() => handleSort("title")}
             >
-              Title <i className="ms-2 bi bi-arrow-down-up"></i>
+              Title <i className="ms-1 bi bi-arrow-down-up"></i>
             </th>
             <th
               className="cursor-pointer hover:text-gray-500 hidden md:flex"
@@ -115,7 +135,11 @@ function Files({ canvasEdit, newNoteButtonkit }) {
               >
                 <td className="align-middle py-2 ps-3">{file.title}</td>
                 <td className="align-middle d-none d-md-table-cell py-2">
-                  {file.date_updated}
+                  {new Date(file.date_updated).toLocaleDateString(undefined, {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
                 </td>
                 <td className="align-middle py-2">
                   <button

@@ -12,6 +12,8 @@ import Task from "../sidebar/task";
 import { useState } from "react";
 import { applyMarkdown } from "../services/frontendNoteConfig/applyMD";
 import MarkdownElement from "../content/notes/md";
+import "./help.css";
+import icon from "../../../assets/TransverseIcon.svg";
 
 function HelpModal({ show, onClose }) {
   if (!show) {
@@ -35,47 +37,73 @@ function HelpModal({ show, onClose }) {
         <>
           <div className=" text-black-50">
             <div>
-              To start a new note or set your preffereences nav to the control
-              center:
-            </div>
-            <div className="d-flex mt-2">
-              <div
-                className="btn btn-light mx-auto text-black-50 d-flex justify-content-between align-items-center py-1 px-3 mt-2 shadow"
-                role="button"
-              >
-                <i
-                  className="bi bi-three-dots bi-2x align-left me-2"
-                  style={{ fontSize: "1.5rem" }}
-                ></i>
-                <span className="mx-auto">Control Center</span>
+              <h6 className="mb-6">
+                <strong>Start a new note:</strong>
+              </h6>
+              <div> To start a new note hit the new Note button</div>
+              <div className="flex my-8 content-center ">
+                <div className="z-10 mx-auto">
+                  <button className="bg-gray-100 inline-flex justify-between rounded-md px-3 py-2.5 text-sm font-semibold text-gray-500 shadow ring-1 ring-inset ring-gray-300 hover:bg-gray-200">
+                    <i
+                      className="bi bi-plus-lg"
+                      style={{ fontSize: "1.5rem" }}
+                    ></i>
+                    <span className="ms-2 flex justify-center items-center w-full text-center my-auto">
+                      New Note
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div className="my-3">
+                From there drop the title of your note and then hit submit
+              </div>
+              <div className="mx-auto w-2/3 my-10">
+                <div className=" flex flex-row overflow-hidden bg-white [&:has(textarea:focus)]:border-token-border-xheavy flex flex-col w-full dark:border-token-border-heavy flex-grow relative border border-token-border-heavy rounded-2xl bg-token-main-surface-primary shadow">
+                  <input
+                    type="text"
+                    className="m-0 w-full resize-none border-0  focus:ring-0 focus:outline-none focus-visible:ring-0 max-h-25 py-[10px] pr-10 md:py-3.5 md:pr-12 placeholder-gray-400 dark:placeholder-opacity-100 pl-4 text-gray-800"
+                    placeholder="Drop the title here! The title is important because it will help with prompting."
+                  />
+                  <button className="w-10 h-10 bottom-0 right-0 rounded-lg border border-gray-500 bg-gray-500 text-white transition-colors disabled:text-gray-400 disabled:opacity-10 dark:border-white my-auto me-2">
+                    <i
+                      className="bi bi-arrow-up-short"
+                      style={{ fontSize: "1.5rem" }}
+                    ></i>
+                  </button>
+                </div>
+              </div>
+              <div className="mb-6">
+                Boom you are done and will automatically go to the new note
               </div>
             </div>
-            <div className="mt-3">
-              From there go to either the preferences tab or the note tab:
-              <ul className="mt-2">
+            <div className="border-top px-10"></div>
+            <h6 className="mt-6">
+              <strong>Set Prefferences:</strong>
+            </h6>
+            <div className="mt-6">
+              To set preferences hit the profile icon in the top right corner
+            </div>
+            <div className="my-6">
+              <button className="flex justify-center items-center ml-auto mr-auto w-12 h-12 justify-center gap-x-1.5 rounded-circle bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-500  ring-1 ring-inset ring-gray-300 hover:bg-gray-200 shadow">
+                <i
+                  className="bi bi-person-circle"
+                  style={{ fontSize: "1.5rem" }}
+                ></i>
+              </button>
+            </div>
+            <div className="my-2.5">
+              Then hit <span className="underline">Account Settings</span>
+            </div>
+            <div>
+              From there you can:
+              <ul className="list-disc list-inside space-y-1 mt-1.5">
+                <li>Set how you want your notes to be formated</li>
                 <li>
-                  In the <strong>pref tab </strong>you can set how you want your
-                  notes to be formated and how you want them to be explained
-                  through natural launguage
+                  Specify how you want them to be explained through natural
+                  launguage
                 </li>
-                <li className="mt-1">
-                  In the <strong>note tab</strong> you can set the title of your
-                  note and start taking notes
-                </li>
+                <li>Control how fast the notes are created</li>
               </ul>
-              From there hit submit and you can find your notes in the notes tab
-            </div>
-            <div className="d-flex mt-2">
-              <div
-                className="btn btn-light mx-auto text-black-50 d-flex justify-content-between align-items-center py-1 px-3 mt-2 shadow"
-                role="button"
-              >
-                <i
-                  className="bi bi-card-list bi-2x align-left me-3"
-                  style={{ fontSize: "1.5rem" }}
-                ></i>
-                <span className="mx-4">Notes</span>
-              </div>
             </div>
           </div>
         </>
@@ -86,42 +114,11 @@ function HelpModal({ show, onClose }) {
       body: () => (
         <>
           <div>
-            <div className="text-black-50">
-              <div>
-                <h6>Notes:</h6>
-
-                <div>
-                  Your active note (only one active note at a time) will be
-                  denoted by a green blinking light
-                </div>
-                <div className="justify-content-center d-flex">
-                  <div style={{ width: "250px" }}>
-                    <Task
-                      className=" shadow"
-                      name="Active task"
-                      state="active"
-                      shadow={true}
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-4">
-                  Inactive notes will be denoted by a grey light
-                </div>
-                <div className="justify-content-center d-flex">
-                  <div style={{ width: "250px" }}>
-                    <Task
-                      className=" shadow"
-                      name="Inactive task"
-                      state="inactive"
-                      shadow={true}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="border-top px-3 my-4"></div>
-              <div className="">
-                <h6>Editing:</h6>
+            <div className="text-black-50 flex-col">
+              <div className=" list-disc list-inside">
+                <h6>
+                  <strong> Editing:</strong>
+                </h6>
                 <div>
                   Inside the notes will be rendered using markdown from the
                   textarea. To get the the textarea click the arrow:
@@ -132,7 +129,10 @@ function HelpModal({ show, onClose }) {
                     style={{ fontSize: "2rem" }}
                   ></i>
                 </div>
-                <br /> <MarkdownElement element={textArea} />
+                <br />
+                <div className="styled-list">
+                  <MarkdownElement element={textArea} />
+                </div>
                 <textarea
                   className="form-control mt-3 text-secondary"
                   id="exampleFormControlTextarea1"
@@ -186,6 +186,63 @@ function HelpModal({ show, onClose }) {
                   </div>
                 </div>
               </div>
+              <div className="border-top px-10 my-6"></div>
+
+              <div className="flex-col">
+                <h6 className="my-6">
+                  <strong> Recording:</strong>
+                </h6>
+                <div>
+                  <p>
+                    Find the recording button on the transcript and editing side
+                    of the notes
+                  </p>
+                  <p>
+                    Toggle the pause play button group to start and stop
+                    recording
+                  </p>
+                </div>
+                <div>While Playing:</div>
+                <div className="flex justify-center items-center my-6">
+                  <div className="flex justify-center items-center bg-gray-100 inline-flex shadow ring-1 ring-inset ring-gray-300 rounded-md">
+                    <button
+                      className="bg-gray-100 inline-flex justify-center ps-3.5 pe-3.5 py-3 text-sm font-semibold text-gray-500 hover:bg-gray-200 rounded-md"
+                      role="button"
+                    >
+                      <i
+                        className="bi bi-pause-fill bi-2x align-left my-auto mx-1.5"
+                        style={{ fontSize: "1.75rem" }}
+                      ></i>
+                    </button>
+                    <button className=" inline-flex justify-center  px-4 py-4 text-sm font-semibold text-gray-500 hover:bg-gray-200 my-auto rounded-md">
+                      <i
+                        className="bi bi-square-fill my-auto"
+                        style={{ fontSize: "1.25rem" }}
+                      ></i>
+                    </button>
+                  </div>
+                </div>
+                <div>While Paused:</div>
+                <div className="flex justify-center items-center my-6">
+                  <div className="bg-gray-100 inline-flex shadow ring-1 ring-inset ring-gray-300 rounded-md">
+                    <button
+                      className="bg-gray-100 inline-flex justify-center ps-3.5 pe-3.5 py-3 text-sm font-semibold text-gray-500 hover:bg-gray-200 rounded-md"
+                      role="button"
+                    >
+                      <i
+                        className="bi bi-record2 bi-2x align-left my-auto mx-1.5"
+                        style={{ fontSize: "1.75rem" }}
+                      ></i>
+                    </button>
+                    <button className=" inline-flex justify-center  px-4 py-4 text-sm font-semibold text-gray-500 hover:bg-gray-200 my-auto rounded-md">
+                      <i
+                        className="bi bi-square-fill my-auto"
+                        style={{ fontSize: "1.25rem" }}
+                      ></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </>
@@ -195,17 +252,11 @@ function HelpModal({ show, onClose }) {
       title: "Exporting and File Management",
       body: () => (
         <div className="text-black-50">
-          <div>Go to the Files button:</div>
-          <div className="d-flex">
-            <div
-              className="btn btn-light mx-auto text-black-50 d-flex justify-content-between align-items-center py-1 px-3 mt-2 shadow"
-              role="button"
-            >
-              <i
-                className="bi bi-folder bi-2x align-left"
-                style={{ fontSize: "1.5rem" }}
-              ></i>{" "}
-              <span className="mx-5">Files</span>
+          <div>Hit the transverse Icon to go back home</div>
+          <div className="flex justify-center ">
+            {" "}
+            <div className="shadow rounded-lg">
+              <img className="h-16 w-16 p-2.5" src={icon} alt="Transverse" />
             </div>
           </div>
           <div className="mt-4">
@@ -213,7 +264,7 @@ function HelpModal({ show, onClose }) {
           </div>
           <div className="text-center mt-3">
             <button className="btn btn-outline-secondary shadow">
-              <i className="bi bi-pencil-square"></i>
+              <i className="bi bi-gear"></i>
             </button>
           </div>
           <div className="mt-3">
@@ -302,4 +353,18 @@ export default HelpModal;
 
    ## Additional Commands\n
    - "Help": Brings up this modal
-   `,*/
+   `,
+   
+                 <ul className="mt-2">
+                <li>
+                  In the <strong>pref tab </strong>you can set how you want your
+                  notes to be formated and how you want them to be explained
+                  through natural launguage
+                </li>
+                <li className="mt-1">
+                  In the <strong>note tab</strong> you can set the title of your
+                  note and start taking notes
+                </li>
+              </ul>
+              From there hit submit and you can find your notes in the notes tab
+   */
