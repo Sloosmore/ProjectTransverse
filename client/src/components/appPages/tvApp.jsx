@@ -184,7 +184,7 @@ function TransverseApp() {
 
   // Mic Failsafe functions -----------------------------------------------------------------------------
   //so timerFailsame does not call UseEffect
-
+  /*
   useEffect(() => {
     console.log("listening effect triggered");
     if (!listening && mode === "note") {
@@ -194,31 +194,7 @@ function TransverseApp() {
       }, 100);
     }
   }, [listening]);
-
-  const [failsafeTimeoutId, setFailsafeTimeoutId] = useState(null);
-
-  useEffect(() => {
-    if (mode === "note") {
-      if (failsafeTimeoutId) {
-        clearTimeout(failsafeTimeoutId);
-      }
-
-      // Set a new timeout
-      const id = setTimeout(() => {
-        setTimeout(() => {
-          SpeechRecognition.startListening({ continuous: true });
-          console.log("mic restared");
-        }, 200);
-      }, 7000); // 10 seconds
-
-      setFailsafeTimeoutId(id);
-
-      // Clean up function
-      return () => {
-        clearTimeout(id); // Using 'id' directly
-      };
-    }
-  }, [transcript]);
+*/
 
   // ------------------------------------------------------------------------------------------------
 
@@ -257,9 +233,6 @@ function TransverseApp() {
         console.log("sent to backend");
       }, 4000);
       setTimeoutId(backID);
-
-      //restart frontend after 7
-      clearTimeout(failsafeTimeoutId);
     }
   }, [transcript]);
 
