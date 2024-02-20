@@ -5,6 +5,7 @@ import PublicRoutes from "./components/publicPages/publicRouter.jsx";
 import AuthProvider from "./hooks/auth.jsx";
 import ProtectedRoute from "./components/appPages/protectedRoute.jsx";
 import "./index.css";
+import "bootstrap/dist/css/bootstrap.css";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
 

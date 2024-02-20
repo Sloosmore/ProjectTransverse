@@ -207,8 +207,10 @@ function TransverseApp() {
 
   useEffect(() => {
     if (mode === "default") {
-      SpeechRecognition.stopListening();
-      console.log("not listening");
+      setTimeout(() => {
+        SpeechRecognition.stopListening();
+        console.log("not listening");
+      }, 5000);
     }
   }, [mode]);
 
