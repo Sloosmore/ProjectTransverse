@@ -3,8 +3,9 @@ import Noteroom from "./notes/noteView";
 import Home from "./panel";
 import Files from "./files/files";
 import BottomConent from "./bottom/bottomContent";
-import TopProfile from "./top/profile";
 import AppNav from "./top/appNav";
+import Novel from "./novel/editor";
+//import Editor from "./tiptapNotes/editor";
 export const AppRoutes = ({
   transcript,
   docData,
@@ -37,15 +38,7 @@ export const AppRoutes = ({
           />
         }
       />
-      <Route
-        path="/oldIndex"
-        element={
-          <Home
-            transcript={transcript ? transcript.slice(-300) : ""}
-            helpModalKit={helpModalKit}
-          />
-        }
-      />
+      <Route path="/edit" element={<Novel />} />
       <Route
         path="/"
         element={
@@ -60,3 +53,14 @@ export const AppRoutes = ({
     />
   </div>
 );
+/* 
+
+      <Route
+        path="/oldIndex"
+        element={
+          <Home
+            transcript={transcript ? transcript.slice(-300) : ""}
+            helpModalKit={helpModalKit}
+          />
+        }
+      />*/

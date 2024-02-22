@@ -54416,4 +54416,290 @@
       "metadata": {}
     }
   ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_WjaeV15mJomcU92crHDUr474/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_rds32g3z56BgwpJnhfCssBv1",
+        "object": "thread.message",
+        "created_at": 1708469614,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_WjaeV15mJomcU92crHDUr474",
+        "run_id": "run_ZrYgRQKOotaNQ6B77EWh2YVZ",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Note-taking Formats\n- Real-time note-taking\n- Personalization\n\n## Importance of Personalization\n- Analogous to a tailored suit, notes should be optimized for the user\n- Emphasis on personalization for individual needs and preferences\n\n## Generation Speed\n- Control over note generation speed\n- Customizing the pace of note creation for user preference\n\n## Intuitive Settings\n- Adjusting settings for intuitive use\n- Importance of user-friendly interface and settings for intuitive experience",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_xV9FD8cFlbnKdVMrf4vV9kjY",
+        "object": "thread.message",
+        "created_at": 1708469613,
+        "assistant_id": null,
+        "thread_id": "thread_WjaeV15mJomcU92crHDUr474",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "so you dropped it in here and now it's going to be picking up on the transcripts and then you are I'm just going to leave this on usually I don't do this cuz it's not going to make anything intuitive but I'm going to change one other setting really quickly and it's not going to be very intuitive because like it's going to be in the speaker sense but what's very interesting about my application is that a real-time not taking and be personalization so here you can control exactly how you want the notes outputted so you say I want this kind of format but you can also tell it specifically how you want the information conveyed to you which I think is probably one of the most the like the most key points because it's not just about getting notes it's about getting notes that are optimized for you so heavy heavy emphasis on personalization and then you can also tell it how quickly you want the notes to generate so all of I I was looking at all of these things and they were like afterwards it generates the notes but what is the difference the notes right so afterwards the notes are okay right \n\n 01:32\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_rds32g3z56BgwpJnhfCssBv1",
+    "last_id": "msg_xV9FD8cFlbnKdVMrf4vV9kjY",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_rds32g3z56BgwpJnhfCssBv1",
+      "object": "thread.message",
+      "created_at": 1708469614,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_WjaeV15mJomcU92crHDUr474",
+      "run_id": "run_ZrYgRQKOotaNQ6B77EWh2YVZ",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Note-taking Formats\n- Real-time note-taking\n- Personalization\n\n## Importance of Personalization\n- Analogous to a tailored suit, notes should be optimized for the user\n- Emphasis on personalization for individual needs and preferences\n\n## Generation Speed\n- Control over note generation speed\n- Customizing the pace of note creation for user preference\n\n## Intuitive Settings\n- Adjusting settings for intuitive use\n- Importance of user-friendly interface and settings for intuitive experience",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_xV9FD8cFlbnKdVMrf4vV9kjY",
+      "object": "thread.message",
+      "created_at": 1708469613,
+      "assistant_id": null,
+      "thread_id": "thread_WjaeV15mJomcU92crHDUr474",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "so you dropped it in here and now it's going to be picking up on the transcripts and then you are I'm just going to leave this on usually I don't do this cuz it's not going to make anything intuitive but I'm going to change one other setting really quickly and it's not going to be very intuitive because like it's going to be in the speaker sense but what's very interesting about my application is that a real-time not taking and be personalization so here you can control exactly how you want the notes outputted so you say I want this kind of format but you can also tell it specifically how you want the information conveyed to you which I think is probably one of the most the like the most key points because it's not just about getting notes it's about getting notes that are optimized for you so heavy heavy emphasis on personalization and then you can also tell it how quickly you want the notes to generate so all of I I was looking at all of these things and they were like afterwards it generates the notes but what is the difference the notes right so afterwards the notes are okay right \n\n 01:32\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    }
+  ]
+}{
+  "options": {
+    "method": "get",
+    "path": "/threads/thread_WjaeV15mJomcU92crHDUr474/messages",
+    "query": {},
+    "headers": {
+      "OpenAI-Beta": "assistants=v1"
+    }
+  },
+  "response": {
+    "size": 0,
+    "timeout": 0
+  },
+  "body": {
+    "object": "list",
+    "data": [
+      {
+        "id": "msg_R26dxuct8OuCZulHiKKRxf6D",
+        "object": "thread.message",
+        "created_at": 1708469680,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_WjaeV15mJomcU92crHDUr474",
+        "run_id": "run_hj9MnYo1SPureQjYVlP4TYOz",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Benefit of Generated Notes\n- Ease of reviewing notes after the fact\n- Comparison with handwritten notes for comprehensive understanding\n\n## Focus on Information Retention\n- Emphasis on information capture during live dialogue\n- Notetaking for detailed comprehension\n\n## Tailoring Note Format\n- Customized note specifications\n- Importance of aligning note format to personal preferences",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_8dYodM0l9vhHdfJ2ZPRsX1Jm",
+        "object": "thread.message",
+        "created_at": 1708469679,
+        "assistant_id": null,
+        "thread_id": "thread_WjaeV15mJomcU92crHDUr474",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "excuse the primary benefitprofessors talking are you or like what are you imagining that to look like I would say that like the goal of so twofold like the reason that you generate notes afterwards is that like I I would say that a I have a tendency to look over my notes because like people that are typing their notes will they're focused on making sure that they're getting the information down so like the great thing about okay the best way I can put it is that the emphasis and here are the notes that were generating right now and then I've specified how I specifically want them so like generally just going over some of the value proposition so now that I've showed you this I'm an \n\n 02:33\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_rds32g3z56BgwpJnhfCssBv1",
+        "object": "thread.message",
+        "created_at": 1708469614,
+        "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+        "thread_id": "thread_WjaeV15mJomcU92crHDUr474",
+        "run_id": "run_ZrYgRQKOotaNQ6B77EWh2YVZ",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "## Note-taking Formats\n- Real-time note-taking\n- Personalization\n\n## Importance of Personalization\n- Analogous to a tailored suit, notes should be optimized for the user\n- Emphasis on personalization for individual needs and preferences\n\n## Generation Speed\n- Control over note generation speed\n- Customizing the pace of note creation for user preference\n\n## Intuitive Settings\n- Adjusting settings for intuitive use\n- Importance of user-friendly interface and settings for intuitive experience",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      },
+      {
+        "id": "msg_xV9FD8cFlbnKdVMrf4vV9kjY",
+        "object": "thread.message",
+        "created_at": 1708469613,
+        "assistant_id": null,
+        "thread_id": "thread_WjaeV15mJomcU92crHDUr474",
+        "run_id": null,
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": {
+              "value": "so you dropped it in here and now it's going to be picking up on the transcripts and then you are I'm just going to leave this on usually I don't do this cuz it's not going to make anything intuitive but I'm going to change one other setting really quickly and it's not going to be very intuitive because like it's going to be in the speaker sense but what's very interesting about my application is that a real-time not taking and be personalization so here you can control exactly how you want the notes outputted so you say I want this kind of format but you can also tell it specifically how you want the information conveyed to you which I think is probably one of the most the like the most key points because it's not just about getting notes it's about getting notes that are optimized for you so heavy heavy emphasis on personalization and then you can also tell it how quickly you want the notes to generate so all of I I was looking at all of these things and they were like afterwards it generates the notes but what is the difference the notes right so afterwards the notes are okay right \n\n 01:32\n",
+              "annotations": []
+            }
+          }
+        ],
+        "file_ids": [],
+        "metadata": {}
+      }
+    ],
+    "first_id": "msg_R26dxuct8OuCZulHiKKRxf6D",
+    "last_id": "msg_xV9FD8cFlbnKdVMrf4vV9kjY",
+    "has_more": false
+  },
+  "data": [
+    {
+      "id": "msg_R26dxuct8OuCZulHiKKRxf6D",
+      "object": "thread.message",
+      "created_at": 1708469680,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_WjaeV15mJomcU92crHDUr474",
+      "run_id": "run_hj9MnYo1SPureQjYVlP4TYOz",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Benefit of Generated Notes\n- Ease of reviewing notes after the fact\n- Comparison with handwritten notes for comprehensive understanding\n\n## Focus on Information Retention\n- Emphasis on information capture during live dialogue\n- Notetaking for detailed comprehension\n\n## Tailoring Note Format\n- Customized note specifications\n- Importance of aligning note format to personal preferences",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_8dYodM0l9vhHdfJ2ZPRsX1Jm",
+      "object": "thread.message",
+      "created_at": 1708469679,
+      "assistant_id": null,
+      "thread_id": "thread_WjaeV15mJomcU92crHDUr474",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "excuse the primary benefitprofessors talking are you or like what are you imagining that to look like I would say that like the goal of so twofold like the reason that you generate notes afterwards is that like I I would say that a I have a tendency to look over my notes because like people that are typing their notes will they're focused on making sure that they're getting the information down so like the great thing about okay the best way I can put it is that the emphasis and here are the notes that were generating right now and then I've specified how I specifically want them so like generally just going over some of the value proposition so now that I've showed you this I'm an \n\n 02:33\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_rds32g3z56BgwpJnhfCssBv1",
+      "object": "thread.message",
+      "created_at": 1708469614,
+      "assistant_id": "asst_fnBdBUj9ef4kdeq1B9uCEYNZ",
+      "thread_id": "thread_WjaeV15mJomcU92crHDUr474",
+      "run_id": "run_ZrYgRQKOotaNQ6B77EWh2YVZ",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "## Note-taking Formats\n- Real-time note-taking\n- Personalization\n\n## Importance of Personalization\n- Analogous to a tailored suit, notes should be optimized for the user\n- Emphasis on personalization for individual needs and preferences\n\n## Generation Speed\n- Control over note generation speed\n- Customizing the pace of note creation for user preference\n\n## Intuitive Settings\n- Adjusting settings for intuitive use\n- Importance of user-friendly interface and settings for intuitive experience",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    },
+    {
+      "id": "msg_xV9FD8cFlbnKdVMrf4vV9kjY",
+      "object": "thread.message",
+      "created_at": 1708469613,
+      "assistant_id": null,
+      "thread_id": "thread_WjaeV15mJomcU92crHDUr474",
+      "run_id": null,
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "so you dropped it in here and now it's going to be picking up on the transcripts and then you are I'm just going to leave this on usually I don't do this cuz it's not going to make anything intuitive but I'm going to change one other setting really quickly and it's not going to be very intuitive because like it's going to be in the speaker sense but what's very interesting about my application is that a real-time not taking and be personalization so here you can control exactly how you want the notes outputted so you say I want this kind of format but you can also tell it specifically how you want the information conveyed to you which I think is probably one of the most the like the most key points because it's not just about getting notes it's about getting notes that are optimized for you so heavy heavy emphasis on personalization and then you can also tell it how quickly you want the notes to generate so all of I I was looking at all of these things and they were like afterwards it generates the notes but what is the difference the notes right so afterwards the notes are okay right \n\n 01:32\n",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "metadata": {}
+    }
+  ]
 }
