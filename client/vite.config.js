@@ -11,6 +11,11 @@ if (process.env.NODE_ENV === "production") {
   // Production config
   config = defineConfig({
     plugins: [react()],
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+      },
+    },
     // other production-specific config...
   });
 } else {
