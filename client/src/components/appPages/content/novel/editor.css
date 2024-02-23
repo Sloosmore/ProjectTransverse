@@ -1,0 +1,12 @@
+.EditorContent > div:nth-child(1) {
+  height: 100%;
+  background-color: aqua;
+}
+
+.top-div > div:first-child {
+  height: 100%;
+}
+.top-div {
+  display: flex;
+  flex-direction: column;
+}

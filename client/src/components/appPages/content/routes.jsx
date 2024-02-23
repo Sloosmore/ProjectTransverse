@@ -4,7 +4,8 @@ import Home from "./panel";
 import Files from "./files/files";
 import BottomConent from "./bottom/bottomContent";
 import AppNav from "./top/appNav";
-import Novel from "./novel/editor";
+import NovelEditor from "./novel/editor";
+import NoteComponent from "./novel/editorWrapper";
 //import Editor from "./tiptapNotes/editor";
 export const AppRoutes = ({
   transcript,
@@ -38,7 +39,7 @@ export const AppRoutes = ({
           />
         }
       />
-      <Route path="/edit" element={<Novel />} />
+      <Route path="/edit" element={<NoteComponent />} />
       <Route
         path="/"
         element={
