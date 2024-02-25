@@ -7,7 +7,7 @@ import "./noteView.css";
 import { saveNoteMarkdown } from "../../services/crudApi";
 import SideNotes from "./sideNotes";
 import MarkdownElement from "./md";
-
+//
 function Noteroom({
   noteData,
   modeKit,

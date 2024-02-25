@@ -11,6 +11,10 @@ const {
 const { deactivateRecords } = require("../middleware/wsNotes/deactivateNotes");
 const supabase = require("../db/supabase");
 const { getUserIdFromToken } = require("../middleware/authDecodeJWS");
+const {
+  markdownToTiptap,
+  combineTiptapObjects,
+} = require("../middleware/wsNotes/md2JSON");
 
 async function handleWebSocketConnection(ws, request) {
   const connectMessage = {
@@ -55,6 +59,7 @@ async function handleWebSocketConnection(ws, request) {
         //this may not be needed... but need to make sure that this happens before play does
         const play_timestamps = [new Date()];
         const pause_timestamps = [];
+        const json_content = "";
 
         const newRecQuery =
           "INSERT INTO note(note_id, user_id, title, status, date_created, date_updated, is_deleted, active_transcript, full_transcript, active_markdown, full_markdown, thread_id, visible, play_timestamps, pause_timestamps) VALUES($1, $2, $3, $4, NOW(), NOW(), $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *";
@@ -92,12 +97,12 @@ async function handleWebSocketConnection(ws, request) {
               is_deleted,
               active_transcript,
               full_transcript,
-              active_markdown,
               full_markdown,
               thread_id,
               visible,
               play_timestamps,
               pause_timestamps,
+              json_content,
             })
             .select();
 
@@ -106,6 +111,7 @@ async function handleWebSocketConnection(ws, request) {
           }
 
           // send returned records from DB so frontend can set the notes
+          console.log(record[0]);
 
           ws.send(
             JSON.stringify({
@@ -245,14 +251,15 @@ async function handleWebSocketConnection(ws, request) {
           //console.log(`AI ${JSON.stringify(res, null, 2)}`);
           const md = res["data"][0]["content"][0]["text"]["value"];
 
-          //console.log(`there is new markdown${md}`);
+          //convert markdown into json
+          const mdJSON = await markdownToTiptap(md);
 
           //clear active transcript so it can be used later
           const clearTSBool = await clearActiveTS(note_id);
 
           const { data: fullMdResult, error } = await supabase
             .from("note")
-            .select("full_markdown")
+            .select("full_markdown, json_content")
             .eq("note_id", note_id);
 
           if (error) {
@@ -261,6 +268,9 @@ async function handleWebSocketConnection(ws, request) {
 
           let fullMd = fullMdResult[0].full_markdown;
           fullMd += "\n" + md;
+
+          const jsonContent = fullMdResult[0].json_content;
+          const combinedJSON = combineTiptapObjects(jsonContent, mdJSON);
 
           ws.send(
             JSON.stringify({

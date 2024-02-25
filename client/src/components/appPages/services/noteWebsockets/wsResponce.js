@@ -38,7 +38,12 @@ export const handleOnMessage = (
       //append markdown here
       if (record.note_id === noteID) {
         record.full_markdown = wsData.md;
-        saveNoteMarkdown(record.note_id, record.full_markdown);
+        record.json_content = wsData.json_content;
+        saveNoteMarkdown(
+          record.note_id,
+          record.full_markdown,
+          record.json_content
+        );
       }
       return record;
     });

@@ -87,8 +87,8 @@ function Files({ canvasEdit, newNoteButtonkit }) {
   }
 
   return (
-    <div className="mt-3 px-6 lg:px-40 md:px-20 sm:px-10 flex-column h-full ">
-      <div className="mb-4 mt-3 flex justify-between align-center">
+    <div className=" px-6 lg:px-40 md:px-20 sm:px-10 flex-col flex-grow overflow-hidden">
+      <div className="mb-4 mt-3 flex justify-between align-center h-12">
         <FileNewNote
           setNewNoteField={setNewNoteField}
           newNoteField={newNoteField}
@@ -101,7 +101,7 @@ function Files({ canvasEdit, newNoteButtonkit }) {
           className="lg:w-1/3 md:w-1/2 w-7/12 py-2 px-3 border border-gray-300 rounded-md shrink shadow-sm"
         />
       </div>
-      <table className="w-full mb-2 ">
+      <table className="w-full mb-2 h-7">
         <thead className="flex-col">
           <tr>
             <th
@@ -123,8 +123,9 @@ function Files({ canvasEdit, newNoteButtonkit }) {
       </table>
       <div
         className="overflow-auto"
-        style={{ maxHeight: "calc(100vh - 175px)" }}
+        style={{ maxHeight: "calc(100vh - 182px)" }}
       >
+        {" "}
         <table className="w-full">
           <tbody>
             {sortedFiles.map((file, index) => (

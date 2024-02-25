@@ -331,23 +331,21 @@ function TransverseApp() {
   };
 
   return (
-    <div className=" vh-100  h-full">
-      <div className="h-full">
-        <AppRoutes
-          transcript={transcript}
-          docData={docData}
-          noteData={noteData}
-          helpModalKit={helpModalKit}
-          helpModal={setShowHelpModal}
-          modeKit={modeKit}
-          annotatingKit={annotatingKit}
-          canvasEdit={canvasEdit}
-          controlProps={controlProps}
-          newNoteButtonkit={newNoteButtonkit}
-          profileKit={profileKit}
-          pauseProps={pauseProps}
-        />
-      </div>
+    <div className="flex flex-col h-screen">
+      <AppRoutes
+        transcript={transcript}
+        docData={docData}
+        noteData={noteData}
+        helpModalKit={helpModalKit}
+        helpModal={setShowHelpModal}
+        modeKit={modeKit}
+        annotatingKit={annotatingKit}
+        canvasEdit={canvasEdit}
+        controlProps={controlProps}
+        newNoteButtonkit={newNoteButtonkit}
+        profileKit={profileKit}
+        pauseProps={pauseProps}
+      />
       <SupportedToast />
       <SubmitToast {...submitToastKit} />
     </div>

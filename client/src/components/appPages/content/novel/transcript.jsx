@@ -1,11 +1,19 @@
-function Transcript() {
+import React from "react";
+
+function Transcript({ currentNote, transcript }) {
+  const { full_transcript, status } = currentNote;
+  console.log(currentNote);
   return (
-    <div className="h-full">
-      <div className="h-full flex items-center justify-center">
-        Transcript Goes here
-      </div>
+    <div className="p-6 text-secondary">
+      {full_transcript &&
+        full_transcript.split("\n").map((line, index) => (
+          <React.Fragment key={index}>
+            {line}
+            <br />
+          </React.Fragment>
+        ))}
+      {status === "active" && transcript}
     </div>
   );
 }
-
 export default Transcript;
