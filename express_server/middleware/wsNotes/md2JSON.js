@@ -1,60 +1,69 @@
-const marked = require("marked");
-
 function markdownToTiptap(markdown) {
-  const tokens = marked.lexer(markdown);
-  return tokensToTiptap(tokens);
-}
-
-function tokensToTiptap(tokens) {
+  const lines = markdown.split("\n");
   const result = [];
   let currentListItems = [];
+  let inList = false;
 
-  for (const token of tokens) {
-    switch (token.type) {
-      case "paragraph":
-        result.push({
-          type: "paragraph",
-          content: textToTiptap(token.text),
-        });
-        break;
-      case "heading":
-        result.push({
-          type: "heading",
-          attrs: { level: token.depth },
-          content: textToTiptap(token.text),
-        });
-        break;
-      case "list_start":
-        currentListItems = [];
-        break;
-      case "list_end":
-        result.push({
-          type: "bulletList",
-          attrs: { tight: true },
-          content: currentListItems,
-        });
-        break;
-      case "list_item_start":
-        break;
-      case "list_item_end":
-        break;
-      case "text":
-        currentListItems.push({
-          type: "listItem",
-          content: [{ type: "paragraph", content: textToTiptap(token.text) }],
-        });
-        break;
-      // Additional cases for other elements...
+  for (const line of lines) {
+    if (line.startsWith("## ")) {
+      if (inList) {
+        endList();
+      }
+      addHeading(line.slice(3), 2);
+    } else if (line.startsWith("- ")) {
+      if (!inList) {
+        startList();
+      }
+      addListItem(line.slice(2));
+    } else if (line.trim() !== "") {
+      if (inList) {
+        endList();
+      }
+      addParagraph(line);
     }
   }
 
-  return { type: "doc", content: result };
-}
+  if (inList) {
+    endList();
+  }
 
-function textToTiptap(text) {
-  // This function should be expanded to properly parse inline Markdown formatting
-  // such as bold and italics. For simplicity, it's treating text as plain here.
-  return [{ type: "text", text: text }];
+  function addHeading(text, level) {
+    result.push({
+      type: "heading",
+      attrs: { level },
+      content: [{ type: "text", text }],
+    });
+  }
+
+  function startList() {
+    inList = true;
+    currentListItems = [];
+  }
+
+  function endList() {
+    result.push({
+      type: "bulletList",
+      attrs: { tight: true },
+      content: currentListItems,
+    });
+    inList = false;
+  }
+
+  function addListItem(text) {
+    currentListItems.push({
+      type: "listItem",
+      content: [{ type: "paragraph", content: [{ type: "text", text }] }],
+    });
+  }
+
+  function addParagraph(text) {
+    result.push({
+      type: "paragraph",
+      content: [{ type: "text", text }],
+    });
+  }
+
+  return { type: "doc", content: result };
 }
 
 function combineTiptapObjects(obj1, obj2) {
@@ -78,4 +87,4 @@ function combineTiptapObjects(obj1, obj2) {
   };
 }
 
-module.exports = { markdownToTiptap, tokensToTiptap, combineTiptapObjects };
+module.exports = { markdownToTiptap, combineTiptapObjects };

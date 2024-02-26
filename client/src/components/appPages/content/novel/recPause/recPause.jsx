@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
-import getRecStatusArray from "./statusArray.js";
+import getRecStatusArray from "./statusArray.jsx";
 import { useAuth } from "@/hooks/auth.jsx";
 import { fetchNoteRecords } from "@/components/appPages/services/crudApi.js";
 import { onPause, onPlay } from "@/components/appPages/services/pausePlay.js";
 import titleFromID from "@/components/appPages/services/frontendNoteConfig/titleFromID.js";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const RecPause = ({ pauseProps, localNoteID }) => {
   const [recStatus, setRecStatus] = useState();
@@ -23,6 +29,8 @@ const RecPause = ({ pauseProps, localNoteID }) => {
     setNoteID,
     submitToastKit,
   } = pauseProps;
+  const { setActiveToast, setToastMessage, activeToast, toastMessage } =
+    submitToastKit;
 
   const endNoteToast = () => {
     setToastMessage("Recording Sesstion ended");
@@ -44,6 +52,7 @@ const RecPause = ({ pauseProps, localNoteID }) => {
     SpeechRecognition,
     setNoteID,
     localNoteID,
+    viewTitle,
   });
 
   useEffect(() => {
@@ -74,33 +83,44 @@ const RecPause = ({ pauseProps, localNoteID }) => {
   }, [recStatus]);
 
   return (
-    <div className="flex me-2.5 align-middle ">
-      <div
-        onClick={() => {
-          recStatusObject.leftFunction();
-        }}
-        className=""
-      >
-        <i
-          className={`${
-            recStatusObject?.leftIcon || ""
-          } align-middle my-auto hover:bg-gray-100 rounded p-2.5`}
-          style={{ fontSize: "1.2rem" }}
-        ></i>
-      </div>
-      <div
-        onClick={() => {
-          recStatusObject.RightFunction();
-        }}
-        className=""
-      >
-        <i
-          className={`${
-            recStatusObject?.rightIcon || ""
-          } align-middle my-auto hover:bg-gray-100 rounded p-2.5`}
-        ></i>
-      </div>
-    </div>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <div className="flex me-2.5 align-middle ">
+            <div
+              onClick={() => {
+                recStatusObject.leftFunction();
+              }}
+              className=""
+            >
+              <i
+                className={`${
+                  recStatusObject?.leftIcon || ""
+                } align-middle my-auto hover:bg-gray-100 rounded p-2.5`}
+                style={{ fontSize: "1.2rem" }}
+              ></i>
+            </div>
+            <div
+              onClick={() => {
+                recStatusObject.rightFunction();
+              }}
+              className=""
+            >
+              <i
+                className={`${
+                  recStatusObject?.rightIcon || ""
+                } align-middle my-auto hover:bg-gray-100 rounded p-2.5`}
+              ></i>
+            </div>
+          </div>
+        </TooltipTrigger>
+        {recStatus === "lock" && (
+          <TooltipContent>
+            <div>end the note {viewTitle}</div>
+          </TooltipContent>
+        )}
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 

@@ -12,7 +12,7 @@ const fetchActiveTs = async (id, incomingTs) => {
       throw error;
     }
     if (!note) {
-      console.error(`Note with ID ${id} not found`);
+      console.error(`fetchActiveTs Note with ID ${id} not found`);
       return false;
     }
     const activeTS = note.active_transcript + incomingTs;
@@ -42,7 +42,8 @@ const clearActiveTS = async (id) => {
       throw error;
     }
     if (!data || data.length === 0) {
-      console.error(`Note with ID ${id} not found`);
+      console.log(data);
+      console.error(`clearActiveTS Note with ID ${id} not found`);
       return false;
     }
     return true;

@@ -43,6 +43,7 @@ function NoteComponent({
   const [content, setContent] = useState();
   const [editKey, setEditKey] = useState(0);
   const [updatedTitle, setUpdatedTitle] = useState();
+  const [keyFlag, setKeyFlag] = useState(0);
 
   //more conditional rendering
   const windowWidth = useWindowWidth();
@@ -50,17 +51,34 @@ function NoteComponent({
   const [currentNote, setCurrentNote] = useState({});
 
   useEffect(() => {
+    console.log("noteId", noteId);
     const note = noteData.find((record) => noteId === record.note_id);
     if (note) {
+      console.log("note", note);
       setCurrentNote(note);
     }
   }, [noteData, noteId]);
 
   useEffect(() => {
-    setUpdatedTitle(currentNote.tile);
-    setContent(currentNote.json_content);
-    setEditKey((prevKey) => prevKey + 1);
-  }, [currentNote]);
+    setUpdatedTitle(currentNote.title);
+    if (currentNote.json_content !== content) {
+      setContent(currentNote.json_content);
+    }
+    console.log("currentNote", currentNote);
+    setKeyFlag(keyFlag + 1);
+  }, [currentNote.json_content, currentNote.title]);
+
+  useEffect(() => {
+    setEditKey(editKey + 1);
+  }, [keyFlag]);
+
+  /*
+  useEffect(() => {
+    if (keyFlag) {
+      console.log("content", content);
+    }
+  }, [content]);
+  */
 
   const contentKit = {
     content,
@@ -118,7 +136,11 @@ function NoteComponent({
       </div>
       {editorState === "Edit" && (
         <div className="overflow-auto lg:px-20 md:px-10 flex-grow">
-          <NovelEditor currentNote={currentNote} contentKit={contentKit} />
+          <NovelEditor
+            currentNote={currentNote}
+            contentKit={contentKit}
+            key={editKey}
+          />
         </div>
       )}
       {editorState === "Transcript" && (
@@ -134,6 +156,7 @@ function NoteComponent({
                 <NovelEditor
                   currentNote={currentNote}
                   contentKit={contentKit}
+                  key={editKey}
                 />
               </div>
             </ResizablePanel>

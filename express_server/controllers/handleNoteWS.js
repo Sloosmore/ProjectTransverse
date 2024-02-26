@@ -271,10 +271,11 @@ async function handleWebSocketConnection(ws, request) {
 
           const jsonContent = fullMdResult[0].json_content;
           const combinedJSON = combineTiptapObjects(jsonContent, mdJSON);
-
+          console.log(`combinedJSON`, combinedJSON);
           ws.send(
             JSON.stringify({
               md: fullMd,
+              json_content: combinedJSON,
             })
           );
         } else if (activeTs) {

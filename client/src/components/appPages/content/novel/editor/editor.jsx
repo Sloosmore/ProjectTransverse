@@ -56,7 +56,7 @@ const NovelEditor = ({ currentNote, contentKit }) => {
   }, [updatedTitle]);
 
   return (
-    <EditorRoot key={editKey}>
+    <EditorRoot>
       <EditorContent
         className=" top-div h-full relative relative min-h-[500px] w-full max-w-screen-lg "
         extensions={extensions}

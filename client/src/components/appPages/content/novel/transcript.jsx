@@ -2,7 +2,6 @@ import React from "react";
 
 function Transcript({ currentNote, transcript }) {
   const { full_transcript, status } = currentNote;
-  console.log(currentNote);
   return (
     <div className="p-6 text-secondary">
       {full_transcript &&

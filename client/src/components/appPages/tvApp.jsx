@@ -17,6 +17,7 @@ import SupportedToast from "./support/supportedBrowser";
 import NoAudioSupport from "./support/noSupport";
 import SubmitToast from "./modalsToast/submitToast";
 import { useNavigate } from "react-router-dom";
+import { useDebounce } from "use-debounce";
 
 const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 
@@ -184,7 +185,6 @@ function TransverseApp() {
 
   // Mic Failsafe functions -----------------------------------------------------------------------------
   //so timerFailsame does not call UseEffect
-  /*
   useEffect(() => {
     console.log("listening effect triggered");
     if (!listening && mode === "note") {
@@ -194,7 +194,33 @@ function TransverseApp() {
       }, 100);
     }
   }, [listening]);
-*/
+
+  /*
+  const [failsafeTimeoutId, setFailsafeTimeoutId] = useState(null);
+
+  useEffect(() => {
+    if (mode === "note") {
+      if (failsafeTimeoutId) {
+        clearTimeout(failsafeTimeoutId);
+      }
+
+      // Set a new timeout
+      const id = setTimeout(() => {
+        setTimeout(() => {
+          SpeechRecognition.startListening({ continuous: true });
+          console.log("mic restared");
+        }, 200);
+      }, 7000); // 10 seconds
+
+      setFailsafeTimeoutId(id);
+
+      // Clean up function
+      return () => {
+        clearTimeout(id); // Using 'id' directly
+      };
+    }
+  }, [transcript]);
+  */
 
   // ------------------------------------------------------------------------------------------------
 
@@ -209,7 +235,7 @@ function TransverseApp() {
     if (mode === "default") {
       setTimeout(() => {
         SpeechRecognition.stopListening();
-        console.log("not listening");
+        console.log("Listening stopped");
       }, 5000);
     }
   }, [mode]);
@@ -222,6 +248,10 @@ function TransverseApp() {
         clearTimeout(timeoutId);
       }
       const backID = setTimeout(() => {
+        console.log("reset and sending to back");
+
+        SpeechRecognition.startListening({ continuous: true });
+
         const title = titleFromID(noteID, noteData);
 
         sendJsonMessage({
@@ -231,9 +261,7 @@ function TransverseApp() {
           note_id: noteID,
           token: session.access_token,
         });
-        SpeechRecognition.startListening({ continuous: true });
-        console.log("sent to backend");
-      }, 4000);
+      }, 3250);
       setTimeoutId(backID);
     }
   }, [transcript]);
@@ -260,11 +288,6 @@ function TransverseApp() {
     fetchNoteRecords(session, true).then(setNotes);
   }, [showOffCanvasEdit]);
 
-  /*
-  useEffect(() => {
-    console.log(noteData);
-  }, [noteData]);
-*/
   const submitToastKit = {
     setActiveToast,
     setToastMessage,

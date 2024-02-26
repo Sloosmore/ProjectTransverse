@@ -68,8 +68,12 @@ const getRecStatusArray = ({
   },
   {
     recStatus: "lock",
-    leftFunction: null,
-    rightFunction: null,
+    leftFunction: () => {
+      console.log("locked");
+    },
+    rightFunction: () => {
+      console.log("locked");
+    },
     leftIcon: "bi bi-record2 bi-2x align-left ",
     rightIcon: "bi bi-square-fill ",
   },

@@ -47,6 +47,7 @@ export const handleOnMessage = (
       }
       return record;
     });
+    console.log("updateMd", updateMd);
     setNotes(updateMd);
   }
 };
