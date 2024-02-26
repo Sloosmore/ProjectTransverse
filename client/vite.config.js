@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import dotenv from "dotenv";
+import path from "path";
 
 dotenv.config();
 // https://vitejs.dev/config/
@@ -10,6 +11,11 @@ if (process.env.NODE_ENV === "production") {
   // Production config
   config = defineConfig({
     plugins: [react()],
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+      },
+    },
     // other production-specific config...
   });
 } else {
@@ -30,6 +36,11 @@ if (process.env.NODE_ENV === "production") {
           target: process.env.VITE_WS_SERVER_URL,
           ws: true,
         },
+      },
+    },
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
       },
     },
   });

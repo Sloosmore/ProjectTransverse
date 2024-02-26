@@ -45,7 +45,7 @@ export const deactivateNotes = async (session) => {
 };
 
 //UP MARKDOWN (no auth needed for MVP)
-export const saveNoteMarkdown = async (note_id, markdown) => {
+export const saveNoteMarkdown = async (note_id, markdown, json_content) => {
   console.log(note_id);
   const response = await fetch(
     `${import.meta.env.VITE_BASE_URL}/records-api/notes-markdown`,
@@ -54,7 +54,7 @@ export const saveNoteMarkdown = async (note_id, markdown) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ note_id, markdown }),
+      body: JSON.stringify({ note_id, markdown, json_content }),
     }
   );
   const data = await response.json();

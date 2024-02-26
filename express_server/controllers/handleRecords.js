@@ -186,14 +186,18 @@ const upInactiveStatus = async (req, res) => {
 //UP MD (no auth needed for MVP)
 const updateMarkdownToSB = async (req, res) => {
   try {
-    const { note_id, markdown } = req.body;
+    const { note_id, markdown, json_content } = req.body;
     console.log("Updating Markdown to DB...");
     console.log("note_id", note_id);
 
     //console.log(`${markdown}`);
     const result = await supabase
       .from("note")
-      .update({ full_markdown: markdown, date_updated: new Date() })
+      .update({
+        full_markdown: markdown,
+        date_updated: new Date(),
+        json_content: json_content,
+      })
       .eq("note_id", note_id);
     if (result.error) {
       throw result.error;

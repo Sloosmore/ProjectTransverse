@@ -31,8 +31,8 @@ function AppNav({ profileKit, controlProps, noteData }) {
   };
 
   return (
-    <>
-      <Disclosure as="nav" className="bg-white shadow-sm">
+    <div className="h-16  ">
+      <Disclosure as="nav" className="bg-white shadow-sm ">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -111,7 +111,7 @@ function AppNav({ profileKit, controlProps, noteData }) {
         noteData={noteData}
         controlProps={controlProps}
       />
-    </>
+    </div>
   );
 }
 

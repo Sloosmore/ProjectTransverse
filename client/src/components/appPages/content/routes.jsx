@@ -3,8 +3,10 @@ import Noteroom from "./notes/noteView";
 import Home from "./panel";
 import Files from "./files/files";
 import BottomConent from "./bottom/bottomContent";
-import TopProfile from "./top/profile";
 import AppNav from "./top/appNav";
+import NovelEditor from "./novel/editor/editor";
+import NoteComponent from "./novel/editorWrapper";
+//import Editor from "./tiptapNotes/editor";
 export const AppRoutes = ({
   transcript,
   docData,
@@ -18,7 +20,7 @@ export const AppRoutes = ({
   profileKit,
   pauseProps,
 }) => (
-  <div className="h-full relative overflow-hidden">
+  <div className="flex flex-col h-screen">
     <AppNav
       profileKit={profileKit}
       controlProps={controlProps}
@@ -26,7 +28,7 @@ export const AppRoutes = ({
     />
     <Routes>
       <Route
-        path="/:noteId"
+        path="/classic/:noteId"
         element={
           <Noteroom
             noteData={noteData}
@@ -38,11 +40,14 @@ export const AppRoutes = ({
         }
       />
       <Route
-        path="/oldIndex"
+        path="/:noteId"
         element={
-          <Home
-            transcript={transcript ? transcript.slice(-300) : ""}
-            helpModalKit={helpModalKit}
+          <NoteComponent
+            noteData={noteData}
+            transcript={transcript}
+            modeKit={modeKit}
+            annotatingKit={annotatingKit}
+            pauseProps={pauseProps}
           />
         }
       />
@@ -60,3 +65,14 @@ export const AppRoutes = ({
     />
   </div>
 );
+/* 
+
+      <Route
+        path="/oldIndex"
+        element={
+          <Home
+            transcript={transcript ? transcript.slice(-300) : ""}
+            helpModalKit={helpModalKit}
+          />
+        }
+      />*/

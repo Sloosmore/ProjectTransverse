@@ -16,7 +16,7 @@ const appendFullTranscript = async (id, newTsChunk) => {
       throw error;
     }
     if (!note) {
-      console.error(`Note with ID ${id} not found`);
+      console.error(`appendFullTranscript Note with ID ${id} not found`);
       return false;
     }
     const newfullTs = note.full_transcript + newTsChunk;
