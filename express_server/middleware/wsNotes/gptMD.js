@@ -33,7 +33,7 @@ async function queryAI(note_id, ts_message) {
 
     const { note_preferences } = user;
 
-    const user_prompt = `Here is the user's note title: ${title} and preferences on notetaking: ${note_preferences}`;
+    const user_prompt = `Here is the user's note title: ${title} and preferences on notetaking: ${note_preferences[0]}`;
 
     // Creating a new thread if doesn't exist
     if (!thread_id) {
