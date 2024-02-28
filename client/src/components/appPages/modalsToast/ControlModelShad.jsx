@@ -93,9 +93,9 @@ function ControlModalShad({ show, handleClose, noteData, controlProps }) {
                   className={
                     num === activeNum && `border-b-2 border-gray-700 pb-2`
                   }
+                  key={num}
                 >
                   <Button
-                    key={num}
                     className={`text-white hover:bg-gray-700`}
                     onClick={(event) => {
                       setActiveNum(num);
