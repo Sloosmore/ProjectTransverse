@@ -1,5 +1,9 @@
-export const handleSendLLM = (instructions, frequency, session) => {
+export const handleSendLLM = (instructions, frequency, session, pref_num) => {
   const token = session.access_token;
+
+  if (!pref_num) {
+    pref_num = 4;
+  }
 
   fetch(`${import.meta.env.VITE_BASE_URL}/settings/notes`, {
     method: "POST",
@@ -7,7 +11,7 @@ export const handleSendLLM = (instructions, frequency, session) => {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
     },
-    body: JSON.stringify({ instructions, frequency }),
+    body: JSON.stringify({ instructions, frequency, pref_num }),
   })
     .then((response) => response.json())
     .then((data) => console.log(data))
@@ -16,7 +20,13 @@ export const handleSendLLM = (instructions, frequency, session) => {
     });
 };
 
-export const fetchLLMpref = (setTextareaValue, setFrequency, session) => {
+export const fetchLLMpref = (
+  setPreferences,
+  setActiveNum,
+  setFrequency,
+  session
+) => {
+  console.log(session);
   const token = session.access_token;
   fetch(`${import.meta.env.VITE_BASE_URL}/settings/notes`, {
     method: "GET",
@@ -27,8 +37,10 @@ export const fetchLLMpref = (setTextareaValue, setFrequency, session) => {
   })
     .then((response) => response.json())
     .then((body) => {
-      setTextareaValue(body.instructions);
       setFrequency(body.frequency);
+      console.log(body.instructions);
+      setPreferences(body.instructions);
+      setActiveNum(body.pref_num);
     })
     .catch((error) => {
       console.error("Error:", error);

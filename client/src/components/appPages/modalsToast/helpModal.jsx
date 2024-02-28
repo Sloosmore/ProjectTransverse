@@ -1,0 +1,369 @@
+import React from "react";
+import ReactMarkdown from "react-markdown";
+import {
+  Button,
+  Modal,
+  Accordion,
+  Card,
+  ButtonGroup,
+  ToggleButton,
+} from "react-bootstrap";
+import Task from "../sidebar/task";
+import { useState } from "react";
+import { applyMarkdown } from "../services/frontendNoteConfig/applyMD";
+import MarkdownElement from "../content/notes/md";
+import "./help.css";
+import icon from "../../../assets/TransverseIcon.svg";
+
+function HelpModal({ show, onClose }) {
+  if (!show) {
+    return null;
+  }
+  const [radioValue, setRadioValue] = useState(0);
+  const [textArea, setTextArea] =
+    useState(`###### Highlight something and then use to buttons to apply markdown 
+  - ==highlight==
+  - **bold**
+  - *italicize*
+  - \`code\`
+  - the last button will clear any of the markdown when highlighted`);
+  const title = ` Take Notes. In real time. Your way.`;
+  const radios = [{ name: "Word" }, { name: "PDF" }];
+
+  const content = [
+    {
+      title: "Setup and Personalization",
+      body: () => (
+        <>
+          <div className=" text-black-50">
+            <div>
+              <h6 className="mb-6">
+                <strong>Start a new note:</strong>
+              </h6>
+              <div> To start a new note hit the new Note button</div>
+              <div className="flex my-8 content-center ">
+                <div className="z-10 mx-auto">
+                  <button className="bg-gray-100 inline-flex justify-between rounded-md px-3 py-2.5 text-sm font-semibold text-gray-500 shadow ring-1 ring-inset ring-gray-300 hover:bg-gray-200">
+                    <i
+                      className="bi bi-plus-lg"
+                      style={{ fontSize: "1.5rem" }}
+                    ></i>
+                    <span className="ms-2 flex justify-center items-center w-full text-center my-auto">
+                      New Note
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div className="my-3">
+                From there drop the title of your note and then hit submit
+              </div>
+              <div className="mx-auto w-2/3 my-10">
+                <div className=" flex flex-row overflow-hidden bg-white [&:has(textarea:focus)]:border-token-border-xheavy flex flex-col w-full dark:border-token-border-heavy flex-grow relative border border-token-border-heavy rounded-2xl bg-token-main-surface-primary shadow">
+                  <input
+                    type="text"
+                    className="m-0 w-full resize-none border-0  focus:ring-0 focus:outline-none focus-visible:ring-0 max-h-25 py-[10px] pr-10 md:py-3.5 md:pr-12 placeholder-gray-400 dark:placeholder-opacity-100 pl-4 text-gray-800"
+                    placeholder="Drop the title here! The title is important because it will help with prompting."
+                  />
+                  <button className="w-10 h-10 bottom-0 right-0 rounded-lg border border-gray-500 bg-gray-500 text-white transition-colors disabled:text-gray-400 disabled:opacity-10 dark:border-white my-auto me-2">
+                    <i
+                      className="bi bi-arrow-up-short"
+                      style={{ fontSize: "1.5rem" }}
+                    ></i>
+                  </button>
+                </div>
+              </div>
+              <div className="mb-6">
+                Boom you are done and will automatically go to the new note
+              </div>
+            </div>
+            <div className="border-top px-10"></div>
+            <h6 className="mt-6">
+              <strong>Set Prefferences:</strong>
+            </h6>
+            <div className="mt-6">
+              To set preferences hit the profile icon in the top right corner
+            </div>
+            <div className="my-6">
+              <button className="flex justify-center items-center ml-auto mr-auto w-12 h-12 justify-center gap-x-1.5 rounded-circle bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-500  ring-1 ring-inset ring-gray-300 hover:bg-gray-200 shadow">
+                <i
+                  className="bi bi-person-circle"
+                  style={{ fontSize: "1.5rem" }}
+                ></i>
+              </button>
+            </div>
+            <div className="my-2.5">
+              Then hit <span className="underline">Account Settings</span>
+            </div>
+            <div>
+              From there you can:
+              <ul className="list-disc list-inside space-y-1 mt-1.5">
+                <li>Set how you want your notes to be formated</li>
+                <li>
+                  Specify how you want them to be explained through natural
+                  launguage
+                </li>
+                <li>Control how fast the notes are created</li>
+              </ul>
+            </div>
+          </div>
+        </>
+      ),
+    },
+    {
+      title: "Notetaking",
+      body: () => (
+        <>
+          <div>
+            <div className="text-black-50 flex-col">
+              <div className=" list-disc list-inside">
+                <h6>
+                  <strong> Editing:</strong>
+                </h6>
+                <div>
+                  Inside the notes will be rendered using markdown from the
+                  textarea. To get the the textarea click the arrow:
+                </div>
+                <div className="text-center mt-3">
+                  <i
+                    className="bi bi-caret-left text-secondary "
+                    style={{ fontSize: "2rem" }}
+                  ></i>
+                </div>
+                <br />
+                <div className="styled-list">
+                  <MarkdownElement element={textArea} />
+                </div>
+                <textarea
+                  className="form-control mt-3 text-secondary"
+                  id="exampleFormControlTextarea1"
+                  style={{ height: "15vh", overflow: "auto", resize: "none" }}
+                  value={textArea}
+                  onChange={(e) => setTextArea(e.target.value)}
+                />
+                <div>
+                  {" "}
+                  <div className=" d-flex mt-2 col-4 justify-content-between">
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() =>
+                        applyMarkdown("highlight", textArea, setTextArea)
+                      }
+                    >
+                      <i className="bi bi-marker-tip"></i>{" "}
+                    </Button>
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() =>
+                        applyMarkdown("bold", textArea, setTextArea)
+                      }
+                    >
+                      <i className="bi bi-type-bold"></i>
+                    </Button>
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() =>
+                        applyMarkdown("italic", textArea, setTextArea)
+                      }
+                    >
+                      <i className="bi bi-type-italic "></i>
+                    </Button>
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() =>
+                        applyMarkdown("code", textArea, setTextArea)
+                      }
+                    >
+                      <i className="bi bi-code-slash"></i>{" "}
+                    </Button>
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() =>
+                        applyMarkdown("clear", textArea, setTextArea)
+                      }
+                    >
+                      <i className="bi bi-eraser"></i>{" "}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              <div className="border-top px-10 my-6"></div>
+
+              <div className="flex-col">
+                <h6 className="my-6">
+                  <strong> Recording:</strong>
+                </h6>
+                <div>
+                  <p>
+                    Find the recording button on the transcript and editing side
+                    of the notes
+                  </p>
+                  <p>
+                    Toggle the pause play button group to start and stop
+                    recording
+                  </p>
+                </div>
+                <div>While Playing:</div>
+                <div className="flex justify-center items-center my-6">
+                  <div className="flex justify-center items-center bg-gray-100 inline-flex shadow ring-1 ring-inset ring-gray-300 rounded-md">
+                    <button
+                      className="bg-gray-100 inline-flex justify-center ps-3.5 pe-3.5 py-3 text-sm font-semibold text-gray-500 hover:bg-gray-200 rounded-md"
+                      role="button"
+                    >
+                      <i
+                        className="bi bi-pause-fill bi-2x align-left my-auto mx-1.5"
+                        style={{ fontSize: "1.75rem" }}
+                      ></i>
+                    </button>
+                    <button className=" inline-flex justify-center  px-4 py-4 text-sm font-semibold text-gray-500 hover:bg-gray-200 my-auto rounded-md">
+                      <i
+                        className="bi bi-square-fill my-auto"
+                        style={{ fontSize: "1.25rem" }}
+                      ></i>
+                    </button>
+                  </div>
+                </div>
+                <div>While Paused:</div>
+                <div className="flex justify-center items-center my-6">
+                  <div className="bg-gray-100 inline-flex shadow ring-1 ring-inset ring-gray-300 rounded-md">
+                    <button
+                      className="bg-gray-100 inline-flex justify-center ps-3.5 pe-3.5 py-3 text-sm font-semibold text-gray-500 hover:bg-gray-200 rounded-md"
+                      role="button"
+                    >
+                      <i
+                        className="bi bi-record2 bi-2x align-left my-auto mx-1.5"
+                        style={{ fontSize: "1.75rem" }}
+                      ></i>
+                    </button>
+                    <button className=" inline-flex justify-center  px-4 py-4 text-sm font-semibold text-gray-500 hover:bg-gray-200 my-auto rounded-md">
+                      <i
+                        className="bi bi-square-fill my-auto"
+                        style={{ fontSize: "1.25rem" }}
+                      ></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ),
+    },
+    {
+      title: "Exporting and File Management",
+      body: () => (
+        <div className="text-black-50">
+          <div>Hit the transverse Icon to go back home</div>
+          <div className="flex justify-center ">
+            <div className="shadow rounded-lg">
+              <img className="h-16 w-16 p-2.5" src={icon} alt="Transverse" />
+            </div>
+          </div>
+          <div className="mt-4">
+            And find the edit button for the specific file:
+          </div>
+          <div className="text-center mt-3">
+            <button className="btn btn-outline-secondary shadow">
+              <i className="bi bi-gear"></i>
+            </button>
+          </div>
+          <div className="mt-3">
+            From there you can change the title, markdown, visibility in the
+            sidebar and more in the edit page.
+          </div>
+          <br />
+          <div>You can also download the markdown as a PDF/Word doc:</div>
+          <div className="col justify-content-center d-flex mt-3 ">
+            <ButtonGroup>
+              {radios.map((radio, idx) => (
+                <ToggleButton
+                  className="shadow"
+                  key={idx}
+                  variant="info-outline"
+                  type="radio"
+                  name="radio"
+                  checked={radioValue === idx} // Compare with idx
+                  onClick={() => setRadioValue(idx)}
+                >
+                  {radio.name}
+                </ToggleButton>
+              ))}
+            </ButtonGroup>
+          </div>
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <Modal
+      show={show}
+      onHide={onClose}
+      size="xl"
+      centered
+      className="text-secondary"
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>
+          <h2>{title}</h2>
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Accordion defaultActiveKey="0">
+          {content.map((item, index) => (
+            <Accordion.Item eventKey={index.toString()} key={index}>
+              <Accordion.Header as={Card.Header}>
+                <div className="text-muted">{item.title}</div>
+              </Accordion.Header>
+              <Accordion.Body>
+                <Card.Body>{item.body()}</Card.Body>
+              </Accordion.Body>
+            </Accordion.Item>
+          ))}
+        </Accordion>
+      </Modal.Body>
+      <Modal.Footer>
+        <button type="button" className="btn btn-secondary" onClick={onClose}>
+          Close
+        </button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
+
+export default HelpModal;
+
+/*     
+    `
+  ## Note Personilzation\n 
+  - Voice: Say the title of your notes and then afterword say 'note insturctions'\n
+  - Command Center: Open the Command Center and enter in custom LLM propmpt\n
+  ##\n
+  ## Note Taking\n
+  - Voice: Say the title of your notes and then "Note Mode" afterword to be\n
+  - Command Center: Open the Command Center, navigate to the 2nd accordian tab, enter document name and submit\n
+  ##\n
+  ## Document Gen\n
+  - Voice: give your document a prompt and then say the keyword "tranverse" after a brief pause to send your script to the backend\n
+  - Command Center: Open the Command Center and enter in custom LLM propmpt\n
+  ##\n
+  ## Clear Transcript\n
+   - Voice: say "Clear" after pausing breifly while to the model\n
+   - Keyboard: Press the C Key\n
+
+   ## Additional Commands\n
+   - "Help": Brings up this modal
+   `,
+   
+                 <ul className="mt-2">
+                <li>
+                  In the <strong>pref tab </strong>you can set how you want your
+                  notes to be formated and how you want them to be explained
+                  through natural launguage
+                </li>
+                <li className="mt-1">
+                  In the <strong>note tab</strong> you can set the title of your
+                  note and start taking notes
+                </li>
+              </ul>
+              From there hit submit and you can find your notes in the notes tab
+   */

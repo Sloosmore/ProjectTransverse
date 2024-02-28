@@ -74,70 +74,59 @@ function ControlModal({ show, handleClose, noteData, controlProps }) {
     <>
       <Modal show={show} onHide={handleClose} size="xl">
         <Modal.Header closeButton>
-          <Modal.Title>Control Center</Modal.Title>
+          <Modal.Title>Set Prefferences</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Accordion defaultActiveKey="0">
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>Set Prefferences</Accordion.Header>
-              <Accordion.Body>
-                <div className="mb-3">
-                  <label htmlFor="prefTextArea" className="form-label">
-                    Notetaking Preferences
-                  </label>
-                  <textarea
-                    className="form-control"
-                    id="prefTextArea"
-                    rows="6"
-                    value={textareaValue || ""}
-                    onChange={(e) => setTextareaValue(e.target.value)}
-                  ></textarea>
+          <div className="mb-3">
+            <label htmlFor="prefTextArea" className="form-label">
+              Notetaking Preferences
+            </label>
+            <textarea
+              className="form-control"
+              id="prefTextArea"
+              rows="6"
+              value={textareaValue || ""}
+              onChange={(e) => setTextareaValue(e.target.value)}
+            ></textarea>
 
-                  <label htmlFor="freqRange" className="my-3 mt-4">
-                    Note Frequency (minutes)
-                  </label>
-                  <input
-                    type="range"
-                    className="form-range"
-                    min="350"
-                    max="1500"
-                    step="5"
-                    id="freqRange"
-                    value={frequency}
-                    onChange={(e) => setFrequency(e.target.value)}
-                  ></input>
-                  <div className="d-flex justify-content-between mb-4 mt-1 pb-2 border-bottom">
-                    <div>Quicker (1m)</div>
-                    <div>Average (3m)</div>
-                    <div>Slower (5m)</div>
-                  </div>
+            <label htmlFor="freqRange" className="my-3 mt-4">
+              Note Frequency (minutes)
+            </label>
+            <input
+              type="range"
+              className="form-range"
+              min="350"
+              max="1500"
+              step="5"
+              id="freqRange"
+              value={frequency}
+              onChange={(e) => setFrequency(e.target.value)}
+            ></input>
+            <div className="d-flex justify-content-between mb-4 mt-1 pb-2 border-bottom">
+              <div>Quicker (1m)</div>
+              <div>Average (3m)</div>
+              <div>Slower (5m)</div>
+            </div>
+          </div>
+          <div className="row align-items-center mt-2">
+            <div className="col">
+              <Button variant="primary" type="button" onClick={handleSubmitLLM}>
+                Submit
+              </Button>
+            </div>
+            <div className="col-lg-6 col-sm-9 ms-auto">
+              {showAlert && (
+                <div
+                  className="alert alert-success"
+                  role="alert"
+                  style={{ padding: "8px", marginTop: "14px" }}
+                >
+                  <i className="bi bi-check2-circle me-2"></i>
+                  Notetaking preference submitted
                 </div>
-                <div className="row align-items-center mt-2">
-                  <div className="col">
-                    <Button
-                      variant="primary"
-                      type="button"
-                      onClick={handleSubmitLLM}
-                    >
-                      Submit
-                    </Button>
-                  </div>
-                  <div className="col-lg-6 col-sm-9 ms-auto">
-                    {showAlert && (
-                      <div
-                        className="alert alert-success"
-                        role="alert"
-                        style={{ padding: "8px", marginTop: "14px" }}
-                      >
-                        <i className="bi bi-check2-circle me-2"></i>
-                        Notetaking preference submitted
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
+              )}
+            </div>
+          </div>
         </Modal.Body>
         <div className="d-flex p-3 border-top">
           <Button

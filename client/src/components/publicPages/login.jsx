@@ -38,7 +38,7 @@ function Login() {
                   "prompt5",
                 ],
                 note_frequency: 700,
-                active_pref: 0,
+                pref_number: 0,
               });
 
             if (insertError) {

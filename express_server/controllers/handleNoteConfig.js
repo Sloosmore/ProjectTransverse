@@ -11,11 +11,16 @@ const writeLLM = async (req, res) => {
     const user_id = getUserIdFromToken(token);
     const message = req.body["instructions"];
     const frequency = req.body["frequency"];
+    const pref_num = req.body["pref_num"];
     console.log(frequency);
 
     const { error } = await supabase
       .from("user")
-      .update({ note_preferences: message, note_frequency: frequency })
+      .update({
+        note_preferences: message,
+        note_frequency: frequency,
+        pref_number: pref_num,
+      })
       .eq("user_id", user_id);
 
     if (error) {
@@ -39,19 +44,22 @@ const readLLM = async (req, res) => {
 
     const { data: message, error } = await supabase
       .from("user")
-      .select("note_preferences, note_frequency")
+      .select("note_preferences, note_frequency, pref_number")
       .eq("user_id", user_id);
 
     const instructions = message[0].note_preferences;
     const frequency = message[0].note_frequency;
+    const pref_num = message[0].pref_number;
 
     if (error) {
       throw error;
     }
 
     console.log("frequency", frequency);
+    console.log("preferences", instructions);
+    console.log("pref_num", pref_num);
 
-    res.status(201).json({ instructions, frequency });
+    res.status(201).json({ instructions, frequency, pref_num });
   } catch (error) {
     console.error(`Read LLM Error: ${error.stack}`);
     res.status(500);

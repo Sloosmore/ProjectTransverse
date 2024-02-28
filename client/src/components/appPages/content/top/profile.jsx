@@ -21,14 +21,18 @@ function TopProfile({ profileKit, noteData, controlProps }) {
   return (
     <>
       <div className="items-center">
-        <ProfIcon logOut={logOut} handleShow={handleShow} />
+        <ProfIcon
+          logOut={logOut}
+          noteData={noteData}
+          controlProps={controlProps}
+        />
       </div>
-      <ControlModal
+      {/*      <ControlModal
         show={show}
         handleClose={handleClose}
         noteData={noteData}
         controlProps={controlProps}
-      />
+  />*/}
     </>
   );
 }

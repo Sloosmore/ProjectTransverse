@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../../../hooks/auth";
 import ControlModal from "../../modalsToast/ControlModal";
 import { useState } from "react";
+import ControlModalShad from "../../modalsToast/ControlModelShad";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Sheet, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 const userNavigation = [
   { name: "Your Profile", href: "#" },
@@ -31,7 +35,7 @@ function AppNav({ profileKit, controlProps, noteData }) {
   };
 
   return (
-    <div className="h-16  ">
+    <div>
       <Disclosure as="nav" className="bg-white shadow-sm ">
         {({ open }) => (
           <>
@@ -47,11 +51,17 @@ function AppNav({ profileKit, controlProps, noteData }) {
                 <div className="hidden md:block">
                   <div className="ml-4 flex items-center md:ml-6">
                     {/* Profile dropdown */}
-                    <TopProfile
-                      profileKit={profileKit}
-                      controlProps={controlProps}
-                      noteData={noteData}
-                    />
+                    <Sheet>
+                      <TopProfile
+                        profileKit={profileKit}
+                        controlProps={controlProps}
+                        noteData={noteData}
+                      />
+                      <ControlModalShad
+                        noteData={noteData}
+                        controlProps={controlProps}
+                      />
+                    </Sheet>
                   </div>
                 </div>
                 <div className="-mr-2 flex md:hidden">
@@ -85,13 +95,21 @@ function AppNav({ profileKit, controlProps, noteData }) {
                   </div>
                 </div>
                 <div className="mt-3 space-y-1 px-4">
-                  <Disclosure.Button
-                    as="a"
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                    onClick={() => handleShow()}
-                  >
-                    Account Settings
-                  </Disclosure.Button>
+                  <Sheet>
+                    <SheetTrigger asChild>
+                      <div
+                        as="a"
+                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                      >
+                        Account Settings
+                      </div>
+                    </SheetTrigger>
+                    <ControlModalShad
+                      noteData={noteData}
+                      controlProps={controlProps}
+                    />
+                  </Sheet>
+
                   <Disclosure.Button
                     as="a"
                     className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
@@ -105,12 +123,13 @@ function AppNav({ profileKit, controlProps, noteData }) {
           </>
         )}
       </Disclosure>
+      {/*
       <ControlModal
         show={show}
         handleClose={handleClose}
         noteData={noteData}
         controlProps={controlProps}
-      />
+                    />*/}
     </div>
   );
 }

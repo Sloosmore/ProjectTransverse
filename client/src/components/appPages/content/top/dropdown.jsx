@@ -1,12 +1,23 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import ControlModalShad from "../../modalsToast/ControlModelShad";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function ProfIcon({ logOut, handleShow }) {
+function ProfIcon({ logOut, noteData, controlProps }) {
+  const [show, setShow] = useState(false);
   return (
     <div className=" justify-center items-center">
       <Menu as="div" className="relative inline-block text-left w-full">
@@ -31,17 +42,16 @@ function ProfIcon({ logOut, handleShow }) {
           <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none me-2">
             <div className="py-1">
               <Menu.Item>
-                {({ active }) => (
+                <SheetTrigger asChild>
                   <button
                     className={classNames(
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block w-full px-4 py-2  text-left  text-sm"
+                      "text-gray-700 block w-full px-4 py-2  text-left  text-sm hover:bg-gray-100 hover:text-gray-900"
                     )}
-                    onClick={() => handleShow()}
+                    onClick={() => setShow(!show)}
                   >
                     Account settings
                   </button>
-                )}
+                </SheetTrigger>
               </Menu.Item>
 
               <Menu.Item>
