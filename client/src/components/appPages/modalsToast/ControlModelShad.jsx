@@ -37,7 +37,7 @@ function ControlModalShad({ show, handleClose, noteData, controlProps }) {
 
   //Set prefferences when called
   const handleSubmitLLM = () => {
-    handleSendLLM(preferences, frequency, session);
+    handleSendLLM(preferences, frequency, activeNum, session);
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
@@ -91,7 +91,7 @@ function ControlModalShad({ show, handleClose, noteData, controlProps }) {
               {prefArray.map((num) => (
                 <div
                   className={
-                    num === activeNum && `border-b-2 border-gray-700 pb-2`
+                    num === activeNum ? "border-b-2 border-gray-700 pb-2" : ""
                   }
                   key={num}
                 >

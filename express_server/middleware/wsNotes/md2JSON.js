@@ -1,30 +1,36 @@
 function markdownToTiptap(markdown) {
   const lines = markdown.split("\n");
   const result = [];
-  let currentListItems = [];
-  let inList = false;
+  let listStack = [];
+  let currentList = null;
+  let currentIndentLevel = 0;
 
   for (const line of lines) {
-    if (line.startsWith("## ")) {
-      if (inList) {
-        endList();
-      }
-      addHeading(line.slice(3), 2);
-    } else if (line.startsWith("- ")) {
-      if (!inList) {
-        startList();
-      }
-      addListItem(line.slice(2));
-    } else if (line.trim() !== "") {
-      if (inList) {
-        endList();
-      }
-      addParagraph(line);
+    const trimmedLine = line.trim();
+    const indentLevel = (line.length - trimmedLine.length) / 2;
+
+    if (trimmedLine.startsWith("## ")) {
+      closeAllLists();
+      addHeading(trimmedLine.slice(3), 2);
+    } else if (trimmedLine.startsWith("- ")) {
+      const indentLevel = (line.length - trimmedLine.length) / 2;
+      adjustListStack(indentLevel);
+      addListItem(trimmedLine.slice(2));
+    } else if (trimmedLine !== "") {
+      closeAllLists();
+      addParagraph(trimmedLine);
     }
   }
 
-  if (inList) {
-    endList();
+  closeAllLists();
+
+  function adjustListStack(indentLevel) {
+    if (indentLevel > currentIndentLevel) {
+      startList();
+    } else if (indentLevel < currentIndentLevel) {
+      endList();
+    }
+    currentIndentLevel = indentLevel;
   }
 
   function addHeading(text, level) {
@@ -36,31 +42,53 @@ function markdownToTiptap(markdown) {
   }
 
   function startList() {
-    inList = true;
-    currentListItems = [];
+    const newList = {
+      type: "bulletList",
+      attrs: { tight: true },
+      content: [],
+    };
+
+    if (currentList) {
+      const lastItem = getLastItem(currentList);
+      lastItem.content.push(newList);
+    } else {
+      result.push(newList);
+    }
+
+    listStack.push(newList);
+    currentList = newList;
   }
 
   function endList() {
-    result.push({
-      type: "bulletList",
-      attrs: { tight: true },
-      content: currentListItems,
-    });
-    inList = false;
+    listStack.pop();
+    currentList = listStack[listStack.length - 1] || null;
+  }
+
+  function closeAllLists() {
+    while (listStack.length > 0) {
+      listStack.pop();
+    }
+    currentList = null;
   }
 
   function addListItem(text) {
-    currentListItems.push({
+    const listItem = {
       type: "listItem",
       content: [{ type: "paragraph", content: [{ type: "text", text }] }],
-    });
+    };
+
+    if (!currentList) {
+      startList();
+    }
+
+    currentList.content.push(listItem);
   }
 
-  function addParagraph(text) {
-    result.push({
-      type: "paragraph",
-      content: [{ type: "text", text }],
-    });
+  function getLastItem(list) {
+    if (!list.content.length) {
+      list.content.push({ type: "listItem", content: [] });
+    }
+    return list.content[list.content.length - 1];
   }
 
   return { type: "doc", content: result };

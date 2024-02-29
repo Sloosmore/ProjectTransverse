@@ -1,9 +1,5 @@
-export const handleSendLLM = (instructions, frequency, session, pref_num) => {
+export const handleSendLLM = (instructions, frequency, pref_num, session) => {
   const token = session.access_token;
-
-  if (!pref_num) {
-    pref_num = 4;
-  }
 
   fetch(`${import.meta.env.VITE_BASE_URL}/settings/notes`, {
     method: "POST",

@@ -13,6 +13,7 @@ const writeLLM = async (req, res) => {
     const frequency = req.body["frequency"];
     const pref_num = req.body["pref_num"];
     console.log(frequency);
+    console.log(pref_num);
 
     const { error } = await supabase
       .from("user")

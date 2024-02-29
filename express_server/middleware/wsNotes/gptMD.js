@@ -32,6 +32,8 @@ async function queryAI(note_id, ts_message) {
     }
 
     const { note_preferences, pref_number } = user;
+    console.log("user pref number", pref_number);
+    console.log("user pref", note_preferences[pref_number]);
 
     const user_prompt = `Here is the user's note title: ${title} and preferences on notetaking: ${note_preferences[pref_number]}`;
 
