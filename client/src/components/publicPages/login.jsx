@@ -65,9 +65,9 @@ function Login() {
   }, []);
 
   return (
-    <div className=" justify-content-center align-items-center vh-100">
-      <div className=" mx-auto form-padding">
-        <div className="card text-center p-5 shadow-lg auth-container">
+    <div className=" flex align-items-center vh-100">
+      <div className=" mx-auto w-3/4 sm:w-7/12 md:w-1/2 mt-20">
+        <div className=" text-center p-5 shadow-lg auth-container rounded-lg">
           <Auth
             supabaseClient={supabaseClient}
             appearance={{

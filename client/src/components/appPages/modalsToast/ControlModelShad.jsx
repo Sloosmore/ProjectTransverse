@@ -71,8 +71,8 @@ function ControlModalShad({ show, handleClose, noteData, controlProps }) {
 
   return (
     <>
-      <SheetContent className="text-gray-400 sm:max-w-[800px] rounded-l-lg flex-col flex justify-between">
-        <div>
+      <SheetContent className="text-gray-400 sm:max-w-[800px] rounded-l-lg flex-col flex justify-between ">
+        <div className="min-width-[320px]">
           <SheetHeader>
             <SheetTitle> Set Prefferences</SheetTitle>
           </SheetHeader>
@@ -89,7 +89,7 @@ function ControlModalShad({ show, handleClose, noteData, controlProps }) {
                 onChange={(e) => setTextareaValue(e.target.value)}
               ></textarea>
 
-              <div className="flex flex-row space-x-4 mt-2.5">
+              <div className="flex flex-row sm:space-x-4 space-x-1 mt-2.5 overflow-x-auto">
                 {prefArray.map((num) => (
                   <div
                     className={
