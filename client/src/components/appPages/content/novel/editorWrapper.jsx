@@ -90,8 +90,8 @@ function NoteComponent({
   };
 
   return (
-    <div className="flex-grow flex flex-col px-10 overflow-auto">
-      <div className="h-12 flex-none border-bottom flex">
+    <div className="flex-grow flex flex-col px-10 overflow-auto text-gray-500">
+      <div className="h-12 flex-none border-b flex">
         <div className="my-auto md:ps-10 flex w-full justify-between">
           <div className="flex h-5 items-center text-sm text-gray-400 my-auto ">
             <div className="flex">

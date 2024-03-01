@@ -10,6 +10,7 @@ import {
   SheetTitle,
   SheetClose,
 } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 
 function ControlModalShad({ show, handleClose, noteData, controlProps }) {
   const { session } = useAuth();
@@ -70,56 +71,64 @@ function ControlModalShad({ show, handleClose, noteData, controlProps }) {
 
   return (
     <>
-      <SheetContent className="text-gray-400 sm:max-w-[800px] rounded-l-lg">
-        <SheetHeader>
-          <SheetTitle> Set Prefferences</SheetTitle>
-        </SheetHeader>
-        <div className="flex flex-col">
-          <div className="mb-3">
-            <label htmlFor="prefTextArea" className="form-label">
-              Notetaking Preferences
-            </label>
-            <textarea
-              className="form-control"
-              id="prefTextArea"
-              rows="6"
-              value={textareaValue || ""}
-              onChange={(e) => setTextareaValue(e.target.value)}
-            ></textarea>
+      <SheetContent className="text-gray-400 sm:max-w-[800px] rounded-l-lg flex-col flex justify-between">
+        <div>
+          <SheetHeader>
+            <SheetTitle> Set Prefferences</SheetTitle>
+          </SheetHeader>
+          <div className="flex flex-col mt-3">
+            <div className="mb-3 flex-col flex">
+              <label htmlFor="prefTextArea" className="form-label">
+                Notetaking Preferences
+              </label>
+              <textarea
+                className="form-control p-3 border rounded"
+                id="prefTextArea"
+                rows="6"
+                value={textareaValue || ""}
+                onChange={(e) => setTextareaValue(e.target.value)}
+              ></textarea>
 
-            <div className="flex flex-row space-x-4 mt-2.5">
-              {prefArray.map((num) => (
-                <div
-                  className={
-                    num === activeNum ? "border-b-2 border-gray-700 pb-2" : ""
-                  }
-                  key={num}
-                >
-                  <Button
-                    className={`text-white hover:bg-gray-700`}
-                    onClick={(event) => {
-                      setActiveNum(num);
-                    }}
+              <div className="flex flex-row space-x-4 mt-2.5">
+                {prefArray.map((num) => (
+                  <div
+                    className={
+                      num === activeNum ? "border-b-2 border-gray-700 pb-2" : ""
+                    }
+                    key={num}
                   >
-                    {num + 1}
-                  </Button>
-                </div>
-              ))}
-            </div>
+                    <Button
+                      className={`hover:bg-gray-700 hover:text-white bg-gray-200`}
+                      variant="secondary"
+                      onClick={(event) => {
+                        setActiveNum(num);
+                      }}
+                    >
+                      {num + 1}
+                    </Button>
+                  </div>
+                ))}
+              </div>
 
-            <label htmlFor="freqRange" className="my-3 mt-4">
-              Note Frequency (minutes) cskdfjskld
-            </label>
-            <Slider
-              min={350}
-              max={1500}
-              step={5}
-              defaultValue={[frequency]}
-              onChange={(e, newValue) => setFrequency(newValue)}
-              id="freqRange"
-            ></Slider>
+              <label htmlFor="freqRange" className="my-3 mt-4 pt-4 border-t">
+                Note Frequency (minutes)
+              </label>
+              <Slider
+                className={cn(
+                  "border",
+                  "border-gray-300",
+                  "rounded-full",
+                  "mt-3"
+                )}
+                min={350}
+                max={1500}
+                step={5}
+                defaultValue={[frequency]}
+                onChange={(e, newValue) => setFrequency(newValue)}
+                id="freqRange"
+              ></Slider>
 
-            {/* <input
+              {/* <input
               type="range"
               className="form-range"
               min="350"
@@ -129,33 +138,42 @@ function ControlModalShad({ show, handleClose, noteData, controlProps }) {
               value={frequency}
               onChange={(e) => setFrequency(e.target.value)}
                 ></input>*/}
-            <div className="d-flex justify-content-between mb-4 mt-1 pb-2 border-bottom">
-              <div>Quicker (1m)</div>
-              <div>Average (3m)</div>
-              <div>Slower (5m)</div>
+              <div className="justify-between flex flex-row my-3 pb-3 border-b">
+                <div>Quicker (1m)</div>
+                <div>Average (3m)</div>
+                <div>Slower (5m)</div>
+              </div>
             </div>
-          </div>
-          <div className="row align-items-center mt-2">
-            <div className="col">
-              <Button onClick={handleSubmitLLM}>Submit</Button>
-            </div>
-            <div className="col-lg-6 col-sm-9 ms-auto">
-              {showAlert && (
-                <div className="alert alert-success" role="alert">
-                  <i className="bi bi-check2-circle me-2"></i>
-                  Notetaking preference submitted
-                </div>
-              )}
+            <div className="flex-row flex justify-between">
+              <Button
+                onClick={handleSubmitLLM}
+                variant="secondary"
+                className="bg-gray-200"
+              >
+                Submit
+              </Button>
+              <SheetClose asChild>
+                <Button
+                  type="submit"
+                  variant="secondary"
+                  className="bg-gray-200"
+                >
+                  Close
+                </Button>
+              </SheetClose>
             </div>
           </div>
         </div>
-        <div className="d-flex p-3 border-top">
-          <Button className="me-auto" onClick={() => resetTranscript()}>
-            Clear Transcript
-          </Button>
-          <SheetClose asChild>
-            <Button type="submit">Close</Button>
-          </SheetClose>
+        <div className="p-3 flex justify-end">
+          {showAlert && (
+            <div
+              className="alert alert-success shadow-lg flex flex-row p-4 rounded-lg translate-x-4 translate-y-4"
+              role="alert"
+            >
+              <i className="bi bi-check2-circle me-2"></i>
+              <p>Notetaking preference submitted</p>
+            </div>
+          )}
         </div>
       </SheetContent>
     </>

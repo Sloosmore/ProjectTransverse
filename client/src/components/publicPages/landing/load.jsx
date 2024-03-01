@@ -1,11 +1,11 @@
+import { Skeleton } from "@/components/ui/skeleton";
+
 function LoadLine() {
   return (
-    <div>
-      <p className="placeholder-glow mt-3">
-        <span className="placeholder col-12 mb-2"></span>
-        <span className="placeholder col-10 mb-2"></span>
-        <span className="placeholder col-8 mb-2"></span>
-      </p>
+    <div className="gap-y-2 w-full flex flex-col ">
+      <Skeleton className={"h-4 w-full bg-gray-300"} />
+      <Skeleton className={`h-4 w-5/6 bg-gray-300`} />
+      <Skeleton className={"h-4 w-2/3 bg-gray-300"} />
     </div>
   );
 }

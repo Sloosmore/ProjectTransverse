@@ -1,11 +1,8 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
-import { Modal, Card, ButtonGroup, ToggleButton } from "react-bootstrap";
 import { useState } from "react";
-import { applyMarkdown } from "../services/frontendNoteConfig/applyMD";
-import MarkdownElement from "../content/notes/md";
 import "./help.css";
 import icon from "../../../assets/TransverseIcon.svg";
+import { Button } from "@/components/ui/button";
 import {
   Accordion,
   AccordionContent,
@@ -64,14 +61,16 @@ function HelpModalShad({ show, onClose }) {
               <div className="my-3">
                 From there drop the title of your note and then hit submit
               </div>
-              <div className="mx-auto w-2/3 my-10">
-                <div className=" flex flex-row overflow-hidden bg-white [&:has(textarea:focus)]:border-token-border-xheavy flex flex-col w-full dark:border-token-border-heavy flex-grow relative border border-token-border-heavy rounded-2xl bg-token-main-surface-primary shadow">
+              <div
+                className={`lg:w-3/4 md:w-5/6 sm:w-11/12 mx-auto z-10 transition-opacity duration-300 p-5 `}
+              >
+                <div className=" flex flex-row overflow-hidden bg-white [&:has(textarea:focus)]:border-token-border-xheavy shadow-lg w-full dark:border-token-border-heavy flex-grow relative border border-token-border-heavy rounded-2xl bg-token-main-surface-primary shadow-lg">
                   <input
                     type="text"
-                    className="m-0 w-full resize-none border-0  focus:ring-0 focus:outline-none focus-visible:ring-0 max-h-25 py-[10px] pr-10 md:py-3.5 md:pr-12 placeholder-gray-400 dark:placeholder-opacity-100 pl-4 text-gray-800"
+                    className="m-0 w-full resize-none border-0 focus:ring-0 focus:outline-none focus-visible:ring-0 max-h-25 py-[10px] pr-4 md:py-3.5 md:pr-12 placeholder-gray-400 dark:placeholder-opacity-100 pl-4 text-gray-800"
                     placeholder="Drop the title here! The title is important because it will help with prompting."
                   />
-                  <button className="w-10 h-10 bottom-0 right-0 rounded-lg border border-gray-500 bg-gray-500 text-white transition-colors disabled:text-gray-400 disabled:opacity-10 dark:border-white my-auto me-2">
+                  <button className="w-10 h-10 flex-shrink-0 bottom-0 right-0 rounded-lg border border-gray-500 bg-gray-500 text-white transition-colors disabled:text-gray-400 disabled:opacity-10 dark:border-white my-auto me-2">
                     <i
                       className="bi bi-arrow-up-short"
                       style={{ fontSize: "1.5rem" }}
@@ -91,7 +90,7 @@ function HelpModalShad({ show, onClose }) {
               To set preferences hit the profile icon in the top right corner
             </div>
             <div className="my-6">
-              <button className="flex justify-center items-center ml-auto mr-auto w-12 h-12 justify-center gap-x-1.5 rounded-circle bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-500  ring-1 ring-inset ring-gray-300 hover:bg-gray-200 shadow">
+              <button className="flex justify-center items-center ml-auto mr-auto w-12 h-12 justify-center gap-x-1.5 rounded-full bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-500  ring-1 ring-inset ring-gray-300 hover:bg-gray-200 shadow">
                 <i
                   className="bi bi-person-circle"
                   style={{ fontSize: "1.5rem" }}
@@ -123,83 +122,32 @@ function HelpModalShad({ show, onClose }) {
           <div>
             <div className="text-black-50 flex-col">
               <div className=" list-disc list-inside">
-                <h6>
+                <h5 className="mb-6">
                   <strong> Editing:</strong>
-                </h6>
-                <div>
-                  Inside the notes will be rendered using markdown from the
-                  textarea. To get the the textarea click the arrow:
-                </div>
-                <div className="text-center mt-3">
-                  <i
-                    className="bi bi-caret-left text-secondary "
-                    style={{ fontSize: "2rem" }}
-                  ></i>
-                </div>
-                <br />
-
-                {/*<div className="styled-list">
-                  <MarkdownElement element={textArea} />
-                </div>
-                <textarea
-                  className="form-control mt-3 text-secondary"
-                  id="exampleFormControlTextarea1"
-                  style={{ height: "15vh", overflow: "auto", resize: "none" }}
-                  value={textArea}
-                  onChange={(e) => setTextArea(e.target.value)}
-                />
-                <div>
-                  {" "}
-                  <div className=" d-flex mt-2 col-4 justify-content-between">
-                    <Button
-                      variant="outline-secondary"
-                      onClick={() =>
-                        applyMarkdown("highlight", textArea, setTextArea)
-                      }
-                    >
-                      <i className="bi bi-marker-tip"></i>{" "}
-                    </Button>
-                    <Button
-                      variant="outline-secondary"
-                      onClick={() =>
-                        applyMarkdown("bold", textArea, setTextArea)
-                      }
-                    >
-                      <i className="bi bi-type-bold"></i>
-                    </Button>
-                    <Button
-                      variant="outline-secondary"
-                      onClick={() =>
-                        applyMarkdown("italic", textArea, setTextArea)
-                      }
-                    >
-                      <i className="bi bi-type-italic "></i>
-                    </Button>
-                    <Button
-                      variant="outline-secondary"
-                      onClick={() =>
-                        applyMarkdown("code", textArea, setTextArea)
-                      }
-                    >
-                      <i className="bi bi-code-slash"></i>{" "}
-                    </Button>
-                    <Button
-                      variant="outline-secondary"
-                      onClick={() =>
-                        applyMarkdown("clear", textArea, setTextArea)
-                      }
-                    >
-                      <i className="bi bi-eraser"></i>{" "}
-                    </Button>
-                  </div>
-                    </div>*/}
+                </h5>
+                <p>Edit the notes just like notion!</p>
+                <ul className="list-disc list-inside">
+                  <li className="p-1">
+                    You can drag and drop the notes to move them around
+                  </li>
+                  <li className="p-1 ">
+                    You can highlight the notes and then use the buttons to
+                    apply styling
+                  </li>
+                  <li className="p-1 ">
+                    You use the markdown to apply styling
+                  </li>
+                  <li className="p-1 ">
+                    and hit slash to bring up the more features
+                  </li>
+                </ul>
               </div>
               <div className="border-top px-10 my-6"></div>
 
               <div className="flex-col">
-                <h6 className="my-6">
+                <h5 className="my-6">
                   <strong> Recording:</strong>
-                </h6>
+                </h5>
                 <div>
                   <p>
                     Find the recording button on the transcript and editing side
@@ -210,44 +158,34 @@ function HelpModalShad({ show, onClose }) {
                     recording
                   </p>
                 </div>
-                <div>While Playing:</div>
+                <h6 className="mt-2">While Playing:</h6>
                 <div className="flex justify-center items-center my-6">
-                  <div className="flex justify-center items-center bg-gray-100 inline-flex shadow ring-1 ring-inset ring-gray-300 rounded-md">
-                    <button
-                      className="bg-gray-100 inline-flex justify-center ps-3.5 pe-3.5 py-3 text-sm font-semibold text-gray-500 hover:bg-gray-200 rounded-md"
-                      role="button"
-                    >
-                      <i
-                        className="bi bi-pause-fill bi-2x align-left my-auto mx-1.5"
-                        style={{ fontSize: "1.75rem" }}
-                      ></i>
-                    </button>
-                    <button className=" inline-flex justify-center  px-4 py-4 text-sm font-semibold text-gray-500 hover:bg-gray-200 my-auto rounded-md">
-                      <i
-                        className="bi bi-square-fill my-auto"
-                        style={{ fontSize: "1.25rem" }}
-                      ></i>
-                    </button>
+                  <div className="">
+                    <i
+                      className={`${"bi bi-record2 bi-2x align-left"} align-middle my-auto hover:bg-gray-100 rounded p-2.5`}
+                      style={{ fontSize: "1.2rem" }}
+                    ></i>
+                  </div>
+                  <div className="">
+                    <i
+                      className={`${"bi bi-square-fill"} align-middle my-auto hover:bg-gray-100 rounded p-2.5`}
+                    ></i>
                   </div>
                 </div>
-                <div>While Paused:</div>
+                <h6>While Paused:</h6>
                 <div className="flex justify-center items-center my-6">
-                  <div className="bg-gray-100 inline-flex shadow ring-1 ring-inset ring-gray-300 rounded-md">
-                    <button
-                      className="bg-gray-100 inline-flex justify-center ps-3.5 pe-3.5 py-3 text-sm font-semibold text-gray-500 hover:bg-gray-200 rounded-md"
-                      role="button"
-                    >
+                  <div className="flex justify-center items-center my-6">
+                    <div className="">
                       <i
-                        className="bi bi-record2 bi-2x align-left my-auto mx-1.5"
-                        style={{ fontSize: "1.75rem" }}
+                        className={`${"bi bi-pause-fill bi-2x align-left"} align-middle my-auto hover:bg-gray-100 rounded p-2.5`}
+                        style={{ fontSize: "1.2rem" }}
                       ></i>
-                    </button>
-                    <button className=" inline-flex justify-center  px-4 py-4 text-sm font-semibold text-gray-500 hover:bg-gray-200 my-auto rounded-md">
+                    </div>
+                    <div className="">
                       <i
-                        className="bi bi-square-fill my-auto"
-                        style={{ fontSize: "1.25rem" }}
+                        className={`${" bi bi-square-fill"} align-middle my-auto hover:bg-gray-100 rounded p-2.5`}
                       ></i>
-                    </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -259,20 +197,22 @@ function HelpModalShad({ show, onClose }) {
     {
       title: "Exporting and File Management",
       body: () => (
-        <div className="text-black-50">
+        <div className="text-gray-400">
           <div>Hit the transverse Icon to go back home</div>
           <div className="flex justify-center ">
-            <div className="shadow rounded-lg">
+            <div className="shadow rounded-lg mt-2">
               <img className="h-16 w-16 p-2.5" src={icon} alt="Transverse" />
             </div>
           </div>
           <div className="mt-4">
             And find the edit button for the specific file:
           </div>
-          <div className="text-center mt-3">
-            <button className="btn btn-outline-secondary shadow">
-              <i className="bi bi-gear"></i>
-            </button>
+          <div className="text-center mt-3 flex justify-center">
+            <div className=" border-2 border-gray-300 p-4 w-4 h-5 flex justify-center items-center hover:bg-gray-500 rounded-lg hover:text-white">
+              <div className="  align-middle  ">
+                <i className=" bi bi-gear align-middle "></i>
+              </div>
+            </div>
           </div>
           <div className="mt-3">
             From there you can change the title, markdown, visibility in the
@@ -305,9 +245,11 @@ function HelpModalShad({ show, onClose }) {
 
   return (
     <div className="overflow-auto">
-      <DialogContent className="text-secondary sm:max-w-[800px] lg:max-w-screen-lg overflow-y-scroll max-h-screen rounded">
+      <DialogContent className="text-gray-400 sm:max-w-[800px] lg:max-w-screen-lg overflow-y-scroll max-h-screen rounded">
         <DialogHeader>
-          <DialogTitle>How transverse works</DialogTitle>
+          <DialogTitle className="text-gray-800">
+            How transverse works
+          </DialogTitle>
         </DialogHeader>
         <>
           <Accordion type="single" collapsible className="w-full">
@@ -315,7 +257,7 @@ function HelpModalShad({ show, onClose }) {
               <div key={index}>
                 <AccordionItem value={index.toString()}>
                   <AccordionTrigger>
-                    <div className="text-muted">{item.title}</div>
+                    <div className="text-gray-600">{item.title}</div>
                   </AccordionTrigger>
                   <AccordionContent>
                     <div>{item.body()}</div>
@@ -326,9 +268,14 @@ function HelpModalShad({ show, onClose }) {
           </Accordion>
         </>
         <DialogFooter>
-          <button type="button" className="btn btn-secondary" onClick={onClose}>
+          <Button
+            variant="secondary"
+            className="bg-gray-200"
+            type="button"
+            onClick={onClose}
+          >
             Close
-          </button>
+          </Button>
         </DialogFooter>
       </DialogContent>
     </div>

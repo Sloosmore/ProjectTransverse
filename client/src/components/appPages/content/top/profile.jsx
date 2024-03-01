@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../../../../hooks/auth";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import ProfIcon from "./dropdown";
-import ControlModal from "../../modalsToast/ControlModal";
+//import ControlModal from "../../modalsToast/ControlModal";
 
 function TopProfile({ profileKit, noteData, controlProps }) {
   const { user, signOut } = useAuth();

@@ -1,34 +1,37 @@
-import { ButtonGroup, ToggleButton, Button } from "react-bootstrap";
 import { useState } from "react";
 import "./files.jsx";
 import { sendDownload } from "../../services/downloadNote.js";
+import { Button } from "@/components/ui/button.jsx";
+import { Label } from "@/components/ui/label";
+
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const radios = [{ name: "Word" }, { name: "PDF" }];
 
-function DownloadMd(noteID) {
+function DownloadMd({ noteID }) {
   const [radioValue, setRadioValue] = useState(0); // Initialize with 0
 
   return (
-    <div className="row mb-3">
-      <div className="col">
-        <ButtonGroup>
-          {radios.map((radio, idx) => (
-            <ToggleButton
-              key={idx}
-              variant="info-outline"
-              type="radio"
-              name="radio"
-              checked={radioValue === idx} // Compare with idx
-              onClick={() => setRadioValue(idx)} // Set state to idx
-            >
-              {radio.name}
-            </ToggleButton>
+    <div className=" mb-3 flex justify-between">
+      <div className="">
+        <RadioGroup
+          defaultValue={radioValue}
+          onChange={(value) => setRadioValue(value)}
+        >
+          {radios.map((radio, index) => (
+            <div key={index}>
+              <RadioGroupItem value={index} id={index} />
+              <Label htmlFor={index} className="ms-2">
+                {radio.name}
+              </Label>
+            </div>
           ))}
-        </ButtonGroup>
+        </RadioGroup>
       </div>
-      <div className="col justify-content-end d-flex">
+      <div className="self-center">
         <Button
           variant="secondary"
+          className="align-middle"
           onClick={() => sendDownload(noteID, radios[radioValue].name)}
         >
           Download

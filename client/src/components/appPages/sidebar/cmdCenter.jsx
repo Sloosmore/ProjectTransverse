@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import transverseImage from "../../../assets/TvsLogo.svg";
 import { Link } from "react-router-dom";
-import ControlModal from "../modalsToast/ControlModal";
+//import ControlModal from "../modalsToast/ControlModal";
 function CmdCenter({ noteData, controlProps }) {
   const [show, setShow] = useState(false);
 
