@@ -4,43 +4,36 @@ import logo from "../../assets/TransverseIcon.svg";
 
 function Footer() {
   return (
-    <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top px-4 ">
-      <p className="col-md-4 mb-0 text-body-secondary">© 2024 Transverse</p>
+    <footer className="flex flex-wrap justify-between items-center py-3 my-2.5 px-4">
+      <p className="col-span-4 mb-0 text-gray-600">© 2024 Transverse</p>
 
       <Link
         to="/"
-        className="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+        className="col-span-4 flex items-center justify-center mb-3 md:mb-0 md:mr-auto text-blue-600 no-underline md:mx-auto mt-2.5"
       >
-        <img
-          src={logo}
-          alt=""
-          style={{
-            width: "3rem",
-            height: "3rem",
-          }}
-        />
+        <img src={logo} alt="" className="w-12 h-12" />
       </Link>
 
-      <ul className="nav col-md-4 justify-content-end">
+      <ul className="nav col-span-4 flex justify-end">
         <li className="nav-item">
-          <Link to="/about" className="nav-link px-2 text-body-secondary">
+          <Link to="/about" className="nav-link px-2 text-gray-600">
             About
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/terms" className="nav-link px-2 text-body-secondary">
+          <Link to="/terms" className="nav-link px-2 text-gray-600">
             Terms
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/policy" className="nav-link px-2 text-body-secondary">
+          <Link to="/policy" className="nav-link px-2 text-gray-600">
             Policy
           </Link>
         </li>
         <li className="nav-item">
           <Link
             to="/thisPageDoesn'tLeadToAnything"
-            className="nav-link px-2 text-body-secondary"
+            className="nav-link px-2 text-gray-600"
           >
             Other cool link
           </Link>

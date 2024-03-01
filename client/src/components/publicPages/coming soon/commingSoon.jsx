@@ -17,7 +17,7 @@ const ComingSoon = () => {
       }}
     >
       <h1>The {page} page is coming soon</h1>
-      <p>When I say mvp I really mean mvp</p>
+      <p className="my-3">When I say mvp I really mean mvp</p>
       <Link to="/">
         <div className="text-white">
           <button

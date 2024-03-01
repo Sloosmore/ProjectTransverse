@@ -22,7 +22,7 @@ function ProfIcon({ logOut, noteData, controlProps }) {
     <div className=" justify-center items-center">
       <Menu as="div" className="relative inline-block text-left w-full">
         <div>
-          <Menu.Button className="flex justify-center items-center ml-auto mr-auto w-12 h-12 justify-center gap-x-1.5 rounded-circle bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-200">
+          <Menu.Button className="rounded-full flex justify-center items-center ml-auto mr-auto w-12 h-12 justify-center gap-x-1.5 rounded-circle bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-500 shadow hover:bg-gray-200">
             <i
               className="bi bi-person-circle"
               style={{ fontSize: "1.5rem" }}

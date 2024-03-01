@@ -9,9 +9,15 @@ function markdownToTiptap(markdown) {
     const trimmedLine = line.trim();
     const indentLevel = (line.length - trimmedLine.length) / 2;
 
-    if (trimmedLine.startsWith("## ")) {
+    if (trimmedLine.startsWith("### ")) {
+      closeAllLists();
+      addHeading(trimmedLine.slice(4), 3);
+    } else if (trimmedLine.startsWith("## ")) {
       closeAllLists();
       addHeading(trimmedLine.slice(3), 2);
+    } else if (trimmedLine.startsWith("# ")) {
+      closeAllLists();
+      addHeading(trimmedLine.slice(2), 1);
     } else if (trimmedLine.startsWith("- ")) {
       const indentLevel = (line.length - trimmedLine.length) / 2;
       adjustListStack(indentLevel);
@@ -89,6 +95,13 @@ function markdownToTiptap(markdown) {
       list.content.push({ type: "listItem", content: [] });
     }
     return list.content[list.content.length - 1];
+  }
+
+  function addParagraph(text) {
+    result.push({
+      type: "paragraph",
+      content: [{ type: "text", text }],
+    });
   }
 
   return { type: "doc", content: result };

@@ -4,7 +4,6 @@ import TopProfile from "./profile";
 import icon from "../../../../assets/TransverseIcon.svg";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../../hooks/auth";
-import ControlModal from "../../modalsToast/ControlModal";
 import { useState } from "react";
 import ControlModalShad from "../../modalsToast/ControlModelShad";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
@@ -79,9 +78,9 @@ function AppNav({ profileKit, controlProps, noteData }) {
               </div>
             </div>
 
-            <Disclosure.Panel className="md:hidden">
+            <Disclosure.Panel className="md:hidden rounded">
               <div className="border-t border-gray-200 pb-3 pt-4">
-                <div className="flex items-center px-4">
+                <div className="flex items-center px-4 ">
                   <div className="flex-shrink-0 text-gray-500">
                     <i className="bi bi-person-circle "></i>
                   </div>

@@ -36,41 +36,38 @@ export function BlockText() {
   }, []);
 
   return (
-    <div
-      className="flex h-screen w-screen bg-light shadow-lg px-5 px-lg-0 "
-      style={{ overflowX: "hidden", overflowY: "hidden" }}
-    >
-      <div className=" py-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 lg:flex">
-        <div className="grow p-lg-5 pt-lg-3 xl:w-[120rem] lg:w-[110rem] ">
+    <div className="flex h-screen w-screen bg-light shadow-lg px-5 overflow-hidden">
+      <div className="py-4 pb-0 pt-5 lg:items-center rounded-3 flex lg:flex-row flex-col">
+        <div className="lg:grow p-5 pt-3 xl:w-[110rem] lg:w-[90rem] ">
           <img
             src={grey}
             alt=""
+            className="absolute"
             style={{
               width: "12rem",
               height: "auto",
-              position: "absolute",
               top: "35px",
               left: "35px",
             }}
           />
 
-          <p className="text-black-50 mt-20 lg:mt-5">V1.1 in beta now</p>
-          <h1 className=" fw-bold lh-1 gradient-text pb-2 pe-2 w-100">
+          <p className="text-gray-500 mt-20 lg:mt-5 mb-2">V1.1 in beta now</p>
+          <h1 className="font-bold leading-none gradient-text pb-4 pe-2 w-full">
             Take notes your way in {titlesList[randList]}
           </h1>
 
-          <div className="text-lg text-muted ms-1 fs-5">
+          <div className="text-lg text-gray-500 ms-1 fs-5">
             {textValue === "loading" && <LoadLine />}
             {textValue === "done" && (
               <ReactMarkdown>{mdList[randList]}</ReactMarkdown>
             )}
           </div>
-          <div className="flex  gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3 ">
+          <div className="flex gap-2 mb-4 mt-5">
             <Link to="/login">
               <div className="text-white">
                 <button
                   type="button"
-                  className="px-4 me-md-2  bg-gradient-to-r from-blue-700 to-fuchsia-600 hover:from-transparent hover:bg-white hover:text-purple-600 hover:bg-transparent py-2 rounded-md"
+                  className="px-4 py-2 rounded-md bg-gradient-to-r from-blue-700 to-fuchsia-600 hover:from-transparent hover:bg-white hover:text-purple-600"
                 >
                   {(user && "Log in") || "Sign up"}
                 </button>
@@ -79,7 +76,7 @@ export function BlockText() {
             <Link to="/about">
               <button
                 type="button"
-                className="px-4 btn-custom d-flex align-items-center justify-content-center"
+                className="px-4 flex items-center justify-center"
               >
                 Learn more
                 <i
@@ -90,9 +87,9 @@ export function BlockText() {
             </Link>
           </div>
         </div>
-        <div className=" w-[200%] sm:w-[100%] ">
+        <div className="w-[200%] sm:w-[100%]">
           <img
-            className=" rounded shadow-xl ml-auto ring-2 ring-gray-200 ring-opacity-50"
+            className="rounded shadow-xl ml-auto ring-2 ring-gray-200 ring-opacity-50"
             src={Open}
             alt=""
             width={"100%"}

@@ -1,4 +1,3 @@
-import HelpModal from "../../modalsToast/helpModal";
 import HelpModalShad from "../../modalsToast/helpShad";
 import {
   Dialog,

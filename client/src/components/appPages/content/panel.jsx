@@ -1,6 +1,6 @@
 import "./panel.css";
 import React, { useState, useEffect } from "react";
-import HelpModal from "../modalsToast/helpModal";
+//import HelpModal from "../modalsToast/helpModal";
 
 function Home({ transcript, helpModalKit }) {
   const { showHelpModal, setShowHelpModal, closeModal } = helpModalKit;

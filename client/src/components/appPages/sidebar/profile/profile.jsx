@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../../../../hooks/auth";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import ProfDropdown from "./dropdown";
-import ControlModal from "../../modalsToast/ControlModal";
+//import ControlModal from "../../modalsToast/ControlModal";
 
 function Profile({ profileKit, noteData, controlProps }) {
   const { user, signOut } = useAuth();
@@ -21,12 +21,13 @@ function Profile({ profileKit, noteData, controlProps }) {
   return (
     <>
       <ProfDropdown logOut={logOut} handleShow={handleShow} />
+      {/*
       <ControlModal
         show={show}
         handleClose={handleClose}
         noteData={noteData}
         controlProps={controlProps}
-      />
+  />*/}
     </>
   );
 }
