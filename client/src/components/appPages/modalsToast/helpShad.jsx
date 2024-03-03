@@ -98,7 +98,7 @@ function HelpModalShad({ show, onClose }) {
               </button>
             </div>
             <div className="my-2.5">
-              Then hit <span className="underline">Account Settings</span>
+              Then hit <span className="underline">Note Settings</span>
             </div>
             <div>
               From there you can:

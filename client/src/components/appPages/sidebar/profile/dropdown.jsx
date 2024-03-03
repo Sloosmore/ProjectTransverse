@@ -36,7 +36,7 @@ function ProfDropdown({ logOut, handleShow }) {
                     )}
                     onClick={() => handleShow()}
                   >
-                    Account settings
+                    Note settings
                   </button>
                 )}
               </Menu.Item>

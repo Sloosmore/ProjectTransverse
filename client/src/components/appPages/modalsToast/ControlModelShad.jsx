@@ -98,7 +98,7 @@ function ControlModalShad({ show, handleClose, noteData, controlProps }) {
             </div>
 
             <label htmlFor="freqRange" className="my-3 mt-4 pt-4 border-t">
-              Note Frequency (minutes)
+              Note Generation Speed (minutes)
             </label>
             <Slider
               className={cn(

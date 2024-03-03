@@ -49,7 +49,7 @@ function ProfIcon({ logOut, noteData, controlProps }) {
                     )}
                     onClick={() => setShow(!show)}
                   >
-                    Account settings
+                    Note settings
                   </button>
                 </SheetTrigger>
               </Menu.Item>
