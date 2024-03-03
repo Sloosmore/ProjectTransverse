@@ -30,6 +30,63 @@ function markdownToTiptap(markdown) {
 
   closeAllLists();
 
+  function parseTextStyle(text) {
+    const nodes = [];
+    let currentIndex = 0;
+
+    const addTextNode = (text, marks = []) => {
+      if (text) {
+        nodes.push({ type: "text", text, marks });
+      }
+    };
+
+    const findNextMatch = (text) => {
+      const boldMatch = text.match(/\*\*(.*?)\*\*/);
+      const italicMatch = text.match(/\*(.*?)\*/);
+
+      if (!boldMatch && !italicMatch) return null;
+
+      if (boldMatch && (!italicMatch || boldMatch.index <= italicMatch.index)) {
+        return { match: boldMatch, type: "bold" };
+      } else {
+        return { match: italicMatch, type: "italic" };
+      }
+    };
+
+    while (currentIndex < text.length) {
+      const remainingText = text.slice(currentIndex);
+      const nextMatch = findNextMatch(remainingText);
+
+      if (nextMatch) {
+        const { match, type } = nextMatch;
+        const start = match.index;
+        const end = start + match[0].length;
+        const matchedText = match[1];
+
+        addTextNode(remainingText.slice(0, start));
+
+        const nestedMatch = findNextMatch(matchedText);
+        if (nestedMatch) {
+          const nestedContent = parseTextStyle(matchedText);
+          nestedContent.forEach((node) => {
+            if (!node.marks) node.marks = [];
+            node.marks.push({ type });
+            nodes.push(node);
+          });
+        } else {
+          addTextNode(matchedText, [{ type }]);
+        }
+
+        currentIndex += end;
+      } else {
+        addTextNode(remainingText);
+        break;
+      }
+    }
+
+    return nodes;
+  }
+
   function adjustListStack(indentLevel) {
     if (indentLevel > currentIndentLevel) {
       startList();
@@ -40,10 +97,11 @@ function markdownToTiptap(markdown) {
   }
 
   function addHeading(text, level) {
+    const parsedText = parseTextStyle(text);
     result.push({
       type: "heading",
       attrs: { level },
-      content: [{ type: "text", text }],
+      content: parsedText,
     });
   }
 
@@ -78,9 +136,10 @@ function markdownToTiptap(markdown) {
   }
 
   function addListItem(text) {
+    const parsedText = parseTextStyle(text);
     const listItem = {
       type: "listItem",
-      content: [{ type: "paragraph", content: [{ type: "text", text }] }],
+      content: [{ type: "paragraph", content: parsedText }],
     };
 
     if (!currentList) {
@@ -98,9 +157,10 @@ function markdownToTiptap(markdown) {
   }
 
   function addParagraph(text) {
+    const parsedText = parseTextStyle(text);
     result.push({
       type: "paragraph",
-      content: [{ type: "text", text }],
+      content: parsedText,
     });
   }
 

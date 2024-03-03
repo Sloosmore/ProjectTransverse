@@ -11,14 +11,24 @@ async function queryAI(note_id, ts_message) {
   try {
     const { data: note, error: noteError } = await supabase
       .from("note")
-      .select("user_id, thread_id", "title")
+      .select("user_id, thread_id", "title", "json_content")
       .eq("note_id", note_id)
       .single();
     if (noteError) {
       throw noteError;
     }
-    const { user_id, thread_id, title } = note;
-
+    const { user_id, thread_id, title, json_content } = note;
+    let recent_data_len = 0;
+    if (json_content) {
+      const recent_data_len = json_content.content.length;
+    }
+    let recent_data = "nothing yet keep creating notes!";
+    if (recent_data_len >= 4) {
+      recent_data = json_content.content.slice(
+        recent_data_len - 4,
+        recent_data_len - 1
+      );
+    }
     console.log("message:", ts_message);
 
     const { data: user, error: userError } = await supabase
@@ -35,7 +45,11 @@ async function queryAI(note_id, ts_message) {
     console.log("user pref number", pref_number);
     console.log("user pref", note_preferences[pref_number]);
 
-    const user_prompt = `Here is the user's note title: ${title} and preferences on notetaking: ${note_preferences[pref_number]}`;
+    const user_prompt = `
+    Note title: ${title}
+    Preferences on notetaking: ${note_preferences[pref_number]}
+    Recent content: ${recent_data}
+    `;
 
     // Creating a new thread if doesn't exist
     if (!thread_id) {

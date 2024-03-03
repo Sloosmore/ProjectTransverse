@@ -6,6 +6,7 @@ require("dotenv").config();
 const cors = require("cors");
 const http = require("http");
 const server = http.createServer(app);
+const multer = require("multer");
 
 const PORT = process.env.PORT || 5001;
 
@@ -17,6 +18,10 @@ app.use(
 );
 
 app.use(logger);
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+module.exports.upload = upload;
 
 // For parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
