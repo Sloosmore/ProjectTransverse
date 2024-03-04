@@ -1,5 +1,5 @@
 .ProseMirror {
-  @apply px-6 md:px-12 pt-8 sm:px-12 pb-6;
+  @apply px-6 md:px-12 pt-4 sm:px-12 pb-6;
 }
 
 .ProseMirror .is-editor-empty:first-child::before {

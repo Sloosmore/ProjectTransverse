@@ -25,6 +25,8 @@ const getRecStatusArray = ({
       onPause(noteID)
         .then(() => fetchNoteRecords(session, true))
         .then((data) => {
+          console.log("paused data", data);
+          //this is where the error is
           setNotes(data);
           setMode("default");
         });
@@ -47,7 +49,7 @@ const getRecStatusArray = ({
       setNoteID();
       endNoteToast();
     },
-    leftIcon: "bi bi-record2 bi-2x align-left",
+    leftIcon: "bi bi-mic-fill bi-2x align-left",
     rightIcon: "bi bi-square-fill ",
   },
   {
@@ -63,7 +65,7 @@ const getRecStatusArray = ({
     rightFunction: () => {
       setNoteID();
     },
-    leftIcon: "bi bi-record2 bi-2x align-left ",
+    leftIcon: "bi bi-mic-fill bi-2x align-left ",
     rightIcon: "bi bi-square-fill ",
   },
   {
@@ -74,7 +76,7 @@ const getRecStatusArray = ({
     rightFunction: () => {
       console.log("locked");
     },
-    leftIcon: "bi bi-record2 bi-2x align-left ",
+    leftIcon: "bi bi-mic-fill bi-2x align-left ",
     rightIcon: "bi bi-square-fill ",
   },
 ];

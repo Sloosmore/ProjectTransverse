@@ -28,6 +28,7 @@ import { useParams } from "react-router-dom";
 import RecPause from "./recPause/recPause";
 import { useWindowWidth } from "@/hooks/windowWidth";
 import { Separator } from "@/components/ui/separator";
+import EditTitle from "./title";
 
 function NoteComponent({
   noteData,
@@ -52,10 +53,12 @@ function NoteComponent({
 
   useEffect(() => {
     console.log("noteId", noteId);
-    const note = noteData.find((record) => noteId === record.note_id);
-    if (note) {
-      console.log("note", note);
-      setCurrentNote(note);
+    if (noteData) {
+      const note = noteData.find((record) => noteId === record.note_id);
+      if (note) {
+        console.log("note", note);
+        setCurrentNote(note);
+      }
     }
   }, [noteData, noteId]);
 
@@ -135,12 +138,15 @@ function NoteComponent({
         </div>
       </div>
       {editorState === "Edit" && (
-        <div className="overflow-auto lg:px-20 md:px-10 flex-grow">
-          <NovelEditor
-            currentNote={currentNote}
-            contentKit={contentKit}
-            key={editKey}
-          />
+        <div className="overflow-auto flex-grow">
+          <EditTitle currentNote={currentNote} />
+          <div className="flex-grow">
+            <NovelEditor
+              currentNote={currentNote}
+              contentKit={contentKit}
+              key={editKey}
+            />
+          </div>
         </div>
       )}
       {editorState === "Transcript" && (
@@ -153,11 +159,14 @@ function NoteComponent({
           <ResizablePanelGroup direction="horizontal">
             <ResizablePanel className="flex flex-col">
               <div className="overflow-auto flex-grow">
-                <NovelEditor
-                  currentNote={currentNote}
-                  contentKit={contentKit}
-                  key={editKey}
-                />
+                <EditTitle currentNote={currentNote} />
+                <div className="flex-grow">
+                  <NovelEditor
+                    currentNote={currentNote}
+                    contentKit={contentKit}
+                    key={editKey}
+                  />
+                </div>
               </div>
             </ResizablePanel>
             <ResizableHandle withHandle />
