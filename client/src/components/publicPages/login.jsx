@@ -94,7 +94,7 @@ function Login() {
                 },
               },
             }}
-            providers={["google"]}
+            providers={[]}
           />
         </div>
       </div>
