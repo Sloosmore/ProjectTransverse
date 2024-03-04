@@ -26,8 +26,8 @@ function Footer() {
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/policy" className="nav-link px-2 text-gray-600">
-            Policy
+          <Link to="/privacy" className="nav-link px-2 text-gray-600">
+            Private Policy
           </Link>
         </li>
         <li className="nav-item">

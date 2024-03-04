@@ -7,6 +7,8 @@ import ComingSoon from "./coming soon/commingSoon";
 import Landing from "./landing/landing";
 import Login from "./login";
 import NotFound from "./notFound/notFound";
+import PrivatePolicy from "./policies/private";
+import TermsOfService from "./policies/terms";
 
 function PublicRoutes() {
   return (
@@ -14,7 +16,8 @@ function PublicRoutes() {
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/about" element={<ComingSoon />} />
-      <Route path="/terms" element={<ComingSoon />} />
+      <Route path="/privacy" element={<PrivatePolicy />} />
+      <Route path="/terms" element={<TermsOfService />} />
       <Route path="/policy" element={<ComingSoon />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
