@@ -47,14 +47,6 @@ const NovelEditor = ({ currentNote, contentKit }) => {
     saveNoteMarkdown(note_id, full_markdown, json);
   }, 300);
 
-  const debounceTitle = useDebouncedCallback(async (updatedTitle) => {
-    updateTitle(note_id, updatedTitle);
-  }, 1500);
-
-  useEffect(() => {
-    debounceTitle(updatedTitle);
-  }, [updatedTitle]);
-
   return (
     <EditorRoot>
       <EditorContent
