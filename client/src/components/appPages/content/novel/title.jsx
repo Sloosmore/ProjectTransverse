@@ -3,10 +3,10 @@ import { useDebouncedCallback } from "use-debounce";
 import { updateTitle } from "@/components/appPages/services/crudApi";
 
 function EditTitle({ currentNote }) {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(currentNote.title || "");
 
   useEffect(() => {
-    if (!title) setTitle(currentNote.title);
+    if (!title) setTitle(currentNote.title || "");
   }, [currentNote.title]);
 
   const handleChange = (e) => {
