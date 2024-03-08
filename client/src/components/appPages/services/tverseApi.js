@@ -1,5 +1,5 @@
 // fetchTranscript.js
-import { fetchTaskRecords } from "./crudApi";
+//import { fetchTaskRecords } from "./crudApi";
 
 export const tvrseFunc = (transcript, setData) => {
   fetch(`${import.meta.env.VITE_BASE_URL}/tverse-api`, {

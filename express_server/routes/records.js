@@ -7,6 +7,10 @@ const {
   updateVisibilitySB,
   delNoteSB,
   upInactiveStatus,
+  sendFoldersFromSB,
+  postFolderToSB,
+  upFolderTitleToSB,
+  delFolder,
 } = require("../controllers/handleRecords");
 
 const { pauseAppend, playAppend } = require("../controllers/handlePausePlay");
@@ -15,8 +19,20 @@ const { downloadNote } = require("../controllers/handleNoteDownload");
 
 //router.get("/tasks", sendTasks);
 
-//change to sendNotesFromPGSoon
+//change to
 router.get("/notes", sendNotesFromSB);
+
+//GET folder
+router.get("/folders", sendFoldersFromSB);
+
+//POST folder
+router.post("/folders", postFolderToSB);
+
+//UPDATE folder title
+router.post("/folder-title", upFolderTitleToSB);
+
+//DELETE folder
+router.delete("/folders", delFolder);
 
 //UPDATE MD
 router.put("/notes-markdown", updateMarkdownToSB);

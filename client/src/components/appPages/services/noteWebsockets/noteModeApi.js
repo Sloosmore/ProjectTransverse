@@ -6,7 +6,8 @@ export const createNewNote = (
   setMode,
   wsJSON,
   session,
-  SpeechRecognition
+  SpeechRecognition,
+  folder_id
 ) => {
   //turn on the mike
   SpeechRecognition.startListening({ continuous: true });
@@ -22,6 +23,7 @@ export const createNewNote = (
     });
     setNotes(statusUpdate);
   }
+  console.log("folder_id", folder_id);
   //this may be blocking
   setMode("note");
   wsJSON({
@@ -29,5 +31,6 @@ export const createNewNote = (
     transcript: transcript,
     init: true,
     token: session.access_token,
+    folder_id: folder_id,
   });
 };

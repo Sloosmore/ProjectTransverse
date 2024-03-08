@@ -44,6 +44,8 @@ async function handleWebSocketConnection(ws, request) {
         getUserIdFromToken(token) || "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
 
       if (justActivated) {
+        console.log("data", data);
+
         const user_id = user;
 
         const note_id = uuid.v4();
@@ -60,6 +62,7 @@ async function handleWebSocketConnection(ws, request) {
         const play_timestamps = [new Date()];
         const pause_timestamps = [];
         const json_content = "";
+        const folder_id = data.folder_id;
 
         const newRecQuery =
           "INSERT INTO note(note_id, user_id, title, status, date_created, date_updated, is_deleted, active_transcript, full_transcript, active_markdown, full_markdown, thread_id, visible, play_timestamps, pause_timestamps) VALUES($1, $2, $3, $4, NOW(), NOW(), $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *";
@@ -103,6 +106,7 @@ async function handleWebSocketConnection(ws, request) {
               play_timestamps,
               pause_timestamps,
               json_content,
+              folder_id,
             })
             .select();
 

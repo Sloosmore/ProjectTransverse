@@ -42,7 +42,7 @@ function AppNav({ profileKit, controlProps, noteData }) {
               <div className="flex h-16 items-center justify-between">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <Link to="/n">
+                    <Link to="/app/folder-grid">
                       <img className="h-8 w-8" src={icon} alt="Transverse" />
                     </Link>
                   </div>

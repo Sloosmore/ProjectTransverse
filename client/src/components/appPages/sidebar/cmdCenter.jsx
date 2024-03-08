@@ -16,7 +16,7 @@ function CmdCenter({ noteData, controlProps }) {
           role="button"
           style={{ width: "100%" }}
         >
-          <Link to="/n">
+          <Link to="/app">
             <img src={transverseImage} alt="" />
           </Link>
         </div>

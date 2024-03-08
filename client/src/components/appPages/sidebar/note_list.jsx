@@ -9,7 +9,7 @@ function NoteList({ notes }) {
   const navigate = useNavigate();
 
   const goToTask = (notes) => {
-    navigate(`/n/${notes.note_id}`, {
+    navigate(`/app/n/${notes.note_id}`, {
       state: {
         title: notes.title,
         id: notes.note_id,

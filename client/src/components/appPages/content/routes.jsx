@@ -6,6 +6,7 @@ import BottomConent from "./bottom/bottomContent";
 import AppNav from "./top/appNav";
 import NovelEditor from "./novel/editor/editor";
 import NoteComponent from "./novel/editorWrapper";
+import FolderView from "./files/folderView/folderView";
 //import Editor from "./tiptapNotes/editor";
 export const AppRoutes = ({
   transcript,
@@ -40,7 +41,7 @@ export const AppRoutes = ({
         }
       />
       <Route
-        path="/:noteId"
+        path="n/:noteId"
         element={
           <NoteComponent
             noteData={noteData}
@@ -52,7 +53,16 @@ export const AppRoutes = ({
         }
       />
       <Route
-        path="/"
+        path="f/:folderId"
+        element={
+          <FolderView
+            canvasEdit={canvasEdit}
+            newNoteButtonkit={newNoteButtonkit}
+          />
+        }
+      />
+      <Route
+        path="/*"
         element={
           <Files canvasEdit={canvasEdit} newNoteButtonkit={newNoteButtonkit} />
         }

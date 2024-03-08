@@ -12,7 +12,7 @@ import {
   TextQuote,
 } from "lucide-react";
 import { createSuggestionItems } from "novel/extensions";
-import { startImageUpload } from "novel/plugins";
+//import { startImageUpload } from "novel/plugins";
 import { Command, renderItems } from "novel/extensions";
 
 export const suggestionItems = createSuggestionItems([
@@ -122,6 +122,25 @@ export const suggestionItems = createSuggestionItems([
       editor.chain().focus().deleteRange(range).toggleCodeBlock().run(),
   },
   {
+    title: "Send Feedback",
+    description: "Let us know how we can improve.",
+    icon: <MessageSquarePlus size={18} />,
+    command: ({ editor, range }) => {
+      editor.chain().focus().deleteRange(range).run();
+      window.open("/feedback", "_blank");
+    },
+  },
+]);
+
+export const slashCommand = Command.configure({
+  suggestion: {
+    items: () => suggestionItems,
+    render: renderItems,
+  },
+});
+
+/*
+{
     title: "Image",
     description: "Upload an image from your computer.",
     searchTerms: ["photo", "picture", "media"],
@@ -141,21 +160,4 @@ export const suggestionItems = createSuggestionItems([
       };
       input.click();
     },
-  },
-  {
-    title: "Send Feedback",
-    description: "Let us know how we can improve.",
-    icon: <MessageSquarePlus size={18} />,
-    command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).run();
-      window.open("/feedback", "_blank");
-    },
-  },
-]);
-
-export const slashCommand = Command.configure({
-  suggestion: {
-    items: () => suggestionItems,
-    render: renderItems,
-  },
-});
+  },*/
