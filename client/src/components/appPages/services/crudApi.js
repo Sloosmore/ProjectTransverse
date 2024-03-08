@@ -1,11 +1,11 @@
-export const fetchTaskRecords = async () => {
+/*export const fetchTaskRecords = async () => {
   const response = await fetch(
     `${import.meta.env.VITE_BASE_URL}/records-api/tasks`,
     { method: "GET" }
   );
   const data = await response.json();
   return data.records;
-};
+};*/
 
 //Grabs Note Records and distingueshes if the note visble or not
 export const fetchNoteRecords = async (session, visibleNotes, resume) => {
@@ -97,6 +97,67 @@ export const updateVis = async (note_id, visible) => {
 export const deleteRecord = async (note_id) => {
   const response = await fetch(
     `${import.meta.env.VITE_BASE_URL}/records-api/notes?note_id=${note_id}`,
+    {
+      method: "DELETE",
+    }
+  );
+  const data = await response.json();
+  console.log(data);
+};
+
+export const createFolder = async (session) => {
+  const token = session.access_token;
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/records-api/folders`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  const data = await response.json();
+  console.log(data);
+  return data;
+};
+
+export const fetchFolders = async (session) => {
+  const token = session.access_token;
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/records-api/folders`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  const data = await response.json();
+  return data.folderRecords;
+};
+
+export const updateFolderTitle = async (folder_id, title) => {
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/records-api/folder-title`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ folder_id, title }),
+    }
+  );
+  const data = await response.json();
+  console.log(data);
+};
+
+export const deleteFolder = async (folder_id) => {
+  const response = await fetch(
+    `${
+      import.meta.env.VITE_BASE_URL
+    }/records-api/folders?folder_id=${folder_id}`,
     {
       method: "DELETE",
     }

@@ -16,7 +16,7 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route
-              path="/n/*"
+              path="/app/*"
               element={
                 <ProtectedRoute>
                   <TransverseApp />

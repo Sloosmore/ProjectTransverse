@@ -5,7 +5,7 @@ function StorageButton() {
   return (
     <div className=" justify-content-center text-center">
       <Link
-        to="/n/files"
+        to="/app/files"
         style={{
           textDecoration: "none",
         }}

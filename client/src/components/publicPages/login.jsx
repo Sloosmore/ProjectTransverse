@@ -46,7 +46,7 @@ function Login() {
               // handle error appropriately
             }
           }
-          navigate("/n"); // replace '/n' with the path you want to navigate to
+          navigate("/app/folder-grid"); // replace '/n' with the path you want to navigate to
         }
       }
     );
@@ -60,7 +60,7 @@ function Login() {
   useEffect(() => {
     if (user) {
       console.log(user);
-      navigate("/n");
+      navigate("/app");
     }
   }, []);
 

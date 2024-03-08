@@ -10,6 +10,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import "ldrs/waveform";
 
 const RecPause = ({ pauseProps, localNoteID }) => {
   const [recStatus, setRecStatus] = useState();
@@ -87,6 +88,17 @@ const RecPause = ({ pauseProps, localNoteID }) => {
       <Tooltip>
         <TooltipTrigger>
           <div className="flex me-2.5 align-middle ">
+            {recStatus === "pause" && (
+              <div className="me-2 mb-.5 mt-1">
+                <l-waveform
+                  size="15"
+                  stroke="2"
+                  speed="1.2"
+                  color="gray"
+                ></l-waveform>
+              </div>
+            )}
+
             <div
               onClick={() => {
                 recStatusObject.leftFunction();

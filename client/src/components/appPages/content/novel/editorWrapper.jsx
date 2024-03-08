@@ -96,7 +96,12 @@ function NoteComponent({
     <div className="flex-grow flex flex-col px-10 overflow-auto text-gray-500">
       <div className="h-12 flex-none border-b flex">
         <div className="my-auto md:ps-10 flex w-full justify-between">
-          <div className="flex h-5 items-center text-sm text-gray-400 my-auto ">
+          <div className="text-gray-400 flex align-items">
+            <RecPause pauseProps={pauseProps} localNoteID={noteId} />
+            <Separator orientation="vertical" className="me-2.5" />
+            <Playback />
+          </div>
+          <div className="flex h-5 items-center text-sm text-gray-400 my-auto me-2 md:me-10">
             <div className="flex">
               {tooltips.map(
                 (tooltip, index) =>
@@ -129,11 +134,6 @@ function NoteComponent({
                   )
               )}
             </div>
-          </div>
-          <div className="text-gray-400 flex align-items">
-            <RecPause pauseProps={pauseProps} localNoteID={noteId} />
-            <Separator orientation="vertical" className="me-2.5" />
-            <Playback />
           </div>
         </div>
       </div>

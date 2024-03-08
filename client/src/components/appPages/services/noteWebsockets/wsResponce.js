@@ -19,7 +19,7 @@ export const handleOnMessage = (
     //set by uuid
     setNoteID(wsData.note_id);
     setNotes(wsData.noteRecords);
-    navigate(`/n/${wsData.note_id}`);
+    navigate(`/app/n/${wsData.note_id}`);
   }
   if (wsData.resetState) {
     resetTranscript();

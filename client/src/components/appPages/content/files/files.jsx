@@ -4,9 +4,15 @@ import { fetchNoteRecords } from "../../services/crudApi";
 //import EditOffcanvas from "./fileEdit";
 import { useAuth } from "../../../../hooks/auth";
 import FileNewNote from "./fileNewNote";
-import { useNavigate } from "react-router-dom";
-import { Sheet, SheetTrigger } from "@/components/ui/sheet";
-import EditExportNote from "./fileEditShad";
+import FileScroll from "./viewTypes/fileScroll";
+import { Button } from "@/components/ui/button";
+import { fetchFolders } from "../../services/crudApi";
+import FolderScroll from "./viewTypes/folderScroll";
+import FolderBox from "./viewTypes/folderBox";
+import { Route, Link, Routes } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import CreateFolder from "./folderView/createFolder";
+import { deleteFolder } from "@/components/appPages/services/crudApi";
 
 //overflow for records
 
@@ -14,95 +20,131 @@ function Files({ canvasEdit, newNoteButtonkit }) {
   const { session } = useAuth();
   const { showOffCanvasEdit, setOffCanvasEdit } = canvasEdit;
   const [files, setFiles] = useState([]);
+  const [folders, setFolders] = useState([]);
   const { newNoteField, setNewNoteField, noteID } = newNoteButtonkit;
   //this needs to be in the use effect for use State
   const targetFile = useRef(null);
 
   useEffect(() => {
     fetchNoteRecords(session, false).then(setFiles);
+    fetchFolders(session).then(setFolders);
   }, [showOffCanvasEdit, noteID]);
 
-  const handleOffCanvasShow = (file) => {
-    targetFile.current = file;
-    setOffCanvasEdit(true);
-  };
-  const handleClose = () => setOffCanvasEdit(false);
+  useEffect(() => {
+    console.log("folders", folders);
+  }, [folders]);
 
-  const navigate = useNavigate();
+  const [fileView, setFileView] = useState("FolderGrid");
 
-  const goToTask = (notes) => {
-    navigate(`/n/${notes.note_id}`, {
-      state: {
-        title: notes.title,
-        id: notes.note_id,
-        markdown: notes.full_markdown,
-        status: notes.status,
-      },
-    });
-  };
+  const fileViewArray = [
+    {
+      view: "folder-grid",
+      icon: "bi bi-archive",
+    },
+    {
+      view: "folder-list",
+      icon: "bi bi-folder2",
+    },
 
+    {
+      view: "files",
+      icon: "bi bi-card-list",
+    },
+  ];
+
+  const location = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortField, setSortField] = useState(null);
-  const [sortDirection, setSortDirection] = useState(null);
 
-  const handleSort = (field) => {
-    let direction =
-      sortField === field && sortDirection === "asc" ? "desc" : "asc";
-    setSortField(field);
-    setSortDirection(direction);
-  };
-
-  let sortedFiles = [...files];
-  if (sortField !== null) {
-    sortedFiles.sort((a, b) => {
-      let aValue = a[sortField];
-      let bValue = b[sortField];
-
-      // Convert to Date objects if the values are dates
-      if (sortField === "date_updated") {
-        aValue = new Date(aValue);
-        bValue = new Date(bValue);
-      }
-
-      // Convert to lowercase if the values are strings
-      else if (typeof aValue === "string") {
-        aValue = aValue.toLowerCase();
-      }
-      if (typeof bValue === "string") {
-        bValue = bValue.toLowerCase();
-      }
-
-      if (aValue < bValue) {
-        return sortDirection === "asc" ? 1 : -1;
-      }
-      if (aValue > bValue) {
-        return sortDirection === "asc" ? -1 : 1;
-      }
-      return 0;
+  const handleDeleteFolder = (folder_id) => {
+    deleteFolder(folder_id, session).then((res) => {
+      console.log("res", res);
+      fetchFolders(session).then(setFolders);
     });
-  }
-
-  if (searchTerm !== "") {
-    sortedFiles = sortedFiles.filter((file) =>
-      file.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }
+  };
 
   return (
-    <div className=" px-6 xl:px-40 md:px-20 sm:px-10 flex-col flex-grow overflow-hidden">
-      <div className="mb-4 mt-3 flex justify-between align-center h-12">
+    <div className=" px-6 xl:px-40 md:px-20 sm:px-10 flex-col h-full overflow-hidden flex">
+      <div
+        className={`mb-4 mt-3 flex align-center h-12 justify-between flex-none`}
+      >
         <FileNewNote
           setNewNoteField={setNewNoteField}
           newNoteField={newNoteField}
         />
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="lg:w-1/3 md:w-1/2 w-7/12 py-2 px-3 border border-gray-300 rounded-md shrink shadow-sm"
-        />
+
+        <div className="flex items-center gap-x-4 me-2 text-gray-400">
+          {fileViewArray.map((item, index) => (
+            <Link
+              key={index}
+              to={`${item.view}`}
+              className={`flex items-center hover:text-gray-500 ${
+                location.pathname.endsWith(item.view) ? "text-gray-600" : ""
+              }`}
+            >
+              <i
+                className={`${item.icon} `}
+                style={{ fontSize: "1.25rem" }}
+              ></i>
+            </Link>
+          ))}
+        </div>
       </div>
+      <div className="flex-grow overflow-auto">
+        <Routes>
+          <Route
+            path="files"
+            element={
+              <>
+                <div className="w-full flex-row mb-4">
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="lg:w-1/3 md:w-1/2 w-7/12 py-2 px-3 border border-gray-300 rounded-md shrink shadow-sm"
+                  />
+                </div>
+                <FileScroll
+                  canvasEdit={canvasEdit}
+                  files={files}
+                  searchTerm={searchTerm}
+                  folders={folders}
+                />
+              </>
+            }
+          />
+          <Route
+            path="folder-list"
+            element={
+              <FolderScroll
+                canvasEdit={canvasEdit}
+                files={files}
+                folders={folders}
+              />
+            }
+          />
+          <Route
+            path="folder-grid"
+            element={
+              <FolderBox
+                canvasEdit={canvasEdit}
+                files={files}
+                folders={folders}
+                handleDeleteFolder={handleDeleteFolder}
+              />
+            }
+          />
+        </Routes>
+      </div>
+    </div>
+  );
+}
+
+export default Files;
+
+{
+  /*
+
       <table className="w-full mb-2 h-7">
         <thead className="">
           <tr>
@@ -161,30 +203,11 @@ function Files({ canvasEdit, newNoteButtonkit }) {
                     />
                   </Sheet>
 
-                  {/*
-                  <button
-                    className="btn btn-outline-secondary"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleOffCanvasShow(file);
-                    }}
-                  >
-                    <i className="bi bi-gear"></i>
-                  </button>*/}
+
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
-      {/*
-      <EditOffcanvas
-        canvasEdit={canvasEdit}
-        handleClose={handleClose}
-        file={targetFile.current}
-                />*/}
-    </div>
-  );
+      </div>*/
 }
-
-export default Files;

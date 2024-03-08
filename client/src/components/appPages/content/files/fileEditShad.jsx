@@ -26,10 +26,6 @@ import {
 export function EditExportNote({ canvasEdit, handleClose, file }) {
   const { showOffCanvasEdit, setOffCanvasEdit } = canvasEdit;
 
-  useEffect(() => {
-    console.log(file);
-  }, []);
-
   const [title, setTitle] = useState(file ? file.title : "");
   const [visible, setVisible] = useState(file ? file.visible : "");
   const [markdown, setMarkdown] = useState(file ? file.full_markdown : "");
