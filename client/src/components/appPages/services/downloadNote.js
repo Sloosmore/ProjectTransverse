@@ -1,5 +1,6 @@
-export const sendDownload = ({ noteID }, format) => {
+export const sendDownload = (noteID, format) => {
   console.log(format);
+  console.log("note_id", noteID);
   if (format.toLowerCase() === "word") {
     format = "docx";
   }
