@@ -60,7 +60,7 @@ function Login() {
   useEffect(() => {
     if (user) {
       console.log(user);
-      navigate("/app");
+      navigate("/app/folder-grid");
     }
   }, []);
 
