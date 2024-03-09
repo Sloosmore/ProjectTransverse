@@ -16,7 +16,10 @@ function DownloadMd({ noteID }) {
       <div className="">
         <RadioGroup
           defaultValue={radioValue}
-          onChange={(value) => setRadioValue(value)}
+          onValueChange={(value) => {
+            console.log(value);
+            setRadioValue(value);
+          }}
         >
           {radios.map((radio, index) => (
             <div key={index}>
@@ -29,13 +32,17 @@ function DownloadMd({ noteID }) {
         </RadioGroup>
       </div>
       <div className="self-center">
-        <Button
+        <button
           variant="secondary"
           className="align-middle"
-          onClick={() => sendDownload(noteID, radios[radioValue].name)}
+          onClick={(event) => {
+            console.log(noteID);
+            event.preventDefault();
+            sendDownload(noteID, radios[radioValue].name);
+          }}
         >
           Download
-        </Button>
+        </button>
       </div>
     </div>
   );
