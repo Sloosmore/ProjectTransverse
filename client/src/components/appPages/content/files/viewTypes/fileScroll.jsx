@@ -78,7 +78,7 @@ function FileScroll({ canvasEdit, files, folders, searchTerm }) {
   }
 
   return (
-    <div>
+    <div className="h-full flex flex-col">
       <table className="w-full mb-2 h-7">
         <thead className="">
           <tr>
@@ -105,10 +105,7 @@ function FileScroll({ canvasEdit, files, folders, searchTerm }) {
           </tr>
         </thead>
       </table>
-      <div
-        className="overflow-auto"
-        style={{ maxHeight: "calc(100vh - 240px)" }}
-      >
+      <div className="overflow-auto flex-grow">
         <table className="w-full text-gray-600">
           <tbody>
             {sortedFiles.map((file, index) => (

@@ -10,7 +10,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import "ldrs/waveform";
+import { waveform } from "ldrs";
+
+// Default values shown
 
 const RecPause = ({ pauseProps, localNoteID }) => {
   const [recStatus, setRecStatus] = useState();
@@ -82,6 +84,7 @@ const RecPause = ({ pauseProps, localNoteID }) => {
     console.log(newRec);
     setRecStatusObject(newRec);
   }, [recStatus]);
+  waveform.register();
 
   return (
     <TooltipProvider>
