@@ -133,7 +133,7 @@ function FolderView({ canvasEdit, newNoteButtonkit }) {
           <thead className="">
             <tr>
               <th
-                className="ps-3 cursor-pointer hover:text-gray-500 text-left  "
+                className="ps-3 cursor-pointer hover:text-gray-500 text-left w-[71.5%] "
                 onClick={() => handleSort("title")}
               >
                 Title <i className="ms-1 bi bi-arrow-down-up"></i>
@@ -160,7 +160,7 @@ function FolderView({ canvasEdit, newNoteButtonkit }) {
               {sortedFiles.map((file, index) => (
                 <tr key={index} className={`hover:bg-gray-200 border-b`}>
                   <td
-                    className="align-middle py-3 ps-3"
+                    className="align-middle py-3 ps-3 "
                     onClick={() => goToTask(file)}
                   >
                     {file.title}
@@ -181,9 +181,9 @@ function FolderView({ canvasEdit, newNoteButtonkit }) {
                       )}
                     </div>
                   </td>
-                  <td className="justify-end flex">
-                    <Sheet>
-                      <SheetTrigger className="border-2 border-gray-300 p-4 w-4 h-5 flex justify-center items-center hover:bg-gray-500 rounded-lg hover:text-white me-3">
+                  <td className="">
+                    <Sheet className="flex items-center">
+                      <SheetTrigger className="border-2 border-gray-300 p-4 w-4 h-5 flex justify-center items-center hover:bg-gray-500 rounded-lg hover:text-white">
                         <div className="  align-middle  ">
                           <i className=" bi bi-gear align-middle "></i>
                         </div>
