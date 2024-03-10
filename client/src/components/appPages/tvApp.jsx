@@ -17,7 +17,7 @@ import SupportedToast from "./support/supportedBrowser";
 import NoAudioSupport from "./support/noSupport";
 import SubmitToast from "./modalsToast/submitToast";
 import { useNavigate } from "react-router-dom";
-import { useDebounce } from "use-debounce";
+import { stopRecordingMedia } from "./services/mediaRecorder";
 
 const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 
@@ -54,6 +54,9 @@ function TransverseApp() {
 
   //this is for note field
   const [newNoteField, setNewNoteField] = useState(false);
+
+  //this is for the media recorder
+  const [recorder, setRecorder] = useState(null);
 
   useEffect(() => {
     localStorage.setItem("noteID", noteID);
@@ -155,7 +158,7 @@ function TransverseApp() {
     listening,
     resetTranscript,
     browserSupportsSpeechRecognition,
-  } = useSpeechRecognition({ commands });
+  } = useSpeechRecognition();
 
   const { sendJsonMessage, readyState } = useWebSocket(WS_URL, {
     onOpen: () => {
@@ -170,7 +173,9 @@ function TransverseApp() {
         setNotes,
         noteID,
         resetTranscript,
-        navigate
+        navigate,
+        SpeechRecognition,
+        setRecorder
       );
     },
 
@@ -232,11 +237,12 @@ function TransverseApp() {
   const [timeoutId, setTimeoutId] = useState(null);
 
   useEffect(() => {
-    if (mode === "default") {
+    if (mode !== "note") {
       setTimeout(() => {
         SpeechRecognition.stopListening();
+        stopRecordingMedia(recorder);
         console.log("Listening stopped");
-      }, 5000);
+      }, 750);
     }
   }, [mode]);
 
@@ -323,6 +329,8 @@ function TransverseApp() {
     newNoteField,
     setNoteID,
     submitToastKit,
+    recorder,
+    setRecorder,
   };
 
   const modeKit = {
