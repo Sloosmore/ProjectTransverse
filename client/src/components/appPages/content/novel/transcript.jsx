@@ -1,4 +1,5 @@
 import React from "react";
+import AudioControls from "./playback/streamAudio";
 
 function Transcript({ currentNote, transcript }) {
   const { full_transcript, status } = currentNote;

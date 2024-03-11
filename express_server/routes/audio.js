@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   handleUploadAudio,
   uploadAudio,
-} = require("../controllers/handleAudio");
+} = require("../controllers/audio/handleUpAudio");
 
 router.post("/upload", uploadAudio, handleUploadAudio);
 

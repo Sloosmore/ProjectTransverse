@@ -1,11 +1,5 @@
 import NovelEditor from "./editor/editor";
 import {
-  Captions,
-  NotebookPen,
-  SplitSquareHorizontal,
-  ListVideo,
-} from "lucide-react";
-import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -29,6 +23,7 @@ import RecPause from "./recPause/recPause";
 import { useWindowWidth } from "@/hooks/windowWidth";
 import { Separator } from "@/components/ui/separator";
 import EditTitle from "./title";
+import AudioControls from "./playback/streamAudio";
 
 function NoteComponent({
   noteData,
@@ -178,6 +173,9 @@ function NoteComponent({
           </ResizablePanelGroup>
         </div>
       )}
+      <div className="h-24 flex-none border-t flex">
+        <AudioControls currentNote={currentNote} />
+      </div>
     </div>
   );
 }

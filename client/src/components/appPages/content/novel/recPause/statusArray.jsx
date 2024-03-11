@@ -1,7 +1,7 @@
 import {
   startRecordingMedia,
   stopRecordingMedia,
-} from "@/components/appPages/services/mediaRecorder";
+} from "@/components/appPages/services/audio/mediaRecorder";
 
 const getRecStatusArray = ({
   onPause,

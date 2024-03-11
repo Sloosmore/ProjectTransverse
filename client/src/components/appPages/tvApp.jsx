@@ -17,7 +17,7 @@ import SupportedToast from "./support/supportedBrowser";
 import NoAudioSupport from "./support/noSupport";
 import SubmitToast from "./modalsToast/submitToast";
 import { useNavigate } from "react-router-dom";
-import { stopRecordingMedia } from "./services/mediaRecorder";
+import { stopRecordingMedia } from "./services/audio/mediaRecorder";
 
 const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 

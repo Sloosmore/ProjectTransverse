@@ -1,6 +1,6 @@
 import { saveNoteMarkdown } from "../crudApi";
 import { useNavigate } from "react-router-dom";
-import { startRecordingMedia } from "../mediaRecorder";
+import { startRecordingMedia } from "../audio/mediaRecorder";
 //this takes two params note ID and markdown
 
 export const handleOnMessage = (
