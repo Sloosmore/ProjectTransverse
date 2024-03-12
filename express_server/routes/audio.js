@@ -5,6 +5,10 @@ const {
   uploadAudio,
 } = require("../controllers/audio/handleUpAudio");
 
+const { streamAudio } = require("../controllers/audio/handleStreamAudio");
+
 router.post("/upload", uploadAudio, handleUploadAudio);
+
+router.get("/stream", streamAudio);
 
 module.exports = router;

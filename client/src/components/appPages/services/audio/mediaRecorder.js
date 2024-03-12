@@ -42,8 +42,17 @@ const startRecordingMedia = (session, setRecorder, noteID) => {
         });
       };
 
+      mediaRecorder.addEventListener("dataavailable", (event) => {
+        if (event.data.size > 0) {
+          sendAudioData(event.data);
+        }
+      });
+
       mediaRecorder.start();
-      const recordingInterval = setInterval(startNewRecording, 30000);
+      const recordingInterval = setInterval(() => {
+        mediaRecorder.stop();
+        startNewRecording();
+      }, 30000);
 
       setRecorder({ mediaRecorder, recordingInterval });
     })

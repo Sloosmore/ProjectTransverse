@@ -1,10 +1,9 @@
-const streamAudio = async (session, NoteID, startTime) => {
+const fetchURLs = async (session, noteID) => {
   try {
     const token = session.access_token;
+
     const response = await fetch(
-      `${
-        import.meta.env.VITE_BASE_URL
-      }/audio/stream?noteID=${NoteID}&startTime=${startTime}`,
+      `${import.meta.env.VITE_BASE_URL}/audio/stream?noteID=${noteID}`,
       {
         method: "GET",
         headers: {
@@ -13,10 +12,11 @@ const streamAudio = async (session, NoteID, startTime) => {
       }
     );
     if (response.status === 200) {
-      const audioStream = response.body;
-      return audioStream;
+      const data = await response.json();
+      const { urls } = data;
+      return urls;
     } else {
-      console.error("Error streaming audio:", response);
+      console.error("Error grabbing urls:", response);
       return null;
     }
   } catch (error) {
@@ -24,4 +24,4 @@ const streamAudio = async (session, NoteID, startTime) => {
   }
 };
 
-export { streamAudio };
+export { fetchURLs };

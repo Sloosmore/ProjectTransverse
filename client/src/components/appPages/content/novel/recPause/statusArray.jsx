@@ -22,12 +22,16 @@ const getRecStatusArray = ({
     recStatus: "pause",
     leftFunction: () => {
       console.log("paused");
-      onPause(noteID)
-        .then(() => fetchNoteRecords(session, true))
-        .then((data) => {
-          setNotes(data);
-          setMode("default"); //will stop the recording because the mode is default
-        });
+      setMode("default");
+      //uploading note data
+      setTimeout(() => {
+        onPause(noteID)
+          .then(() => fetchNoteRecords(session, true))
+          .then((data) => {
+            setNotes(data);
+            //will stop the recording because the mode is default
+          });
+      }, 1500);
     },
     rightFunction: () => {
       onPause(noteID)

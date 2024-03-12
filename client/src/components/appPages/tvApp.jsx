@@ -175,7 +175,8 @@ function TransverseApp() {
         resetTranscript,
         navigate,
         SpeechRecognition,
-        setRecorder
+        setRecorder,
+        session
       );
     },
 

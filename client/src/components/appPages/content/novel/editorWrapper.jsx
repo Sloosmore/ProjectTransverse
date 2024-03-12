@@ -40,6 +40,7 @@ function NoteComponent({
   const [editKey, setEditKey] = useState(0);
   const [updatedTitle, setUpdatedTitle] = useState();
   const [keyFlag, setKeyFlag] = useState(0);
+  const { mode } = modeKit;
 
   //more conditional rendering
   const windowWidth = useWindowWidth();
@@ -173,9 +174,11 @@ function NoteComponent({
           </ResizablePanelGroup>
         </div>
       )}
-      <div className="h-24 flex-none border-t flex">
-        <AudioControls currentNote={currentNote} />
-      </div>
+      {mode === "CHANGEHERE" && (
+        <div className="h-24 flex-none border-t flex">
+          <AudioControls currentNote={currentNote} />
+        </div>
+      )}
     </div>
   );
 }

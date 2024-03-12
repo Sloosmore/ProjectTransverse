@@ -21,21 +21,32 @@ const handleUploadAudio = async (req, res) => {
     if (!audio || !audio.buffer) {
       return res.status(400).json({ message: "No audio file provided" });
     }
-
-    const { data: existingChunks, error: queryError } = await supabase
-      .from("audio_chunk")
+    const { data: existingSegments, error: querySegError } = await supabase
+      .from("audio_segment")
       .select("*")
       .eq("note_id", noteID);
 
-    if (queryError) {
-      throw queryError;
+    if (querySegError) {
+      throw querySegError;
+    }
+
+    const segmentLen = existingSegments.length.toString().padStart(3, "0");
+    const segment_id = existingSegments[segmentLen - 1].segment_id;
+
+    const { data: existingChunks, error: queryChunkError } = await supabase
+      .from("audio_chunk")
+      .select("*")
+      .eq("segment_id", segment_id);
+
+    if (queryChunkError) {
+      throw queryChunkError;
     }
 
     // Determine the sequence number for the new chunk
     const nextSequenceNum = (existingChunks.length + 1)
       .toString()
-      .padStart(4, "0");
-    const filePath = `${noteID}/audio-file-${nextSequenceNum}`;
+      .padStart(3, "0");
+    const filePath = `${noteID}/${segmentLen}/audio-file-${nextSequenceNum}`;
     const arrayBuffer = Uint8Array.from(audio.buffer).buffer;
 
     const { error: uploadError } = await supabase.storage
@@ -48,11 +59,11 @@ const handleUploadAudio = async (req, res) => {
     const chunk_id = uuid.v4();
 
     const { data, error } = await supabase.from("audio_chunk").insert({
-      note_id: noteID,
       chunk_id: chunk_id,
       file_path: filePath,
       sequence_num: nextSequenceNum,
-      user_id: user_id,
+      segment_num: segmentLen,
+      segment_id: segment_id,
     });
 
     if (error) {
@@ -67,7 +78,9 @@ const handleUploadAudio = async (req, res) => {
     } else {
       console.log("Caught an exception that was not an Error object:", error);
     }
-    res.status(500);
+    res
+      .status(500)
+      .json({ message: "An error occurred while processing your request." });
   }
 };
 

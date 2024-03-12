@@ -6,8 +6,51 @@ const streamAudio = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     const user_id = getUserIdFromToken(token);
-    const noteID = req.params.noteID;
+    const noteID = req.query.noteID;
+    console.log("noteID", noteID);
 
+    // Read segments from note instead of chunks
+    const { data: segments, error: querySegError } = await supabase
+      .from("audio_segment")
+      .select("file_path, sequence_num, duration")
+      .eq("note_id", noteID)
+      .order("sequence_num", { ascending: true });
+
+    if (queryError) {
+      throw queryError;
+    }
+    const filePaths = segments.map((segment) => segment.file_path);
+
+    const { segURLData, segURLerror } = await supabase.storage
+      .from("audio_chunks")
+      .createSignedUrls(filePaths, 60 ** 3);
+
+    if (segURLerror) {
+      throw segURLerror;
+    }
+    //send list of segment Urls along with timestamps in an object
+    // [{url: "url", time: "time differential"}]
+
+    if (error) {
+      console.error("Error in streamAudio:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+
+    const urls = segURLData.map((url) => url.signedUrl);
+
+    console.log("urls", urls);
+
+    res.status(200).json({ message: "Audio streaming successful", urls: urls });
+  } catch (error) {
+    console.error("Error in streamAudio:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+  //
+};
+
+module.exports = { streamAudio };
+
+/*
     const { data: audioChunks, error: queryError } = await supabase
       .from("audio_chunk")
       .select("file_path")
@@ -17,60 +60,15 @@ const streamAudio = async (req, res) => {
     if (queryError) {
       throw queryError;
     }
-
     if (audioChunks.length === 0) {
+      console.error("No audio found for note");
       return res.status(404).json({ message: "No audio found for note" });
     }
 
-    const startTime = parseInt(req.query.startTime) || 0;
+    const filePaths = audioChunks.map((chunk) => chunk.file_path);
 
-    // Calculate which chunk to start with (assuming 30 sec per chunk)
-    const startChunkIndex = Math.floor(startTime / 30);
-
-    // TODO: Calculate byte range if necessary for partial content
-
-    res.writeHead(200, {
-      "Content-Type": "audio/wav",
-      // Additional headers if partial content
-    });
-
-    // Stream starting from the calculated chunk
-    let isLastChunk = false;
-    for (let i = startChunkIndex; i < audioChunks.length; i++) {
-      // Stream each chunk
-      if (i === audioChunks.length - 1) {
-        isLastChunk = true;
-      }
-      await streamAudioChunk(audioChunks[i].file_path, res, isLastChunk);
-    }
-
-    async function streamAudioChunk(filePath, res, isLastChunk) {
-      try {
-        const { data, error } = await supabase.storage
-          .from("audio_chunks")
-          .download(filePath);
-
-        if (error) {
-          throw error;
-        }
-
-        data.pipe(res, { end: false });
-        await new Promise((resolve) =>
-          data.on("end", () => {
-            if (isLastChunk) {
-              res.end(); // End the response after the last chunk
-            }
-            resolve();
-          })
-        );
-      } catch (error) {
-        console.error("Error streaming chunk:", error);
-      }
-    }
-  } catch (error) {
-    console.error("Error in streamAudio:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-module.exports = { streamAudio };
+    // Stream each chunk
+    const { data, error } = await supabase.storage
+      .from("audio_chunks")
+      .createSignedUrls(filePaths, 60 ** 3);
+ */

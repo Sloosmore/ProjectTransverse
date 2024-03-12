@@ -4,9 +4,11 @@ import raf from "raf"; // requestAnimationFrame polyfill
 import testAudio from "../../../../../assets/testAudio.wav";
 import "./stream.css";
 import { useAuth } from "@/hooks/auth";
-import { streamAudio } from "@/components/appPages/services/audio/streamAudio";
+import { fetchURLs } from "@/components/appPages/services/audio/streamAudio";
+import { createUrlArray } from "@/components/appPages/services/audio/playback";
+import { Howl } from "howler";
 
-const AudioControls = ({ currentNote }) => {
+const AudioControls = ({ currentNote, mode }) => {
   const { session } = useAuth();
   const [playing, setPlaying] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -15,27 +17,24 @@ const AudioControls = ({ currentNote }) => {
   const [isSeeking, setIsSeeking] = useState(false);
   const [duration, setDuration] = useState(0.0);
   const [shouldPlay, setShouldPlay] = useState(false);
-
-  const [audioUrl, setAudioUrl] = useState(null);
-
-  const [totalTime, setTotalTime] = useState(0);
-
-  useEffect(() => {
-    if (currentNote && currentNote.pause_timestamps) {
-      let totTime = 0;
-      for (let i = 0; i < currentNote.pause_timestamps.length; i++) {
-        let timeDiferential =
-          new Date(currentNote.pause_timestamps[i]).getTime() -
-          new Date(currentNote.play_timestamps[i]).getTime();
-        totTime += timeDiferential;
-      }
-      console.log("totTime", totTime);
-      setTotalTime(totTime / 1000);
-    }
-  }, [currentNote]);
-
+  const [audioUrls, setAudioUrls] = useState(null);
   const playerRef = useRef(null);
   const rafId = useRef(null);
+  const [section, setSection] = useState(0);
+  const [chunk, setChunk] = useState(0);
+
+  // Fetch the audio urls and set states
+  useEffect(() => {
+    if (currentNote.note_id === undefined) return;
+    const fetchAudio = async () => {
+      const urls = await fetchURLs(session, currentNote.note_id);
+      const { urlArray, totTime } = createUrlArray(currentNote, urls);
+      setDuration(totTime);
+      setAudioUrls(urlArray);
+    };
+    fetchAudio();
+  }, [currentNote]);
+  // Playing the audio
 
   useEffect(() => {
     return () => {
@@ -55,21 +54,51 @@ const AudioControls = ({ currentNote }) => {
   }, [playing]);
 
   useEffect(() => {
-    const fetchAudioUrl = async () => {
-      const url = await streamAudio(session, currentNote.note_id, seek);
-      setAudioUrl(url);
-    };
+    if (playing && Array.isArray(audioUrls) && audioUrls.length > 0) {
+      // Calculate the new section based on the current seek position
+      const newSection = audioUrls.findIndex((u) => seek < u.time);
 
-    if (shouldPlay) {
-      fetchAudioUrl();
+      // Set the current section and chunk if the section has changed
+      if (newSection !== section) {
+        setSection(newSection);
+        setChunk(0); // Reset chunk to the start of the new section
+
+        // Preload the next section if it exists and hasn't been preloaded
+        if (
+          newSection + 1 < audioUrls.length &&
+          !audioUrls[newSection + 1].howl
+        ) {
+          const nextUrls = audioUrls[newSection + 1].urls;
+          // Assuming we preload the first URL of the next section
+          audioUrls[newSection + 1].howl = new Howl({
+            src: [nextUrls[0]],
+            preload: true,
+          });
+        }
+      }
+
+      // Calculate the new chunk within the current section
+      const pastSectionTime =
+        newSection === 0 ? 0 : audioUrls[newSection - 1].time;
+      const newChunk =
+        newSection === section
+          ? audioUrls[section].urls.findIndex(
+              (url, index) => seek < pastSectionTime + (index + 1) * 30
+            )
+          : 0;
+
+      if (newChunk !== chunk) {
+        setChunk(newChunk);
+      }
     }
-  }, [session, currentNote, seek, shouldPlay]);
+  }, [seek, audioUrls, section, chunk]);
+
+  //future use effect
 
   const handleToggle = () => setPlaying(!playing);
 
   const handleOnLoad = () => {
     setLoaded(true);
-    setDuration(playerRef.current.duration());
   };
 
   const handleOnPlay = () => {
@@ -82,12 +111,6 @@ const AudioControls = ({ currentNote }) => {
     raf.cancel(rafId.current);
   };
 
-  const handleStop = () => {
-    playerRef.current.stop();
-    setPlaying(false);
-    renderSeekPos();
-  };
-
   const handleMouseDownSeek = () => {
     setIsSeeking(true);
     setPlaying(false);
@@ -97,6 +120,7 @@ const AudioControls = ({ currentNote }) => {
     setIsSeeking(false);
     setPlaying(true);
   };
+
   const handleSeekingChange = (e) => {
     const newSeek = parseFloat(e.target.value);
     setSeek(newSeek);
@@ -126,12 +150,18 @@ const AudioControls = ({ currentNote }) => {
   return (
     <div className="w-full flex flex-col">
       <ReactHowler
-        src={[testAudio]}
+        src={
+          (audioUrls &&
+            audioUrls[section] &&
+            audioUrls[section]["urls"][chunk]) ||
+          testAudio
+        }
         playing={playing}
         onLoad={handleOnLoad}
         onPlay={handleOnPlay}
         onEnd={handleOnEnd}
         ref={playerRef}
+        format={["wav"]}
       />
 
       <div className=" flex justify-center mt-3.5 gap-x-5">
@@ -182,7 +212,7 @@ const AudioControls = ({ currentNote }) => {
 
       <div className="w-full flex-row flex justify-center mt-2.5 slider-container items-center">
         <div className="playback-bar__progress-time-elapsed">
-          {formatTime(seek)}
+          {formatTime(seek / 1000)}
         </div>
         <div className=" w-1/2 my-auto mx-2 flex">
           <input
@@ -204,7 +234,9 @@ const AudioControls = ({ currentNote }) => {
             style={{ width: `${(seek / duration) * 100}%` }}
           ></div>
         </div>
-        <div className="playback-bar__duration">{formatTime(duration)}</div>
+        <div className="playback-bar__duration">
+          {formatTime(duration / 1000)}
+        </div>
       </div>
     </div>
   );
@@ -231,5 +263,11 @@ export default AudioControls;
     {rate.toFixed(2)}
   </label>
 </div>;
-<button onClick={handleStop}>Stop</button>;*/
+<button onClick={handleStop}>Stop</button>;
+
+  const handleStop = () => {
+    playerRef.current.stop();
+    setPlaying(false);
+    renderSeekPos();
+  };*/
 }
