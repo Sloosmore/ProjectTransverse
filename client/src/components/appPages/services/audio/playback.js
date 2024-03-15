@@ -21,3 +21,9 @@ export const createUrlArray = (currentNote, urlList) => {
   }
   return { urlArray, totTime };
 };
+
+export const getMaxTime = (urlArray) => {
+  const endTimeArray = urlArray.map((url) => url.end_time);
+  const maxTime = Math.max(...endTimeArray);
+  return { totTime: maxTime };
+};

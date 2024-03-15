@@ -24,6 +24,7 @@ import { useWindowWidth } from "@/hooks/windowWidth";
 import { Separator } from "@/components/ui/separator";
 import EditTitle from "./title";
 import AudioControls from "./playback/streamAudio";
+import TestAudioControls from "./playback/testStreamAudio";
 
 function NoteComponent({
   noteData,
@@ -174,9 +175,9 @@ function NoteComponent({
           </ResizablePanelGroup>
         </div>
       )}
-      {mode === "CHANGEHERE" && (
+      {mode === "CHANGE_TO_ENABLE" && (
         <div className="h-24 flex-none border-t flex">
-          <AudioControls currentNote={currentNote} />
+          <TestAudioControls currentNote={currentNote} />
         </div>
       )}
     </div>

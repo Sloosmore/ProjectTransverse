@@ -13,8 +13,8 @@ const fetchURLs = async (session, noteID) => {
     );
     if (response.status === 200) {
       const data = await response.json();
-      const { urls } = data;
-      return urls;
+      const { segData } = data;
+      return segData;
     } else {
       console.error("Error grabbing urls:", response);
       return null;

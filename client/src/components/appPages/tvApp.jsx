@@ -193,13 +193,22 @@ function TransverseApp() {
   //so timerFailsame does not call UseEffect
   useEffect(() => {
     console.log("listening effect triggered");
+    console.log("mode", mode);
     if (!listening && mode === "note") {
       setTimeout(() => {
-        SpeechRecognition.startListening({ continuous: true });
-        console.log("Restart after trgger");
+        if (mode === "note") {
+          SpeechRecognition.startListening({ continuous: true });
+          console.log("Restart after trgger");
+        } else {
+          return;
+        }
       }, 100);
     }
   }, [listening]);
+
+  useEffect(() => {
+    console.log("updated mode", mode);
+  }, [mode]);
 
   /*
   const [failsafeTimeoutId, setFailsafeTimeoutId] = useState(null);
@@ -239,11 +248,9 @@ function TransverseApp() {
 
   useEffect(() => {
     if (mode !== "note") {
-      setTimeout(() => {
-        SpeechRecognition.stopListening();
-        stopRecordingMedia(recorder);
-        console.log("Listening stopped");
-      }, 750);
+      SpeechRecognition.stopListening();
+      stopRecordingMedia(recorder);
+      console.log("Listening stopped");
     }
   }, [mode]);
 
@@ -255,19 +262,21 @@ function TransverseApp() {
         clearTimeout(timeoutId);
       }
       const backID = setTimeout(() => {
-        console.log("reset and sending to back");
+        if (mode === "note") {
+          console.log("reset and sending to back");
 
-        SpeechRecognition.startListening({ continuous: true });
+          SpeechRecognition.startListening({ continuous: true });
 
-        const title = titleFromID(noteID, noteData);
+          const title = titleFromID(noteID, noteData);
 
-        sendJsonMessage({
-          title,
-          transcript: transcript,
-          init: false,
-          note_id: noteID,
-          token: session.access_token,
-        });
+          sendJsonMessage({
+            title,
+            transcript: transcript,
+            init: false,
+            note_id: noteID,
+            token: session.access_token,
+          });
+        }
       }, 3250);
       setTimeoutId(backID);
     }

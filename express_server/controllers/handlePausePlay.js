@@ -16,6 +16,8 @@ const readUserRecordsFromNoteID = async (note_id) => {
 const pauseAppend = async (req, res) => {
   try {
     const { id } = req.body;
+
+    // read note to get pause timestamps and update pause timestamps
     const { data: note, error } = await supabase
       .from("note")
       .select("pause_timestamps, play_timestamps")
@@ -41,107 +43,51 @@ const pauseAppend = async (req, res) => {
     if (updateError) {
       throw updateError;
     }
-
     console.log("timestamps updated", note.play_timestamps, pauseArray);
 
-    // calculate time difference between pause and play timestamps by also reading play timestamps
+    // Done updating ------------------------------
+
+    // Update Segment with the time difference and end time
     const recording_intervals = pauseArray.length;
     let newTimeDifference = 0;
     let totTimePassed = 0;
     for (let i = 0; i < recording_intervals; i++) {
-      let pauseTime = new Date(pauseArray[i]).getTime();
-      let playTime = new Date(note.play_timestamps[i] + "Z").getTime(); // Convert to UTC
-
-      let timeDiferential = pauseTime - playTime;
-
-      totTimePassed += timeDiferential;
       if (i === recording_intervals - 1) {
-        newTimeDifference = totTimePassed;
+        let pauseTime = new Date(pauseArray[i]).getTime();
+        let playTime = new Date(note.play_timestamps[i] + "Z").getTime(); // add Z to fix timezone issue
+        let endDiff = pauseTime - playTime;
+
+        newTimeDifference = endDiff;
+        totTimePassed += endDiff;
+      } else {
+        let pauseTime = new Date(note.pause_timestamps[i]).getTime();
+        let playTime = new Date(note.play_timestamps[i]).getTime();
+
+        let timeDiferential = pauseTime - playTime;
+
+        totTimePassed += timeDiferential;
       }
+    }
 
-      console.log("totTimePassed", totTimePassed);
+    console.log("totTimePassed", totTimePassed);
 
-      // insert time difference into segment
+    // insert time difference into segment
+    try {
       const { data: segmentInsert, error: queryErrorInsert } = await supabase
         .from("audio_segment")
-        .update({ duration: timeDiferential, end_time: totTimePassed })
-        .eq("sequence_num", recording_intervals);
-
-      if (queryErrorInsert) {
-        throw queryErrorInsert;
-      }
-
-      console.log("timeDiferential", timeDiferential);
-
-      // read audio segment to get segment sequence number and file path
-      let segment, queryError, chunk, chunkError;
-
-      try {
-        const result = await supabase
-          .from("audio_segment")
-          .select("segment_id, file_path")
-          .eq("note_id", id)
-          .eq("sequence_num", recording_intervals);
-
-        segment = result.data;
-        queryError = result.error;
-
-        if (queryError) {
-          throw queryError;
-        }
-      } catch (error) {
-        console.error("Error querying audio_segment:", error);
-      }
-      console.log("segment", segment);
-      try {
-        const result = await supabase
-          .from("audio_chunk")
-          .select("file_path")
-          .eq("segment_id", segment[0].segment_id)
-          .order("sequence_num", { ascending: true });
-
-        chunk = result.data;
-        chunkError = result.error;
-
-        if (chunkError) {
-          throw chunkError;
-        }
-      } catch (error) {
-        console.error("Error querying audio_chunk:", error);
-      }
-      console.log("chunk", chunk);
-
-      const filePaths = chunk.map((chunk) => chunk.file_path);
-
-      // get all chunks urls from supabase
-
-      let urlData, urlError;
-
-      try {
-        const result = await supabase.storage
-          .from("audio_chunks")
-          .createSignedUrls(filePaths, 60 ** 3);
-
-        urlData = result.data;
-        urlError = result.error;
-      } catch (urlError) {
-        console.error("Error querying audio_chunk from storage:", error);
-      }
-
-      console.log("urlsData", urlData);
-      const urls = urlData.map((url) => url.signedUrl);
-      console.log("urls newUrls", urls);
-      // combine all chunks into a single audio file
-      const segment_path = segment[0].file_path;
-
-      try {
-        const result = await processAudioFiles(urls, segment_path);
-      } catch (error) {
-        console.error("Error processing large audio files:", error);
-      }
-
-      res.status(201).json({ message: "Pause updated" });
+        .update({ duration: newTimeDifference, end_time: totTimePassed })
+        .eq("sequence_num", recording_intervals)
+        .eq("note_id", id);
+    } catch (error) {
+      console.log("error", error);
     }
+
+    console.log("timeDiferential", newTimeDifference);
+
+    // Done updating ------------------------------
+    // read audio segment to get segment sequence number and file path
+
+    res.status(201).json({ message: "Pause updated" });
   } catch (error) {
     console.log(`pauseAppend:`, error);
     console.log("error", error.stack);
@@ -152,6 +98,8 @@ const pauseAppend = async (req, res) => {
 const playAppend = async (req, res) => {
   try {
     const { id } = req.body;
+
+    // read note to get play timestamps and update play timestamps
     const { data: note, error } = await supabase
       .from("note")
       .select("play_timestamps, pause_timestamps")
@@ -164,16 +112,6 @@ const playAppend = async (req, res) => {
       return res.status(404).json({ message: "Note not found" });
     }
     const newDate = new Date();
-
-    let timeDifference = 0;
-    for (let i = 0; i < note.pause_timestamps.length; i++) {
-      timeDifference +=
-        (new Date(note.pause_timestamps[i]) -
-          new Date(note.play_timestamps[i])) /
-        1000;
-      // insert time difference into segment
-    }
-    timeDifference = Math.floor(timeDifference);
 
     const playArray = [...note.play_timestamps, newDate];
 
@@ -188,6 +126,7 @@ const playAppend = async (req, res) => {
     if (updateError) {
       throw updateError;
     }
+    // Done updating ------------------------------
 
     const { data: segment, error: queryError } = await supabase
       .from("audio_segment")
@@ -202,21 +141,21 @@ const playAppend = async (req, res) => {
     const sequence_num = segment.length + 1;
 
     const segment_id = uuid.v4();
-    const file_path = `${id}/${segment_id.padStart(2, "0")}`;
+    const file_path = `${id}/${String(sequence_num).padStart(2, "0")}`;
 
-    const { data: audioSegment, error: audioError } = await supabase
-      .from("audio_segment")
-      .insert({
-        segment_id,
-        note_id,
-        sequence_num: sequence_num,
-        file_path,
-        start_time: timeDifference,
-      });
-
-    if (audioError) {
-      throw audioError;
+    try {
+      const { data: audioSegment, error: audioError } = await supabase
+        .from("audio_segment")
+        .insert({
+          segment_id,
+          note_id: id,
+          sequence_num: sequence_num,
+          file_path,
+        });
+    } catch (error) {
+      console.log("error", error);
     }
+
     // read audio segment to get segment sequence number
     // create new audio segment
     // path to audio segment: note_id/segment_id.padStart(4, "0")
@@ -231,3 +170,55 @@ const playAppend = async (req, res) => {
 };
 
 module.exports = { pauseAppend, playAppend };
+
+// attempt to concatenate audio segments
+{
+  /*
+   let segment, queryError;
+
+    try {
+      const result = await supabase
+        .from("audio_segment")
+        .select("segment_id, file_path")
+        .eq("note_id", id);
+
+      segment = result.data;
+      queryError = result.error;
+
+      if (queryError) {
+        throw queryError;
+      }
+    } catch (error) {
+      console.error("Error querying audio_segment:", error);
+    }
+    console.log("segment", segment);
+
+    const filePaths = segment.map((segment) => segment.file_path);
+
+    // get all chunks urls from supabase
+
+    let urlData, urlError;
+
+    try {
+      const result = await supabase.storage
+        .from("audio_segments")
+        .createSignedUrls(filePaths, 60 ** 3);
+
+      urlData = result.data;
+      urlError = result.error;
+    } catch (urlError) {
+      console.error("Error querying audio_chunk from storage:", error);
+    }
+
+    console.log("urlsData", urlData);
+    const urls = urlData.map((url) => url.signedUrl);
+    console.log("urls newUrls", urls);
+    // combine all chunks into a single audio file
+    const full_path = `${id}`;
+
+    try {
+      const result = await processAudioFiles(urls, full_path);
+    } catch (error) {
+      console.error("Error processing large audio files:", error);
+    } */
+}

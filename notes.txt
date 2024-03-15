@@ -1,4 +1,2 @@
-AUDIO RECORDING in frontend:
-https://www.npmjs.com/package/react-audio-voice-recorder
-https://blog.logrocket.com/how-to-create-video-audio-recorder-react/
-
+Supabase access token
+sbp_d5671f6e94994ea5c20921f085203673a16d92e9

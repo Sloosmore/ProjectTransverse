@@ -3,14 +3,17 @@ const startRecordingMedia = (session, setRecorder, noteID) => {
     .getUserMedia({ audio: true })
     .then((stream) => {
       let mediaRecorder = new MediaRecorder(stream);
-      const sendAudioData = (data) => {
-        let blob = new Blob([data], { type: "audio/wav" }); // Ensure the MIME type matches the recording format
+      let audioChunks = []; // Array to store audio chunks
+
+      const sendAudioData = () => {
+        let blob = new Blob(audioChunks, { type: "audio/wav" }); // Combine chunks into a single Blob
         let date = new Date();
         let formData = new FormData();
         formData.append("audio", blob, `recording_${date.toISOString()}.wav`);
         formData.append("noteID", noteID);
 
         const token = session.access_token;
+        console.log("sending audio data");
         fetch(`${import.meta.env.VITE_BASE_URL}/audio/upload`, {
           method: "POST",
           headers: {
@@ -22,39 +25,24 @@ const startRecordingMedia = (session, setRecorder, noteID) => {
             if (!response.ok) {
               throw new Error("Network response was not ok");
             }
-            console.log("Chunk uploaded successfully");
+            console.log("Recording uploaded successfully");
           })
           .catch((error) => {
             console.error("There was a problem with the upload:", error);
           });
       };
-      const startNewRecording = () => {
-        if (mediaRecorder && mediaRecorder.state !== "inactive") {
-          mediaRecorder.stop();
-        }
-        mediaRecorder = new MediaRecorder(stream);
-        mediaRecorder.start();
-
-        mediaRecorder.addEventListener("dataavailable", (event) => {
-          if (event.data.size > 0) {
-            sendAudioData(event.data);
-          }
-        });
-      };
 
       mediaRecorder.addEventListener("dataavailable", (event) => {
         if (event.data.size > 0) {
-          sendAudioData(event.data);
+          console.log("Audio data available");
+          audioChunks.push(event.data); // Append chunk to array
+          sendAudioData();
         }
       });
+      console.log("Recording started");
+      mediaRecorder.start(30000); // Start recording and slice audio data every 30 seconds
 
-      mediaRecorder.start();
-      const recordingInterval = setInterval(() => {
-        mediaRecorder.stop();
-        startNewRecording();
-      }, 30000);
-
-      setRecorder({ mediaRecorder, recordingInterval });
+      setRecorder({ mediaRecorder, sendAudioData });
     })
     .catch((error) => {
       console.error("There was a problem with the recording:", error);
@@ -64,12 +52,13 @@ const startRecordingMedia = (session, setRecorder, noteID) => {
 
 const stopRecordingMedia = (recorderObj) => {
   if (recorderObj) {
-    const { mediaRecorder, recordingInterval } = recorderObj;
-    clearInterval(recordingInterval); // Stop the interval
-    console.log("recording almost stopped");
+    const { mediaRecorder, sendAudioData } = recorderObj;
 
     mediaRecorder.stop();
     mediaRecorder.stream.getTracks().forEach((track) => track.stop());
+
+    sendAudioData(); // Send combined audio data when recording is stopped
+
     console.log("Recording stopped");
   }
 };

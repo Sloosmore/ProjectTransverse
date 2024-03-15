@@ -1,6 +1,6 @@
 const { getUserIdFromToken } = require("../../middleware/authDecodeJWS");
 const supabase = require("../../db/supabase");
-const ffmpeg = require("fluent-ffmpeg");
+const { response } = require("express");
 
 const streamAudio = async (req, res) => {
   try {
@@ -10,42 +10,54 @@ const streamAudio = async (req, res) => {
     console.log("noteID", noteID);
 
     // Read segments from note instead of chunks
+
     const { data: segments, error: querySegError } = await supabase
       .from("audio_segment")
-      .select("file_path, sequence_num, duration")
+      .select("file_path, sequence_num, duration, end_time")
       .eq("note_id", noteID)
       .order("sequence_num", { ascending: true });
 
-    if (queryError) {
-      throw queryError;
+    if (querySegError) {
+      throw querySegError;
     }
+
     const filePaths = segments.map((segment) => segment.file_path);
+    console.log("filePaths", filePaths);
 
-    const { segURLData, segURLerror } = await supabase.storage
-      .from("audio_chunks")
-      .createSignedUrls(filePaths, 60 ** 3);
+    let segURLData, segURLerror;
 
-    if (segURLerror) {
-      throw segURLerror;
+    try {
+      const response = await supabase.storage
+        .from("audio_segments")
+        .createSignedUrls(filePaths, 60 ** 3);
+      segURLData = response.data;
+      segURLerror = response.error;
+    } catch (error) {
+      console.error("Error in createSignedUrls:", error);
     }
+
     //send list of segment Urls along with timestamps in an object
     // [{url: "url", time: "time differential"}]
-
-    if (error) {
-      console.error("Error in streamAudio:", error);
-      res.status(500).json({ message: "Internal server error" });
-    }
-
+    console.log("segURLData", segURLData);
     const urls = segURLData.map((url) => url.signedUrl);
+    const durations = segments.map((segment) => segment.duration);
+    const endTimes = segments.map((segment) => segment.end_time);
 
-    console.log("urls", urls);
+    const segData = urls.map((url, index) => {
+      return {
+        url: url,
+        duration: durations[index],
+        end_time: endTimes[index],
+      };
+    });
 
-    res.status(200).json({ message: "Audio streaming successful", urls: urls });
+    res
+      .status(200)
+      .json({ message: "Audio streaming successful", segData: segData });
   } catch (error) {
     console.error("Error in streamAudio:", error);
     res.status(500).json({ message: "Internal server error" });
   }
-  //
 };
 
 module.exports = { streamAudio };

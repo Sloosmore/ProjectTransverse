@@ -22,9 +22,29 @@ async function concatenateAndUpload(urls, file_path) {
   const passThrough = new PassThrough();
   ffmpeg.stdout.pipe(passThrough);
 
+  ffmpeg.stderr.on("data", (data) => {
+    console.error(`FFmpeg error: ${data}`);
+  });
+
+  ffmpeg.on("error", (error) => {
+    console.error(`Error spawning FFmpeg: ${error.message}`);
+    passThrough.end();
+  });
+
+  ffmpeg.on("close", (code) => {
+    if (code !== 0) {
+      console.error(`FFmpeg exited with code ${code}`);
+      passThrough.end();
+    }
+  });
+
   const { data, error } = await supabase.storage
-    .from("audio_segments")
-    .upload(file_path, passThrough);
+    .from("full_audio")
+    .upload(file_path, passThrough, {
+      contentType: "audio/wav",
+      duplex: "half",
+      upsert: true,
+    });
 
   if (error) {
     throw error;
