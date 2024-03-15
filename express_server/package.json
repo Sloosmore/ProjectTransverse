@@ -35,7 +35,6 @@
     "@tiptap/extension-text-align": "^2.2.4",
     "@tiptap/extension-underline": "^2.2.4",
     "@tiptap/html": "^2.2.4",
-    "axios": "^1.6.7",
     "chokidar": "^3.5.3",
     "cors": "^2.8.5",
     "date-fns": "^3.0.0",

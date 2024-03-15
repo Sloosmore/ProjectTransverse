@@ -3,7 +3,6 @@ const supabase = require("../../db/supabase");
 const multer = require("multer");
 const upload = multer();
 const uuid = require("uuid");
-const axios = require("axios");
 
 const uploadAudio = upload.fields([
   { name: "noteID", maxCount: 1 },
