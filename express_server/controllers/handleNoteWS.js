@@ -117,6 +117,22 @@ async function handleWebSocketConnection(ws, request) {
           // send returned records from DB so frontend can set the notes
           console.log(record[0]);
 
+          //create audio_segment
+          const segment_id = uuid.v4();
+          const file_path = `${note_id}/01`;
+          try {
+            const { data: audioSegment, error: audioError } = await supabase
+              .from("audio_segment")
+              .insert({
+                segment_id,
+                note_id,
+                sequence_num: 1,
+                file_path,
+              });
+          } catch (error) {
+            console.error("Error in audio segment creation:", error);
+          }
+
           ws.send(
             JSON.stringify({
               noteRecords: [record[0], ...inactiveRecords],

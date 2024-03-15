@@ -36,6 +36,7 @@ if (process.env.NODE_ENV === "production") {
           target: process.env.VITE_WS_SERVER_URL,
           ws: true,
         },
+        "/audio": process.env.VITE_HTTP_SERVER_URL,
       },
     },
     resolve: {

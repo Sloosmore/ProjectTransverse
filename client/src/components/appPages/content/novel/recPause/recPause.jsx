@@ -31,6 +31,8 @@ const RecPause = ({ pauseProps, localNoteID }) => {
     newNoteField,
     setNoteID,
     submitToastKit,
+    recorder,
+    setRecorder,
   } = pauseProps;
   const { setActiveToast, setToastMessage, activeToast, toastMessage } =
     submitToastKit;
@@ -56,6 +58,8 @@ const RecPause = ({ pauseProps, localNoteID }) => {
     setNoteID,
     localNoteID,
     viewTitle,
+    recorder,
+    setRecorder,
   });
 
   useEffect(() => {

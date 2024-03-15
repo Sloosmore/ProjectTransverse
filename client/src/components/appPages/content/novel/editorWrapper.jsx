@@ -1,11 +1,5 @@
 import NovelEditor from "./editor/editor";
 import {
-  Captions,
-  NotebookPen,
-  SplitSquareHorizontal,
-  ListVideo,
-} from "lucide-react";
-import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -29,6 +23,8 @@ import RecPause from "./recPause/recPause";
 import { useWindowWidth } from "@/hooks/windowWidth";
 import { Separator } from "@/components/ui/separator";
 import EditTitle from "./title";
+import AudioControls from "./playback/streamAudio";
+import TestAudioControls from "./playback/testStreamAudio";
 
 function NoteComponent({
   noteData,
@@ -45,6 +41,7 @@ function NoteComponent({
   const [editKey, setEditKey] = useState(0);
   const [updatedTitle, setUpdatedTitle] = useState();
   const [keyFlag, setKeyFlag] = useState(0);
+  const { mode } = modeKit;
 
   //more conditional rendering
   const windowWidth = useWindowWidth();
@@ -176,6 +173,11 @@ function NoteComponent({
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
+        </div>
+      )}
+      {mode === "CHANGE_TO_ENABLE" && (
+        <div className="h-24 flex-none border-t flex">
+          <TestAudioControls currentNote={currentNote} />
         </div>
       )}
     </div>

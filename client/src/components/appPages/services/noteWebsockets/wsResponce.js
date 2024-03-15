@@ -1,5 +1,6 @@
 import { saveNoteMarkdown } from "../crudApi";
 import { useNavigate } from "react-router-dom";
+import { startRecordingMedia } from "../audio/mediaRecorder";
 //this takes two params note ID and markdown
 
 export const handleOnMessage = (
@@ -9,7 +10,10 @@ export const handleOnMessage = (
   setNotes,
   noteID,
   resetTranscript,
-  navigate
+  navigate,
+  SpeechRecognition,
+  setRecoder,
+  session
 ) => {
   const wsData = JSON.parse(event.data);
   console.log("WebSocket message received:", wsData);
@@ -17,9 +21,14 @@ export const handleOnMessage = (
     //this should happen once during notemode init
     console.log("-------======================================-------");
     //set by uuid
-    setNoteID(wsData.note_id);
+    const noteID = wsData.note_id;
+    //TODO start listing to the note using media recorder
+    //startRecording(noteID, setRecoder);
+    SpeechRecognition.startListening({ continuous: true });
+    startRecordingMedia(session, setRecoder, noteID);
+    setNoteID(noteID);
     setNotes(wsData.noteRecords);
-    navigate(`/app/n/${wsData.note_id}`);
+    navigate(`/app/n/${noteID}`);
   }
   if (wsData.resetState) {
     resetTranscript();

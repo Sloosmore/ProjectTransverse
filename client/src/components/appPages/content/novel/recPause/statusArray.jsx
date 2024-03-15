@@ -1,3 +1,8 @@
+import {
+  startRecordingMedia,
+  stopRecordingMedia,
+} from "@/components/appPages/services/audio/mediaRecorder";
+
 const getRecStatusArray = ({
   onPause,
   onPlay,
@@ -10,25 +15,31 @@ const getRecStatusArray = ({
   SpeechRecognition,
   setNoteID,
   localNoteID,
+  recorder,
+  setRecorder,
 }) => [
   {
     recStatus: "pause",
     leftFunction: () => {
-      onPause(noteID)
-        .then(() => fetchNoteRecords(session, true))
-        .then((data) => {
-          setNotes(data);
-          setMode("default");
-        });
+      console.log("paused");
+      setMode("default");
+      //uploading note data
+      setTimeout(() => {
+        onPause(noteID)
+          .then(() => fetchNoteRecords(session, true))
+          .then((data) => {
+            setNotes(data);
+            //will stop the recording because the mode is default
+          });
+      }, 1500);
     },
     rightFunction: () => {
       onPause(noteID)
         .then(() => fetchNoteRecords(session, true))
         .then((data) => {
           console.log("paused data", data);
-          //this is where the error is
           setNotes(data);
-          setMode("default");
+          setMode("default"); //will stop the recording because the mode is default
         });
       setNoteID(null);
       endNoteToast();
@@ -43,6 +54,8 @@ const getRecStatusArray = ({
         .then(() => fetchNoteRecords(session, true, true))
         .then((data) => setNotes(data));
       setMode("note");
+      startRecordingMedia(session, setRecorder, noteID);
+      console.log("between start and speech");
       SpeechRecognition.startListening({ continuous: true });
     },
     rightFunction: () => {
@@ -60,6 +73,8 @@ const getRecStatusArray = ({
         .then(() => fetchNoteRecords(session, true, true))
         .then((data) => setNotes(data));
       setMode("note");
+      startRecordingMedia(session, setRecorder, localNoteID);
+      console.log("between start and speech");
       SpeechRecognition.startListening({ continuous: true });
     },
     rightFunction: () => {

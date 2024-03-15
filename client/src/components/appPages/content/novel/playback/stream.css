@@ -1,0 +1,34 @@
+.slider {
+  --g: 1px; /* the gap */
+  --l: 5px; /* line thickness */
+  --s: 15px; /* thumb size */
+
+  width: 100%; /* Full width */
+  height: var(--s); /* Needed for Firefox */
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/* Chromium */
+.slider::-webkit-slider-thumb {
+  height: var(--s);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: lightgray; /* Change this to the color you want */
+  border-image: linear-gradient(90deg, var(--c) 50%, #ababab 0) 0 1 /
+    calc(50% - var(--l) / 2) 100vw / 0 calc(100vw + var(--g));
+  -webkit-appearance: none;
+}
+
+/* Firefox */
+.slider::-moz-range-thumb {
+  height: var(--s);
+  width: var(--s);
+  border-radius: 50%;
+  background: lightgray; /* Change this to the color you want */
+  border-image: linear-gradient(90deg, var(--c) 50%, #ababab 0) 0 1 /
+    calc(50% - var(--l) / 2) 100vw / 0 calc(100vw + var(--g));
+  -moz-appearance: none;
+}

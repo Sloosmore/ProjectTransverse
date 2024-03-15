@@ -17,7 +17,7 @@ import SupportedToast from "./support/supportedBrowser";
 import NoAudioSupport from "./support/noSupport";
 import SubmitToast from "./modalsToast/submitToast";
 import { useNavigate } from "react-router-dom";
-import { useDebounce } from "use-debounce";
+import { stopRecordingMedia } from "./services/audio/mediaRecorder";
 
 const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 
@@ -54,6 +54,9 @@ function TransverseApp() {
 
   //this is for note field
   const [newNoteField, setNewNoteField] = useState(false);
+
+  //this is for the media recorder
+  const [recorder, setRecorder] = useState(null);
 
   useEffect(() => {
     localStorage.setItem("noteID", noteID);
@@ -155,7 +158,7 @@ function TransverseApp() {
     listening,
     resetTranscript,
     browserSupportsSpeechRecognition,
-  } = useSpeechRecognition({ commands });
+  } = useSpeechRecognition();
 
   const { sendJsonMessage, readyState } = useWebSocket(WS_URL, {
     onOpen: () => {
@@ -170,7 +173,10 @@ function TransverseApp() {
         setNotes,
         noteID,
         resetTranscript,
-        navigate
+        navigate,
+        SpeechRecognition,
+        setRecorder,
+        session
       );
     },
 
@@ -187,13 +193,22 @@ function TransverseApp() {
   //so timerFailsame does not call UseEffect
   useEffect(() => {
     console.log("listening effect triggered");
+    console.log("mode", mode);
     if (!listening && mode === "note") {
       setTimeout(() => {
-        SpeechRecognition.startListening({ continuous: true });
-        console.log("Restart after trgger");
+        if (mode === "note") {
+          SpeechRecognition.startListening({ continuous: true });
+          console.log("Restart after trgger");
+        } else {
+          return;
+        }
       }, 100);
     }
   }, [listening]);
+
+  useEffect(() => {
+    console.log("updated mode", mode);
+  }, [mode]);
 
   /*
   const [failsafeTimeoutId, setFailsafeTimeoutId] = useState(null);
@@ -232,11 +247,10 @@ function TransverseApp() {
   const [timeoutId, setTimeoutId] = useState(null);
 
   useEffect(() => {
-    if (mode === "default") {
-      setTimeout(() => {
-        SpeechRecognition.stopListening();
-        console.log("Listening stopped");
-      }, 5000);
+    if (mode !== "note") {
+      SpeechRecognition.stopListening();
+      stopRecordingMedia(recorder);
+      console.log("Listening stopped");
     }
   }, [mode]);
 
@@ -248,19 +262,21 @@ function TransverseApp() {
         clearTimeout(timeoutId);
       }
       const backID = setTimeout(() => {
-        console.log("reset and sending to back");
+        if (mode === "note") {
+          console.log("reset and sending to back");
 
-        SpeechRecognition.startListening({ continuous: true });
+          SpeechRecognition.startListening({ continuous: true });
 
-        const title = titleFromID(noteID, noteData);
+          const title = titleFromID(noteID, noteData);
 
-        sendJsonMessage({
-          title,
-          transcript: transcript,
-          init: false,
-          note_id: noteID,
-          token: session.access_token,
-        });
+          sendJsonMessage({
+            title,
+            transcript: transcript,
+            init: false,
+            note_id: noteID,
+            token: session.access_token,
+          });
+        }
       }, 3250);
       setTimeoutId(backID);
     }
@@ -323,6 +339,8 @@ function TransverseApp() {
     newNoteField,
     setNoteID,
     submitToastKit,
+    recorder,
+    setRecorder,
   };
 
   const modeKit = {
