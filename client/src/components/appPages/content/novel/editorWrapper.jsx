@@ -42,6 +42,9 @@ function NoteComponent({
   const [updatedTitle, setUpdatedTitle] = useState();
   const [keyFlag, setKeyFlag] = useState(0);
   const { mode } = modeKit;
+  const [editView, setEditView] = useState(false);
+  const [transcriptView, setTranscriptView] = useState(false);
+  const [slideView, setSlideView] = useState(false);
 
   //more conditional rendering
   const windowWidth = useWindowWidth();

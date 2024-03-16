@@ -1,15 +1,61 @@
-function markdownToTiptap(markdown) {
+const uuid = require("uuid");
+const {
+  diagramRecord2DB,
+  mermaid2SVG,
+  svg2PNG,
+  diagram2Storage,
+} = require("./diagramGen");
+
+const markdownToTiptap = async (markdown, note_id) => {
   const lines = markdown.split("\n");
   const result = [];
   let listStack = [];
   let currentList = null;
   let currentIndentLevel = 0;
 
+  let isMermaidBlock = false;
+  let mermaidContent = "";
+  let mermaidTitle = "diagram";
+
   for (const line of lines) {
     const trimmedLine = line.trim();
     const indentLevel = (line.length - trimmedLine.length) / 2;
 
-    if (trimmedLine.startsWith("### ")) {
+    if (trimmedLine.startsWith("```mermaid")) {
+      isMermaidBlock = true;
+      mermaidContent = "";
+      closeAllLists();
+      continue;
+    } else if (isMermaidBlock && trimmedLine.startsWith("```")) {
+      isMermaidBlock = false;
+      let diagram_id = uuid.v4();
+      const file_path = `${note_id}/${mermaidTitle}_${diagram_id}`;
+
+      const success = await diagramRecord2DB(
+        note_id,
+        diagram_id,
+        file_path,
+        mermaidContent
+      );
+      if (!success) {
+        console.log(`failed uploading ${file_path} `);
+      }
+
+      const svg = await mermaid2SVG(mermaidContent, file_path, diagram_id);
+      const buffer = await svg2PNG(svg);
+      const img_url = await diagram2Storage(file_path, buffer);
+      addDiagram(img_url, mermaidTitle);
+      mermaidTitle = "diagram";
+
+      //push img to tiptap stack
+      continue;
+    } else if (isMermaidBlock) {
+      mermaidContent += line + "\n";
+    }
+    if (trimmedLine.startsWith("#### ")) {
+      closeAllLists();
+      addHeading(trimmedLine.slice(5), 4);
+    } else if (trimmedLine.startsWith("### ")) {
       closeAllLists();
       addHeading(trimmedLine.slice(4), 3);
     } else if (trimmedLine.startsWith("## ")) {
@@ -22,7 +68,7 @@ function markdownToTiptap(markdown) {
       const indentLevel = (line.length - trimmedLine.length) / 2;
       adjustListStack(indentLevel);
       addListItem(trimmedLine.slice(2));
-    } else if (trimmedLine !== "") {
+    } else if (trimmedLine !== "" && !isMermaidBlock) {
       closeAllLists();
       addParagraph(trimmedLine);
     }
@@ -164,8 +210,15 @@ function markdownToTiptap(markdown) {
     });
   }
 
+  function addDiagram(url, title) {
+    result.push({
+      type: "image",
+      attrs: { src: url, title, alt: title },
+    });
+  }
+
   return { type: "doc", content: result };
-}
+};
 
 function combineTiptapObjects(obj1, obj2) {
   // Check if both objects are non-existent
