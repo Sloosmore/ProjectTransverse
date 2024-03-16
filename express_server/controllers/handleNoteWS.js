@@ -271,8 +271,10 @@ async function handleWebSocketConnection(ws, request) {
           //console.log(`AI ${JSON.stringify(res, null, 2)}`);
           const md = res["data"][0]["content"][0]["text"]["value"];
 
+          //extract mermaid code f
+
           //convert markdown into json
-          const mdJSON = await markdownToTiptap(md);
+          const mdJSON = await markdownToTiptap(md, note_id);
 
           //clear active transcript so it can be used later
           const clearTSBool = await clearActiveTS(note_id);
@@ -316,3 +318,6 @@ async function handleWebSocketConnection(ws, request) {
 }
 
 module.exports = { handleWebSocketConnection };
+/*
+Timestamp Inclusion: Right before each new topic heading, it is imperative to include the timestamp from the transcript indicating when this topic started. This should not be part of the title, but directly below it. Format it as 00:00 with the first two zeros being minutes and the second two being seconds. Add hours as a single digit in front of minutes like 0:00:00 as needed. The notes will not be sufficient if each section does not contain a timestamp. IF YOU FIND MULTIPLE TOPICS within a single timestamp span, format everything under one '## topic,' then break into sub-topics inside that topic. Ensure this timestamp accurately reflects the point in the lecture where the new topic begins. Always put time stamps below each top title. 
+*/
