@@ -12,6 +12,9 @@ const {
   upFolderTitleToSB,
   delFolder,
 } = require("../controllers/handleRecords");
+const { upload } = require("../server");
+
+const { uploadSlides } = require("../controllers/handleSlideUpload");
 
 const { pauseAppend, playAppend } = require("../controllers/handlePausePlay");
 
@@ -57,5 +60,7 @@ router.delete("/notes", delNoteSB);
 
 //POST Download MD
 router.post("/notes-download", downloadNote);
+
+router.post("/upload-slides", upload.single("file"), uploadSlides);
 
 module.exports = router;
