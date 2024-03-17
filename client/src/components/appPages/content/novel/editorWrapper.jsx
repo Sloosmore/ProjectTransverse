@@ -16,15 +16,16 @@ const tooltips = [
   { icon: "bi bi-pencil-square", content: "Edit" },
   { icon: "bi bi-card-text", content: "Transcript" },
   { icon: "bi bi-window-split", content: "Split" },
+  { icon: "bi bi-easel2", content: "Slides" },
 ];
 import Playback from "./playback/playback";
 import { useParams } from "react-router-dom";
 import RecPause from "./recPause/recPause";
 import { useWindowWidth } from "@/hooks/windowWidth";
 import { Separator } from "@/components/ui/separator";
-import EditTitle from "./title";
-import AudioControls from "./playback/streamAudio";
+import EditTitle from "./editor/title";
 import TestAudioControls from "./playback/testStreamAudio";
+import Slides from "./slides";
 
 function NoteComponent({
   noteData,
@@ -176,6 +177,11 @@ function NoteComponent({
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
+        </div>
+      )}
+      {editorState === "Slides" && (
+        <div className="overflow-auto flex-grow min-h-0">
+          <Slides currentNote={currentNote} />
         </div>
       )}
       {mode === "CHANGE_TO_ENABLE" && (
