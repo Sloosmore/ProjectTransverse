@@ -145,6 +145,7 @@ async function handleWebSocketConnection(ws, request) {
       } else if (ts) {
         //get the id of the note which will only be passed when note is Activated
         const note_id = data.note_id;
+        console.log("note_id in ws", note_id);
 
         //this is what needs to be appended to the full TS and thrown on to the active to see if it needs to be appended
         //throw on a date if it has a x charecter count

@@ -1,4 +1,5 @@
-export const onPause = async (id) => {
+export const onPause = async (id, date) => {
+  console.log("onPause", id, date);
   //turn off the mike
   const response = await fetch(
     `${import.meta.env.VITE_BASE_URL}/records-api/notes-pause`,
@@ -7,7 +8,7 @@ export const onPause = async (id) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id }),
+      body: JSON.stringify({ id, date }),
     }
   );
   const data = await response.json();

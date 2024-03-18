@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 
-function Slides({ currentNote }) {
-  const [activeUrl, setActiveUrl] = useState(currentNote?.slide_url || "");
+function Slides({ currentNote, activeUrl, setActiveUrl }) {
   const [uploadedFile, setUploadedFile] = useState("");
 
   const uploadSlides = async (file, note_id) => {

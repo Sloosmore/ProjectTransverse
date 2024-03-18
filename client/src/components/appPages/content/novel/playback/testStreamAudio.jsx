@@ -37,7 +37,6 @@ const TestAudioControls = ({ currentNote, mode }) => {
             preload: true,
             html5: true,
             buffer: true,
-            onload: () => console.log(`Audio file ${index + 1} loaded`), // Log when each audio file is loaded
           })
       );
       console.log("sounds", sounds);

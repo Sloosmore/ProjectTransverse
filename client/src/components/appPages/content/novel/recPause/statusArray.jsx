@@ -21,11 +21,11 @@ const getRecStatusArray = ({
   {
     recStatus: "pause",
     leftFunction: () => {
-      console.log("paused");
+      const date = new Date();
       setMode("default");
       //uploading note data
       setTimeout(() => {
-        onPause(noteID)
+        onPause(noteID, date)
           .then(() => fetchNoteRecords(session, true))
           .then((data) => {
             setNotes(data);

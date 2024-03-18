@@ -15,7 +15,6 @@ const markdownToTiptap = async (markdown, note_id) => {
 
   let isMermaidBlock = false;
   let mermaidContent = "";
-  let mermaidTitle = "diagram";
 
   for (const line of lines) {
     const trimmedLine = line.trim();
@@ -29,7 +28,8 @@ const markdownToTiptap = async (markdown, note_id) => {
     } else if (isMermaidBlock && trimmedLine.startsWith("```")) {
       isMermaidBlock = false;
       let diagram_id = uuid.v4();
-      const file_path = `${note_id}/${mermaidTitle}_${diagram_id}`;
+      console.log("note_id", note_id);
+      const file_path = `${note_id}/${diagram_id}`;
 
       const success = await diagramRecord2DB(
         note_id,
@@ -44,8 +44,7 @@ const markdownToTiptap = async (markdown, note_id) => {
       const svg = await mermaid2SVG(mermaidContent, file_path, diagram_id);
       const buffer = await svg2PNG(svg);
       const img_url = await diagram2Storage(file_path, buffer);
-      addDiagram(img_url, mermaidTitle);
-      mermaidTitle = "diagram";
+      addDiagram(img_url, "description");
 
       //push img to tiptap stack
       continue;

@@ -14,7 +14,8 @@ const readUserRecordsFromNoteID = async (note_id) => {
 
 const pauseAppend = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id, date } = req.body;
+    console.log("date1", new Date());
 
     // read note to get pause timestamps and update pause timestamps
     const { data: note, error } = await supabase
@@ -28,7 +29,9 @@ const pauseAppend = async (req, res) => {
     if (!note) {
       return res.status(404).json({ message: "Note not found" });
     }
-    const newDate = new Date();
+    console.log("date sent over", date);
+    const newDate = date || new Date();
+    console.log("date2", new Date());
     const pauseArray = [...note.pause_timestamps, newDate];
 
     const { error: updateError } = await supabase
@@ -67,6 +70,14 @@ const pauseAppend = async (req, res) => {
         totTimePassed += timeDiferential;
       }
     }
+
+    // if there is only one recording interval, subtract 1100ms from the total time passed to account for the time it takes to process the pause
+    if (recording_intervals === 1) {
+      newTimeDifference = newTimeDifference - 1100;
+    }
+
+    //this is the time difference between the first play and the last pause
+    totTimePassed = totTimePassed - 1100;
 
     console.log("totTimePassed", totTimePassed);
 

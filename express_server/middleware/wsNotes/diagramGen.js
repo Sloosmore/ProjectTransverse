@@ -5,7 +5,7 @@ const puppeteer = require("puppeteer");
 const diagramRecord2DB = async (note_id, diagram_id, file_path, mermaid_MD) => {
   try {
     const { data: record, error: insertError } = await supabase
-      .from("note")
+      .from("diagram")
       .insert({
         note_id,
         diagram_id,
@@ -55,6 +55,7 @@ const svg2PNG = async (svg) => {
 
 const diagram2Storage = async (file_path, buffer) => {
   try {
+    console.log("file_path", file_path);
     const { error: uploadError } = await supabase.storage
       .from("diagrams")
       .upload(file_path, buffer, {

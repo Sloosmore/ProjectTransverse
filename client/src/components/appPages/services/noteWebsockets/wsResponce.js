@@ -22,6 +22,7 @@ export const handleOnMessage = (
     console.log("-------======================================-------");
     //set by uuid
     const noteID = wsData.note_id;
+    console.log("returned noteID", noteID);
     //TODO start listing to the note using media recorder
     //startRecording(noteID, setRecoder);
     SpeechRecognition.startListening({ continuous: true });

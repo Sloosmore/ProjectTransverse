@@ -149,7 +149,9 @@ function SubmitNewNote({ controlProps, noteData }) {
               <div className="h-full">
                 <button
                   className=" w-10 h-10 flex-shrink-0 bottom-0 right-0 rounded-lg border border-gray-500 bg-gray-500 text-white transition-colors disabled:text-gray-400 disabled:opacity-10 dark:border-white my-auto me-2"
-                  onClick={() => handleNoteSubmit()}
+                  onClick={() => {
+                    handleNoteSubmit();
+                  }}
                 >
                   <i
                     className="bi bi-arrow-up-short"
