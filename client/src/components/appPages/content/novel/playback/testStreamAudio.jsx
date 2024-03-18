@@ -9,8 +9,8 @@ import { Howl } from "howler";
 const TestAudioControls = ({ currentNote, mode }) => {
   const { session } = useAuth();
   const [playing, setPlaying] = useState(false);
-  const [globalSeek, setglobalSeek] = useState(0.0);
   const [duration, setDuration] = useState(0.0);
+  const [globalSeek, setglobalSeek] = useState(0.0);
 
   //loaded audio
   const [audio, setAudio] = useState([]);
@@ -37,6 +37,19 @@ const TestAudioControls = ({ currentNote, mode }) => {
             preload: true,
             html5: true,
             buffer: true,
+            onload: function () {
+              let newSeek = globalSeek;
+              if (index !== 0) {
+                newSeek = globalSeek - segData[index - 1].end_time / 1000;
+              }
+              console.log("newSeek", newSeek);
+              this.seek(newSeek);
+            },
+            onend: function () {
+              if (index === sounds.length - 1) {
+                setPlaying(false);
+              }
+            },
           })
       );
       console.log("sounds", sounds);
@@ -91,10 +104,58 @@ const TestAudioControls = ({ currentNote, mode }) => {
       if (audio[currentSoundIndex].playing()) {
         audio[currentSoundIndex].pause();
       } else {
+        const audioStart =
+          (audioData[currentSoundIndex].end_time -
+            audioData[currentSoundIndex].duration) /
+          1000;
+        audio[currentSoundIndex].seek(globalSeek - audioStart);
         audio[currentSoundIndex].play();
       }
     }
     setPlaying(!playing);
+  };
+
+  const skipToNext = () => {
+    if (currentSoundIndex < audio.length - 1) {
+      const wasPlaying = audio[currentSoundIndex].playing();
+      audio[currentSoundIndex].pause();
+      setglobalSeek(audioData[currentSoundIndex].end_time / 1000);
+      setCurrentSoundIndex(currentSoundIndex + 1);
+      if (wasPlaying) {
+        audio[currentSoundIndex + 1].play();
+      }
+    }
+  };
+
+  const skipToPrevious = () => {
+    const wasPlaying = audio[currentSoundIndex].playing();
+
+    if (currentSoundIndex > 0) {
+      const threshold = audioData[currentSoundIndex - 1].end_time / 1000;
+      if (globalSeek > threshold + 3) {
+        audio[currentSoundIndex].pause();
+        audio[currentSoundIndex].seek(0);
+        setglobalSeek(threshold);
+      } else {
+        audio[currentSoundIndex].pause();
+        const newSeek =
+          (audioData[currentSoundIndex - 1].end_time -
+            audioData[currentSoundIndex - 1].duration) /
+          1000;
+        setCurrentSoundIndex(currentSoundIndex - 1);
+        setglobalSeek(newSeek);
+      }
+      if (wasPlaying) {
+        audio[currentSoundIndex - 1].play();
+      }
+    } else {
+      audio[currentSoundIndex].pause();
+      setglobalSeek(0);
+      setCurrentSoundIndex(0);
+      if (wasPlaying) {
+        audio[0].play();
+      }
+    }
   };
 
   useEffect(() => {
@@ -149,6 +210,14 @@ const TestAudioControls = ({ currentNote, mode }) => {
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
+  const benchTime = () => {
+    if (Math.ceil(globalSeek) === Math.floor(duration)) {
+      return duration;
+    } else {
+      return globalSeek;
+    }
+  };
+
   return (
     <div className="w-full flex flex-col">
       <div className="w-full flex flex-col">
@@ -172,18 +241,13 @@ const TestAudioControls = ({ currentNote, mode }) => {
               style={{ fontSize: "1.1rem", marginTop: "10px" }}
             ></i>
           </button>
-          {/*
 
-          <button>
-          If in the middle of a section, go to the start of the section (set index)
-          If at the start of a section, go to the start of the previous section (set index-1)
-         
+          <button onClick={() => skipToPrevious()}>
             <i
               className="bi bi-skip-start-fill"
               style={{ fontSize: "1.25rem" }}
             ></i>
           </button>
-           */}
           <button onClick={() => handleToggle()}>
             <div className="w-8 h-8 rounded-full flex justify-center items-center bg-gray-500 hover:bg-gray-400">
               {playing ? (
@@ -199,17 +263,12 @@ const TestAudioControls = ({ currentNote, mode }) => {
               )}
             </div>
           </button>
-          {/* 
-          <button>
-      
-          Set index+1
-      
+          <button onClick={() => skipToNext()}>
             <i
               className="bi bi-skip-end-fill"
               style={{ fontSize: "1.25rem" }}
             ></i>{" "}
           </button>
-              */}
           <button
             className="mt-1"
             onClick={() => {
@@ -227,7 +286,7 @@ const TestAudioControls = ({ currentNote, mode }) => {
 
         <div className="w-full flex-row flex justify-center mt-2.5 slider-container items-center">
           <div className="playback-bar__progress-time-elapsed">
-            {formatTime(globalSeek)}
+            {formatTime(benchTime())}
           </div>
           <div className=" md:w-4/12 w-5/12 my-auto mx-2 flex">
             <input
@@ -257,71 +316,3 @@ const TestAudioControls = ({ currentNote, mode }) => {
 };
 
 export default TestAudioControls;
-{
-  /*
-          <p>{loaded ? "Loaded" : "Loading"}</p>
-
-<div className="rate">
-  <label>
-    Rate:
-    <span className="slider-container">
-      <input
-        type="range"
-        min="0.1"
-        max="3"
-        step=".01"
-        value={rate}
-        onChange={handleRate}
-      />
-    </span>
-    {rate.toFixed(2)}
-  </label>
-</div>;
-<button onClick={handleStop}>Stop</button>;
-
-  const handleStop = () => {
-    playerRef.current.stop();
-    setPlaying(false);
-    renderSeekPos();
-  };*/
-  /*
-  useEffect(() => {
-    if (playing && Array.isArray(audioUrls) && audioUrls.length > 0) {
-      // Calculate the new section based on the current seek position
-      const newSection = audioUrls.findIndex((u) => seek < u.time);
-
-      // Set the current section and chunk if the section has changed
-      if (newSection !== section) {
-        setSection(newSection);
-        setChunk(0); // Reset chunk to the start of the new section
-
-        // Preload the next section if it exists and hasn't been preloaded
-        if (
-          newSection + 1 < audioUrls.length &&
-          !audioUrls[newSection + 1].howl
-        ) {
-          const nextUrls = audioUrls[newSection + 1].urls;
-          // Assuming we preload the first URL of the next section
-          audioUrls[newSection + 1].howl = new Howl({
-            src: [nextUrls[0]],
-            preload: true,
-          });
-        }
-      }
-
-      // Calculate the new chunk within the current section
-      const pastSectionTime =
-        newSection === 0 ? 0 : audioUrls[newSection - 1].time;
-      const newChunk =
-        newSection === section
-          ? audioUrls[section].urls.findIndex(
-              (url, index) => seek < pastSectionTime + (index + 1) * 30
-            )
-          : 0;
-
-      if (newChunk !== chunk) {
-        setChunk(newChunk);
-      }
-    }
-  }, [seek, audioUrls, section, chunk]);*/
-}

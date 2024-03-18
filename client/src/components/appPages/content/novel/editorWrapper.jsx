@@ -97,14 +97,6 @@ function NoteComponent({
     setEditKey(editKey + 1);
   }, [keyFlag]);
 
-  /*
-  useEffect(() => {
-    if (keyFlag) {
-      console.log("content", content);
-    }
-  }, [content]);
-  */
-
   const contentKit = {
     content,
     setContent,
@@ -314,7 +306,7 @@ function NoteComponent({
 
       {mode === "default" && audioView && (
         <div className="h-24 flex-none border-t flex">
-          <TestAudioControls currentNote={currentNote} />
+          <TestAudioControls />
         </div>
       )}
     </div>
