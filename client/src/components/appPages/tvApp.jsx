@@ -2,7 +2,6 @@ import "regenerator-runtime";
 import { useState, useEffect } from "react";
 import useWebSocket from "react-use-websocket";
 import "./tvApp.css";
-import Sidebar from "./sidebar/sidebar";
 import { AppRoutes } from "./content/routes";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { handleSendLLM } from "./services/setNotepref";

@@ -25,7 +25,7 @@ const TestAudioControls = ({ currentNote, mode }) => {
 
   // Fetch the audio urls and set states
   useEffect(() => {
-    if (currentNote.note_id === undefined) return;
+    if (currentNote?.note_id === undefined) return;
     const fetchAudio = async () => {
       const segData = await fetchURLs(session, currentNote.note_id);
       const urls = segData.map((seg) => seg.url);
@@ -286,7 +286,7 @@ const TestAudioControls = ({ currentNote, mode }) => {
 
         <div className="w-full flex-row flex justify-center mt-2.5 slider-container items-center">
           <div className="playback-bar__progress-time-elapsed">
-            {formatTime(benchTime())}
+            {formatTime(benchTime(globalSeek))}
           </div>
           <div className=" md:w-4/12 w-5/12 my-auto mx-2 flex">
             <input
@@ -307,7 +307,7 @@ const TestAudioControls = ({ currentNote, mode }) => {
             ></div>
           </div>
           <div className="playback-bar__duration">
-            {formatTime(duration) || "00:00"}
+            {formatTime(duration) || "00"}
           </div>
         </div>
       </div>

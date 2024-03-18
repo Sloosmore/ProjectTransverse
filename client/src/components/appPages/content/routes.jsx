@@ -1,10 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-import Noteroom from "./notes/noteView";
-import Home from "./panel";
 import Files from "./files/files";
 import BottomConent from "./bottom/bottomContent";
 import AppNav from "./top/appNav";
-import NovelEditor from "./novel/editor/editor";
 import NoteComponent from "./novel/editorWrapper";
 import FolderView from "./files/folderView/folderView";
 //import Editor from "./tiptapNotes/editor";
@@ -28,18 +25,6 @@ export const AppRoutes = ({
       noteData={noteData}
     />
     <Routes>
-      <Route
-        path="/classic/:noteId"
-        element={
-          <Noteroom
-            noteData={noteData}
-            transcript={transcript}
-            modeKit={modeKit}
-            annotatingKit={annotatingKit}
-            pauseProps={pauseProps}
-          />
-        }
-      />
       <Route
         path="n/:noteId"
         element={
