@@ -306,7 +306,7 @@ function NoteComponent({
 
       {mode === "default" && audioView && (
         <div className="h-24 flex-none border-t flex">
-          <TestAudioControls />
+          <TestAudioControls currentNote={currentNote} />
         </div>
       )}
     </div>
