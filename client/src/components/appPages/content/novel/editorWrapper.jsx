@@ -21,8 +21,8 @@ import RecPause from "./recPause/recPause";
 import { useWindowWidth } from "@/hooks/windowWidth";
 import { Separator } from "@/components/ui/separator";
 import EditTitle from "./editor/title";
-import TestAudioControls from "./playback/testStreamAudio";
 import Slides from "./slides";
+import AudioControls from "./playback/streamAudio";
 
 function NoteComponent({
   noteData,
@@ -306,7 +306,7 @@ function NoteComponent({
 
       {mode === "default" && audioView && (
         <div className="h-24 flex-none border-t flex">
-          <TestAudioControls currentNote={currentNote} />
+          <AudioControls currentNote={currentNote} />
         </div>
       )}
     </div>

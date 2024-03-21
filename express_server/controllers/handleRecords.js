@@ -1,5 +1,7 @@
 const pool = require("../db/db");
-const { deactivateRecords } = require("../middleware/wsNotes/deactivateNotes");
+const {
+  deactivateRecords,
+} = require("../middleware/wsNotes/databaseOps/deactivateNotes");
 const supabase = require("../db/supabase");
 const { getUserIdFromToken } = require("../middleware/authDecodeJWS");
 
