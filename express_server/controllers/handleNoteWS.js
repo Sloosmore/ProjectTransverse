@@ -1,20 +1,30 @@
 const uuid = require("uuid");
 const { queryAI } = require("../middleware/wsNotes/gptMD");
 const pool = require("../db/db");
-const { appendFullTranscript } = require("../middleware/wsNotes/appendFullTs");
+const {
+  appendFullTranscript,
+} = require("../middleware/wsNotes/databaseOps/appendFullTs");
 const fsPromises = require("fs").promises;
 const path = require("path");
 const {
   fetchActiveTs,
   clearActiveTS,
-} = require("../middleware/wsNotes/activeTs");
-const { deactivateRecords } = require("../middleware/wsNotes/deactivateNotes");
+} = require("../middleware/wsNotes/databaseOps/activeTs");
+const {
+  deactivateRecords,
+} = require("../middleware/wsNotes/databaseOps/deactivateNotes");
 const supabase = require("../db/supabase");
 const { getUserIdFromToken } = require("../middleware/authDecodeJWS");
 const {
   markdownToTiptap,
   combineTiptapObjects,
-} = require("../middleware/wsNotes/md2JSON");
+} = require("../middleware/wsNotes/compileGPTOutput/md2JSON");
+
+const {
+  insertNewNoteRecord,
+  insertNewAudioSegment,
+} = require("../middleware/wsNotes/insertNewNote");
+const { formatElapsedTime } = require("../middleware/wsNotes/formating");
 
 async function handleWebSocketConnection(ws, request) {
   const connectMessage = {
@@ -33,115 +43,33 @@ async function handleWebSocketConnection(ws, request) {
         return;
       }
 
-      const title = data.title;
       const ts = data.transcript;
       const justActivated = data.init;
       //console.log(`this is the incomming transcript ${ts}`);
 
       //this is loosmore's user ID
       const token = data.token;
-      const user =
-        getUserIdFromToken(token) || "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
+      const user = getUserIdFromToken(token);
 
       if (justActivated) {
+        //extenal data: data.folder_id, user, title,
         console.log("data", data);
-
         const user_id = user;
-
-        const note_id = uuid.v4();
-        const status = "active";
-        const is_deleted = false;
-        const thread_id = "";
-
-        const active_transcript = "";
-        const full_transcript = "";
-        const active_markdown = "";
-        const full_markdown = "";
-        const visible = "true";
-        //this may not be needed... but need to make sure that this happens before play does
-        const play_timestamps = [new Date()];
-        const pause_timestamps = [];
-        const json_content = "";
+        const title = data.title;
         const folder_id = data.folder_id;
 
-        const newRecQuery =
-          "INSERT INTO note(note_id, user_id, title, status, date_created, date_updated, is_deleted, active_transcript, full_transcript, active_markdown, full_markdown, thread_id, visible, play_timestamps, pause_timestamps) VALUES($1, $2, $3, $4, NOW(), NOW(), $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *";
-        const newRec = [
-          note_id,
-          user_id,
-          title,
-          status,
-          is_deleted,
-          active_transcript,
-          full_transcript,
-          active_markdown,
-          full_markdown,
-          thread_id,
-          visible,
-          play_timestamps,
-          pause_timestamps,
-        ];
+        const inactiveRecords = await deactivateRecords(user);
+        const record = await insertNewNoteRecord(user_id, title, folder_id);
+        console.log(record[0]);
+        const note_id = record[0].note_id;
+        const audioSegment = await insertNewAudioSegment(note_id);
 
-        try {
-          //deactivate records
-          //grabs all the notes and not just the ones that are deleted
-          const inactiveRecords = await deactivateRecords(user);
-
-          //send new record
-          const { data: record, error: insertError } = await supabase
-            .from("note")
-            .insert({
-              note_id,
-              user_id,
-              title,
-              status,
-              date_created: new Date(),
-              date_updated: new Date(),
-              is_deleted,
-              active_transcript,
-              full_transcript,
-              full_markdown,
-              thread_id,
-              visible,
-              play_timestamps,
-              pause_timestamps,
-              json_content,
-              folder_id,
-            })
-            .select();
-
-          if (insertError) {
-            throw insertError;
-          }
-
-          // send returned records from DB so frontend can set the notes
-          console.log(record[0]);
-
-          //create audio_segment
-          const segment_id = uuid.v4();
-          const file_path = `${note_id}/01`;
-          try {
-            const { data: audioSegment, error: audioError } = await supabase
-              .from("audio_segment")
-              .insert({
-                segment_id,
-                note_id,
-                sequence_num: 1,
-                file_path,
-              });
-          } catch (error) {
-            console.error("Error in audio segment creation:", error);
-          }
-
-          ws.send(
-            JSON.stringify({
-              noteRecords: [record[0], ...inactiveRecords],
-              note_id,
-            })
-          );
-        } catch (err) {
-          console.error(`the error is happening at record ${err}`);
-        }
+        ws.send(
+          JSON.stringify({
+            noteRecords: [record[0], ...inactiveRecords],
+            note_id,
+          })
+        );
       } else if (ts) {
         //get the id of the note which will only be passed when note is Activated
         const note_id = data.note_id;
@@ -209,24 +137,7 @@ async function handleWebSocketConnection(ws, request) {
             console.log(totTime);
           }
 
-          let hours = Math.floor(totTime / 3600000);
-          let minutes = Math.floor((totTime % 3600000) / 60000);
-          let seconds = Math.floor(((totTime % 3600000) % 60000) / 1000);
-
-          // Pad the minutes and seconds with leading zeros, if necessary
-          minutes = minutes.toString().padStart(2, "0");
-          seconds = seconds.toString().padStart(2, "0");
-
-          if (seconds % 10 === 0) {
-            seconds = seconds.padEnd(2, "0");
-          }
-
-          let formattedTime = `${minutes}:${seconds}`;
-          // If hours is not zero, prepend it to the formatted time
-          if (hours > 0) {
-            hours = hours.toString().padStart(2, "0");
-            formattedTime = `${hours}:${formattedTime}`;
-          }
+          const formattedTime = formatElapsedTime(totTime);
 
           incomingTs = `${ts} \n\n ${formattedTime}\n`;
         } else {
@@ -261,18 +172,14 @@ async function handleWebSocketConnection(ws, request) {
           throw error;
         }
 
+        console.log("frequncy", frequency);
         if (activeTs && activeTs.length >= frequency) {
           //in theroy the thread ID should be passed into this function
+          const md = await queryAI(note_id, activeTs, frequency);
 
-          const res = await queryAI(note_id, activeTs);
-
-          //be able to look at outputs without clouding consol
-          const debugPath = path.join(__dirname, "../logs/debuglog.txt");
-          await fsPromises.appendFile(debugPath, JSON.stringify(res, null, 2));
+          //const debugPath = path.join(__dirname, "../logs/debuglog.txt");
+          //await fsPromises.appendFile(debugPath, JSON.stringify(res, null, 2));
           //console.log(`AI ${JSON.stringify(res, null, 2)}`);
-          const md = res["data"][0]["content"][0]["text"]["value"];
-
-          //extract mermaid code f
 
           //convert markdown into json
           const mdJSON = await markdownToTiptap(md, note_id);
@@ -288,6 +195,8 @@ async function handleWebSocketConnection(ws, request) {
           if (error) {
             throw error;
           }
+
+          console.log("fullMdResult", fullMdResult);
 
           let fullMd = fullMdResult[0].full_markdown;
           fullMd += "\n" + md;
