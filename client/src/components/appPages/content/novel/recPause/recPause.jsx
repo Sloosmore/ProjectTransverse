@@ -103,7 +103,13 @@ const RecPause = ({ pauseProps, localNoteID, diagram_on, note_on }) => {
   waveform.register();
 
   // Default values shown
+  useEffect(() => {
+    const doAsyncOperation = async () => {
+      await toggleGen(localNoteID, noteOn, diagramOn);
+    };
 
+    doAsyncOperation();
+  }, [noteOn, diagramOn]);
   return (
     <TooltipProvider>
       <Tooltip>
@@ -160,7 +166,6 @@ const RecPause = ({ pauseProps, localNoteID, diagram_on, note_on }) => {
           <button
             onClick={async () => {
               setNoteOn((prev) => !prev);
-              await toggleGen(localNoteID, !note_on, diagram_on);
             }}
           >
             {noteOn ? (
@@ -176,9 +181,7 @@ const RecPause = ({ pauseProps, localNoteID, diagram_on, note_on }) => {
           </button>
           <button
             onClick={async () => {
-              setDiagramOn((prev) => !prev);
-
-              await toggleGen(localNoteID, note_on, !diagram_on);
+              await setDiagramOn((prev) => !prev);
             }}
           >
             {diagramOn ? (
