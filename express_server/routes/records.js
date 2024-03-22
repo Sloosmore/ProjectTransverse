@@ -11,14 +11,19 @@ const {
   postFolderToSB,
   upFolderTitleToSB,
   delFolder,
-} = require("../controllers/handleRecords");
+} = require("../controllers/noteCRUD/handleRecords");
 const { upload } = require("../server");
 
-const { uploadSlides } = require("../controllers/handleSlideUpload");
+const { uploadSlides } = require("../controllers/noteCRUD/handleSlideUpload");
 
-const { pauseAppend, playAppend } = require("../controllers/handlePausePlay");
+const {
+  pauseAppend,
+  playAppend,
+} = require("../controllers/noteCRUD/handlePausePlay");
 
 const { downloadNote } = require("../controllers/handleNoteDownload");
+
+const { toggleGeneration } = require("../controllers/noteCRUD/handleGenOnOff");
 
 //router.get("/tasks", sendTasks);
 
@@ -46,8 +51,11 @@ router.put("/notes-deactivate", upInactiveStatus);
 //UPDATE Title
 router.put("/notes-title", updateTitleToSB);
 
-//UPDATE Vis
+//UPDATE Vis (do we need this?)
 router.put("/notes-visiblity", updateVisibilitySB);
+
+//turn on and off note generation
+router.put("/notes-toggleGen", toggleGeneration);
 
 //UPDATE Play
 router.put("/notes-play", playAppend);

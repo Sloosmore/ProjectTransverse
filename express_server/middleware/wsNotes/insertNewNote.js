@@ -9,7 +9,6 @@ const insertNewNoteRecord = async (user_id, title, folder_id) => {
 
   const active_transcript = "";
   const full_transcript = "";
-  const active_markdown = "";
   const full_markdown = "";
   const visible = "true";
   //this may not be needed... but need to make sure that this happens before play does
@@ -17,6 +16,8 @@ const insertNewNoteRecord = async (user_id, title, folder_id) => {
   const pause_timestamps = [];
   const json_content = "";
   const diagram_message_count = 0;
+  const note_gen_on = false;
+  const diagram_gen_on = false;
 
   try {
     //deactivate records
@@ -43,6 +44,8 @@ const insertNewNoteRecord = async (user_id, title, folder_id) => {
         json_content,
         folder_id,
         diagram_message_count,
+        note_gen_on,
+        diagram_gen_on,
       })
       .select();
 

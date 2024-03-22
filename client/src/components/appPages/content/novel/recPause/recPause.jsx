@@ -11,13 +11,20 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { waveform } from "ldrs";
+import { toggleGen } from "@/components/appPages/services/toggleGen.js";
+import { Separator } from "@/components/ui/separator";
+import "./recPause.css";
+import CardTextSvg from "./svg/card-text.jsx";
+import CardPicSvg from "./svg/card-pic.jsx";
 
 // Default values shown
 
-const RecPause = ({ pauseProps, localNoteID }) => {
+const RecPause = ({ pauseProps, localNoteID, diagram_on, note_on }) => {
   const [recStatus, setRecStatus] = useState();
   const [viewTitle, setViewTitle] = useState();
   const [recStatusObject, setRecStatusObject] = useState();
+  const [diagramOn, setDiagramOn] = useState(diagram_on);
+  const [noteOn, setNoteOn] = useState(note_on);
 
   const { session } = useAuth();
   const {
@@ -67,6 +74,11 @@ const RecPause = ({ pauseProps, localNoteID }) => {
   }, [noteID, noteData]);
 
   useEffect(() => {
+    setDiagramOn(diagram_on);
+    setNoteOn(note_on);
+  }, [diagram_on, note_on, localNoteID]);
+
+  useEffect(() => {
     console.log("typeof noteID:", typeof noteID);
     if (mode === "note" && noteID === localNoteID) {
       setRecStatus("pause");
@@ -90,13 +102,15 @@ const RecPause = ({ pauseProps, localNoteID }) => {
   }, [recStatus]);
   waveform.register();
 
+  // Default values shown
+
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
           <div className="flex me-2.5 align-middle ">
             {recStatus === "pause" && (
-              <div className="me-2 mb-.5 mt-1">
+              <div className="me-2 mb-.5 mt-1 ">
                 <l-waveform
                   size="15"
                   stroke="2"
@@ -139,6 +153,49 @@ const RecPause = ({ pauseProps, localNoteID }) => {
           </TooltipContent>
         )}
       </Tooltip>
+      {mode === "note" && (
+        <>
+          <Separator orientation="vertical" />
+
+          <button
+            onClick={async () => {
+              setNoteOn((prev) => !prev);
+              await toggleGen(localNoteID, !note_on, diagram_on);
+            }}
+          >
+            {noteOn ? (
+              <div className="hover:bg-gray-100 rounded p-2.5 text-gray-500">
+                <CardTextSvg />
+              </div>
+            ) : (
+              <i
+                className={`bi bi-card-text hover:bg-gray-100 rounded p-2.5`}
+                style={{ fontSize: "1.1rem" }}
+              ></i>
+            )}
+          </button>
+          <button
+            onClick={async () => {
+              setDiagramOn((prev) => !prev);
+
+              await toggleGen(localNoteID, note_on, !diagram_on);
+            }}
+          >
+            {diagramOn ? (
+              <div className="hover:bg-gray-100 rounded p-2.5 text-gray-500">
+                <CardPicSvg />
+              </div>
+            ) : (
+              <i
+                className={`bi bi-image hover:bg-gray-100 rounded p-2.5 ${
+                  diagramOn && `text-gray-500 animate-colorChange`
+                }`}
+                style={{ fontSize: "1.1rem" }}
+              ></i>
+            )}
+          </button>
+        </>
+      )}
     </TooltipProvider>
   );
 };

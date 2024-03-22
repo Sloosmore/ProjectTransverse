@@ -33,10 +33,20 @@ export const fetchLLMpref = (
   })
     .then((response) => response.json())
     .then((body) => {
+      const preferences = {
+        note: body.instructions,
+        diagram: body.diagram_instructions,
+      };
+
+      const activeNum = {
+        note: body.pref_num,
+        diagram: body.diagram_pref_numb,
+      };
+
       setFrequency(body.frequency);
       console.log(body.instructions);
-      setPreferences(body.instructions);
-      setActiveNum(body.pref_num);
+      setPreferences(preferences);
+      setActiveNum(activeNum);
     })
     .catch((error) => {
       console.error("Error:", error);

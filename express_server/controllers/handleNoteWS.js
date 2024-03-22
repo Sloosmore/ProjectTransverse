@@ -182,34 +182,37 @@ async function handleWebSocketConnection(ws, request) {
           //console.log(`AI ${JSON.stringify(res, null, 2)}`);
 
           //convert markdown into json
-          const mdJSON = await markdownToTiptap(md, note_id);
+          //md will be null if the AI call fails or are turned off
+          if (md) {
+            const mdJSON = await markdownToTiptap(md, note_id);
 
-          //clear active transcript so it can be used later
-          const clearTSBool = await clearActiveTS(note_id);
+            //clear active transcript so it can be used later
+            const clearTSBool = await clearActiveTS(note_id);
 
-          const { data: fullMdResult, error } = await supabase
-            .from("note")
-            .select("full_markdown, json_content")
-            .eq("note_id", note_id);
+            const { data: fullMdResult, error } = await supabase
+              .from("note")
+              .select("full_markdown, json_content")
+              .eq("note_id", note_id);
 
-          if (error) {
-            throw error;
+            if (error) {
+              throw error;
+            }
+
+            console.log("fullMdResult", fullMdResult);
+
+            let fullMd = fullMdResult[0].full_markdown;
+            fullMd += "\n" + md;
+
+            const jsonContent = fullMdResult[0].json_content;
+            const combinedJSON = combineTiptapObjects(jsonContent, mdJSON);
+            console.log(`combinedJSON`, combinedJSON);
+            ws.send(
+              JSON.stringify({
+                md: fullMd,
+                json_content: combinedJSON,
+              })
+            );
           }
-
-          console.log("fullMdResult", fullMdResult);
-
-          let fullMd = fullMdResult[0].full_markdown;
-          fullMd += "\n" + md;
-
-          const jsonContent = fullMdResult[0].json_content;
-          const combinedJSON = combineTiptapObjects(jsonContent, mdJSON);
-          console.log(`combinedJSON`, combinedJSON);
-          ws.send(
-            JSON.stringify({
-              md: fullMd,
-              json_content: combinedJSON,
-            })
-          );
         } else if (activeTs) {
           console.log(
             `Pooling TS => ${

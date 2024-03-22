@@ -54,7 +54,7 @@ function NoteComponent({
       variable: editView,
     },
     {
-      icon: "bi bi-card-text",
+      icon: "bi bi-chat-text",
       content: "Transcript",
       function: setTranscriptView,
       variable: transcriptView,
@@ -111,16 +111,25 @@ function NoteComponent({
       <div className="h-12 flex-none border-b flex">
         <div className="my-auto md:ps-10 flex w-full justify-between">
           <div className="text-gray-400 flex align-items">
-            <RecPause pauseProps={pauseProps} localNoteID={noteId} />
-            <Separator orientation="vertical" className="me-2.5" />
-            <button onClick={() => setAudioView((view) => !view)}>
-              <i
-                className={`bi bi-collection-play p-2.5 hover:bg-gray-100 rounded cursor-pointer ${
-                  mode === "default" && audioView && "text-gray-500"
-                }`}
-                style={{ fontSize: "1.1rem" }}
-              ></i>
-            </button>
+            <RecPause
+              pauseProps={pauseProps}
+              localNoteID={noteId}
+              diagram_on={currentNote.diagram_gen_on}
+              note_on={currentNote.note_gen_on}
+            />
+            {mode === "default" && (
+              <>
+                <Separator orientation="vertical" className="me-2.5" />
+                <button onClick={() => setAudioView((view) => !view)}>
+                  <i
+                    className={`bi bi-collection-play p-2.5 hover:bg-gray-100 rounded cursor-pointer ${
+                      mode === "default" && audioView && "text-gray-500"
+                    }`}
+                    style={{ fontSize: "1.1rem" }}
+                  ></i>
+                </button>
+              </>
+            )}
           </div>
           <div className="flex h-5 items-center text-sm text-gray-400 my-auto me-2 md:me-10">
             <div className="flex">

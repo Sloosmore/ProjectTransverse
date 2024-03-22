@@ -36,7 +36,7 @@ export function BlockText() {
   }, []);
 
   return (
-    <div className="flex h-screen w-screen bg-light shadow-lg px-5 overflow-hidden">
+    <div className="flex h-screen w-screen bg-light  px-5 overflow-hidden">
       <div className="py-4 pb-0 pt-5 lg:items-center rounded-3 flex lg:flex-row flex-col">
         <div className="lg:grow p-5 pt-3 xl:w-[110rem] lg:w-[90rem] ">
           <img

@@ -11,12 +11,13 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import UploadNotes from "./UploadNotes";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function ControlModalShad({ show, handleClose, noteData, controlProps }) {
   const { session } = useAuth();
 
   //LLM preffereences
-  const [preferences, setPreferences] = useState([]);
+  const [preferences, setPreferences] = useState({ note: [], diagram: [] });
   //Value of LLMPref text box
   const [textareaValue, setTextareaValue] = useState("");
 
@@ -27,6 +28,7 @@ function ControlModalShad({ show, handleClose, noteData, controlProps }) {
   const [activeNum, setActiveNum] = useState(0);
 
   const [textKey, setTextKey] = useState(0);
+  const [activeTab, setActiveTab] = useState("note");
 
   //Set prefferences when called
   const handleSubmitLLM = (preferences, frequency, activeNum, session) => {
@@ -44,18 +46,28 @@ function ControlModalShad({ show, handleClose, noteData, controlProps }) {
   }, []);
 
   useEffect(() => {
-    setTextareaValue(preferences[activeNum]);
-  }, [activeNum]);
+    setTextareaValue(preferences[activeTab][activeNum[activeTab]]);
+  }, [activeNum, activeTab]);
 
   useEffect(() => {
+    console.log(activeNum);
     setPreferences((prev) => {
-      const newPrefs = [...prev];
-      newPrefs[activeNum] = textareaValue;
-      return newPrefs;
+      console.log("activeTab", activeTab);
+      return {
+        ...prev,
+        [activeTab]: prev[activeTab].map((item, index) =>
+          index === activeNum[activeTab] ? textareaValue : item
+        ),
+      };
     });
-  }, [textareaValue, activeNum]);
+  }, [textareaValue, activeNum, activeTab]);
+
+  useEffect(() => {
+    console.log("pref", preferences);
+  }, [preferences]);
 
   const prefArray = [0, 1, 2, 3, 4];
+  const typeArray = ["note", "diagram"];
 
   return (
     <SheetContent className="text-gray-400 sm:max-w-[800px] rounded-l-lg flex-col flex justify-between ">
@@ -65,9 +77,52 @@ function ControlModalShad({ show, handleClose, noteData, controlProps }) {
         </SheetHeader>
         <div className="flex flex-col mt-3">
           <div className="mb-3 flex-col flex">
-            <label htmlFor="prefTextArea" className="form-label">
-              Notetaking Preferences
-            </label>
+            <Tabs
+              defaultValue="note"
+              className="w-full"
+              onValueChange={setActiveTab}
+            >
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="note">Notes</TabsTrigger>
+                <TabsTrigger value="diagram">Diagrams</TabsTrigger>
+              </TabsList>
+              {typeArray.map((type) => (
+                <TabsContent key={type} value={type}>
+                  <textarea
+                    className="form-control p-3 border rounded w-full"
+                    id="prefTextArea"
+                    rows="6"
+                    value={textareaValue || preferences[type][activeNum[type]]}
+                    onChange={(e) => setTextareaValue(e.target.value)}
+                  ></textarea>
+                  <div className="flex flex-row sm:space-x-4 space-x-1 mt-2.5 overflow-x-auto">
+                    {prefArray.map((num) => (
+                      <div
+                        className={
+                          num === activeNum[type]
+                            ? "border-b-2 border-gray-700 pb-2"
+                            : ""
+                        }
+                        key={num}
+                      >
+                        <Button
+                          className={`hover:bg-gray-700 hover:text-white bg-gray-200`}
+                          variant="secondary"
+                          onClick={(event) => {
+                            setActiveNum((prevNum) => {
+                              return { ...prevNum, [type]: num };
+                            });
+                          }}
+                        >
+                          {num + 1}
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </TabsContent>
+              ))}
+            </Tabs>
+            {/*
             <textarea
               className="form-control p-3 border rounded"
               id="prefTextArea"
@@ -75,27 +130,7 @@ function ControlModalShad({ show, handleClose, noteData, controlProps }) {
               value={textareaValue || preferences[activeNum]}
               onChange={(e) => setTextareaValue(e.target.value)}
             ></textarea>
-
-            <div className="flex flex-row sm:space-x-4 space-x-1 mt-2.5 overflow-x-auto">
-              {prefArray.map((num) => (
-                <div
-                  className={
-                    num === activeNum ? "border-b-2 border-gray-700 pb-2" : ""
-                  }
-                  key={num}
-                >
-                  <Button
-                    className={`hover:bg-gray-700 hover:text-white bg-gray-200`}
-                    variant="secondary"
-                    onClick={(event) => {
-                      setActiveNum(num);
-                    }}
-                  >
-                    {num + 1}
-                  </Button>
-                </div>
-              ))}
-            </div>
+              */}
 
             <label htmlFor="freqRange" className="my-3 mt-4 pt-4 border-t">
               Note Generation Speed (minutes)

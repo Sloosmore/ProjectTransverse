@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { writeLLM, readLLM } = require("../controllers/handleNoteConfig");
 const { upload } = require("../server");
-const { customNotePrompt } = require("../controllers/handleNoteUpload");
+const { customNotePrompt } = require("../controllers/handleNoteExampleUpload");
 
 router.post("/notes", writeLLM);
 router.get("/notes", readLLM);

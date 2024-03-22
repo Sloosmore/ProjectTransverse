@@ -13,17 +13,23 @@ async function queryAI(note_id, ts_message, frequency) {
     const { data: note, error: noteError } = await supabase
       .from("note")
       .select(
-        "user_id, thread_id, title, json_content, diagram_thread_id, diagram_message_count"
+        "user_id, thread_id, title, json_content, diagram_thread_id, diagram_message_count, note_gen_on, diagram_gen_on"
       )
       .eq("note_id", note_id)
       .single();
     if (noteError) {
       throw noteError;
     }
-    const { user_id, thread_id, title, json_content, diagram_message_count } =
-      note;
+    const {
+      user_id,
+      title,
+      json_content,
+      diagram_message_count,
+      diagram_gen_on,
+      note_gen_on,
+    } = note;
     console.log("note", note);
-    let { diagram_thread_id } = note;
+    let { diagram_thread_id, thread_id } = note;
     let recent_data_len = 0;
     if (json_content) {
       recent_data_len = json_content.content.length;
@@ -88,7 +94,7 @@ async function queryAI(note_id, ts_message, frequency) {
           },
         ],
       });
-      gptMessage = await sendAICall(thread.id, user_prompt, ts2md_id);
+      thread_id = thread.id;
 
       const { error } = await supabase
         .from("note")
@@ -103,7 +109,11 @@ async function queryAI(note_id, ts_message, frequency) {
         role: "user",
         content: ts_message,
       });
-      gptMessage = await sendAICall(thread_id, user_prompt, ts2md_id);
+    }
+    let md = false;
+    if (note_gen_on) {
+      gptMessage = await sendAICall(thread.id, user_prompt, ts2md_id);
+      md = gptMessage["data"][0]["content"][0]["text"]["value"];
     }
 
     // append transcript to diagram thread regardless of whether mermaid is fired
@@ -139,11 +149,9 @@ async function queryAI(note_id, ts_message, frequency) {
 
     // check if mermaid is in the response
 
-    const md = gptMessage["data"][0]["content"][0]["text"]["value"];
-
     const diagramThreshold = Math.ceil((frequency * -4) / 1150 + 6.21739130435);
     //the diagram message count needs to be greater or equal to than the threshold
-    if (diagram_message_count >= diagramThreshold) {
+    if (diagram_message_count >= diagramThreshold && diagram_gen_on) {
       console.log("mer_id", ts2mermaid_id);
       console.log("diagram_thread_id", diagram_thread_id);
       console.log("md_id", ts2md_id);
