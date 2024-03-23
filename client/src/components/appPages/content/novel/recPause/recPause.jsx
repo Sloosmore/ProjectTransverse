@@ -114,7 +114,11 @@ const RecPause = ({ pauseProps, localNoteID, diagram_on, note_on }) => {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
-          <div className="flex me-2.5 align-middle ">
+          <div
+            className={`flex me-2.5 align-middle ${
+              recStatus !== "pause" && "ms-[22px]"
+            }`}
+          >
             {recStatus === "pause" && (
               <div className="me-2 mb-.5 mt-1 ">
                 <l-waveform

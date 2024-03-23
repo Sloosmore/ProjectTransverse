@@ -131,7 +131,7 @@ function NoteComponent({
               </>
             )}
           </div>
-          <div className="flex h-5 items-center text-sm text-gray-400 my-auto me-2 md:me-10">
+          <div className="flex h-5 items-center text-sm text-gray-400 my-auto me-2 md:me-16">
             <div className="flex">
               {tooltips.map(
                 (tooltip, index) =>
@@ -174,13 +174,12 @@ function NoteComponent({
           </div>
         )}
         {slideView && !(editView || transcriptView) && (
-          <div className="overflow-auto flex-grow min-h-0">
+          <div className="overflow-auto flex-grow min-h-0 items-center h-full">
             <Slides
               currentNote={currentNote}
               activeUrl={activeUrl}
               setActiveUrl={setActiveUrl}
             />
-            test
           </div>
         )}
         {editView && !(slideView || transcriptView) && (
