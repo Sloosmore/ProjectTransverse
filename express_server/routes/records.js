@@ -25,6 +25,8 @@ const { downloadNote } = require("../controllers/handleNoteDownload");
 
 const { toggleGeneration } = require("../controllers/noteCRUD/handleGenOnOff");
 
+const { uploadMDImage } = require("../controllers/noteCRUD/handleImgUp");
+
 //router.get("/tasks", sendTasks);
 
 //change to
@@ -42,8 +44,11 @@ router.post("/folder-title", upFolderTitleToSB);
 //DELETE folder
 router.delete("/folders", delFolder);
 
-//UPDATE MD
+//UPDATE MD JSON
 router.put("/notes-markdown", updateMarkdownToSB);
+
+//UPDATE Image
+router.post("/notes-image", upload.single("file"), uploadMDImage);
 
 //UPDATE Statis
 router.put("/notes-deactivate", upInactiveStatus);
@@ -69,6 +74,7 @@ router.delete("/notes", delNoteSB);
 //POST Download MD
 router.post("/notes-download", downloadNote);
 
+// POST upload slides
 router.post("/upload-slides", upload.single("file"), uploadSlides);
 
 module.exports = router;
