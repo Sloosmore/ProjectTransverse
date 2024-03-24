@@ -7,7 +7,6 @@ import {
   EditorCommandEmpty,
   EditorCommandItem,
   EditorBubble,
-  defaultEditorProps,
 } from "novel";
 import React, { useEffect, useState } from "react";
 
@@ -20,9 +19,11 @@ import { NodeSelector } from "./bubble/nodeSelector";
 import { TextButtons } from "./bubble/text-buttons";
 import "./editor.css";
 import { useDebouncedCallback } from "use-debounce";
-import { ImageResizer } from "novel/extensions";
 import { saveNoteMarkdown } from "@/components/appPages/services/crudApi";
 import { updateTitle } from "@/components/appPages/services/crudApi";
+import { ImageResizer, handleCommandNavigation } from "novel/extensions";
+import { handleImageDrop, handleImagePaste } from "novel/plugins";
+import { uploadFn } from "./extentions/image-upload";
 
 const extensions = [...defaultExtensions, slashCommand];
 
@@ -58,7 +59,12 @@ const NovelEditor = ({ currentNote, contentKit }) => {
           setSaveStatus("Unsaved");
         }}
         editorProps={{
-          ...defaultEditorProps,
+          handleDOMEvents: {
+            keydown: (_view, event) => handleCommandNavigation(event),
+          },
+          handlePaste: (view, event) => handleImagePaste(view, event, uploadFn),
+          handleDrop: (view, event, _slice, moved) =>
+            handleImageDrop(view, event, moved, uploadFn),
           attributes: {
             class: `prose-lg prose-stone dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full w-full mx-auto  h-full`,
           },

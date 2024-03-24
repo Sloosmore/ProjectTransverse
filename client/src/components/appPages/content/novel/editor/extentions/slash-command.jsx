@@ -14,8 +14,30 @@ import {
 import { createSuggestionItems } from "novel/extensions";
 //import { startImageUpload } from "novel/plugins";
 import { Command, renderItems } from "novel/extensions";
+import { uploadFn } from "./image-upload";
 
 export const suggestionItems = createSuggestionItems([
+  {
+    title: "Image",
+    description: "Upload an image from your computer.",
+    searchTerms: ["photo", "picture", "media"],
+    icon: <ImageIcon size={18} />,
+    command: ({ editor, range }) => {
+      editor.chain().focus().deleteRange(range).run();
+      // upload image
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+      input.onchange = async () => {
+        if (input.files?.length) {
+          const file = input.files[0];
+          const pos = editor.view.state.selection.from;
+          uploadFn(file, editor.view, pos);
+        }
+      };
+      input.click();
+    },
+  },
   {
     title: "Heading 1",
     description: "Big section heading.",
