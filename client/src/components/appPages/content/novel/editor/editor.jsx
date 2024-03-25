@@ -20,12 +20,12 @@ import { TextButtons } from "./bubble/text-buttons";
 import "./editor.css";
 import { useDebouncedCallback } from "use-debounce";
 import { saveNoteMarkdown } from "@/components/appPages/services/crudApi";
-import { updateTitle } from "@/components/appPages/services/crudApi";
 import { ImageResizer, handleCommandNavigation } from "novel/extensions";
 import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import { uploadFn } from "./extentions/image-upload";
+import UniversalTimeAttribute from "./extentions/time";
 
-const extensions = [...defaultExtensions, slashCommand];
+const extensions = [...defaultExtensions, slashCommand, UniversalTimeAttribute];
 
 const NovelEditor = ({ currentNote, contentKit }) => {
   const { title, json_content, full_markdown, note_id } = currentNote;

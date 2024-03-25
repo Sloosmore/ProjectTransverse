@@ -11,14 +11,14 @@ function Waitlist({}) {
 
   return (
     <div className="flex justify-center">
-      <div className="">
+      <div className="w-full">
         <h2 className="text-gray-500 flex justify-center">
           Join the waitlist today
         </h2>
-        <div className="my-10 flex gap-x-6 justify-center">
+        <div className="my-10 flex flex-row gap-x-6 justify-center">
           <input
             type="text"
-            className="border focus:ring-0 focus:border-gray focus:outline-none focus-visible:ring-0 p-2 me-2 rounded-lg ps-4 "
+            className="border focus:ring-1 focus:border-gray focus:outline-gray-300 focus-visible:ring-0 p-2 me-2 rounded-lg ps-4 w-[300px]"
             placeholder="Email Here"
             onChange={(e) => {
               setEmail(e.target.value);
