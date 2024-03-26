@@ -44,11 +44,13 @@ export const handleOnMessage = (
   if (wsData.md) {
     //find record and set markdown in that specific file
     //this will update the markdown of a specific record
+    console.log("new_json", wsData.new_json);
     const updateMd = noteData.map((record) => {
       //append markdown here
       if (record.note_id === noteID) {
         record.full_markdown = wsData.md;
         record.json_content = wsData.json_content;
+        record.new_json = wsData.new_json;
         saveNoteMarkdown(
           record.note_id,
           record.full_markdown,

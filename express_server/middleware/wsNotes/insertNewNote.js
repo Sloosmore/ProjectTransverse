@@ -18,6 +18,7 @@ const insertNewNoteRecord = async (user_id, title, folder_id) => {
   const diagram_message_count = 0;
   const note_gen_on = false;
   const diagram_gen_on = false;
+  const new_json = "";
 
   try {
     //deactivate records
@@ -46,6 +47,7 @@ const insertNewNoteRecord = async (user_id, title, folder_id) => {
         diagram_message_count,
         note_gen_on,
         diagram_gen_on,
+        new_json,
       })
       .select();
 

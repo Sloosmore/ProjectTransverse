@@ -184,7 +184,11 @@ async function handleWebSocketConnection(ws, request) {
           //convert markdown into json
           //md will be null if the AI call fails or are turned off
           if (md) {
-            const mdJSON = await markdownToTiptap(md, note_id);
+            //mdJSON includes type: "doc", content is just content
+            const { fullDoc, contentLevel } = await markdownToTiptap(
+              md,
+              note_id
+            );
 
             //clear active transcript so it can be used later
             const clearTSBool = await clearActiveTS(note_id);
@@ -204,12 +208,13 @@ async function handleWebSocketConnection(ws, request) {
             fullMd += "\n" + md;
 
             const jsonContent = fullMdResult[0].json_content;
-            const combinedJSON = combineTiptapObjects(jsonContent, mdJSON);
+            const combinedJSON = combineTiptapObjects(jsonContent, fullDoc);
             console.log(`combinedJSON`, combinedJSON);
             ws.send(
               JSON.stringify({
                 md: fullMd,
                 json_content: combinedJSON,
+                new_json: contentLevel,
               })
             );
           }

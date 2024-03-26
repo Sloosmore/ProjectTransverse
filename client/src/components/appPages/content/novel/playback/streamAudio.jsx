@@ -29,7 +29,6 @@ const AudioControls = ({ currentNote, mode }) => {
     const fetchAudio = async () => {
       const segData = await fetchURLs(session, currentNote.note_id);
       const urls = segData.map((seg) => seg.url);
-      console.log("loaded urls", urls);
       const sounds = urls.map(
         (url, index) =>
           new Howl({
@@ -52,7 +51,6 @@ const AudioControls = ({ currentNote, mode }) => {
             },
           })
       );
-      console.log("sounds", sounds);
       setAudioData(segData);
       setAudio(sounds);
       const { totTime } = getMaxTime(segData);

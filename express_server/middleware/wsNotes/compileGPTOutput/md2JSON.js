@@ -218,7 +218,7 @@ const markdownToTiptap = async (markdown, note_id) => {
     });
   }
 
-  return { type: "doc", content: result };
+  return { fullDoc: { type: "doc", content: result }, contentLevel: result };
 };
 
 function combineTiptapObjects(obj1, obj2) {

@@ -110,10 +110,14 @@ async function queryAI(note_id, ts_message, frequency) {
         content: ts_message,
       });
     }
-    let md = false;
+    let md;
+
+    console.log("note_gen_on", note_gen_on);
     if (note_gen_on) {
-      gptMessage = await sendAICall(thread.id, user_prompt, ts2md_id);
+      console.log("note_gen_on is true");
+      gptMessage = await sendAICall(thread_id, user_prompt, ts2md_id);
       md = gptMessage["data"][0]["content"][0]["text"]["value"];
+      console.log("md", md);
     }
 
     // append transcript to diagram thread regardless of whether mermaid is fired
@@ -152,11 +156,6 @@ async function queryAI(note_id, ts_message, frequency) {
     const diagramThreshold = Math.ceil((frequency * -4) / 1150 + 6.21739130435);
     //the diagram message count needs to be greater or equal to than the threshold
     if (diagram_message_count >= diagramThreshold && diagram_gen_on) {
-      console.log("mer_id", ts2mermaid_id);
-      console.log("diagram_thread_id", diagram_thread_id);
-      console.log("md_id", ts2md_id);
-      console.log("thread_id", thread_id);
-
       const mermaidMessage = await sendAICall(
         diagram_thread_id,
         user_diagram_prompt,

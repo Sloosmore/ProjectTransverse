@@ -19,12 +19,12 @@ import CardPicSvg from "./svg/card-pic.jsx";
 
 // Default values shown
 
-const RecPause = ({ pauseProps, localNoteID, diagram_on, note_on }) => {
+const RecPause = ({ pauseProps, localNoteID, ToggleGenKit }) => {
   const [recStatus, setRecStatus] = useState();
   const [viewTitle, setViewTitle] = useState();
   const [recStatusObject, setRecStatusObject] = useState();
-  const [diagramOn, setDiagramOn] = useState(diagram_on);
-  const [noteOn, setNoteOn] = useState(note_on);
+
+  const { diagramOn, noteOn, setDiagramOn, setNoteOn } = ToggleGenKit;
 
   const { session } = useAuth();
   const {
@@ -72,11 +72,6 @@ const RecPause = ({ pauseProps, localNoteID, diagram_on, note_on }) => {
   useEffect(() => {
     setViewTitle(titleFromID(noteID, noteData));
   }, [noteID, noteData]);
-
-  useEffect(() => {
-    setDiagramOn(diagram_on);
-    setNoteOn(note_on);
-  }, [diagram_on, note_on, localNoteID]);
 
   useEffect(() => {
     console.log("typeof noteID:", typeof noteID);
