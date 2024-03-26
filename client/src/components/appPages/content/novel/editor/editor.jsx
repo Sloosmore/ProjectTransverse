@@ -9,7 +9,7 @@ import {
   EditorBubble,
 } from "novel";
 import React, { useEffect, useState, useLayoutEffect, useRef } from "react";
-import { SkeletonLoad, SkeletonCard } from "./skeleton";
+import { SkeletonLoad, SkeletonCard } from "./insideComponents /skeleton";
 import { defaultExtensions } from "./extentions/extensions";
 import { slashCommand } from "./extentions/slash-command";
 import { Separator } from "@/components/ui/separator";
@@ -24,27 +24,29 @@ import { ImageResizer, handleCommandNavigation } from "novel/extensions";
 import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import { uploadFn } from "./extentions/image-upload";
 import UniversalTimeAttribute from "./extentions/time";
+import AppendJSONExtension from "./extentions/addJSON";
+import AppendJSONComponent from "./insideComponents /addJsonComp";
+import EditTitle from "./title";
 
-const extensions = [...defaultExtensions, slashCommand, UniversalTimeAttribute];
+const extensions = [
+  ...defaultExtensions,
+  slashCommand,
+  UniversalTimeAttribute,
+  AppendJSONExtension,
+];
 
 const NovelEditor = ({ currentNote, contentKit, ToggleGenKit }) => {
   //mode
-  const { title, json_content, full_markdown, note_id } = currentNote;
+  const { title, json_content, full_markdown, note_id, new_json } = currentNote;
 
-  const {
-    content,
-    setContent,
-    editKey,
-    setEditKey,
-    updatedTitle,
-    setUpdatedTitle,
-  } = contentKit;
+  const { content, setContent } = contentKit;
 
   const [openNode, setOpenNode] = useState(false);
   const [saveStatus, setSaveStatus] = useState("Saved");
 
   const debouncedUpdates = useDebouncedCallback(async (editor) => {
     const json = editor.getJSON();
+    console.log("setting json");
     setContent(json);
     console.log(json);
     setSaveStatus("Saved");
@@ -53,8 +55,14 @@ const NovelEditor = ({ currentNote, contentKit, ToggleGenKit }) => {
 
   const { mode, diagramOn, noteOn } = ToggleGenKit;
 
+  useEffect(() => {
+    setJsonToAppend(new_json);
+  }, [new_json]);
+
+  const [jsonToAppend, setJsonToAppend] = useState();
+
   return (
-    <div>
+    <div key={content}>
       <EditorRoot>
         <EditorContent
           className=" top-div h-full relative relative w-full max-w-screen-lg "
@@ -114,8 +122,10 @@ const NovelEditor = ({ currentNote, contentKit, ToggleGenKit }) => {
               </EditorCommandItem>
             ))}
           </EditorCommand>
+          <AppendJSONComponent jsonToAppend={jsonToAppend} mode={mode} />
         </EditorContent>
       </EditorRoot>
+
       {mode === "note" && diagramOn && (
         <div className="md:px-12 px-6 w-full mb-6">
           <SkeletonCard />
@@ -130,5 +140,3 @@ const NovelEditor = ({ currentNote, contentKit, ToggleGenKit }) => {
   );
 };
 export default NovelEditor;
-/*
- */

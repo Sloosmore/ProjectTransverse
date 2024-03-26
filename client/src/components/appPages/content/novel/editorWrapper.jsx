@@ -110,14 +110,11 @@ function NoteComponent({
     setUpdatedTitle(currentNote.title);
     if (currentNote.json_content !== content) {
       setContent(currentNote.json_content);
+      console.log("content", currentNote.json_content);
     }
     console.log("currentNote", currentNote);
-    setKeyFlag(keyFlag + 1);
+    //setKeyFlag(keyFlag + 1);
   }, [currentNote.json_content, currentNote.title]);
-
-  useEffect(() => {
-    setEditKey(editKey + 1);
-  }, [keyFlag]);
 
   const contentKit = {
     content,
@@ -212,7 +209,6 @@ function NoteComponent({
                   <NovelEditor
                     currentNote={currentNote}
                     contentKit={contentKit}
-                    key={editKey}
                     ToggleGenKit={ToggleGenKit}
                   />
                 </div>
@@ -229,7 +225,6 @@ function NoteComponent({
                   <NovelEditor
                     currentNote={currentNote}
                     contentKit={contentKit}
-                    key={editKey}
                     ToggleGenKit={ToggleGenKit}
                   />
                 </div>
@@ -252,7 +247,6 @@ function NoteComponent({
                   <NovelEditor
                     currentNote={currentNote}
                     contentKit={contentKit}
-                    key={editKey}
                     ToggleGenKit={ToggleGenKit}
                   />
                 </div>
@@ -295,7 +289,6 @@ function NoteComponent({
                   <NovelEditor
                     currentNote={currentNote}
                     contentKit={contentKit}
-                    key={editKey}
                     ToggleGenKit={ToggleGenKit}
                   />
                 </div>
