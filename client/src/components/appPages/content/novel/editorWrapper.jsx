@@ -5,7 +5,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import Transcript from "./transcript";
 import {
   ResizableHandle,
@@ -45,6 +45,28 @@ function NoteComponent({
   const [slideView, setSlideView] = useState(false);
   const [activeUrl, setActiveUrl] = useState("");
   const [audioView, setAudioView] = useState(true);
+
+  const [diagramOn, setDiagramOn] = useState(false);
+  const [noteOn, setNoteOn] = useState(false);
+
+  //Scroll
+
+  const scrollKit = {};
+
+  //----------------------------------
+
+  const ToggleGenKit = {
+    diagramOn,
+    setDiagramOn,
+    noteOn,
+    setNoteOn,
+    mode,
+  };
+
+  useEffect(() => {
+    setDiagramOn(currentNote.diagram_gen_on);
+    setNoteOn(currentNote.note_gen_on);
+  }, [noteId]);
 
   const tooltips = [
     {
@@ -114,8 +136,7 @@ function NoteComponent({
             <RecPause
               pauseProps={pauseProps}
               localNoteID={noteId}
-              diagram_on={currentNote.diagram_gen_on}
-              note_on={currentNote.note_gen_on}
+              ToggleGenKit={ToggleGenKit}
             />
             {mode === "default" && (
               <>
@@ -167,7 +188,7 @@ function NoteComponent({
           </div>
         </div>
       </div>
-      <div className="overflow-auto flex-grow min-h-0">
+      <div className="flex-grow min-h-0">
         {transcriptView && !(editView || slideView) && (
           <div className="overflow-auto flex-grow min-h-0">
             <Transcript currentNote={currentNote} transcript={transcript} />
@@ -183,16 +204,21 @@ function NoteComponent({
           </div>
         )}
         {editView && !(slideView || transcriptView) && (
-          <div className="overflow-auto flex-grow">
-            <EditTitle currentNote={currentNote} />
-            <div className="flex-grow">
-              <NovelEditor
-                currentNote={currentNote}
-                contentKit={contentKit}
-                key={editKey}
-              />
-            </div>
-          </div>
+          <ResizablePanelGroup>
+            <ResizablePanel className="flex flex-col">
+              <div className="overflow-auto flex-grow">
+                <EditTitle currentNote={currentNote} />
+                <div className="flex-grow">
+                  <NovelEditor
+                    currentNote={currentNote}
+                    contentKit={contentKit}
+                    key={editKey}
+                    ToggleGenKit={ToggleGenKit}
+                  />
+                </div>
+              </div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
         )}
         {editView && slideView && !transcriptView && (
           <ResizablePanelGroup direction="horizontal">
@@ -204,6 +230,7 @@ function NoteComponent({
                     currentNote={currentNote}
                     contentKit={contentKit}
                     key={editKey}
+                    ToggleGenKit={ToggleGenKit}
                   />
                 </div>
               </div>
@@ -211,11 +238,7 @@ function NoteComponent({
             <ResizableHandle withHandle />
             <ResizablePanel className="flex flex-col">
               <div className="overflow-auto flex-grow min-h-0">
-                <Slides
-                  currentNote={currentNote}
-                  activeUrl={activeUrl}
-                  setActiveUrl={setActiveUrl}
-                />
+                <Slides currentNote={currentNote} />
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
@@ -230,6 +253,7 @@ function NoteComponent({
                     currentNote={currentNote}
                     contentKit={contentKit}
                     key={editKey}
+                    ToggleGenKit={ToggleGenKit}
                   />
                 </div>
               </div>
@@ -272,6 +296,7 @@ function NoteComponent({
                     currentNote={currentNote}
                     contentKit={contentKit}
                     key={editKey}
+                    ToggleGenKit={ToggleGenKit}
                   />
                 </div>
               </div>
@@ -320,262 +345,5 @@ function NoteComponent({
     </div>
   );
 }
-
-/*
-
-      {editorState === "Edit" && (
-        <div className="overflow-auto flex-grow">
-          <EditTitle currentNote={currentNote} />
-          <div className="flex-grow">
-            <NovelEditor
-              currentNote={currentNote}
-              contentKit={contentKit}
-              key={editKey}
-            />
-          </div>
-        </div>
-      )}
-      {editorState === "Transcript" && (
-        <div className="overflow-auto flex-grow min-h-0">
-          <Transcript currentNote={currentNote} transcript={transcript} />
-        </div>
-      )}
-      {editorState === "Split" && (
-        <div className="overflow-auto flex-grow min-h-0">
-          <ResizablePanelGroup direction="horizontal">
-            <ResizablePanel className="flex flex-col">
-              <div className="overflow-auto flex-grow">
-                <EditTitle currentNote={currentNote} />
-                <div className="flex-grow">
-                  <NovelEditor
-                    currentNote={currentNote}
-                    contentKit={contentKit}
-                    key={editKey}
-                  />
-                </div>
-              </div>
-            </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel className="flex flex-col">
-              <div className="overflow-auto flex-grow min-h-0">
-                <Transcript currentNote={currentNote} transcript={transcript} />
-              </div>
-            </ResizablePanel>
-          </ResizablePanelGroup>
-        </div>
-      )}
-      {editorState === "Slides" && (
-        <div className="overflow-auto flex-grow min-h-0">
-          <Slides currentNote={currentNote} />
-        </div>
-      )}
-
-
-
-
-      <ResizablePanelGroup direction="horizontal">
-          {editView && (
-            <ResizablePanel className="flex flex-col">
-              <div className="overflow-auto flex-grow">
-                <EditTitle currentNote={currentNote} />
-                <div className="flex-grow">
-                  <NovelEditor
-                    currentNote={currentNote}
-                    contentKit={contentKit}
-                    key={editKey}
-                  />
-                </div>
-              </div>
-            </ResizablePanel>
-          )}
-
-          {!editView && slideView && (
-            <ResizablePanel className="flex flex-col">
-              <div className="overflow-auto flex-grow min-h-0">
-                <Slides
-                  currentNote={currentNote}
-                  activeUrl={activeUrl}
-                  setActiveUrl={setActiveUrl}
-                />
-              </div>
-            </ResizablePanel>
-          )}
-
-          {transcriptView && !(editView || slideView) && (
-            <ResizablePanel className="flex flex-col">
-              <div className="overflow-auto flex-grow min-h-0">
-                <Transcript currentNote={currentNote} transcript={transcript} />
-              </div>
-            </ResizablePanel>
-          )}
-
-          {!(slideView || transcriptView || editView) && (
-            <div className="flex flex-col justify-center">
-              <h1 className="self-middle">
-                well this is ackward but def don't have to have any selected
-              </h1>
-            </div>
-          )}
-
-          {(editView && transcriptView && (
-            <>
-              <ResizableHandle withHandle />
-              <ResizablePanel className="flex flex-col">
-                <ResizablePanelGroup direction="vertical">
-                  {slideView && transcriptView && editView && (
-                    <>
-                      <ResizablePanel className="flex flex-col">
-                        <div className="overflow-auto flex-grow min-h-0">
-                          <Slides
-                            currentNote={currentNote}
-                            activeUrl={activeUrl}
-                            setActiveUrl={setActiveUrl}
-                          />
-                        </div>
-                      </ResizablePanel>
-                      <ResizableHandle withHandle />
-                      <ResizablePanel className="flex flex-col">
-                        <div className="overflow-auto flex-grow min-h-0">
-                          <Transcript
-                            currentNote={currentNote}
-                            transcript={transcript}
-                          />
-                        </div>
-                      </ResizablePanel>
-                    </>
-                  )}
-                  {transcriptView && !(editView && slideView) && (
-                    <ResizablePanel className="flex flex-col">
-                      <div className="overflow-auto flex-grow min-h-0">
-                        <Transcript
-                          currentNote={currentNote}
-                          transcript={transcript}
-                        />
-                      </div>
-                    </ResizablePanel>
-                  )}
-
-                  {editView && slideView && !transcriptView && (
-                    <ResizablePanel className="flex flex-col">
-                      <div className="overflow-auto flex-grow min-h-0">
-                        <Slides
-                          currentNote={currentNote}
-                          activeUrl={activeUrl}
-                          setActiveUrl={setActiveUrl}
-                        />
-                      </div>
-                    </ResizablePanel>
-                  )}
-                </ResizablePanelGroup>
-              </ResizablePanel>
-            </>
-          )) ||
-            (editView && slideView && (
-              <>
-                <ResizableHandle withHandle />
-                <ResizablePanel className="flex flex-col">
-                  <ResizablePanelGroup direction="vertical">
-                    {slideView && transcriptView && editView && (
-                      <>
-                        <ResizablePanel className="flex flex-col">
-                          <div className="overflow-auto flex-grow min-h-0">
-                            <Slides
-                              currentNote={currentNote}
-                              activeUrl={activeUrl}
-                              setActiveUrl={setActiveUrl}
-                            />
-                          </div>
-                        </ResizablePanel>
-                        <ResizableHandle withHandle />
-                        <ResizablePanel className="flex flex-col">
-                          <div className="overflow-auto flex-grow min-h-0">
-                            <Transcript
-                              currentNote={currentNote}
-                              transcript={transcript}
-                            />
-                          </div>
-                        </ResizablePanel>
-                      </>
-                    )}
-                    {transcriptView && !(editView && slideView) && (
-                      <ResizablePanel className="flex flex-col">
-                        <div className="overflow-auto flex-grow min-h-0">
-                          <Transcript
-                            currentNote={currentNote}
-                            transcript={transcript}
-                          />
-                        </div>
-                      </ResizablePanel>
-                    )}
-
-                    {editView && slideView && !transcriptView && (
-                      <ResizablePanel className="flex flex-col">
-                        <div className="overflow-auto flex-grow min-h-0">
-                          <Slides
-                            currentNote={currentNote}
-                            activeUrl={activeUrl}
-                            setActiveUrl={setActiveUrl}
-                          />
-                        </div>
-                      </ResizablePanel>
-                    )}
-                  </ResizablePanelGroup>
-                </ResizablePanel>
-              </>
-            )) ||
-            (slideView && transcriptView && (
-              <>
-                <ResizableHandle withHandle />
-                <ResizablePanel className="flex flex-col">
-                  <ResizablePanelGroup direction="vertical">
-                    {slideView && transcriptView && editView && (
-                      <>
-                        <ResizablePanel className="flex flex-col">
-                          <div className="overflow-auto flex-grow min-h-0">
-                            <Slides
-                              currentNote={currentNote}
-                              activeUrl={activeUrl}
-                              setActiveUrl={setActiveUrl}
-                            />
-                          </div>
-                        </ResizablePanel>
-                        <ResizableHandle withHandle />
-                        <ResizablePanel className="flex flex-col">
-                          <div className="overflow-auto flex-grow min-h-0">
-                            <Transcript
-                              currentNote={currentNote}
-                              transcript={transcript}
-                            />
-                          </div>
-                        </ResizablePanel>
-                      </>
-                    )}
-                    {transcriptView && !(editView && slideView) && (
-                      <ResizablePanel className="flex flex-col">
-                        <div className="overflow-auto flex-grow min-h-0">
-                          <Transcript
-                            currentNote={currentNote}
-                            transcript={transcript}
-                          />
-                        </div>
-                      </ResizablePanel>
-                    )}
-                    {editView && slideView && !transcriptView && (
-                      <ResizablePanel className="flex flex-col">
-                        <div className="overflow-auto flex-grow min-h-0">
-                          <Slides
-                            currentNote={currentNote}
-                            activeUrl={activeUrl}
-                            setActiveUrl={setActiveUrl}
-                          />
-                        </div>
-                      </ResizablePanel>
-                    )}
-                  </ResizablePanelGroup>
-                </ResizablePanel>
-              </>
-            ))}
-        </ResizablePanelGroup>
-*/
 
 export default NoteComponent;
