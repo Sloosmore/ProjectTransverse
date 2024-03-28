@@ -7,6 +7,10 @@ const { getUserIdFromToken } = require("../../middleware/authDecodeJWS");
 
 const id = "ba3147a5-1bb0-4795-ba62-24b9b816f4a7";
 const { uuid } = require("uuidv4");
+const { calculateTotTime } = require("../../middleware/infoTracking/calcTime");
+const {
+  replaceTimeWithCurrent,
+} = require("../../middleware/infoTracking/addTimeJson");
 
 /*
 const sendNotesFromPG = async (req, res) => {
@@ -271,6 +275,13 @@ const updateMarkdownToSB = async (req, res) => {
     console.log("json_content", json_content);
     console.log("Updating Markdown to DB...");
     console.log("note_id", note_id);
+
+    //calculate time diff here and null notes
+    const totTime = await calculateTotTime(note_id);
+    console.log("totTime", totTime);
+    //replace any nulls with a time stamp
+
+    const newJsonContent = replaceTimeWithCurrent(json_content, totTime);
 
     //console.log(`${markdown}`);
     const result = await supabase

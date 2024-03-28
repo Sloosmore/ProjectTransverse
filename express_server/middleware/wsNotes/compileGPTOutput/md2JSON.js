@@ -6,7 +6,7 @@ const {
   diagram2Storage,
 } = require("./diagramGen");
 
-const markdownToTiptap = async (markdown, note_id) => {
+const markdownToTiptap = async (markdown, totTime) => {
   const lines = markdown.split("\n");
   const result = [];
   let listStack = [];
@@ -20,39 +20,6 @@ const markdownToTiptap = async (markdown, note_id) => {
     const trimmedLine = line.trim();
     const indentLevel = (line.length - trimmedLine.length) / 2;
 
-    if (trimmedLine.startsWith("```mermaid")) {
-      isMermaidBlock = true;
-      mermaidContent = "";
-      closeAllLists();
-      continue;
-    } else if (isMermaidBlock && trimmedLine.startsWith("```")) {
-      isMermaidBlock = false;
-      let diagram_id = uuid.v4();
-      console.log("note_id", note_id);
-      const file_path = `${note_id}/${diagram_id}`;
-
-      const success = await diagramRecord2DB(
-        note_id,
-        diagram_id,
-        file_path,
-        mermaidContent
-      );
-      if (!success) {
-        console.log(`failed uploading ${file_path} `);
-      }
-
-      const svg = await mermaid2SVG(mermaidContent, file_path, diagram_id);
-      const buffer = await svg2PNG(svg);
-      const img_url = await diagram2Storage(file_path, buffer);
-      addDiagram(img_url, "description");
-
-      //push img to tiptap stack
-      continue;
-    } else if (trimmedLine.startsWith("no_mermaid")) {
-      continue;
-    } else if (isMermaidBlock) {
-      mermaidContent += line + "\n";
-    }
     if (trimmedLine.startsWith("#### ")) {
       closeAllLists();
       addHeading(trimmedLine.slice(5), 4);
@@ -147,7 +114,7 @@ const markdownToTiptap = async (markdown, note_id) => {
     const parsedText = parseTextStyle(text);
     result.push({
       type: "heading",
-      attrs: { level },
+      attrs: { level, time: totTime },
       content: parsedText,
     });
   }
@@ -155,7 +122,7 @@ const markdownToTiptap = async (markdown, note_id) => {
   function startList() {
     const newList = {
       type: "bulletList",
-      attrs: { tight: true },
+      attrs: { tight: true, time: totTime },
       content: [],
     };
 
@@ -186,7 +153,9 @@ const markdownToTiptap = async (markdown, note_id) => {
     const parsedText = parseTextStyle(text);
     const listItem = {
       type: "listItem",
-      content: [{ type: "paragraph", content: parsedText }],
+      content: [
+        { type: "paragraph", content: parsedText, attrs: { time: totTime } },
+      ],
     };
 
     if (!currentList) {
@@ -208,13 +177,14 @@ const markdownToTiptap = async (markdown, note_id) => {
     result.push({
       type: "paragraph",
       content: parsedText,
+      attrs: { time: totTime },
     });
   }
 
   function addDiagram(url, title) {
     result.push({
       type: "image",
-      attrs: { src: url, title, alt: title },
+      attrs: { src: url, title, alt: title, time: totTime },
     });
   }
 
@@ -243,3 +213,37 @@ function combineTiptapObjects(obj1, obj2) {
 }
 
 module.exports = { markdownToTiptap, combineTiptapObjects };
+
+/*    if (trimmedLine.startsWith("```mermaid")) {
+      isMermaidBlock = true;
+      mermaidContent = "";
+      closeAllLists();
+      continue;
+    } else if (isMermaidBlock && trimmedLine.startsWith("```")) {
+      isMermaidBlock = false;
+      let diagram_id = uuid.v4();
+      console.log("note_id", note_id);
+      const file_path = `${note_id}/${diagram_id}`;
+
+      const success = await diagramRecord2DB(
+        note_id,
+        diagram_id,
+        file_path,
+        mermaidContent
+      );
+      if (!success) {
+        console.log(`failed uploading ${file_path} `);
+      }
+
+      const svg = await mermaid2SVG(mermaidContent, file_path, diagram_id);
+      const buffer = await svg2PNG(svg);
+      const img_url = await diagram2Storage(file_path, buffer);
+      addDiagram(img_url, "description");
+
+      //push img to tiptap stack
+      continue;
+    } else if (trimmedLine.startsWith("no_mermaid")) {
+      continue;
+    } else if (isMermaidBlock) {
+      mermaidContent += line + "\n";
+    } */

@@ -25,6 +25,7 @@ const {
   insertNewAudioSegment,
 } = require("../middleware/wsNotes/insertNewNote");
 const { formatElapsedTime } = require("../middleware/wsNotes/formating");
+const { calculateTotTime } = require("../middleware/infoTracking/calcTime");
 
 async function handleWebSocketConnection(ws, request) {
   const connectMessage = {
@@ -83,59 +84,7 @@ async function handleWebSocketConnection(ws, request) {
           // if playarray > pause array we are in play
           // if pauseArray = play array we are in paus
 
-          const { data: latestDate, error } = await supabase
-            .from("note")
-            .select("play_timestamps, pause_timestamps")
-            .eq("note_id", note_id);
-
-          if (error) {
-            throw error;
-          }
-
-          if (latestDate.length === 0) {
-            // Handle the case where no data is found
-            console.error("No data found for the given note_id.");
-            return;
-          }
-
-          const playArray = latestDate[0].play_timestamps;
-          const pauseArray = latestDate[0].pause_timestamps;
-          console.log("playArray", playArray);
-          console.log("pauseArray", pauseArray);
-
-          let totTime = 0;
-
-          //this should loop for the lenth of pause array
-          for (let i = 0; i < pauseArray.length; i++) {
-            let timeDiferential =
-              new Date(pauseArray[i]).getTime() -
-              new Date(playArray[i]).getTime();
-            totTime += timeDiferential;
-            console.log("Step ", i, "Time", totTime);
-          }
-
-          //if in play mode (most of the time)
-          if (pauseArray.length < playArray.length) {
-            const lastIndex = playArray.length - 1;
-            console.log(playArray[lastIndex]);
-            let lastDate = new Date(playArray[lastIndex]);
-
-            const timezoneOffsetMilliseconds =
-              new Date().getTimezoneOffset() * 60 * 1000;
-
-            // Subtract the timezone offset from lastDate
-            lastDate = new Date(
-              lastDate.getTime() - timezoneOffsetMilliseconds
-            );
-
-            const now = new Date();
-
-            console.log("lastDate ", lastDate, "date", now);
-            const mostUpdate = now.getTime() - lastDate.getTime();
-
-            totTime += mostUpdate;
-            console.log(totTime);
-          }
+          const totTime = await calculateTotTime(note_id);
 
           const formattedTime = formatElapsedTime(totTime);
 
@@ -187,7 +136,7 @@ async function handleWebSocketConnection(ws, request) {
             //mdJSON includes type: "doc", content is just content
             const { fullDoc, contentLevel } = await markdownToTiptap(
               md,
-              note_id
+              totTime
             );
 
             //clear active transcript so it can be used later

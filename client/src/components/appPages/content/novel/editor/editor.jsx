@@ -9,7 +9,6 @@ import {
   EditorBubble,
 } from "novel";
 import React, { useEffect, useState, useLayoutEffect, useRef } from "react";
-import { SkeletonLoad, SkeletonCard } from "./insideComponents /skeleton";
 import { defaultExtensions } from "./extentions/extensions";
 import { slashCommand } from "./extentions/slash-command";
 import { Separator } from "@/components/ui/separator";
@@ -25,17 +24,29 @@ import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import { uploadFn } from "./extentions/image-upload";
 import UniversalTimeAttribute from "./extentions/time";
 import AppendJSONExtension from "./extentions/addJSON";
-import AppendJSONComponent from "./insideComponents /addJsonComp";
+import AppendJSONComponent from "./insideComponents/addJsonComp";
 import EditTitle from "./title";
+import { SkeletonCard, SkeletonLoad } from "./insideComponents/skeleton";
+import Playback from "./bubble/playback-buttons";
+import SpeakExtension from "./extentions/speak";
+import UpdateNoteState from "./insideComponents/updateTimeState";
+import CustomEnterBehavior from "./extentions/keymap";
 
-const extensions = [
-  ...defaultExtensions,
-  slashCommand,
-  UniversalTimeAttribute,
-  AppendJSONExtension,
-];
-
-const NovelEditor = ({ currentNote, contentKit, ToggleGenKit }) => {
+const NovelEditor = ({
+  currentNote,
+  contentKit,
+  ToggleGenKit,
+  setglobalSeek,
+}) => {
+  const extensions = [
+    SpeakExtension,
+    ...defaultExtensions,
+    slashCommand,
+    UniversalTimeAttribute.configure({
+      currentNote: currentNote,
+    }),
+    AppendJSONExtension,
+  ];
   //mode
   const { title, json_content, full_markdown, note_id, new_json } = currentNote;
 
@@ -95,9 +106,8 @@ const NovelEditor = ({ currentNote, contentKit, ToggleGenKit }) => {
             <Separator orientation="vertical" />
 
             <NodeSelector open={openNode} onOpenChange={setOpenNode} />
-            <Separator orientation="vertical" />
             <TextButtons />
-            <Separator orientation="vertical" />
+            {mode === "default" && <Playback setglobalSeek={setglobalSeek} />}
           </EditorBubble>
           <EditorCommand className="z-50 h-auto max-h-[330px]  w-72 overflow-y-auto rounded-md border border-muted bg-background px-1 py-2 shadow-md transition-all">
             <EditorCommandEmpty className="px-2 text-muted-foreground">
@@ -123,6 +133,7 @@ const NovelEditor = ({ currentNote, contentKit, ToggleGenKit }) => {
             ))}
           </EditorCommand>
           <AppendJSONComponent jsonToAppend={jsonToAppend} mode={mode} />
+          <UpdateNoteState currentNote={currentNote} />
         </EditorContent>
       </EditorRoot>
 

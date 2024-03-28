@@ -6,11 +6,11 @@ import { fetchURLs } from "@/components/appPages/services/audio/streamAudio";
 import { getMaxTime } from "@/components/appPages/services/audio/playback";
 import { Howl } from "howler";
 
-const AudioControls = ({ currentNote, mode }) => {
+const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
   const { session } = useAuth();
   const [playing, setPlaying] = useState(false);
   const [duration, setDuration] = useState(0.0);
-  const [globalSeek, setglobalSeek] = useState(0.0);
+  //const [globalSeek, setglobalSeek] = useState(0.0);
 
   //loaded audio
   const [audio, setAudio] = useState([]);
@@ -22,6 +22,10 @@ const AudioControls = ({ currentNote, mode }) => {
   const [currentSoundIndex, setCurrentSoundIndex] = useState(0);
 
   const requestRef = useRef();
+
+  useEffect(() => {
+    console.log("globalSeek", globalSeek);
+  }, [globalSeek]);
 
   // Fetch the audio urls and set states
   useEffect(() => {
@@ -210,6 +214,7 @@ const AudioControls = ({ currentNote, mode }) => {
 
   const benchTime = () => {
     if (Math.ceil(globalSeek) === Math.floor(duration)) {
+      console.log("duration", duration);
       return duration;
     } else {
       return globalSeek;

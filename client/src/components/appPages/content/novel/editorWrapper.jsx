@@ -45,7 +45,7 @@ function NoteComponent({
   const [slideView, setSlideView] = useState(false);
   const [activeUrl, setActiveUrl] = useState("");
   const [audioView, setAudioView] = useState(true);
-
+  const [globalSeek, setglobalSeek] = useState(0.0);
   const [diagramOn, setDiagramOn] = useState(false);
   const [noteOn, setNoteOn] = useState(false);
 
@@ -210,6 +210,7 @@ function NoteComponent({
                     currentNote={currentNote}
                     contentKit={contentKit}
                     ToggleGenKit={ToggleGenKit}
+                    setglobalSeek={setglobalSeek}
                   />
                 </div>
               </div>
@@ -226,6 +227,7 @@ function NoteComponent({
                     currentNote={currentNote}
                     contentKit={contentKit}
                     ToggleGenKit={ToggleGenKit}
+                    setglobalSeek={setglobalSeek}
                   />
                 </div>
               </div>
@@ -248,6 +250,7 @@ function NoteComponent({
                     currentNote={currentNote}
                     contentKit={contentKit}
                     ToggleGenKit={ToggleGenKit}
+                    setglobalSeek={setglobalSeek}
                   />
                 </div>
               </div>
@@ -290,6 +293,7 @@ function NoteComponent({
                     currentNote={currentNote}
                     contentKit={contentKit}
                     ToggleGenKit={ToggleGenKit}
+                    setglobalSeek={setglobalSeek}
                   />
                 </div>
               </div>
@@ -332,7 +336,11 @@ function NoteComponent({
 
       {mode === "default" && audioView && (
         <div className="h-24 flex-none border-t flex">
-          <AudioControls currentNote={currentNote} />
+          <AudioControls
+            currentNote={currentNote}
+            globalSeek={globalSeek}
+            setglobalSeek={setglobalSeek}
+          />
         </div>
       )}
     </div>

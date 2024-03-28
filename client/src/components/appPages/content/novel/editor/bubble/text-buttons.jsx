@@ -52,7 +52,7 @@ export const TextButtons = () => {
     },
   ];
   return (
-    <div className="flex">
+    <div className="flex border-l">
       {items.map((item, index) => (
         <EditorBubbleItem
           key={index}
