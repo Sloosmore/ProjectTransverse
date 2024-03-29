@@ -26,13 +26,9 @@ import AudioControls from "./playback/streamAudio";
 
 function NoteComponent({ noteData, modeKit, annotatingKit, pauseProps }) {
   const { noteId } = useParams();
-  //consitional rendering
-  const [editorState, setEditorState] = useState("Edit");
-  //need to be here because of conditional rendering
   const [content, setContent] = useState();
   const [editKey, setEditKey] = useState(0);
   const [updatedTitle, setUpdatedTitle] = useState();
-  const [keyFlag, setKeyFlag] = useState(0);
   const { mode } = modeKit;
   const [editView, setEditView] = useState(true);
   const [transcriptView, setTranscriptView] = useState(false);
@@ -42,12 +38,6 @@ function NoteComponent({ noteData, modeKit, annotatingKit, pauseProps }) {
   const [globalSeek, setglobalSeek] = useState(0.0);
   const [diagramOn, setDiagramOn] = useState(false);
   const [noteOn, setNoteOn] = useState(false);
-
-  //Scroll
-
-  const scrollKit = {};
-
-  //----------------------------------
 
   const ToggleGenKit = {
     diagramOn,
@@ -327,9 +317,7 @@ function NoteComponent({ noteData, modeKit, annotatingKit, pauseProps }) {
         {!(editView || slideView || transcriptView) && (
           <div className="flex justify-center items-center h-full">
             <h1 className="my-auto text-center p-20">
-              well this is kind of ackward but you don't have to select anything
-              <br />
-              <br /> you do you
+              if you hate this notetaker text me feedback (206) 372-0327 <br />
             </h1>
           </div>
         )}

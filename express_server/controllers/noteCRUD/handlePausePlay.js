@@ -33,6 +33,8 @@ const pauseAppend = async (req, res) => {
     console.log("date2", new Date());
     const pauseArray = [...note.pause_timestamps, newDate];
 
+    console.log("noteID", id);
+
     const { error: updateError } = await supabase
       .from("note")
       .update({

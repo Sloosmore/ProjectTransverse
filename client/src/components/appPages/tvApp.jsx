@@ -1,10 +1,9 @@
 import "regenerator-runtime";
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect } from "react";
 import useWebSocket from "react-use-websocket";
 import "./tvApp.css";
 import { AppRoutes } from "./content/routes";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { handleSendLLM } from "./services/setNotepref";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -17,8 +16,8 @@ import NoAudioSupport from "./support/noSupport";
 import SubmitToast from "./modalsToast/submitToast";
 import { useNavigate } from "react-router-dom";
 import { stopRecordingMedia } from "./services/audio/mediaRecorder";
-import { Speech } from "lucide-react";
 import { TranscriptContext } from "@/hooks/transcriptStore";
+import { onPause } from "./services/pausePlay";
 
 const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 
@@ -120,6 +119,8 @@ function TransverseApp() {
     console.log("updated mode", mode);
 
     const handleBeforeUnload = (e) => {
+      onPause(noteID, new Date());
+      setMode("default");
       e.preventDefault();
       e.returnValue = "Are you sure you want to leave?";
       return "Are you sure you want to leave?";
@@ -127,7 +128,9 @@ function TransverseApp() {
 
     if (mode === "note") {
       // Adding the event listener when in 'note' mode
-      window.addEventListener("beforeunload", handleBeforeUnload);
+      setTimeout(() => {
+        window.addEventListener("beforeunload", handleBeforeUnload);
+      }, 1000);
     } else if (mode === "default") {
       // Removing the event listener when in 'default' mode
       window.removeEventListener("beforeunload", handleBeforeUnload);
