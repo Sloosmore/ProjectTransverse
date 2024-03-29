@@ -6,7 +6,6 @@ import NoteComponent from "./novel/editorWrapper";
 import FolderView from "./files/folderView/folderView";
 //import Editor from "./tiptapNotes/editor";
 export const AppRoutes = ({
-  transcript,
   docData,
   noteData,
   helpModalKit,
@@ -30,7 +29,6 @@ export const AppRoutes = ({
         element={
           <NoteComponent
             noteData={noteData}
-            transcript={transcript}
             modeKit={modeKit}
             annotatingKit={annotatingKit}
             pauseProps={pauseProps}

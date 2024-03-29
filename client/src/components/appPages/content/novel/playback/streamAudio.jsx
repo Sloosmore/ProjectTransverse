@@ -310,7 +310,7 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
             ></div>
           </div>
           <div className="playback-bar__duration">
-            {formatTime(duration) || "00"}
+            {!duration ? "Loading..." : formatTime(duration)}
           </div>
         </div>
       </div>

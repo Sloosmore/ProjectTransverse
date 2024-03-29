@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import AudioControls from "./playback/streamAudio";
 
-function Transcript({ currentNote, transcript }) {
+import { TranscriptContext } from "@/hooks/transcriptStore";
+
+function Transcript({ currentNote }) {
+  const { transcript } = useContext(TranscriptContext);
+
   const { full_transcript, status } = currentNote;
   return (
     <div className="p-6 ">

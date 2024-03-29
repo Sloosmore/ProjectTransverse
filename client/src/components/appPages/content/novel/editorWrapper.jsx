@@ -24,13 +24,7 @@ import EditTitle from "./editor/title";
 import Slides from "./slides";
 import AudioControls from "./playback/streamAudio";
 
-function NoteComponent({
-  noteData,
-  modeKit,
-  annotatingKit,
-  transcript,
-  pauseProps,
-}) {
+function NoteComponent({ noteData, modeKit, annotatingKit, pauseProps }) {
   const { noteId } = useParams();
   //consitional rendering
   const [editorState, setEditorState] = useState("Edit");
@@ -89,6 +83,8 @@ function NoteComponent({
     },
   ];
 
+  console.log("rerender");
+
   //more conditional rendering
   const windowWidth = useWindowWidth();
   //keep track of the current note
@@ -115,6 +111,10 @@ function NoteComponent({
     console.log("currentNote", currentNote);
     //setKeyFlag(keyFlag + 1);
   }, [currentNote.json_content, currentNote.title]);
+
+  useEffect(() => {
+    setActiveUrl(currentNote.slide_url);
+  }, [currentNote.slide_url]);
 
   const contentKit = {
     content,
@@ -188,7 +188,7 @@ function NoteComponent({
       <div className="flex-grow min-h-0">
         {transcriptView && !(editView || slideView) && (
           <div className="overflow-auto flex-grow min-h-0">
-            <Transcript currentNote={currentNote} transcript={transcript} />
+            <Transcript currentNote={currentNote} />
           </div>
         )}
         {slideView && !(editView || transcriptView) && (
@@ -202,7 +202,7 @@ function NoteComponent({
         )}
         {editView && !(slideView || transcriptView) && (
           <ResizablePanelGroup>
-            <ResizablePanel className="flex flex-col">
+            <ResizablePanel className="flex flex-col xl:mx-40">
               <div className="overflow-auto flex-grow">
                 <EditTitle currentNote={currentNote} />
                 <div className="flex-grow">
@@ -235,7 +235,11 @@ function NoteComponent({
             <ResizableHandle withHandle />
             <ResizablePanel className="flex flex-col">
               <div className="overflow-auto flex-grow min-h-0">
-                <Slides currentNote={currentNote} />
+                <Slides
+                  currentNote={currentNote}
+                  activeUrl={activeUrl}
+                  setActiveUrl={setActiveUrl}
+                />
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
@@ -258,7 +262,7 @@ function NoteComponent({
             <ResizableHandle withHandle />
             <ResizablePanel className="flex flex-col">
               <div className="overflow-auto flex-grow min-h-0">
-                <Transcript currentNote={currentNote} transcript={transcript} />
+                <Transcript currentNote={currentNote} />
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
@@ -278,7 +282,7 @@ function NoteComponent({
             <ResizableHandle withHandle />
             <ResizablePanel className="flex flex-col">
               <div className="overflow-auto flex-grow min-h-0">
-                <Transcript currentNote={currentNote} transcript={transcript} />
+                <Transcript currentNote={currentNote} />
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
@@ -313,10 +317,7 @@ function NoteComponent({
                 <ResizableHandle withHandle />
                 <ResizablePanel className="flex flex-col">
                   <div className="overflow-auto flex-grow min-h-0">
-                    <Transcript
-                      currentNote={currentNote}
-                      transcript={transcript}
-                    />
+                    <Transcript currentNote={currentNote} />
                   </div>
                 </ResizablePanel>
               </ResizablePanelGroup>

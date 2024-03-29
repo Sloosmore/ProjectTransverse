@@ -66,6 +66,15 @@ const NovelEditor = ({
 
   const { mode, diagramOn, noteOn } = ToggleGenKit;
 
+  const [update, setUpdate] = useState(false);
+
+  useEffect(() => {
+    if (content) {
+      setUpdate(true);
+      console.log("update");
+    }
+  }, [content]);
+
   useEffect(() => {
     setJsonToAppend(new_json);
   }, [new_json]);
@@ -73,10 +82,10 @@ const NovelEditor = ({
   const [jsonToAppend, setJsonToAppend] = useState();
 
   return (
-    <div key={content}>
+    <div key={update} className="w-full flex flex-col justify-center">
       <EditorRoot>
         <EditorContent
-          className=" top-div h-full relative relative w-full max-w-screen-lg "
+          className="h-full relative relative w-full justify-center"
           extensions={extensions}
           initialContent={content}
           onUpdate={({ editor }) => {
@@ -92,7 +101,7 @@ const NovelEditor = ({
             handleDrop: (view, event, _slice, moved) =>
               handleImageDrop(view, event, moved, uploadFn),
             attributes: {
-              class: `prose-lg prose-stone dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full w-full mx-auto  h-full`,
+              class: `prose-lg prose-stone dark:prose-invert prose-headings:font-title font-default focus:outline-none w-full mx-auto h-full `,
             },
           }}
           slotAfter={<ImageResizer />}
