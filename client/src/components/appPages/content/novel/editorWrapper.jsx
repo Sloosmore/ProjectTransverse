@@ -24,7 +24,7 @@ import EditTitle from "./editor/title";
 import Slides from "./slides";
 import AudioControls from "./playback/streamAudio";
 
-function NoteComponent({ noteData, modeKit, annotatingKit, pauseProps }) {
+function NoteComponent({ noteData, modeKit, pauseProps }) {
   const { noteId } = useParams();
   const [content, setContent] = useState();
   const [editKey, setEditKey] = useState(0);

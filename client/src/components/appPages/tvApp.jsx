@@ -17,6 +17,7 @@ import SubmitToast from "./modalsToast/submitToast";
 import { useNavigate } from "react-router-dom";
 import { stopRecordingMedia } from "./services/audio/mediaRecorder";
 import { TranscriptContext } from "@/hooks/transcriptStore";
+import { NoteDataContext } from "@/hooks/noteDataStore";
 import { onPause } from "./services/pausePlay";
 
 const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
@@ -26,14 +27,9 @@ function TransverseApp() {
 
   const { session } = useAuth();
   //this is for help
-  const [showHelpModal, setShowHelpModal] = useState(false);
-  const closeModal = () => setShowHelpModal(false);
 
   //this is for note vs default mode
   const [mode, setMode] = useState("default");
-
-  //this is for docs in sidebar
-  const [docData, setDocs] = useState([]);
 
   //this is for notes in sidebar
   const [noteData, setNotes] = useState([]);
@@ -43,8 +39,6 @@ function TransverseApp() {
   const [noteID, setNoteID] = useState(localStorage.getItem("noteID") || "");
 
   //hide the sidebar while editing notes
-  const [annotating, setAnnotating] = useState(false);
-
   //for editing notes in files link
   const [showOffCanvasEdit, setOffCanvasEdit] = useState(false);
 
@@ -230,7 +224,6 @@ function TransverseApp() {
   };
 
   const controlProps = {
-    setDocs,
     setNotes,
     wsJSON: sendJsonMessage,
     setMode,
@@ -264,21 +257,6 @@ function TransverseApp() {
     setNotes,
   };
 
-  const annotatingKit = {
-    annotating,
-    setAnnotating,
-  };
-
-  const helpModalKit = {
-    showHelpModal,
-    setShowHelpModal,
-    closeModal,
-  };
-
-  const profileKit = {
-    SpeechRecognition,
-  };
-
   const newNoteButtonkit = {
     setNewNoteField,
     newNoteField,
@@ -287,23 +265,22 @@ function TransverseApp() {
 
   return (
     <div className="flex flex-col h-screen">
-      <TranscriptContext.Provider value={{ transcript }}>
-        <AppRoutes
-          docData={docData}
-          noteData={noteData}
-          helpModalKit={helpModalKit}
-          helpModal={setShowHelpModal}
-          modeKit={modeKit}
-          annotatingKit={annotatingKit}
-          canvasEdit={canvasEdit}
-          controlProps={controlProps}
-          newNoteButtonkit={newNoteButtonkit}
-          profileKit={profileKit}
-          pauseProps={pauseProps}
-        />
-        <SupportedToast />
-        <SubmitToast {...submitToastKit} />
-      </TranscriptContext.Provider>
+      <NoteDataContext.Provider
+        value={{ noteData, setNotes, noteID, setNoteID, mode, setMode }}
+      >
+        <TranscriptContext.Provider value={{ transcript }}>
+          <AppRoutes
+            noteData={noteData}
+            modeKit={modeKit}
+            canvasEdit={canvasEdit}
+            controlProps={controlProps}
+            newNoteButtonkit={newNoteButtonkit}
+            pauseProps={pauseProps}
+          />
+          <SupportedToast />
+          <SubmitToast {...submitToastKit} />
+        </TranscriptContext.Provider>
+      </NoteDataContext.Provider>
     </div>
   );
 }
