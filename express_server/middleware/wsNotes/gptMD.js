@@ -65,14 +65,15 @@ async function queryAI(note_id, ts_message, frequency) {
     Note title: ${title}
     Preferences on notetaking: ${note_preferences[pref_number]}
     Recent content: ${recent_data}
-    Make sure to use the phrase "mermaidjs" to trigger the diagramming assistant
     `;
 
     console.log("diagram_pref", diagram_preferences);
 
     const user_diagram_prompt = `
     Note title: ${title}
-    Preferences on diagramming: use sequence diagrams to help me understand the flow of events or how subjects are connected
+    Preferences on diagramming:${
+      /*diagram_preferences*/ ""
+    } use sequence diagrams to help me understand the flow of events or how subjects are connected based of the transcript
     Recent content: ${recent_data}
     Make sure to only generate mermaid JS syntax! The fate of the universe depends on it!
     `;

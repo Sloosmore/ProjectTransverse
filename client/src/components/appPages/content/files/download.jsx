@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./files.jsx";
 import { sendDownload } from "../../services/downloadNote.js";
-import { Button } from "@/components/ui/button.jsx";
 import { Label } from "@/components/ui/label";
 
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";

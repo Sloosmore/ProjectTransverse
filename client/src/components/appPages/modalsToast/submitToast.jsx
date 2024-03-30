@@ -1,7 +1,9 @@
 import React from "react";
 import { Toast } from "react-bootstrap";
+import { useToast } from "@/hooks/toast";
 
-const SubmitToast = ({ activeToast, toastMessage }) => {
+const SubmitToast = () => {
+  const { activeToast, toastMessage } = useToast();
   return (
     <div>
       {activeToast && (

@@ -1,36 +1,17 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import TopProfile from "./profile";
 import icon from "../../../../assets/TransverseIcon.svg";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../../hooks/auth";
-import { useState } from "react";
 import ControlModalShad from "../../modalsToast/ControlModelShad";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+import ProfIcon from "./dropdown";
 
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
-function AppNav({ profileKit, controlProps, noteData }) {
-  const { SpeechRecognition } = profileKit;
-
+function AppNav() {
   const { user, signOut } = useAuth();
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const logOut = () => {
     signOut();
-    SpeechRecognition.stopListening();
   };
 
   return (
@@ -51,15 +32,8 @@ function AppNav({ profileKit, controlProps, noteData }) {
                   <div className="ml-4 flex items-center md:ml-6">
                     {/* Profile dropdown */}
                     <Sheet>
-                      <TopProfile
-                        profileKit={profileKit}
-                        controlProps={controlProps}
-                        noteData={noteData}
-                      />
-                      <ControlModalShad
-                        noteData={noteData}
-                        controlProps={controlProps}
-                      />
+                      <ProfIcon logOut={signOut} />
+                      <ControlModalShad />
                     </Sheet>
                   </div>
                 </div>
@@ -103,10 +77,7 @@ function AppNav({ profileKit, controlProps, noteData }) {
                         Note Settings
                       </div>
                     </SheetTrigger>
-                    <ControlModalShad
-                      noteData={noteData}
-                      controlProps={controlProps}
-                    />
+                    <ControlModalShad />
                   </Sheet>
 
                   <Disclosure.Button
@@ -122,13 +93,6 @@ function AppNav({ profileKit, controlProps, noteData }) {
           </>
         )}
       </Disclosure>
-      {/*
-      <ControlModal
-        show={show}
-        handleClose={handleClose}
-        noteData={noteData}
-        controlProps={controlProps}
-                    />*/}
     </div>
   );
 }

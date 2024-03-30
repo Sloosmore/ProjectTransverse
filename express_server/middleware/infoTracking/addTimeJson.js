@@ -1,5 +1,4 @@
 function replaceTimeWithCurrent(item, newTime) {
-  console.log("time being added", newTime);
   if (Array.isArray(item)) {
     // If item is an array, process each element recursively
     return item.map((element) => replaceTimeWithCurrent(element, newTime));

@@ -1,8 +1,7 @@
 const supabase = require("../../db/supabase");
 const uuid = require("uuid");
 
-const insertNewNoteRecord = async (user_id, title, folder_id) => {
-  const note_id = uuid.v4();
+const insertNewNoteRecord = async (user_id, title, folder_id, note_id) => {
   const status = "active";
   const is_deleted = false;
   const thread_id = "";
@@ -14,7 +13,23 @@ const insertNewNoteRecord = async (user_id, title, folder_id) => {
   //this may not be needed... but need to make sure that this happens before play does
   const play_timestamps = [new Date()];
   const pause_timestamps = [];
-  const json_content = "";
+  const json_content = {
+    type: "doc",
+    content: [
+      {
+        type: "paragraph",
+        attrs: {
+          time: 0,
+        },
+        content: [
+          {
+            text: "",
+            type: "text",
+          },
+        ],
+      },
+    ],
+  };
   const diagram_message_count = 0;
   const note_gen_on = false;
   const diagram_gen_on = false;

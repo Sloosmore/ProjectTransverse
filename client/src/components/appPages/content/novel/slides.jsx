@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 
-function Slides({ currentNote, activeUrl, setActiveUrl }) {
+const Slides = React.memo(function Slides({
+  currentNote,
+  activeUrl,
+  setActiveUrl,
+}) {
   const [uploadedFile, setUploadedFile] = useState("");
 
   const uploadSlides = async (file, note_id) => {
@@ -22,9 +26,13 @@ function Slides({ currentNote, activeUrl, setActiveUrl }) {
     setActiveUrl(slide_url);
   };
 
+  useEffect(() => {
+    console.log("activeUrl", activeUrl);
+  }, [activeUrl]);
+
   return (
     <div className="flex flex-row justify-center h-full">
-      {(activeUrl && (
+      {activeUrl ? (
         <div className="w-full">
           <DocViewer
             sandbox="allow-scripts"
@@ -37,7 +45,7 @@ function Slides({ currentNote, activeUrl, setActiveUrl }) {
             renderers={DocViewerRenderers}
           />
         </div>
-      )) || (
+      ) : (
         <div className="flex-row flex border p-2 rounded-lg self-center w-full sm:mx-10 md:mx-20">
           <input
             type="file"
@@ -58,6 +66,6 @@ function Slides({ currentNote, activeUrl, setActiveUrl }) {
       )}
     </div>
   );
-}
+});
 
 export default Slides;

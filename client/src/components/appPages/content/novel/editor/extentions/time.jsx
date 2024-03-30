@@ -43,6 +43,9 @@ const UniversalTimeAttribute = Extension.create({
 
           if (parentNode && parentNode.attrs.time) {
             console.log(`parentNode.attrs.time`, parentNode.attrs.time);
+            if (parentNode.attrs.time.time === null) {
+              return 0;
+            }
             return parentNode.attrs.time;
           }
 
@@ -72,10 +75,14 @@ const UniversalTimeAttribute = Extension.create({
               return;
             }
 
+            console.log("node", node);
+
             const shouldUpdateTime =
-              "time" in node.attrs
-                ? node.attrs.time === 0 || node.textContent.length < 3
-                : true;
+              "time" in node.attrs &&
+              (node.attrs.time === null ||
+                (typeof node.attrs.time === "object" &&
+                  node.attrs.time.time === null) ||
+                node.textContent.length < 3);
 
             if (shouldUpdateTime) {
               console.log("updating time for node", node, "new time:", newTime);
@@ -139,7 +146,7 @@ const UniversalTimeAttribute = Extension.create({
         types: highLevelNodes,
         attributes: {
           time: {
-            default: 0,
+            default: null,
             renderHTML: (attributes) => {
               return {
                 "data-time": attributes.time,

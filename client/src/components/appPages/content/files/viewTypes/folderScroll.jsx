@@ -11,16 +11,8 @@ import EditExportNote from "../fileEditShad";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-function FolderScroll({ files, folders, canvasEdit }) {
-  useEffect(() => {
-    console.log("folders", folders);
-    console.log("files", files);
-  }, [folders, files]);
-
-  const { setOffCanvasEdit } = canvasEdit;
+function FolderScroll({ files, folders }) {
   //this needs to be in the use effect for use State
-
-  const handleClose = () => setOffCanvasEdit(false);
 
   const navigate = useNavigate();
 
@@ -82,11 +74,7 @@ function FolderScroll({ files, folders, canvasEdit }) {
                                     <i className=" bi bi-gear align-middle "></i>
                                   </div>
                                 </SheetTrigger>
-                                <EditExportNote
-                                  canvasEdit={canvasEdit}
-                                  handleClose={handleClose}
-                                  file={file}
-                                />
+                                <EditExportNote file={file} />
                               </Sheet>
                             </td>
                           </tr>

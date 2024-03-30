@@ -1,16 +1,10 @@
 import HelpModalShad from "../../modalsToast/helpShad";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
 
-function Help({ helpModalKit }) {
-  const { showHelpModal, setShowHelpModal, closeModal } = helpModalKit;
+function Help() {
+  const [showHelpModal, setShowHelpModal] = useState(false);
+  const closeModal = () => setShowHelpModal(false);
 
   return (
     <div className="relative">

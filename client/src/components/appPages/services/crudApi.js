@@ -8,7 +8,8 @@
 };*/
 
 //Grabs Note Records and distingueshes if the note visble or not
-export const fetchNoteRecords = async (session, visibleNotes, resume) => {
+export const fetchNoteRecords = async (session, resume) => {
+  const visibleNotes = true;
   const token = session.access_token;
   // if !resume deactivate records
   const response = await fetch(
@@ -46,7 +47,6 @@ export const deactivateNotes = async (session) => {
 
 //UP MARKDOWN (no auth needed for MVP)
 export const saveNoteMarkdown = async (note_id, markdown, json_content) => {
-  console.log(note_id);
   const response = await fetch(
     `${import.meta.env.VITE_BASE_URL}/records-api/notes-markdown`,
     {

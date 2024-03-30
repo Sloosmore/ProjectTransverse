@@ -58,11 +58,16 @@ async function handleWebSocketConnection(ws, request) {
         const user_id = user;
         const title = data.title;
         const folder_id = data.folder_id;
+        const note_id = data.note_id;
 
         const inactiveRecords = await deactivateRecords(user);
-        const record = await insertNewNoteRecord(user_id, title, folder_id);
+        const record = await insertNewNoteRecord(
+          user_id,
+          title,
+          folder_id,
+          note_id
+        );
         console.log(record[0]);
-        const note_id = record[0].note_id;
         const audioSegment = await insertNewAudioSegment(note_id);
 
         ws.send(
@@ -79,12 +84,13 @@ async function handleWebSocketConnection(ws, request) {
         //this is what needs to be appended to the full TS and thrown on to the active to see if it needs to be appended
         //throw on a date if it has a x charecter count
         let incomingTs = 0;
+        let totTime = 0;
         if (ts.length > 40) {
           //READ FROM DB HERE
           // if playarray > pause array we are in play
           // if pauseArray = play array we are in paus
 
-          const totTime = await calculateTotTime(note_id);
+          totTime = await calculateTotTime(note_id);
 
           const formattedTime = formatElapsedTime(totTime);
 

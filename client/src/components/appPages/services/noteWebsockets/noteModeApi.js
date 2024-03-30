@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 export const createNewNote = (
   name,
   transcript,
@@ -6,11 +8,10 @@ export const createNewNote = (
   setMode,
   wsJSON,
   session,
-  SpeechRecognition,
-  folder_id
+  folder_id,
+  setNoteID
 ) => {
   //turn on the mike
-  SpeechRecognition.startListening({ continuous: true });
 
   console.log(name);
   //notes are being deactivated in the backend so could just fetch insted of filter after send responce
@@ -25,6 +26,9 @@ export const createNewNote = (
   }
   console.log("folder_id", folder_id);
   //this may be blocking
+  const noteID = uuidv4();
+  setNoteID(noteID);
+
   setMode("note");
   wsJSON({
     title: name,
@@ -32,5 +36,6 @@ export const createNewNote = (
     init: true,
     token: session.access_token,
     folder_id: folder_id,
+    note_id: noteID,
   });
 };

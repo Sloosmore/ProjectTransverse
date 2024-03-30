@@ -20,11 +20,16 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { useNoteData } from "@/hooks/noteDataStore";
+import { useAuth } from "@/hooks/auth";
+
+import { fetchNoteRecords } from "../../services/crudApi";
 
 //edit for sheet
 
-export function EditExportNote({ canvasEdit, handleClose, file }) {
-  const { showOffCanvasEdit, setOffCanvasEdit } = canvasEdit;
+export function EditExportNote({ file }) {
+  const { setNotes } = useNoteData();
+  const { session } = useAuth();
 
   const [title, setTitle] = useState(file ? file.title : "");
   const [visible, setVisible] = useState(file ? file.visible : "");
@@ -36,19 +41,36 @@ export function EditExportNote({ canvasEdit, handleClose, file }) {
     setVisible(file ? file.visible : "");
     setMarkdown(file ? file.full_markdown : "");
     setNoteID(file ? file.note_id : "");
-  }, [showOffCanvasEdit, file]);
+  }, [file]);
 
-  const updateNote = (file, markdown, visible, title, noteID, setShowAlert) => {
+  const updateNote = async (
+    file,
+    markdown,
+    visible,
+    title,
+    noteID,
+    setShowAlert
+  ) => {
     if (file) {
-      saveNoteMarkdown(noteID, markdown);
-      updateVis(noteID, visible);
-      updateTitle(noteID, title);
+      await saveNoteMarkdown(noteID, markdown);
+      await updateVis(noteID, visible);
+      await updateTitle(noteID, title);
       setShowAlert(true);
+      const notes = await fetchNoteRecords(session, true);
+      setNotes(notes);
+
       setTimeout(() => {
         setShowAlert(false);
       }, 3000);
     }
   };
+
+  const deleteRec = async (noteID) => {
+    await deleteRecord(noteID);
+    const notes = await fetchNoteRecords(session, true);
+    setNotes(notes);
+  };
+
   return (
     <SheetContent className="min-w-[350px] md:min-w-[500px]">
       <SheetHeader>
@@ -71,9 +93,9 @@ export function EditExportNote({ canvasEdit, handleClose, file }) {
         <div className="d-flex align-items-center justify-content-between mt-4">
           <Button
             type="button"
-            onClick={() =>
-              updateNote(file, markdown, visible, title, noteID, setShowAlert)
-            }
+            onClick={() => {
+              updateNote(file, markdown, visible, title, noteID, setShowAlert);
+            }}
             className="col"
           >
             Save
@@ -114,8 +136,7 @@ export function EditExportNote({ canvasEdit, handleClose, file }) {
           <Button
             variant="destructive"
             onClick={() => {
-              deleteRecord(noteID);
-              setOffCanvasEdit(false);
+              deleteRec(noteID);
             }}
           >
             Delete

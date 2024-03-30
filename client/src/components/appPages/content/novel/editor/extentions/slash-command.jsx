@@ -12,30 +12,40 @@ import {
   TextQuote,
 } from "lucide-react";
 import { createSuggestionItems } from "novel/extensions";
-//import { startImageUpload } from "novel/plugins";
 import { Command, renderItems } from "novel/extensions";
 import { uploadFn } from "./image-upload";
 
 export const suggestionItems = createSuggestionItems([
   {
-    title: "Image",
-    description: "Upload an image from your computer.",
-    searchTerms: ["photo", "picture", "media"],
-    icon: <ImageIcon size={18} />,
+    title: "Send Feedback",
+    description: "Let us know how we can improve.",
+    icon: <MessageSquarePlus size={18} />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).run();
-      // upload image
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = "image/*";
-      input.onchange = async () => {
-        if (input.files?.length) {
-          const file = input.files[0];
-          const pos = editor.view.state.selection.from;
-          uploadFn(file, editor.view, pos);
-        }
-      };
-      input.click();
+      window.open("/feedback", "_blank");
+    },
+  },
+  {
+    title: "Text",
+    description: "Just start typing with plain text.",
+    searchTerms: ["p", "paragraph"],
+    icon: <Text size={18} />,
+    command: ({ editor, range }) => {
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .toggleNode("paragraph", "paragraph")
+        .run();
+    },
+  },
+  {
+    title: "To-do List",
+    description: "Track tasks with a to-do list.",
+    searchTerms: ["todo", "task", "list", "check", "checkbox"],
+    icon: <CheckSquare size={18} />,
+    command: ({ editor, range }) => {
+      editor.chain().focus().deleteRange(range).toggleTaskList().run();
     },
   },
   {
@@ -99,29 +109,6 @@ export const suggestionItems = createSuggestionItems([
     },
   },
   {
-    title: "Text",
-    description: "Just start typing with plain text.",
-    searchTerms: ["p", "paragraph"],
-    icon: <Text size={18} />,
-    command: ({ editor, range }) => {
-      editor
-        .chain()
-        .focus()
-        .deleteRange(range)
-        .toggleNode("paragraph", "paragraph")
-        .run();
-    },
-  },
-  {
-    title: "To-do List",
-    description: "Track tasks with a to-do list.",
-    searchTerms: ["todo", "task", "list", "check", "checkbox"],
-    icon: <CheckSquare size={18} />,
-    command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).toggleTaskList().run();
-    },
-  },
-  {
     title: "Quote",
     description: "Capture a quote.",
     searchTerms: ["blockquote"],
@@ -144,25 +131,6 @@ export const suggestionItems = createSuggestionItems([
       editor.chain().focus().deleteRange(range).toggleCodeBlock().run(),
   },
   {
-    title: "Send Feedback",
-    description: "Let us know how we can improve.",
-    icon: <MessageSquarePlus size={18} />,
-    command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).run();
-      window.open("/feedback", "_blank");
-    },
-  },
-]);
-
-export const slashCommand = Command.configure({
-  suggestion: {
-    items: () => suggestionItems,
-    render: renderItems,
-  },
-});
-
-/*
-{
     title: "Image",
     description: "Upload an image from your computer.",
     searchTerms: ["photo", "picture", "media"],
@@ -177,9 +145,17 @@ export const slashCommand = Command.configure({
         if (input.files?.length) {
           const file = input.files[0];
           const pos = editor.view.state.selection.from;
-          startImageUpload(file, editor.view, pos);
+          uploadFn(file, editor.view, pos);
         }
       };
       input.click();
     },
-  },*/
+  },
+]);
+
+export const slashCommand = Command.configure({
+  suggestion: {
+    //items: () => suggestionItems,
+    render: renderItems,
+  },
+});

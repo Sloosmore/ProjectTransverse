@@ -16,33 +16,20 @@ import { Separator } from "@/components/ui/separator";
 import "./recPause.css";
 import CardTextSvg from "./svg/card-text.jsx";
 import CardPicSvg from "./svg/card-pic.jsx";
+import { useNoteData } from "@/hooks/noteDataStore.jsx";
+import { useToast } from "@/hooks/toast.jsx";
 
 // Default values shown
 
-const RecPause = ({ pauseProps, localNoteID, ToggleGenKit }) => {
+const RecPause = ({ localNoteID, ToggleGenKit }) => {
   const [recStatus, setRecStatus] = useState();
   const [viewTitle, setViewTitle] = useState();
   const [recStatusObject, setRecStatusObject] = useState();
 
   const { diagramOn, noteOn, setDiagramOn, setNoteOn } = ToggleGenKit;
+  const { mode, setMode, noteID, noteData, setNoteID } = useNoteData();
 
-  const { session } = useAuth();
-  const {
-    mode,
-    setMode,
-    noteID,
-    setNotes,
-    noteData,
-    SpeechRecognition,
-    setNewNoteField,
-    newNoteField,
-    setNoteID,
-    submitToastKit,
-    recorder,
-    setRecorder,
-  } = pauseProps;
-  const { setActiveToast, setToastMessage, activeToast, toastMessage } =
-    submitToastKit;
+  const { setActiveToast, setToastMessage } = useToast();
 
   const endNoteToast = () => {
     setToastMessage("Recording Sesstion ended");
@@ -56,17 +43,10 @@ const RecPause = ({ pauseProps, localNoteID, ToggleGenKit }) => {
     onPause,
     onPlay,
     noteID,
-    fetchNoteRecords,
-    session,
-    setNotes,
     setMode,
     endNoteToast,
-    SpeechRecognition,
     setNoteID,
     localNoteID,
-    viewTitle,
-    recorder,
-    setRecorder,
   });
 
   useEffect(() => {

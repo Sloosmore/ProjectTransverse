@@ -26,12 +26,10 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 
-function FolderBox({ folders, canvasEdit, files, handleDeleteFolder }) {
-  const { setOffCanvasEdit } = canvasEdit;
+function FolderBox({ folders, files, handleDeleteFolder }) {
   //this needs to be in the use effect for use State
   const [searchTerm, setSearchTerm] = useState("");
   const [sortValue, setSortValue] = useState("");
-  const handleClose = () => setOffCanvasEdit(false);
 
   if (searchTerm !== "") {
     folders = folders.filter((folders) =>
@@ -263,11 +261,7 @@ function FolderBox({ folders, canvasEdit, files, handleDeleteFolder }) {
                         <i className=" bi bi-gear align-middle "></i>
                       </div>
                     </SheetTrigger>
-                    <EditExportNote
-                      canvasEdit={canvasEdit}
-                      handleClose={handleClose}
-                      file={file}
-                    />
+                    <EditExportNote file={file} />
                   </Sheet>
                 </td>
               </tr>

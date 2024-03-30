@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import UploadNotes from "./UploadNotes";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-function ControlModalShad({ show, handleClose, noteData, controlProps }) {
+function ControlModalShad() {
   const { session } = useAuth();
 
   //LLM preffereences

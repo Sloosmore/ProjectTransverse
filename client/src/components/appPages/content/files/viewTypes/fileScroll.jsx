@@ -7,11 +7,8 @@ import EditExportNote from "../fileEditShad";
 
 //overflow for records
 
-function FileScroll({ canvasEdit, files, folders, searchTerm }) {
-  const { setOffCanvasEdit } = canvasEdit;
+function FileScroll({ files, folders, searchTerm }) {
   //this needs to be in the use effect for use State
-
-  const handleClose = () => setOffCanvasEdit(false);
 
   const navigate = useNavigate();
 
@@ -139,11 +136,7 @@ function FileScroll({ canvasEdit, files, folders, searchTerm }) {
                         <i className=" bi bi-gear align-middle "></i>
                       </div>
                     </SheetTrigger>
-                    <EditExportNote
-                      canvasEdit={canvasEdit}
-                      handleClose={handleClose}
-                      file={file}
-                    />
+                    <EditExportNote file={file} />
                   </Sheet>
                 </td>
               </tr>

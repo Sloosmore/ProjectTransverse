@@ -23,23 +23,15 @@ import { Separator } from "@/components/ui/separator";
 import EditTitle from "./editor/title";
 import Slides from "./slides";
 import AudioControls from "./playback/streamAudio";
+import { useNoteData } from "@/hooks/noteDataStore";
 
-function NoteComponent({
-  noteData,
-  modeKit,
-  annotatingKit,
-  transcript,
-  pauseProps,
-}) {
+function NoteComponent() {
+  const { mode, noteData } = useNoteData();
+
   const { noteId } = useParams();
-  //consitional rendering
-  const [editorState, setEditorState] = useState("Edit");
-  //need to be here because of conditional rendering
   const [content, setContent] = useState();
   const [editKey, setEditKey] = useState(0);
   const [updatedTitle, setUpdatedTitle] = useState();
-  const [keyFlag, setKeyFlag] = useState(0);
-  const { mode } = modeKit;
   const [editView, setEditView] = useState(true);
   const [transcriptView, setTranscriptView] = useState(false);
   const [slideView, setSlideView] = useState(false);
@@ -48,12 +40,6 @@ function NoteComponent({
   const [globalSeek, setglobalSeek] = useState(0.0);
   const [diagramOn, setDiagramOn] = useState(false);
   const [noteOn, setNoteOn] = useState(false);
-
-  //Scroll
-
-  const scrollKit = {};
-
-  //----------------------------------
 
   const ToggleGenKit = {
     diagramOn,
@@ -116,6 +102,10 @@ function NoteComponent({
     //setKeyFlag(keyFlag + 1);
   }, [currentNote.json_content, currentNote.title]);
 
+  useEffect(() => {
+    setActiveUrl(currentNote.slide_url);
+  }, [currentNote.slide_url]);
+
   const contentKit = {
     content,
     setContent,
@@ -130,11 +120,7 @@ function NoteComponent({
       <div className="h-12 flex-none border-b flex">
         <div className="my-auto md:ps-10 flex w-full justify-between">
           <div className="text-gray-400 flex align-items">
-            <RecPause
-              pauseProps={pauseProps}
-              localNoteID={noteId}
-              ToggleGenKit={ToggleGenKit}
-            />
+            <RecPause localNoteID={noteId} ToggleGenKit={ToggleGenKit} />
             {mode === "default" && (
               <>
                 <Separator orientation="vertical" className="me-2.5" />
@@ -188,7 +174,7 @@ function NoteComponent({
       <div className="flex-grow min-h-0">
         {transcriptView && !(editView || slideView) && (
           <div className="overflow-auto flex-grow min-h-0">
-            <Transcript currentNote={currentNote} transcript={transcript} />
+            <Transcript currentNote={currentNote} />
           </div>
         )}
         {slideView && !(editView || transcriptView) && (
@@ -202,7 +188,7 @@ function NoteComponent({
         )}
         {editView && !(slideView || transcriptView) && (
           <ResizablePanelGroup>
-            <ResizablePanel className="flex flex-col">
+            <ResizablePanel className="flex flex-col xl:mx-40">
               <div className="overflow-auto flex-grow">
                 <EditTitle currentNote={currentNote} />
                 <div className="flex-grow">
@@ -235,7 +221,11 @@ function NoteComponent({
             <ResizableHandle withHandle />
             <ResizablePanel className="flex flex-col">
               <div className="overflow-auto flex-grow min-h-0">
-                <Slides currentNote={currentNote} />
+                <Slides
+                  currentNote={currentNote}
+                  activeUrl={activeUrl}
+                  setActiveUrl={setActiveUrl}
+                />
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
@@ -258,7 +248,7 @@ function NoteComponent({
             <ResizableHandle withHandle />
             <ResizablePanel className="flex flex-col">
               <div className="overflow-auto flex-grow min-h-0">
-                <Transcript currentNote={currentNote} transcript={transcript} />
+                <Transcript currentNote={currentNote} />
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
@@ -278,7 +268,7 @@ function NoteComponent({
             <ResizableHandle withHandle />
             <ResizablePanel className="flex flex-col">
               <div className="overflow-auto flex-grow min-h-0">
-                <Transcript currentNote={currentNote} transcript={transcript} />
+                <Transcript currentNote={currentNote} />
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
@@ -313,10 +303,7 @@ function NoteComponent({
                 <ResizableHandle withHandle />
                 <ResizablePanel className="flex flex-col">
                   <div className="overflow-auto flex-grow min-h-0">
-                    <Transcript
-                      currentNote={currentNote}
-                      transcript={transcript}
-                    />
+                    <Transcript currentNote={currentNote} />
                   </div>
                 </ResizablePanel>
               </ResizablePanelGroup>
@@ -326,9 +313,7 @@ function NoteComponent({
         {!(editView || slideView || transcriptView) && (
           <div className="flex justify-center items-center h-full">
             <h1 className="my-auto text-center p-20">
-              well this is kind of ackward but you don't have to select anything
-              <br />
-              <br /> you do you
+              if you hate this notetaker text me feedback (206) 372-0327 <br />
             </h1>
           </div>
         )}

@@ -5,69 +5,14 @@ import AppNav from "./top/appNav";
 import NoteComponent from "./novel/editorWrapper";
 import FolderView from "./files/folderView/folderView";
 //import Editor from "./tiptapNotes/editor";
-export const AppRoutes = ({
-  transcript,
-  docData,
-  noteData,
-  helpModalKit,
-  modeKit,
-  annotatingKit,
-  canvasEdit,
-  controlProps,
-  newNoteButtonkit,
-  profileKit,
-  pauseProps,
-}) => (
+export const AppRoutes = ({ controlProps }) => (
   <div className="flex flex-col h-screen">
-    <AppNav
-      profileKit={profileKit}
-      controlProps={controlProps}
-      noteData={noteData}
-    />
+    <AppNav />
     <Routes>
-      <Route
-        path="n/:noteId"
-        element={
-          <NoteComponent
-            noteData={noteData}
-            transcript={transcript}
-            modeKit={modeKit}
-            annotatingKit={annotatingKit}
-            pauseProps={pauseProps}
-          />
-        }
-      />
-      <Route
-        path="f/:folderId"
-        element={
-          <FolderView
-            canvasEdit={canvasEdit}
-            newNoteButtonkit={newNoteButtonkit}
-          />
-        }
-      />
-      <Route
-        path="/*"
-        element={
-          <Files canvasEdit={canvasEdit} newNoteButtonkit={newNoteButtonkit} />
-        }
-      />
+      <Route path="n/:noteId" element={<NoteComponent />} />
+      <Route path="f/:folderId" element={<FolderView />} />
+      <Route path="/*" element={<Files />} />
     </Routes>
-    <BottomConent
-      helpModalKit={helpModalKit}
-      controlProps={controlProps}
-      noteData={noteData}
-    />
+    <BottomConent controlProps={controlProps} />
   </div>
 );
-/* 
-
-      <Route
-        path="/oldIndex"
-        element={
-          <Home
-            transcript={transcript ? transcript.slice(-300) : ""}
-            helpModalKit={helpModalKit}
-          />
-        }
-      />*/
