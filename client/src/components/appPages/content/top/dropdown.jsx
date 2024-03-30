@@ -16,7 +16,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function ProfIcon({ logOut, noteData, controlProps }) {
+function ProfIcon({ logOut }) {
   const [show, setShow] = useState(false);
   return (
     <div className=" justify-center items-center">

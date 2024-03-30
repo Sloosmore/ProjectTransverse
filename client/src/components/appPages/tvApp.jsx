@@ -40,7 +40,6 @@ function TransverseApp() {
 
   //hide the sidebar while editing notes
   //for editing notes in files link
-  const [showOffCanvasEdit, setOffCanvasEdit] = useState(false);
 
   //for new note toast
   const [activeToast, setActiveToast] = useState(false);
@@ -195,7 +194,6 @@ function TransverseApp() {
     //fetchTaskRecords().then(setDocs);
     const ping = setInterval(() => {
       sendJsonMessage({ ping: true });
-      console.log("ping");
     }, 30000);
 
     //if deactivate any active notes
@@ -208,19 +206,11 @@ function TransverseApp() {
     };
   }, []);
 
-  useEffect(() => {
-    fetchNoteRecords(session, true).then(setNotes);
-  }, [showOffCanvasEdit]);
-
   const submitToastKit = {
     setActiveToast,
     setToastMessage,
     activeToast,
     toastMessage,
-  };
-  const canvasEdit = {
-    showOffCanvasEdit,
-    setOffCanvasEdit,
   };
 
   const controlProps = {
@@ -250,13 +240,6 @@ function TransverseApp() {
     setRecorder,
   };
 
-  const modeKit = {
-    mode,
-    setMode,
-    noteData,
-    setNotes,
-  };
-
   const newNoteButtonkit = {
     setNewNoteField,
     newNoteField,
@@ -270,9 +253,6 @@ function TransverseApp() {
       >
         <TranscriptContext.Provider value={{ transcript }}>
           <AppRoutes
-            noteData={noteData}
-            modeKit={modeKit}
-            canvasEdit={canvasEdit}
             controlProps={controlProps}
             newNoteButtonkit={newNoteButtonkit}
             pauseProps={pauseProps}

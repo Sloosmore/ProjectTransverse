@@ -15,8 +15,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { useNoteData } from "@/hooks/noteDataStore";
 
-function SubmitNewNote({ controlProps, noteData }) {
+function SubmitNewNote({ controlProps }) {
+  const { noteData, setNotes, setMode } = useNoteData();
+
   const { session } = useAuth();
   const [localNoteName, localNoteNameSet] = useState("");
   const [isVisible, setIsVisible] = useState(false);
@@ -31,10 +34,7 @@ function SubmitNewNote({ controlProps, noteData }) {
   const [selectedValue, setSelectedValue] = useState(null);
 
   const {
-    setNotes,
     wsJSON,
-    setMode,
-    resetTranscript,
     setActiveToast,
     setToastMessage,
     SpeechRecognition,

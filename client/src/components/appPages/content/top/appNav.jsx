@@ -1,13 +1,13 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import TopProfile from "./profile";
 import icon from "../../../../assets/TransverseIcon.svg";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../../hooks/auth";
 import ControlModalShad from "../../modalsToast/ControlModelShad";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
+import ProfIcon from "./dropdown";
 
-function AppNav({ controlProps, noteData }) {
+function AppNav() {
   const { user, signOut } = useAuth();
 
   const logOut = () => {
@@ -32,14 +32,8 @@ function AppNav({ controlProps, noteData }) {
                   <div className="ml-4 flex items-center md:ml-6">
                     {/* Profile dropdown */}
                     <Sheet>
-                      <TopProfile
-                        controlProps={controlProps}
-                        noteData={noteData}
-                      />
-                      <ControlModalShad
-                        noteData={noteData}
-                        controlProps={controlProps}
-                      />
+                      <ProfIcon logOut={signOut} />
+                      <ControlModalShad />
                     </Sheet>
                   </div>
                 </div>
@@ -83,10 +77,7 @@ function AppNav({ controlProps, noteData }) {
                         Note Settings
                       </div>
                     </SheetTrigger>
-                    <ControlModalShad
-                      noteData={noteData}
-                      controlProps={controlProps}
-                    />
+                    <ControlModalShad />
                   </Sheet>
 
                   <Disclosure.Button

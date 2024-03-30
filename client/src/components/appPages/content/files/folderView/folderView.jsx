@@ -11,12 +11,13 @@ import EditFolderTitle from "./folderTitle";
 import { useNavigate } from "react-router-dom";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import EditExportNote from "../fileEditShad";
+import { useNoteData } from "@/hooks/noteDataStore";
 
-function FolderView({ canvasEdit, newNoteButtonkit }) {
+function FolderView({ newNoteButtonkit }) {
+  const { noteData } = useNoteData();
   const { session } = useAuth();
   const { folderId } = useParams();
 
-  const { showOffCanvasEdit, setOffCanvasEdit } = canvasEdit;
   const { newNoteField, setNewNoteField, noteID } = newNoteButtonkit;
   const [files, setFiles] = useState([]);
   const [folder, setFolder] = useState({ title: "" });
@@ -24,29 +25,20 @@ function FolderView({ canvasEdit, newNoteButtonkit }) {
   const [title, setTitle] = useState("");
 
   useEffect(() => {
-    console.log("files", files);
-  }, [files]);
+    const fetchFolderData = async () => {
+      const folderNotes = noteData.filter(
+        (note) => note.folder_id === folderId
+      );
+      setFiles(folderNotes);
+      const folders = await fetchFolders(session);
+      const folder = folders.find((folder) => folder.folder_id === folderId);
+      setFolder(folder);
+    };
 
-  useEffect(() => {
-    fetchNoteRecords(session, false)
-      .then((files) => {
-        if (Array.isArray(files)) {
-          return files.filter((file) => file.folder_id === folderId);
-        } else {
-          return [];
-        }
-      })
-      .then(setFiles);
-    fetchFolders(session)
-      .then((folder) => {
-        return folder.find((folder) => folder.folder_id === folderId);
-      })
-      .then(setFolder);
-  }, [showOffCanvasEdit, folderId]);
+    fetchFolderData();
+  }, [folderId, noteData]);
 
   //this needs to be in the use effect for use State
-
-  const handleClose = () => setOffCanvasEdit(false);
 
   const navigate = useNavigate();
 
@@ -183,11 +175,7 @@ function FolderView({ canvasEdit, newNoteButtonkit }) {
                         <i className=" bi bi-gear align-middle "></i>
                       </div>
                     </SheetTrigger>
-                    <EditExportNote
-                      canvasEdit={canvasEdit}
-                      handleClose={handleClose}
-                      file={file}
-                    />
+                    <EditExportNote file={file} />
                   </Sheet>
                 </td>
               </tr>

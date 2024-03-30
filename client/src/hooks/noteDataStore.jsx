@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 export const NoteDataContext = createContext({
   noteData: [],
@@ -10,6 +10,8 @@ export const NoteDataContext = createContext({
 });
 
 export function useNoteData() {
+  const { noteData, setNotes, noteID, setNoteID, mode, setMode } =
+    useContext(NoteDataContext);
   if (noteData === undefined || mode === undefined) {
     throw new Error("useNoteData must be used within a NoteDataProvider");
   }

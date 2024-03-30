@@ -23,13 +23,15 @@ import { Separator } from "@/components/ui/separator";
 import EditTitle from "./editor/title";
 import Slides from "./slides";
 import AudioControls from "./playback/streamAudio";
+import { useNoteData } from "@/hooks/noteDataStore";
 
-function NoteComponent({ noteData, modeKit, pauseProps }) {
+function NoteComponent({ pauseProps }) {
+  const { mode, noteData } = useNoteData();
+
   const { noteId } = useParams();
   const [content, setContent] = useState();
   const [editKey, setEditKey] = useState(0);
   const [updatedTitle, setUpdatedTitle] = useState();
-  const { mode } = modeKit;
   const [editView, setEditView] = useState(true);
   const [transcriptView, setTranscriptView] = useState(false);
   const [slideView, setSlideView] = useState(false);
@@ -72,8 +74,6 @@ function NoteComponent({ noteData, modeKit, pauseProps }) {
       variable: slideView,
     },
   ];
-
-  console.log("rerender");
 
   //more conditional rendering
   const windowWidth = useWindowWidth();
