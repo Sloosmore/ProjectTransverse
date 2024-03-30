@@ -8,7 +8,8 @@
 };*/
 
 //Grabs Note Records and distingueshes if the note visble or not
-export const fetchNoteRecords = async (session, visibleNotes, resume) => {
+export const fetchNoteRecords = async (session, resume) => {
+  const visibleNotes = true;
   const token = session.access_token;
   // if !resume deactivate records
   const response = await fetch(

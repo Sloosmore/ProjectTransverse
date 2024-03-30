@@ -12,17 +12,17 @@ import { useNavigate } from "react-router-dom";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import EditExportNote from "../fileEditShad";
 import { useNoteData } from "@/hooks/noteDataStore";
+import { useNewNote } from "@/hooks/newNote";
 
-function FolderView({ newNoteButtonkit }) {
+function FolderView({}) {
   const { noteData } = useNoteData();
   const { session } = useAuth();
   const { folderId } = useParams();
 
-  const { newNoteField, setNewNoteField, noteID } = newNoteButtonkit;
+  const { newNoteField, setNewNoteField } = useNewNote();
   const [files, setFiles] = useState([]);
   const [folder, setFolder] = useState({ title: "" });
   const [searchTerm, setSearchTerm] = useState("");
-  const [title, setTitle] = useState("");
 
   useEffect(() => {
     const fetchFolderData = async () => {

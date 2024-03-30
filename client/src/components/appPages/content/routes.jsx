@@ -5,22 +5,13 @@ import AppNav from "./top/appNav";
 import NoteComponent from "./novel/editorWrapper";
 import FolderView from "./files/folderView/folderView";
 //import Editor from "./tiptapNotes/editor";
-export const AppRoutes = ({ controlProps, newNoteButtonkit, pauseProps }) => (
+export const AppRoutes = ({ controlProps }) => (
   <div className="flex flex-col h-screen">
     <AppNav />
     <Routes>
-      <Route
-        path="n/:noteId"
-        element={<NoteComponent pauseProps={pauseProps} />}
-      />
-      <Route
-        path="f/:folderId"
-        element={<FolderView newNoteButtonkit={newNoteButtonkit} />}
-      />
-      <Route
-        path="/*"
-        element={<Files newNoteButtonkit={newNoteButtonkit} />}
-      />
+      <Route path="n/:noteId" element={<NoteComponent />} />
+      <Route path="f/:folderId" element={<FolderView />} />
+      <Route path="/*" element={<Files />} />
     </Routes>
     <BottomConent controlProps={controlProps} />
   </div>

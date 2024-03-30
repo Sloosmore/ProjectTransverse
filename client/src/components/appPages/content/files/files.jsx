@@ -13,14 +13,14 @@ import { useLocation } from "react-router-dom";
 import CreateFolder from "./folderView/createFolder";
 import { deleteFolder } from "@/components/appPages/services/crudApi";
 import { useNoteData } from "@/hooks/noteDataStore";
-
+import { useNewNote } from "@/hooks/newNote";
 //overflow for records
 
-function Files({ newNoteButtonkit }) {
-  const { setNotes, noteData } = useNoteData();
+function Files({}) {
+  const { setNotes, noteData, noteID } = useNoteData();
   const { session } = useAuth();
   const [folders, setFolders] = useState([]);
-  const { newNoteField, setNewNoteField, noteID } = newNoteButtonkit;
+  const { newNoteField, setNewNoteField } = useNewNote();
   //this needs to be in the use effect for use State
 
   useEffect(() => {

@@ -16,9 +16,11 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { useNoteData } from "@/hooks/noteDataStore";
+import { useToast } from "@/hooks/toast";
+import { useNewNote } from "@/hooks/newNote";
 
 function SubmitNewNote({ controlProps }) {
-  const { noteData, setNotes, setMode } = useNoteData();
+  const { noteData, setNotes, setMode, setNoteID } = useNoteData();
 
   const { session } = useAuth();
   const [localNoteName, localNoteNameSet] = useState("");
@@ -33,14 +35,10 @@ function SubmitNewNote({ controlProps }) {
   const folderId = pathParts[pathParts.length - 1];
   const [selectedValue, setSelectedValue] = useState(null);
 
-  const {
-    wsJSON,
-    setActiveToast,
-    setToastMessage,
-    SpeechRecognition,
-    newNoteField,
-    setNewNoteField,
-  } = controlProps;
+  const { setActiveToast, setToastMessage } = useToast();
+  const { newNoteField, setNewNoteField } = useNewNote();
+
+  const { wsJSON } = controlProps;
 
   const handleNoteSubmit = () => {
     //no longer will have transcript
@@ -56,8 +54,8 @@ function SubmitNewNote({ controlProps }) {
       setMode,
       wsJSON,
       session,
-      SpeechRecognition,
-      selectedValue
+      selectedValue,
+      setNoteID
     );
 
     setToastMessage("Note Started, look in the notes tab");

@@ -25,7 +25,7 @@ import Slides from "./slides";
 import AudioControls from "./playback/streamAudio";
 import { useNoteData } from "@/hooks/noteDataStore";
 
-function NoteComponent({ pauseProps }) {
+function NoteComponent() {
   const { mode, noteData } = useNoteData();
 
   const { noteId } = useParams();
@@ -120,11 +120,7 @@ function NoteComponent({ pauseProps }) {
       <div className="h-12 flex-none border-b flex">
         <div className="my-auto md:ps-10 flex w-full justify-between">
           <div className="text-gray-400 flex align-items">
-            <RecPause
-              pauseProps={pauseProps}
-              localNoteID={noteId}
-              ToggleGenKit={ToggleGenKit}
-            />
+            <RecPause localNoteID={noteId} ToggleGenKit={ToggleGenKit} />
             {mode === "default" && (
               <>
                 <Separator orientation="vertical" className="me-2.5" />

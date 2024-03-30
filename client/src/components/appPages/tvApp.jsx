@@ -19,35 +19,22 @@ import { stopRecordingMedia } from "./services/audio/mediaRecorder";
 import { TranscriptContext } from "@/hooks/transcriptStore";
 import { NoteDataContext } from "@/hooks/noteDataStore";
 import { onPause } from "./services/pausePlay";
+import { startRecordingMedia } from "./services/audio/mediaRecorder";
+import { ToastProvider } from "@/hooks/toast";
+import { NewNoteProvider } from "@/hooks/newNote";
 
 const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 
 function TransverseApp() {
   const navigate = useNavigate();
-
   const { session } = useAuth();
-  //this is for help
-
   //this is for note vs default mode
   const [mode, setMode] = useState("default");
-
   //this is for notes in sidebar
   const [noteData, setNotes] = useState([]);
-
   //this is for specific active instace of WS notes
   //ID of note and not title use titleFromID to get title
   const [noteID, setNoteID] = useState(localStorage.getItem("noteID") || "");
-
-  //hide the sidebar while editing notes
-  //for editing notes in files link
-
-  //for new note toast
-  const [activeToast, setActiveToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-
-  //this is for note field
-  const [newNoteField, setNewNoteField] = useState(false);
-
   //this is for the media recorder
   const [recorder, setRecorder] = useState(null);
 
@@ -71,7 +58,6 @@ function TransverseApp() {
       handleOnMessage(
         event,
         noteData,
-        setNoteID,
         setNotes,
         noteID,
         resetTranscript,
@@ -147,11 +133,21 @@ function TransverseApp() {
   useEffect(() => {
     if (mode !== "note") {
       stopRecordingMedia(recorder);
-      console.log("Listening stopped");
+      console.log("stop recording media......");
       setTimeout(() => {
         SpeechRecognition.stopListening();
       }, 500);
+    } else {
+      SpeechRecognition.startListening({ continuous: true });
+      console.log("start recording media......", noteID);
+      startRecordingMedia(session, setRecorder, noteID);
     }
+
+    setTimeout(() => {
+      fetchNoteRecords(session, true).then((data) => {
+        setNotes(data);
+      });
+    }, 1000);
   }, [mode]);
 
   //core logic for note mode
@@ -206,61 +202,26 @@ function TransverseApp() {
     };
   }, []);
 
-  const submitToastKit = {
-    setActiveToast,
-    setToastMessage,
-    activeToast,
-    toastMessage,
-  };
-
   const controlProps = {
-    setNotes,
     wsJSON: sendJsonMessage,
-    setMode,
-    resetTranscript,
-    setActiveToast,
-    setToastMessage,
     SpeechRecognition,
-    newNoteField,
-    setNewNoteField,
-  };
-
-  const pauseProps = {
-    mode,
-    setMode,
-    noteID,
-    setNotes,
-    noteData,
-    SpeechRecognition,
-    setNewNoteField,
-    newNoteField,
-    setNoteID,
-    submitToastKit,
-    recorder,
-    setRecorder,
-  };
-
-  const newNoteButtonkit = {
-    setNewNoteField,
-    newNoteField,
-    noteID,
   };
 
   return (
     <div className="flex flex-col h-screen">
-      <NoteDataContext.Provider
-        value={{ noteData, setNotes, noteID, setNoteID, mode, setMode }}
-      >
-        <TranscriptContext.Provider value={{ transcript }}>
-          <AppRoutes
-            controlProps={controlProps}
-            newNoteButtonkit={newNoteButtonkit}
-            pauseProps={pauseProps}
-          />
-          <SupportedToast />
-          <SubmitToast {...submitToastKit} />
-        </TranscriptContext.Provider>
-      </NoteDataContext.Provider>
+      <NewNoteProvider>
+        <ToastProvider>
+          <NoteDataContext.Provider
+            value={{ noteData, setNotes, noteID, setNoteID, mode, setMode }}
+          >
+            <TranscriptContext.Provider value={{ transcript }}>
+              <AppRoutes controlProps={controlProps} />
+              <SupportedToast />
+              <SubmitToast />
+            </TranscriptContext.Provider>
+          </NoteDataContext.Provider>
+        </ToastProvider>
+      </NewNoteProvider>
     </div>
   );
 }

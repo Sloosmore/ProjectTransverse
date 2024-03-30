@@ -1,8 +1,7 @@
 const supabase = require("../../db/supabase");
 const uuid = require("uuid");
 
-const insertNewNoteRecord = async (user_id, title, folder_id) => {
-  const note_id = uuid.v4();
+const insertNewNoteRecord = async (user_id, title, folder_id, note_id) => {
   const status = "active";
   const is_deleted = false;
   const thread_id = "";

@@ -58,11 +58,16 @@ async function handleWebSocketConnection(ws, request) {
         const user_id = user;
         const title = data.title;
         const folder_id = data.folder_id;
+        const note_id = data.note_id;
 
         const inactiveRecords = await deactivateRecords(user);
-        const record = await insertNewNoteRecord(user_id, title, folder_id);
+        const record = await insertNewNoteRecord(
+          user_id,
+          title,
+          folder_id,
+          note_id
+        );
         console.log(record[0]);
-        const note_id = record[0].note_id;
         const audioSegment = await insertNewAudioSegment(note_id);
 
         ws.send(
