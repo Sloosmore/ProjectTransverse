@@ -24,7 +24,7 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
   const requestRef = useRef();
 
   useEffect(() => {
-    console.log("globalSeek", globalSeek);
+    //console.log("globalSeek", globalSeek);
   }, [globalSeek]);
 
   // Fetch the audio urls and set states
@@ -214,7 +214,6 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
 
   const benchTime = () => {
     if (Math.ceil(globalSeek) === Math.floor(duration)) {
-      console.log("duration", duration);
       return duration;
     } else {
       return globalSeek;

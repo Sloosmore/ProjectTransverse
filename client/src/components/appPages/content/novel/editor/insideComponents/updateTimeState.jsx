@@ -8,7 +8,6 @@ const UpdateNoteState = ({ currentNote }) => {
     if (editor && currentNote) {
       // Assuming `appendJSON` is a command you've added to your TipTap editor
       setTimeout(() => {
-        console.log("updating props");
         editor.commands.updateProps(currentNote);
       }, 200);
     }

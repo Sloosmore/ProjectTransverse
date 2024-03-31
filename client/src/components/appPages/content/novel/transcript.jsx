@@ -4,7 +4,7 @@ import AudioControls from "./playback/streamAudio";
 import { TranscriptContext } from "@/hooks/transcriptStore";
 
 function Transcript({ currentNote }) {
-  const { transcript } = useContext(TranscriptContext);
+  const { fullTranscript, caption } = useContext(TranscriptContext);
 
   const { full_transcript, status } = currentNote;
   return (
@@ -16,7 +16,7 @@ function Transcript({ currentNote }) {
             <br />
           </React.Fragment>
         ))}
-      {status === "active" && transcript}
+      {status === "active" && fullTranscript + " " + caption}
     </div>
   );
 }
