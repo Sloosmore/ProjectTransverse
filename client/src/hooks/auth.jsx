@@ -6,20 +6,31 @@ const AuthContext = createContext({
   session: null,
   user: null,
   signOut: () => {},
+  userType: null,
 });
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userType, setUserType] = useState(null);
 
   useEffect(() => {
     const setData = async () => {
       const { data, error } = await supabaseClient.auth.getSession();
+      const userID = data.session.user.id;
+
+      const { data: userType, error: userErr } = await supabaseClient
+        .from("user")
+        .select("user_type")
+        .eq("user_id", userID)
+        .single();
+      console.log("userType", userType.user_type);
       if (error) throw error;
       setSession(data.session);
       setUser(data.session?.user);
       setLoading(false);
+      setUserType(userType.user_type);
     };
 
     const { data: listener } = supabaseClient.auth.onAuthStateChange(
@@ -41,6 +52,7 @@ const AuthProvider = ({ children }) => {
     session,
     user,
     signOut: () => supabaseClient.auth.signOut(),
+    userType,
   };
 
   return (

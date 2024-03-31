@@ -8,7 +8,9 @@ export const handleOnMessage = (
   setNotes,
   noteID,
   resetTranscript,
-  navigate
+  navigate,
+  userType,
+  setFullTranscript
 ) => {
   const wsData = JSON.parse(event.data);
   console.log("WebSocket message received:", wsData);
@@ -22,7 +24,12 @@ export const handleOnMessage = (
     navigate(`/app/n/${noteID}`);
   }
   if (wsData.resetState) {
-    resetTranscript();
+    if (userType === "Standard") {
+      resetTranscript();
+    } else {
+      setFullTranscript("");
+    }
+
     const upDataNotes = noteData.map((record) => {
       if (record.note_id === noteID) {
         record.full_transcript = wsData.transcript;

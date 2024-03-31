@@ -1,3 +1,6 @@
 import React, { createContext } from "react";
 
-export const TranscriptContext = createContext(null);
+export const TranscriptContext = createContext({
+  fullTranscript: "",
+  caption: "",
+});
