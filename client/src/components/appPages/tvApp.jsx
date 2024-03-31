@@ -280,6 +280,12 @@ function TransverseApp() {
   //core logic for note mode
   useEffect(() => {
     if (mode === "note") {
+      let timeCheck;
+      if (userType === "Standard") {
+        timeCheck = 3250;
+      } else {
+        timeCheck = 2000;
+      }
       //send to backend after 2 sec
       if (timeoutId) {
         clearTimeout(timeoutId);
@@ -309,7 +315,7 @@ function TransverseApp() {
         } else {
           SpeechRecognition.stopListening();
         }
-      }, 3250);
+      }, timeCheck);
       setTimeoutId(backID);
     } else {
       if (timeoutId) {
@@ -317,7 +323,7 @@ function TransverseApp() {
         SpeechRecognition.stopListening();
       }
     }
-  }, [fullTranscript]);
+  }, [fullTranscript, caption]);
 
   useEffect(() => {
     if (userType === "Standard") {
