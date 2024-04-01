@@ -90,7 +90,7 @@ function TransverseApp() {
       setApiKey(object);
     };
 
-    if (!apiKey) {
+    if (!apiKey && userType === "Standard") {
       getDeepgramKey();
     }
   }, [apiKey]);

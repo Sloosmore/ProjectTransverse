@@ -20,7 +20,6 @@ import { useParams } from "react-router-dom";
 import RecPause from "./recPause/recPause";
 import { useWindowWidth } from "@/hooks/windowWidth";
 import { Separator } from "@/components/ui/separator";
-import EditTitle from "./editor/title";
 import Slides from "./slides";
 import AudioControls from "./playback/streamAudio";
 import { useNoteData } from "@/hooks/noteDataStore";
@@ -87,7 +86,9 @@ function NoteComponent() {
       if (note) {
         console.log("note", note);
         setCurrentNote(note);
-        setActiveUrl(note.slide_url);
+        if (note.slide_url) {
+          setActiveUrl(note.slide_url);
+        }
       }
     }
   }, [noteData, noteId]);
@@ -171,6 +172,7 @@ function NoteComponent() {
           </div>
         </div>
       </div>
+
       <div className="flex-grow min-h-0">
         {transcriptView && !(editView || slideView) && (
           <div className="overflow-auto flex-grow min-h-0">
@@ -190,7 +192,6 @@ function NoteComponent() {
           <ResizablePanelGroup>
             <ResizablePanel className="flex flex-col xl:mx-40">
               <div className="overflow-auto flex-grow">
-                <EditTitle currentNote={currentNote} />
                 <div className="flex-grow">
                   <NovelEditor
                     currentNote={currentNote}
@@ -207,7 +208,6 @@ function NoteComponent() {
           <ResizablePanelGroup direction="horizontal">
             <ResizablePanel className="flex flex-col">
               <div className="overflow-auto flex-grow">
-                <EditTitle currentNote={currentNote} />
                 <div className="flex-grow">
                   <NovelEditor
                     currentNote={currentNote}
@@ -234,7 +234,6 @@ function NoteComponent() {
           <ResizablePanelGroup direction="horizontal">
             <ResizablePanel className="flex flex-col">
               <div className="overflow-auto flex-grow">
-                <EditTitle currentNote={currentNote} />
                 <div className="flex-grow">
                   <NovelEditor
                     currentNote={currentNote}
@@ -277,7 +276,6 @@ function NoteComponent() {
           <ResizablePanelGroup direction="horizontal">
             <ResizablePanel className="flex flex-col">
               <div className="overflow-auto flex-grow">
-                <EditTitle currentNote={currentNote} />
                 <div className="flex-grow">
                   <NovelEditor
                     currentNote={currentNote}

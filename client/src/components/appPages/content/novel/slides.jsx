@@ -10,20 +10,22 @@ const Slides = React.memo(function Slides({
   const [uploadedFile, setUploadedFile] = useState("");
 
   const uploadSlides = async (file, note_id) => {
-    console.log("note_id", note_id);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("note_id", note_id);
-    const response = await fetch(
-      `${import.meta.env.VITE_BASE_URL}/records-api/upload-slides`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-    const { slide_url } = await response.json();
-    console.log("slide_url", slide_url);
-    setActiveUrl(slide_url);
+    if (uploadedFile) {
+      console.log("note_id", note_id);
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("note_id", note_id);
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/records-api/upload-slides`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const { slide_url } = await response.json();
+      console.log("slide_url", slide_url);
+      setActiveUrl(slide_url);
+    }
   };
 
   useEffect(() => {

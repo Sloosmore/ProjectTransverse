@@ -13,7 +13,6 @@ import React, { useEffect, useState, useLayoutEffect, useRef } from "react";
 import { defaultExtensions } from "./extentions/extensions";
 import { slashCommand } from "./extentions/slash-command";
 import { Separator } from "@/components/ui/separator";
-
 import { suggestionItems } from "./extentions/slash-command";
 import { NodeSelector } from "./bubble/nodeSelector";
 import { TextButtons } from "./bubble/text-buttons";
@@ -30,8 +29,13 @@ import EditTitle from "./title";
 import { SkeletonCard, SkeletonLoad } from "./insideComponents/skeleton";
 import Playback from "./bubble/playback-buttons";
 import SpeakExtension from "./extentions/speak";
-import UpdateNoteState from "./insideComponents/updateTimeState";
+import UpdateNoteState from "./insideComponents/updateExtentionState";
 import ErrorBoundary from "./errorBoundary";
+import AiTranscript from "./extentions/aiTranscript";
+import { TranscriptContext } from "@/hooks/transcriptStore";
+import { useAuth } from "@/hooks/auth";
+import { useContext } from "react";
+import RunAI from "./insideComponents/runAi";
 
 const NovelEditor = ({
   currentNote,
@@ -39,6 +43,8 @@ const NovelEditor = ({
   ToggleGenKit,
   setglobalSeek,
 }) => {
+  const { tiptapToken } = useAuth();
+  const transcript = useContext(TranscriptContext);
   const extensions = [
     UniversalTimeAttribute.configure({
       currentNote: currentNote,
@@ -47,6 +53,12 @@ const NovelEditor = ({
     SpeakExtension,
     ...defaultExtensions,
     slashCommand,
+    AiTranscript.configure({
+      currentNote: currentNote,
+      transcript: transcript,
+      appId: import.meta.env.VITE_TIPTAP_ID,
+      token: tiptapToken,
+    }),
   ];
   //mode
   const { title, json_content, full_markdown, note_id, new_json } = currentNote;
@@ -84,6 +96,8 @@ const NovelEditor = ({
 
   return (
     <div key={update} className="w-full flex flex-col justify-center">
+      <EditTitle currentNote={currentNote} />
+
       <ErrorBoundary>
         <EditorRoot>
           <EditorContent
@@ -147,7 +161,11 @@ const NovelEditor = ({
               </EditorCommandList>
             </EditorCommand>
             <AppendJSONComponent jsonToAppend={jsonToAppend} mode={mode} />
-            <UpdateNoteState currentNote={currentNote} />
+            <RunAI />
+            <UpdateNoteState
+              currentNote={currentNote}
+              transcript={transcript}
+            />
           </EditorContent>
         </EditorRoot>
       </ErrorBoundary>

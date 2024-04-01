@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { updateTitle } from "@/components/appPages/services/crudApi";
+import { fetchNoteRecords } from "@/components/appPages/services/crudApi";
+import { useNoteData } from "@/hooks/noteDataStore";
+import { useAuth } from "@/hooks/auth";
 
 function EditTitle({ currentNote }) {
   const [title, setTitle] = useState(currentNote.title || "");
+  const { setNotes } = useNoteData();
+  const { session } = useAuth();
 
   useEffect(() => {
     if (!title) setTitle(currentNote.title || "");
@@ -18,7 +23,10 @@ function EditTitle({ currentNote }) {
   }, [title]);
 
   const debounceTitle = useDebouncedCallback(async (title) => {
-    updateTitle(currentNote.note_id, title);
+    await updateTitle(currentNote.note_id, title);
+    await fetchNoteRecords(session, true).then((data) => {
+      setNotes(data);
+    });
   }, 1500);
 
   return (

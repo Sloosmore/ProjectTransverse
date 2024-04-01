@@ -96,7 +96,7 @@ async function handleWebSocketConnection(ws, request) {
 
           incomingTs = `${ts} \n\n ${formattedTime}\n`;
         } else {
-          incomingTs = ts;
+          incomingTs = " " + ts.trim();
         }
         //this is what I need to check out
         const newFullTs = await appendFullTranscript(note_id, incomingTs);
