@@ -9,7 +9,7 @@ const UpdateNoteState = ({ currentNote, transcript }) => {
       // Assuming `appendJSON` is a command you've added to your TipTap editor
       setTimeout(() => {
         editor.commands.updateProps(currentNote);
-        editor.commands.updateAIProps(currentNote, transcript);
+        //editor.commands.updateAIProps(currentNote, transcript);
       }, 200);
     }
   }, [currentNote]);
@@ -18,7 +18,7 @@ const UpdateNoteState = ({ currentNote, transcript }) => {
     console.log("transcript:", transcript);
     if (editor && transcript) {
       setTimeout(() => {
-        editor.commands.updateAIProps(currentNote, transcript);
+        //editor.commands.updateAIProps(currentNote, transcript);
       }, 200);
     }
   }, [transcript]);

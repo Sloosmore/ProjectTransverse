@@ -262,11 +262,13 @@ function TransverseApp() {
       }
     } else {
       if (userType === "Standard") {
+        //google
+        console.log("start recording with api......", noteID);
         SpeechRecognition.startListening({ continuous: true });
       } else {
+        //deepgram
         startDGMicrophone();
       }
-      console.log("start recording media......", noteID);
       startRecordingMedia(session, setRecorder, noteID);
     }
 
