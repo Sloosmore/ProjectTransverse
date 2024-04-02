@@ -32,7 +32,6 @@ import SpeakExtension from "./extentions/speak";
 import UpdateNoteState from "./insideComponents/updateExtentionState";
 import ErrorBoundary from "./errorBoundary";
 import { TranscriptContext } from "@/hooks/transcriptStore";
-import { useAuth } from "@/hooks/auth";
 import { useContext } from "react";
 import RunAI from "./insideComponents/runAi";
 
@@ -42,7 +41,6 @@ const NovelEditor = ({
   ToggleGenKit,
   setglobalSeek,
 }) => {
-  const { tiptapToken } = useAuth();
   const transcript = useContext(TranscriptContext);
   const extensions = [
     UniversalTimeAttribute.configure({
