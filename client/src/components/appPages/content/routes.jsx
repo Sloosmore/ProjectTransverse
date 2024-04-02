@@ -5,14 +5,18 @@ import AppNav from "./top/appNav";
 import NoteComponent from "./novel/editorWrapper";
 import FolderView from "./files/folderView/folderView";
 //import Editor from "./tiptapNotes/editor";
+import RewindProvider from "@/hooks/aiRewind";
+
 export const AppRoutes = ({ controlProps }) => (
   <div className="flex flex-col h-screen">
     <AppNav />
-    <Routes>
-      <Route path="n/:noteId" element={<NoteComponent />} />
-      <Route path="f/:folderId" element={<FolderView />} />
-      <Route path="/*" element={<Files />} />
-    </Routes>
+    <RewindProvider>
+      <Routes>
+        <Route path="n/:noteId" element={<NoteComponent />} />
+        <Route path="f/:folderId" element={<FolderView />} />
+        <Route path="/*" element={<Files />} />
+      </Routes>
+    </RewindProvider>
     <BottomConent controlProps={controlProps} />
   </div>
 );

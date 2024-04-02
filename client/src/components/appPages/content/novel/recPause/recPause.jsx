@@ -18,6 +18,8 @@ import CardTextSvg from "./svg/card-text.jsx";
 import CardPicSvg from "./svg/card-pic.jsx";
 import { useNoteData } from "@/hooks/noteDataStore.jsx";
 import { useToast } from "@/hooks/toast.jsx";
+import { useRewind } from "@/hooks/aiRewind.jsx";
+import { useDebouncedCallback } from "use-debounce";
 
 // Default values shown
 
@@ -28,6 +30,9 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
 
   const { diagramOn, noteOn, setDiagramOn, setNoteOn } = ToggleGenKit;
   const { mode, setMode, noteID, noteData, setNoteID } = useNoteData();
+  const { setRewind } = useRewind();
+
+  const [buttonClicks, setClicks] = useState(0);
 
   const { setActiveToast, setToastMessage } = useToast();
 
@@ -85,6 +90,17 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
 
     doAsyncOperation();
   }, [noteOn, diagramOn]);
+
+  const processClick = useDebouncedCallback(() => {
+    if (buttonClicks === 1) {
+      setNoteOn((prev) => !prev);
+    } else if (buttonClicks === 2) {
+      setRewind((prev) => prev + 1);
+      console.log("rewind");
+    }
+    setClicks(0);
+  }, 250);
+
   return (
     <TooltipProvider>
       <Tooltip>
@@ -143,8 +159,9 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
           <Separator orientation="vertical" />
 
           <button
-            onClick={async () => {
-              setNoteOn((prev) => !prev);
+            onClick={() => {
+              setClicks(buttonClicks + 1);
+              processClick();
             }}
           >
             {noteOn ? (

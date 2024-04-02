@@ -7,6 +7,7 @@ const AuthContext = createContext({
   user: null,
   signOut: () => {},
   userType: null,
+  tiptapToken: null,
 });
 
 const AuthProvider = ({ children }) => {
@@ -14,6 +15,7 @@ const AuthProvider = ({ children }) => {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userType, setUserType] = useState(null);
+  const [tiptapToken, setTiptapToken] = useState(null);
 
   useEffect(() => {
     const setData = async () => {
@@ -26,7 +28,21 @@ const AuthProvider = ({ children }) => {
         .eq("user_id", userID)
         .single();
       console.log("userType", userType.user_type);
-      if (error) throw error;
+      if (userErr) throw userErr;
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/settings/tiptapAuth`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${data.session.access_token}`,
+          },
+        }
+      );
+
+      const { tiptapToken } = await response.json();
+
+      setTiptapToken(tiptapToken);
       setSession(data.session);
       setUser(data.session?.user);
       setLoading(false);
@@ -53,6 +69,7 @@ const AuthProvider = ({ children }) => {
     user,
     signOut: () => supabaseClient.auth.signOut(),
     userType,
+    tiptapToken,
   };
 
   return (

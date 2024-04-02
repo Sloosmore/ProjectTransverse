@@ -46,21 +46,23 @@ const uploadSlides = async (req, res) => {
     console.log("urlData", data);
     slide_url = data.publicUrl;
 
-    try {
-      const { data, error } = await supabase
-        .from("note")
-        .update({
-          slide_url,
-        })
-        .eq("note_id", note_id);
+    if (slide_url) {
+      try {
+        const { data, error } = await supabase
+          .from("note")
+          .update({
+            slide_url,
+          })
+          .eq("note_id", note_id);
 
-      if (error) {
-        console.error(error);
+        if (error) {
+          console.error(error);
+          return res.status(500).send({ message: "Error updating slide URL" });
+        }
+      } catch (err) {
+        console.error(err);
         return res.status(500).send({ message: "Error updating slide URL" });
       }
-    } catch (err) {
-      console.error(err);
-      return res.status(500).send({ message: "Error updating slide URL" });
     }
 
     return res.status(200).send({ slide_url });
