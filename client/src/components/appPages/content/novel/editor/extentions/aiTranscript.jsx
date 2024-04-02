@@ -1,6 +1,5 @@
-import { Ai } from "@tiptap-pro/extension-ai";
 import { TextSelection } from "prosemirror-state";
-
+/*
 const AiTranscript = Ai.extend({
   addOptions: {
     currentNote: null,
@@ -80,4 +79,4 @@ const AiTranscript = Ai.extend({
   },
 });
 
-export default AiTranscript;
+*/

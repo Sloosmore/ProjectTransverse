@@ -31,7 +31,6 @@ import Playback from "./bubble/playback-buttons";
 import SpeakExtension from "./extentions/speak";
 import UpdateNoteState from "./insideComponents/updateExtentionState";
 import ErrorBoundary from "./errorBoundary";
-import AiTranscript from "./extentions/aiTranscript";
 import { TranscriptContext } from "@/hooks/transcriptStore";
 import { useAuth } from "@/hooks/auth";
 import { useContext } from "react";
@@ -53,12 +52,6 @@ const NovelEditor = ({
     SpeakExtension,
     ...defaultExtensions,
     slashCommand,
-    AiTranscript.configure({
-      currentNote: currentNote,
-      transcript: transcript,
-      appId: import.meta.env.VITE_TIPTAP_ID,
-      token: tiptapToken,
-    }),
   ];
   //mode
   const { title, json_content, full_markdown, note_id, new_json } = currentNote;
