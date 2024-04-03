@@ -6,7 +6,7 @@ const Rewind = createContext({
 });
 
 const RewindProvider = ({ children }) => {
-  const [rewind, setRewind] = useState(0);
+  const [rewind, setRewind] = useState(false);
 
   const value = {
     rewind,

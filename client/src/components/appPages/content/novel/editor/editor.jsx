@@ -34,6 +34,7 @@ import ErrorBoundary from "./errorBoundary";
 import { TranscriptContext } from "@/hooks/transcriptStore";
 import { useContext } from "react";
 import RunAI from "./insideComponents/runAi";
+import aiTranscript from "./extentions/aiTranscript";
 
 const NovelEditor = ({
   currentNote,
@@ -50,6 +51,7 @@ const NovelEditor = ({
     SpeakExtension,
     ...defaultExtensions,
     slashCommand,
+    aiTranscript,
   ];
   //mode
   const { title, json_content, full_markdown, note_id, new_json } = currentNote;

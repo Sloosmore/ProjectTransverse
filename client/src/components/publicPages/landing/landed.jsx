@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import LoadLine from "./load";
 import { mdList, titlesList } from "./markDownSample";
-import grey from "../../../assets/verse.png";
+import grey from "../../../assets/greyFull.png";
 import Open from "../../../assets/TScreenshotOpen.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../hooks/auth";

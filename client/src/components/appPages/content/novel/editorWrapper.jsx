@@ -23,6 +23,7 @@ import { Separator } from "@/components/ui/separator";
 import Slides from "./slides";
 import AudioControls from "./playback/streamAudio";
 import { useNoteData } from "@/hooks/noteDataStore";
+import { useRewind } from "@/hooks/aiRewind";
 
 function NoteComponent() {
   const { mode, noteData } = useNoteData();

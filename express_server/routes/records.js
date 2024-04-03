@@ -27,6 +27,8 @@ const { toggleGeneration } = require("../controllers/noteCRUD/handleGenOnOff");
 
 const { uploadMDImage } = require("../controllers/noteCRUD/handleImgUp");
 
+const { handleRewind } = require("../controllers/noteCRUD/handleRewind");
+
 //router.get("/tasks", sendTasks);
 
 //change to
@@ -76,5 +78,8 @@ router.post("/notes-download", downloadNote);
 
 // POST upload slides
 router.post("/upload-slides", upload.single("file"), uploadSlides);
+
+// POST rewind
+router.post("/rewind", handleRewind);
 
 module.exports = router;
