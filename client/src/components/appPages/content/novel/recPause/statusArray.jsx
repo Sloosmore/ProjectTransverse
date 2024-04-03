@@ -3,7 +3,6 @@ const getRecStatusArray = ({
   onPlay,
   noteID,
   setMode,
-  endNoteToast,
   setNoteID,
   localNoteID,
 }) => [
@@ -21,7 +20,6 @@ const getRecStatusArray = ({
       setMode("default");
       onPause(noteID, date);
       setNoteID(null);
-      endNoteToast();
     },
     leftIcon: "bi bi-pause-fill bi-2x align-left",
     rightIcon: "bi bi-square-fill ",
@@ -35,7 +33,6 @@ const getRecStatusArray = ({
     },
     rightFunction: () => {
       setNoteID();
-      endNoteToast();
     },
     leftIcon: "bi bi-mic-fill bi-2x align-left",
     rightIcon: "bi bi-square-fill ",

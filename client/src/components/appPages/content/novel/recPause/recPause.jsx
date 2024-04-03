@@ -17,7 +17,6 @@ import "./recPause.css";
 import CardTextSvg from "./svg/card-text.jsx";
 import CardPicSvg from "./svg/card-pic.jsx";
 import { useNoteData } from "@/hooks/noteDataStore.jsx";
-import { useToast } from "@/hooks/toast.jsx";
 import { useRewind } from "@/hooks/aiRewind.jsx";
 import { useDebouncedCallback } from "use-debounce";
 
@@ -32,24 +31,11 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
   const { mode, setMode, noteID, noteData, setNoteID } = useNoteData();
   const { setRewind } = useRewind();
 
-  const [buttonClicks, setClicks] = useState(0);
-
-  const { setActiveToast, setToastMessage } = useToast();
-
-  const endNoteToast = () => {
-    setToastMessage("Recording Sesstion ended");
-    setActiveToast(true);
-    setTimeout(() => {
-      setActiveToast(false);
-    }, 5000);
-  };
-
   const recStatusArray = getRecStatusArray({
     onPause,
     onPlay,
     noteID,
     setMode,
-    endNoteToast,
     setNoteID,
     localNoteID,
   });
