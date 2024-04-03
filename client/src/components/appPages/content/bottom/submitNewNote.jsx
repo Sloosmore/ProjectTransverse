@@ -118,6 +118,11 @@ function SubmitNewNote({ controlProps }) {
                 className="md:border-r m-0 w-full resize-none border-0 focus:ring-0 focus:outline-none focus-visible:ring-0 max-h-25 py-[10px] pr-4 md:py-3.5 placeholder-gray-400 dark:placeholder-opacity-100 pl-4 text-gray-800"
                 placeholder="Enter the title here! (helps with prompting)"
                 onChange={(e) => localNoteNameSet(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleNoteSubmit();
+                  }
+                }}
               />
               <div className="md:border-r md:h-[52px] flex items-center me-2 ">
                 <Select
