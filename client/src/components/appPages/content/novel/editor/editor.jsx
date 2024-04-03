@@ -163,6 +163,29 @@ const NovelEditor = ({
         </EditorRoot>
       </ErrorBoundary>
 
+      {/*
+      <button
+        className="bg-accent text-white p-2 rounded-md w-20 h-10"
+        onClick={() =>
+          setJsonToAppend([
+            {
+              type: "paragraph",
+              attrs: {
+                time: 0,
+              },
+              content: [
+                {
+                  text: "please this should fade in please",
+                  type: "text",
+                },
+              ],
+            },
+          ])
+        }
+      >
+        gogo
+      </button>*/}
+
       {mode === "note" && diagramOn && (
         <div className="md:px-12 px-6 w-full mb-6">
           <SkeletonCard />
