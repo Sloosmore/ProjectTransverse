@@ -154,7 +154,7 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
           </TooltipContent>
         )}
       </Tooltip>
-      {mode && (
+      {mode === "note" && (
         <>
           <Separator orientation="vertical" />
 
