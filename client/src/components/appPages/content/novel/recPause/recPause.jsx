@@ -95,7 +95,7 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
     if (buttonClicks === 1) {
       setNoteOn((prev) => !prev);
     } else if (buttonClicks === 2) {
-      setRewind((prev) => prev + 1);
+      setRewind(true);
       console.log("rewind");
     }
     setClicks(0);
