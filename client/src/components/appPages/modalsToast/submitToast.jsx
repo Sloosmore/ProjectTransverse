@@ -13,7 +13,7 @@ const SubmitToast = () => {
             bottom: "20px",
             right: "20px",
           }}
-          className="bg-success text-white"
+          className="bg-green-300 text-white"
         >
           <Toast.Body className="bg-success">
             <i className="bi bi-check2-circle me-2"></i>

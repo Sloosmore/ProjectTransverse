@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { useNoteData } from "@/hooks/noteDataStore";
-import { useToast } from "@/hooks/toast";
 import { useNewNote } from "@/hooks/newNote";
 
 function SubmitNewNote({ controlProps }) {
@@ -35,7 +34,6 @@ function SubmitNewNote({ controlProps }) {
   const folderId = pathParts[pathParts.length - 1];
   const [selectedValue, setSelectedValue] = useState(null);
 
-  const { setActiveToast, setToastMessage } = useToast();
   const { newNoteField, setNewNoteField } = useNewNote();
 
   const { wsJSON } = controlProps;
@@ -57,12 +55,6 @@ function SubmitNewNote({ controlProps }) {
       selectedValue,
       setNoteID
     );
-
-    setToastMessage("Note Started, look in the notes tab");
-    setActiveToast(true);
-    setTimeout(() => {
-      setActiveToast(false);
-    }, 5000);
   };
   useEffect(() => {
     if (newNoteField) {

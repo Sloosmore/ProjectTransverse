@@ -13,7 +13,6 @@ import titleFromID from "./services/frontendNoteConfig/titleFromID";
 import { useAuth } from "../../hooks/auth";
 import SupportedToast from "./support/supportedBrowser";
 import NoAudioSupport from "./support/noSupport";
-import SubmitToast from "./modalsToast/submitToast";
 import { useNavigate } from "react-router-dom";
 import { stopRecordingMedia } from "./services/audio/mediaRecorder";
 import { TranscriptContext } from "@/hooks/transcriptStore";
@@ -365,7 +364,6 @@ function TransverseApp() {
             <TranscriptContext.Provider value={{ fullTranscript, caption }}>
               <AppRoutes controlProps={controlProps} />
               <SupportedToast />
-              <SubmitToast />
             </TranscriptContext.Provider>
           </NoteDataContext.Provider>
         </ToastProvider>
