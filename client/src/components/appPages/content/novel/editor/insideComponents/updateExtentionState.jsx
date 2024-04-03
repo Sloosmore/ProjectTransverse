@@ -14,15 +14,6 @@ const UpdateNoteState = ({ currentNote, transcript }) => {
     }
   }, [currentNote]);
 
-  useEffect(() => {
-    console.log("transcript:", transcript);
-    if (editor && transcript) {
-      setTimeout(() => {
-        //editor.commands.updateAIProps(currentNote, transcript);
-      }, 200);
-    }
-  }, [transcript]);
-
   return null; // This component doesn't render anything
 };
 

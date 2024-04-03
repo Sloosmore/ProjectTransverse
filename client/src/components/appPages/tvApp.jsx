@@ -85,16 +85,17 @@ function TransverseApp() {
   useEffect(() => {
     const getDeepgramKey = async () => {
       const object = await fetchDeepGramKey();
-      console.log("object", object);
+      console.log("dgkey");
       setApiKey(object);
     };
 
-    if (!apiKey && userType === "Standard") {
+    if (!apiKey && userType !== "Standard") {
       getDeepgramKey();
     }
   }, [apiKey]);
 
   useEffect(() => {
+    console.log("api key", apiKey);
     if (apiKey && "key" in apiKey) {
       console.log("connecting to deepgram");
       const deepgram = createClient(apiKey?.key ?? "");
