@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import testAudio from "../../../../../assets/testAudio.wav";
 import "./stream.css";
 import { useAuth } from "@/hooks/auth";
 import { fetchURLs } from "@/components/appPages/services/audio/streamAudio";
