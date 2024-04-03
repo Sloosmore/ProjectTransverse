@@ -1,12 +1,11 @@
 import React from "react";
-import TranverseNote from "../../../assets/TransverseNote.png";
 import "./blockText.css";
 import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import LoadLine from "./load";
 import { mdList, titlesList } from "./markDownSample";
 import grey from "../../../assets/greyFull.png";
-import Open from "../../../assets/TScreenshotOpen.png";
+import Open from "../../../assets/novelLanding.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../hooks/auth";
 
@@ -36,8 +35,8 @@ export function BlockText() {
   }, []);
 
   return (
-    <div className="flex w-screen bg-light  px-5 overflow-hidden lg:pt-40 lg:pb-20 lg:mb-10 ">
-      <div className="py-4 pb-0 pt-5 lg:items-center rounded-3 flex lg:flex-row flex-col">
+    <div className="flex w-screen bg-light  px-5 overflow-hidden lg:pt-40 lg:pb-20 lg:mb-10">
+      <div className="py-4 pb-0 pt-5 lg:items-center rounded-3 flex lg:flex-row flex-col mb-6">
         <div className="lg:grow p-5 pt-3 xl:w-[110rem] lg:w-[90rem] lg:me-10">
           <img
             src={grey}
