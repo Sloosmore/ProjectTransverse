@@ -22,7 +22,6 @@ const streamAudio = async (req, res) => {
     }
 
     const filePaths = segments.map((segment) => segment.file_path);
-    console.log("filePaths", filePaths);
 
     let segURLData, segURLerror;
 
@@ -38,7 +37,6 @@ const streamAudio = async (req, res) => {
 
     //send list of segment Urls along with timestamps in an object
     // [{url: "url", time: "time differential"}]
-    console.log("segURLData", segURLData);
     const urls = segURLData.map((url) => url.signedUrl);
     const durations = segments.map((segment) => segment.duration);
     const endTimes = segments.map((segment) => segment.end_time);

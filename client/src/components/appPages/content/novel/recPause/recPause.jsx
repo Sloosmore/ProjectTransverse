@@ -30,6 +30,7 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
   const { diagramOn, noteOn, setDiagramOn, setNoteOn } = ToggleGenKit;
   const { mode, setMode, noteID, noteData, setNoteID } = useNoteData();
   const { setRewind } = useRewind();
+  const [buttonClicks, setClicks] = useState(0);
 
   const recStatusArray = getRecStatusArray({
     onPause,

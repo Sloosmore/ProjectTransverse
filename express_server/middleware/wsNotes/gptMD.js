@@ -156,7 +156,8 @@ async function queryAI(note_id, ts_message, frequency) {
 
     const diagramThreshold = Math.ceil((frequency * -4) / 1150 + 6.21739130435);
     //the diagram message count needs to be greater or equal to than the threshold
-    if (diagram_message_count >= diagramThreshold && diagram_gen_on) {
+    //>= diagramThreshold
+    if (diagram_message_count && diagram_gen_on) {
       const mermaidMessage = await sendAICall(
         diagram_thread_id,
         user_diagram_prompt,
