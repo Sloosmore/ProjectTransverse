@@ -20,7 +20,9 @@ const diagramRecord2DB = async (note_id, diagram_id, file_path, mermaid_MD) => {
 };
 
 async function mermaid2SVG(mermaidContent) {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
   const page = await browser.newPage();
 
   await page.setContent(`

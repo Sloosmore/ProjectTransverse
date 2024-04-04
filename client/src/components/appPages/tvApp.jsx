@@ -88,6 +88,7 @@ function TransverseApp() {
       console.log("dgkey");
       setApiKey(object);
     };
+    console.log("userType", userType);
 
     if (!apiKey && userType !== "Standard") {
       getDeepgramKey();
@@ -95,7 +96,6 @@ function TransverseApp() {
   }, [apiKey]);
 
   useEffect(() => {
-    console.log("api key", apiKey);
     if (apiKey && "key" in apiKey) {
       console.log("connecting to deepgram");
       const deepgram = createClient(apiKey?.key ?? "");
