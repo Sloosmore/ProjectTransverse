@@ -13,7 +13,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [userType, setUserType] = useState("Standard");
+  const [userType, setUserType] = useState(null);
 
   useEffect(() => {
     const setData = async () => {
