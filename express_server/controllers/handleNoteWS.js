@@ -142,7 +142,8 @@ async function handleWebSocketConnection(ws, request) {
             //mdJSON includes type: "doc", content is just content
             const { fullDoc, contentLevel } = await markdownToTiptap(
               md,
-              totTime
+              totTime,
+              note_id
             );
 
             //clear active transcript so it can be used later
