@@ -1,5 +1,4 @@
 const supabase = require("../../../db/supabase");
-const sharp = require("sharp");
 const puppeteer = require("puppeteer");
 
 const diagramRecord2DB = async (note_id, diagram_id, file_path, mermaid_MD) => {
@@ -46,7 +45,9 @@ async function mermaid2SVG(mermaidContent) {
 
 const svg2PNG = async (svg) => {
   try {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
     await page.setContent(svg, { waitUntil: ["load", "domcontentloaded"] });
     const dimensions = await page.evaluate(() => {
