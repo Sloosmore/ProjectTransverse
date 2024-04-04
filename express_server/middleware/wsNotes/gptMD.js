@@ -156,8 +156,8 @@ async function queryAI(note_id, ts_message, frequency) {
 
     const diagramThreshold = Math.ceil((frequency * -4) / 1150 + 6.21739130435);
     //the diagram message count needs to be greater or equal to than the threshold
-    //>= diagramThreshold
-    if (diagram_message_count && diagram_gen_on) {
+    //diagram_message_count && >= diagramThreshold
+    if (diagram_gen_on) {
       const mermaidMessage = await sendAICall(
         diagram_thread_id,
         user_diagram_prompt,
@@ -178,6 +178,8 @@ async function queryAI(note_id, ts_message, frequency) {
       const mermaidMd =
         mermaidMessage["data"][0]["content"][0]["text"]["value"];
       console.log("mermaidMd", mermaidMd);
+      console.log("md", md);
+      console.log("full responce", md + "\n\n" + mermaidMd);
       return md + "\n\n" + mermaidMd;
     } else {
       const updatedCount = diagram_message_count + 1;
