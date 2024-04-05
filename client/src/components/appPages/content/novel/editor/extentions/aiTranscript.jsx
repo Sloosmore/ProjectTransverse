@@ -13,11 +13,7 @@ const aiTranscript = Extension.create({
           const { empty, $from } = selection;
           const currentNode = $from.node();
 
-          if (
-            empty &&
-            currentNode.isTextblock &&
-            currentNode.content.size === 0
-          ) {
+          if (empty && currentNode.content.size === 0) {
             let nodeType = null;
             let attrs = {};
             let command = null;
@@ -107,26 +103,43 @@ const aiTranscript = Extension.create({
           // Get the current selection and node
           const { doc } = tr;
 
-          // Determine the position to insert the new node (at the end of the document)
-          const insertPos = doc.content.size;
+          // Get the last node
+
+          const lastNode = doc.nodeAt(doc.content.size - 1);
+
+          if (!lastNode) {
+            return false;
+          }
+
+          // Check if the last node is an image
+          const isImage = lastNode.type.name === "image";
 
           // Check if the last node is empty
-          const lastNode = doc.child(doc.childCount - 1);
-          const isLastNodeEmpty = lastNode.content.size === 0;
+          const isEmpty = lastNode.content.size === 0;
 
-          // If the last node is not empty, create and insert a new node
-          if (!isLastNodeEmpty) {
+          // If the last node is not an image and is empty, set the selection there
+          if (!isImage && isEmpty) {
+            if (dispatch) {
+              tr.setSelection(
+                TextSelection.create(tr.doc, doc.content.size - 1)
+              );
+            }
+          } else {
+            // Determine the position to insert the new node (at the end of the document)
+            const insertPos = doc.content.size;
+
             // Create a new node (e.g., paragraph)
             const nodeType = this.editor.schema.nodes.paragraph;
             const newNode = nodeType.create();
 
-            // Insert the new node and set the selection
+            // Insert the new node
             if (dispatch) {
               tr.insert(insertPos, newNode);
-              tr.setSelection(TextSelection.create(tr.doc, insertPos + 1));
+
+              // Set the selection to the start of the new node
+              tr.setSelection(TextSelection.create(tr.doc, doc.content.size));
             }
           }
-
           return true;
         },
     };

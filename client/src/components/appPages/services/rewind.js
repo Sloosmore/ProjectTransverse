@@ -18,6 +18,5 @@ export const rewindContext = async (session, note_id, transcript, caption) => {
   }
 
   const data = await response.json();
-  const markdown = data.markdown;
-  return markdown;
+  return data;
 };

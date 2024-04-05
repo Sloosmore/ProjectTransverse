@@ -11,8 +11,6 @@ import { handleOnMessage } from "./services/noteWebsockets/wsResponce";
 import { deactivateNotes, fetchNoteRecords } from "./services/crudApi";
 import titleFromID from "./services/frontendNoteConfig/titleFromID";
 import { useAuth } from "../../hooks/auth";
-import SupportedToast from "./support/supportedBrowser";
-import NoAudioSupport from "./support/noSupport";
 import { useNavigate } from "react-router-dom";
 import { stopRecordingMedia } from "./services/audio/mediaRecorder";
 import { TranscriptContext } from "@/hooks/transcriptStore";
@@ -24,10 +22,13 @@ import { NewNoteProvider } from "@/hooks/newNote";
 import { useQueue } from "@uidotdev/usehooks";
 import { fetchDeepGramKey } from "./services/audio/deepgram";
 import { LiveTranscriptionEvents, createClient } from "@deepgram/sdk";
+import { toast } from "sonner";
+import { useBrowser } from "@/hooks/browserSupport";
 
 const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 
 function TransverseApp() {
+  const { compatible } = useBrowser();
   const navigate = useNavigate();
   const { session, userType } = useAuth();
   //this is for note vs default mode
@@ -243,11 +244,6 @@ function TransverseApp() {
 
   // ------------------------------------------------------------------------------------------------
 
-  if (!browserSupportsSpeechRecognition) {
-    console.log("Browser doesnt support speech recognition.");
-    return <NoAudioSupport />;
-  }
-
   const [timeoutId, setTimeoutId] = useState(null);
 
   useEffect(() => {
@@ -355,6 +351,21 @@ function TransverseApp() {
     SpeechRecognition,
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (userType !== "Premium" && !compatible) {
+        console.log(userType);
+        toast("Live trasncript not supported on this browser", {
+          description: "Upgrade Plan or swich to Chrome/Safari",
+          action: {
+            label: "X",
+            onClick: () => console.log("Undo"),
+          },
+        });
+      }
+    }, 400);
+  }, [compatible]);
+
   return (
     <div className="flex flex-col h-screen">
       <NewNoteProvider>
@@ -364,7 +375,6 @@ function TransverseApp() {
           >
             <TranscriptContext.Provider value={{ fullTranscript, caption }}>
               <AppRoutes controlProps={controlProps} />
-              <SupportedToast />
             </TranscriptContext.Provider>
           </NoteDataContext.Provider>
         </ToastProvider>

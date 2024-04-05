@@ -8,24 +8,29 @@ import "./index.css";
 //import "bootstrap/dist/css/bootstrap.css";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
+import { BrowserProvider } from "./hooks/browserSupport.jsx";
+import { Toaster } from "@/components/ui/sonner";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            <Route
-              path="/app/*"
-              element={
-                <ProtectedRoute>
-                  <TransverseApp />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/*" element={<PublicRoutes />} />
-          </Routes>
-        </AuthProvider>
+        <BrowserProvider>
+          <AuthProvider>
+            <Routes>
+              <Route
+                path="/app/*"
+                element={
+                  <ProtectedRoute>
+                    <TransverseApp />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/*" element={<PublicRoutes />} />
+            </Routes>
+          </AuthProvider>
+          <Toaster />
+        </BrowserProvider>
       </BrowserRouter>
       <SpeedInsights />
       <Analytics />
