@@ -1,5 +1,9 @@
 const supabase = require("../../db/supabase");
 const { getUserIdFromToken } = require("../../middleware/authDecodeJWS");
+const { calculateTotTime } = require("../../middleware/infoTracking/calcTime");
+const {
+  markdownToTiptap,
+} = require("../../middleware/wsNotes/compileGPTOutput/md2JSON");
 
 require("dotenv").config();
 
@@ -86,7 +90,17 @@ const handleRewind = async (req, res) => {
 
     const markdown = catchUp.choices[0].message.content;
 
-    return res.status(200).send({ markdown });
+    const totTime = await calculateTotTime(note_id);
+
+    const { fullDoc, contentLevel } = await markdownToTiptap(
+      markdown,
+      totTime,
+      note_id
+    );
+
+    console.log(contentLevel);
+
+    return res.status(200).send({ contentLevel: contentLevel });
   } catch (err) {
     console.error(err);
     return res.status(500).send({ message: "Error with OpenAI" });

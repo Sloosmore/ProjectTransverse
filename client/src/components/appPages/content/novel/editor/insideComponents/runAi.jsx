@@ -45,37 +45,42 @@ const RunAI = () => {
 
   const insert = async (text) => {
     const elements = parseMarkdown(text);
-    //console.log(elements);
+    console.log(elements);
 
     for (let i = 0; i < elements.length; i++) {
       editor.chain().insertCustomCharacter(elements[i]).run();
 
-      await new Promise((resolve) => setTimeout(resolve, 10)); // Wait for 1 second
+      await new Promise((resolve) => setTimeout(resolve, 300)); // Wait for 1 second
     }
   };
 
   //this is a test\n He\n He has\n His mother.
-  //##test\n### test2\n- He\n- He has\n- His mother.
+  //
 
   useEffect(() => {
     console.log("rewind:", rewind);
 
     if (editor && rewind) {
       const runRewind = async () => {
-        let response = await rewindContext(
+        const { contentLevel } = await rewindContext(
           session,
           noteId,
           fullTranscript,
           caption
         );
 
-        response = response.replace(/^[ \t]*/gm, "").replace(/\n+/g, "\n");
+        editor.chain().focus().appendJSON({ content: contentLevel }).run();
 
-        editor.commands.insertNewNode();
-
-        insert(response);
-
+        //response = response.replace(/^[ \t]*/gm, "").replace(/\n+/g, "\n");
+        /*
+        const response = "- test\n### test2\n- He\n- He has\n- His mother.";
+        await editor.chain().insertNewNode().focus().run();
+        setTimeout(() => {
+          insert(response);
+        }, [200]);
         console.log("rewind ran");
+        */
+
         setRewind(false);
       };
 

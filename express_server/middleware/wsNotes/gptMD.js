@@ -180,7 +180,13 @@ async function queryAI(note_id, ts_message, frequency) {
       console.log("mermaidMd", mermaidMd);
       console.log("md", md);
       console.log("full responce", md + "\n\n" + mermaidMd);
-      return md + "\n\n" + mermaidMd;
+      if (md){
+        return mermaidMd + "\n\n" + md;
+
+      } else {
+        return mermaidMd
+      }
+
     } else {
       const updatedCount = diagram_message_count + 1;
       try {

@@ -37,6 +37,7 @@ function NoteComponent() {
   const [slideView, setSlideView] = useState(false);
   const [activeUrl, setActiveUrl] = useState("");
   const [audioView, setAudioView] = useState(true);
+  const [newJson, setnewJson] = useState(null);
   const [globalSeek, setglobalSeek] = useState(0.0);
   const [diagramOn, setDiagramOn] = useState(false);
   const [noteOn, setNoteOn] = useState(false);
@@ -47,6 +48,8 @@ function NoteComponent() {
     noteOn,
     setNoteOn,
     mode,
+    newJson,
+    setnewJson,
   };
 
   useEffect(() => {
@@ -107,6 +110,13 @@ function NoteComponent() {
   useEffect(() => {
     setActiveUrl(currentNote.slide_url);
   }, [currentNote.slide_url]);
+
+  useEffect(() => {
+    if (currentNote.new_json) {
+      console.log("fireing");
+      setnewJson(currentNote.new_json);
+    }
+  }, [currentNote.new_json]);
 
   const contentKit = {
     content,

@@ -19,8 +19,8 @@ const calculateTotTime = async (note_id) => {
 
     const playArray = latestDate[0].play_timestamps;
     const pauseArray = latestDate[0].pause_timestamps;
-    console.log("playArray", playArray);
-    console.log("pauseArray", pauseArray);
+    //console.log("playArray", playArray);
+    //console.log("pauseArray", pauseArray);
 
     let totTime = 0;
 

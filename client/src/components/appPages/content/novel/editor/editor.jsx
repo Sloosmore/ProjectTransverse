@@ -54,7 +54,7 @@ const NovelEditor = ({
     aiTranscript,
   ];
   //mode
-  const { title, json_content, full_markdown, note_id, new_json } = currentNote;
+  const { title, json_content, full_markdown, note_id } = currentNote;
 
   const { content, setContent } = contentKit;
 
@@ -70,7 +70,7 @@ const NovelEditor = ({
     saveNoteMarkdown(note_id, full_markdown, json);
   }, 300);
 
-  const { mode, diagramOn, noteOn } = ToggleGenKit;
+  const { mode, diagramOn, noteOn, newJson, setnewJson } = ToggleGenKit;
 
   const [update, setUpdate] = useState(false);
 
@@ -82,8 +82,14 @@ const NovelEditor = ({
   }, [content]);
 
   useEffect(() => {
-    setJsonToAppend(new_json);
-  }, [new_json]);
+    console.log("newJson??", newJson);
+    if (newJson) {
+      setJsonToAppend(newJson);
+    }
+    setTimeout(() => {
+      setnewJson(null);
+    }, 200);
+  }, [newJson]);
 
   const [jsonToAppend, setJsonToAppend] = useState();
 

@@ -5,6 +5,7 @@ const {
   svg2PNG,
   diagram2Storage,
 } = require("./diagramGen");
+const { realtimeUrl } = require("../../../db/supabase");
 
 const markdownToTiptap = async (markdown, totTime, note_id) => {
   const lines = markdown.split("\n");
@@ -218,6 +219,11 @@ const markdownToTiptap = async (markdown, totTime, note_id) => {
     result.push({
       type: "image",
       attrs: { src: url, title, alt: title, time: totTime },
+    });
+    result.push({
+      type: "paragraph",
+      content: "",
+      attrs: { time: totTime },
     });
   }
 

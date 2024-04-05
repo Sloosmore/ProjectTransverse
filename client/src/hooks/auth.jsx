@@ -18,20 +18,22 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const setData = async () => {
       const { data, error } = await supabaseClient.auth.getSession();
-      const userID = data.session.user.id;
+      if (data.session) {
+        const userID = data.session.user.id;
 
-      const { data: userType, error: userErr } = await supabaseClient
-        .from("user")
-        .select("user_type")
-        .eq("user_id", userID)
-        .single();
-      console.log("userType", userType.user_type);
-      if (userErr) throw userErr;
+        const { data: userType, error: userErr } = await supabaseClient
+          .from("user")
+          .select("user_type")
+          .eq("user_id", userID)
+          .single();
+        console.log("userType", userType.user_type);
+        if (userErr) throw userErr;
 
-      setSession(data.session);
-      setUser(data.session?.user);
-      setLoading(false);
-      setUserType(userType.user_type);
+        setSession(data.session);
+        setUser(data.session?.user);
+        setLoading(false);
+        setUserType(userType.user_type);
+      }
     };
 
     const { data: listener } = supabaseClient.auth.onAuthStateChange(
@@ -48,6 +50,24 @@ const AuthProvider = ({ children }) => {
       listener?.subscription.unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    const updateUser = async () => {
+      if (user) {
+        const userID = user.id;
+
+        const { data: userType, error: userErr } = await supabaseClient
+          .from("user")
+          .select("user_type")
+          .eq("user_id", userID)
+          .single();
+        console.log("userType", userType.user_type);
+        if (userErr) throw userErr;
+        setUserType(userType.user_type);
+      }
+    };
+    updateUser();
+  }, [user]);
 
   const value = {
     session,
