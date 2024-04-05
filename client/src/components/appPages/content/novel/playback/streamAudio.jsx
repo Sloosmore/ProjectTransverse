@@ -22,8 +22,10 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
 
   const requestRef = useRef();
 
+  const globalSeekRef = useRef(globalSeek);
+
   useEffect(() => {
-    //console.log("globalSeek", globalSeek);
+    globalSeekRef.current = globalSeek;
   }, [globalSeek]);
 
   // Fetch the audio urls and set states
@@ -40,9 +42,12 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
             html5: true,
             buffer: true,
             onload: function () {
-              let newSeek = globalSeek;
+              let newSeek = globalSeekRef.current;
               if (index !== 0) {
-                newSeek = globalSeek - segData[index - 1].end_time / 1000;
+                console.log("loaded data");
+                console.log(segData[index - 1].end_time / 1000);
+                console.log(globalSeekRef.current);
+                newSeek -= segData[index - 1].end_time / 1000;
               }
               console.log("newSeek", newSeek);
               this.seek(newSeek);
@@ -98,6 +103,10 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
   const handleSliderChange = (e) => {
     const newSeek = parseFloat(e.target.value);
     setglobalSeek(newSeek);
+    if (audio[currentSoundIndex].playing()) {
+      audio[currentSoundIndex].pause();
+      setPlaying(false);
+    }
   };
 
   const handleToggle = () => {
@@ -161,6 +170,7 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
 
   useEffect(() => {
     // loop through audioData to find the current index for the new seek
+    console.log("globalSeek", globalSeek);
     for (let i = 0; i < audioData.length; i++) {
       // this will trigger when the new seek is less than the end time of the current audioData
       // which means the new seek is within the current audioData
@@ -206,9 +216,14 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
   }, [currentSoundIndex]);
 
   const formatTime = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    seconds %= 3600;
     const minutes = Math.floor(seconds / 60);
     seconds = Math.floor(seconds % 60);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+
+    return `${hours > 0 ? `${hours}:` : ""}${
+      minutes < 10 ? "0" : ""
+    }${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
   const benchTime = () => {
