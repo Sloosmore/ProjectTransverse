@@ -10,10 +10,10 @@ function TrustedBy() {
         Trusted by Employees and Students from:
       </h2>
       <div className="grid lg:grid-cols-4 md:grid-cols-2 lg:gap-x-12 gap-y-12 place-content-evenly justify-items-center md:mx-20">
-        <img src={tmoble} alt className="h-10" />
-        <img src={stanford} alt className="h-10" />
-        <img src={microsoft} alt className="h-10" />
-        <img src={usc} alt className="h-10" />
+        <img src={tmoble} className="h-10" />
+        <img src={stanford} className="h-10" />
+        <img src={microsoft} className="h-10" />
+        <img src={usc} className="h-10" />
       </div>
     </div>
   );
