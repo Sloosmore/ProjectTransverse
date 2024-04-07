@@ -10,6 +10,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
 import { BrowserProvider } from "./hooks/browserSupport.jsx";
 import { Toaster } from "@/components/ui/sonner";
+import { CodeProvider } from "./hooks/code.jsx";
 
 function App() {
   return (
@@ -17,17 +18,19 @@ function App() {
       <BrowserRouter>
         <BrowserProvider>
           <AuthProvider>
-            <Routes>
-              <Route
-                path="/app/*"
-                element={
-                  <ProtectedRoute>
-                    <TransverseApp />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/*" element={<PublicRoutes />} />
-            </Routes>
+            <CodeProvider>
+              <Routes>
+                <Route
+                  path="/app/*"
+                  element={
+                    <ProtectedRoute>
+                      <TransverseApp />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/*" element={<PublicRoutes />} />
+              </Routes>
+            </CodeProvider>
           </AuthProvider>
           <Toaster />
         </BrowserProvider>
