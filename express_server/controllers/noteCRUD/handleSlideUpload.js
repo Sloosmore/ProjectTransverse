@@ -1,5 +1,5 @@
 const supabase = require("../../db/supabase");
-
+const path = require("path");
 const uploadSlides = async (req, res) => {
   let buffer;
   let note_id;
@@ -12,7 +12,9 @@ const uploadSlides = async (req, res) => {
     console.log("req.body", req.body);
 
     note_id = req.body.note_id;
-    file_path = `Slides for note: ${note_id}`;
+    const fileExtension = path.extname(req.file.originalname);
+    file_path = `Slides for note: ${note_id}${fileExtension}`;
+    console.log(fileExtension);
     console.log("note_id", note_id);
 
     if (!req.file) {
