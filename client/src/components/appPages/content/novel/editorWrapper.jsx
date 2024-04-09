@@ -20,7 +20,7 @@ import { useParams } from "react-router-dom";
 import RecPause from "./recPause/recPause";
 import { useWindowWidth } from "@/hooks/windowWidth";
 import { Separator } from "@/components/ui/separator";
-import Slides from "./slides";
+import Slides from "./slides/slides";
 import AudioControls from "./playback/streamAudio";
 import { useNoteData } from "@/hooks/noteDataStore";
 import { useRewind } from "@/hooks/aiRewind";
