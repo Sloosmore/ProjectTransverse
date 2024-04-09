@@ -21,41 +21,6 @@ function Login() {
     const { data } = supabaseClient.auth.onAuthStateChange(
       async (event, session) => {
         if (event === "SIGNED_IN") {
-          const { user: supabaseUser } = session;
-          const { data, error } = await supabaseClient
-            .from("user")
-            .select("*")
-            .eq("user_id", supabaseUser.id);
-          console.log(data);
-          if (error) {
-            console.error("Error fetching user:", error);
-            // handle error appropriately
-          } else if (data.length === 0) {
-            const { error: insertError } = await supabaseClient
-              .from("user")
-              .insert({
-                user_id: supabaseUser.id,
-                email: supabaseUser.email,
-                is_active: true,
-                date_created: new Date(),
-                note_preferences: [
-                  "Use a bullet point style with a subtitle schema (##). For more complex subjects include analogies.",
-                  "prompt2",
-                  "prompt3",
-                  "prompt4",
-                  "prompt5",
-                ],
-                note_frequency: 700,
-                pref_number: 0,
-                //make better exsamples
-                //add diagram
-              });
-
-            if (insertError) {
-              console.error("Error inserting new user:", insertError);
-              // handle error appropriately
-            }
-          }
           navigate("/app/folder-grid"); // replace '/n' with the path you want to navigate to
         }
       }
