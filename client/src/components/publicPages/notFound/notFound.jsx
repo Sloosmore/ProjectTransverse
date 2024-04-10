@@ -11,8 +11,8 @@ const NotFound = () => {
       </p>
       <p>It would be funny making this page a blog</p>
       <p>
-        I may regret this later but send me an email (Loosmore@usc.edu) or text
-        me (206-372-0327) if you have feedback I would love to make this thing
+        I may regret this later but send me an email (stan@vrse.ai) or text me
+        (206-372-0327) if you have feedback I would love to make this thing
         better
       </p>
     </div>
