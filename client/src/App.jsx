@@ -11,6 +11,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { BrowserProvider } from "./hooks/browserSupport.jsx";
 import { Toaster } from "@/components/ui/sonner";
 import { CodeProvider } from "./hooks/code.jsx";
+import FacebookPixel from "./lib/FacebookPixle.jsx";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Toaster />
         </BrowserProvider>
       </BrowserRouter>
+      <FacebookPixel />
       <SpeedInsights />
       <Analytics />
     </>
