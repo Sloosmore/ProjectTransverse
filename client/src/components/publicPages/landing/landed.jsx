@@ -14,40 +14,15 @@ import loadVideoMov from "../../../assets/Onload video.mov";
 import afterVid from "../../../assets/afterVid.png";
 
 export function BlockText() {
-  const { user } = useAuth();
-  const [textValue, setTextValue] = useState("loading");
-  const [randList, setRandList] = useState();
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      let randomInt = Math.floor(Math.random() * 4) + 1;
-      while (randomInt === randList) {
-        randomInt = Math.floor(Math.random() * 4) + 1;
-      }
-      setRandList(randomInt);
-      setTextValue("loading");
-      const timeoutId = setTimeout(() => {
-        setTextValue("done");
-      }, 1500);
-
-      // Clear the timeout when the interval is cleared
-      return () => clearTimeout(timeoutId);
-    }, 3500);
-
-    // Clear the interval when the component is unmounted
-    return () => clearInterval(intervalId);
-  }, []);
-
   const videoRef = useRef(null);
 
   useEffect(() => {
-    // Access the video element from the ref
-    const videoElement = videoRef.current;
-
-    // Prevent looping by setting the loop attribute to false
-    videoElement.loop = false;
+    if (videoRef.current) {
+      videoRef.current.oncanplay = function () {
+        videoRef.current.play();
+      };
+    }
   }, []);
-
   return (
     <div className="flex w-screen bg-light  px-5 overflow-hidden lg:pt-40 lg:pb-20 lg:mb-10">
       <div className="py-4 pb-0 pt-5 lg:items-center rounded-3 flex lg:flex-row flex-col mb-6">
