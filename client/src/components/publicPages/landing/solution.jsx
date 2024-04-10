@@ -42,7 +42,7 @@ const VrseFix = () => {
         vrse fixes this
       </h2>
       <div className="flex flex-col-reverse lg:flex-row items-center w-full justify-between">
-        <div className="flex justify-center min-w-[30rem] flex-grow">
+        <div className="flex justify-center md:min-w-[30rem] flex-grow">
           <div className="flex flex-col lg:my-0 my-12 2xl:me-10">
             {steps.map((item) => (
               <button
