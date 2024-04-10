@@ -35,6 +35,7 @@ import { TranscriptContext } from "@/hooks/transcriptStore";
 import { useContext } from "react";
 import RunAI from "./insideComponents/runAi";
 import aiTranscript from "./extentions/aiTranscript";
+import DemoJson from "./insideComponents/demo";
 
 const NovelEditor = ({
   currentNote,
@@ -95,7 +96,7 @@ const NovelEditor = ({
 
   return (
     <div key={update} className="w-full flex flex-col justify-center">
-      <EditTitle currentNote={currentNote} />
+      {<EditTitle currentNote={currentNote} />}
 
       <ErrorBoundary>
         <EditorRoot>
@@ -116,7 +117,7 @@ const NovelEditor = ({
               handleDrop: (view, event, _slice, moved) =>
                 handleImageDrop(view, event, moved, uploadFn),
               attributes: {
-                class: `prose-lg prose-stone dark:prose-invert prose-headings:font-title font-default focus:outline-none w-full mx-auto h-full `,
+                class: `prose-lg prose-stone dark:prose-invert prose-headings:font-title font-default focus:outline-none w-full mx-auto h-full override-heading-margin`,
               },
             }}
             slotAfter={<ImageResizer />}
@@ -165,10 +166,10 @@ const NovelEditor = ({
               currentNote={currentNote}
               transcript={transcript}
             />
+            {/*<DemoJson />*/}
           </EditorContent>
         </EditorRoot>
       </ErrorBoundary>
-
       {/*
       <button
         className="bg-accent text-white p-2 rounded-md w-20 h-10"
@@ -191,7 +192,6 @@ const NovelEditor = ({
       >
         gogo
       </button>*/}
-
       {mode === "note" && diagramOn && (
         <div className="md:px-12 px-6 w-full mb-6">
           <SkeletonCard />

@@ -178,5 +178,10 @@ ul[data-type="taskList"] li[data-checked="true"] > div > p {
 }
 
 .fade-in {
-  animation: fade-in 1s;
+  animation: fade-in 0.75s;
+}
+
+.override-heading-margin h2 {
+  margin-top: 1.5rem !important;
+  margin-bottom: 1rem !important;
 }
