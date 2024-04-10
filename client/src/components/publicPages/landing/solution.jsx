@@ -42,8 +42,8 @@ const VrseFix = () => {
         vrse fixes this
       </h2>
       <div className="flex flex-col-reverse lg:flex-row items-center w-full justify-between">
-        <div className="flex justify-center min-w-[30rem]">
-          <div className="flex flex-col lg:my-0 my-12">
+        <div className="flex justify-center min-w-[30rem] flex-grow">
+          <div className="flex flex-col lg:my-0 my-12 2xl:me-10">
             {steps.map((item) => (
               <button
                 className={`items-center space-x-2 rounded-md px-4 py-3 text-left text-sm hover:bg-accent aria-selected:bg-accent mb-4 ${
@@ -62,7 +62,7 @@ const VrseFix = () => {
             </div>
           </div>
         </div>
-        <div className="mx-10 md:mx-0">
+        <div className="mx-10 md:mx-0 xl:me-10">
           <img
             src={activePoint}
             alt=""
