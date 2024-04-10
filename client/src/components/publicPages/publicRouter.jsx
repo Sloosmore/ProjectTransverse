@@ -11,6 +11,7 @@ import PrivatePolicy from "./policies/private";
 import TermsOfService from "./policies/terms";
 import ProtectedCodeRoute from "./login/codeProtect";
 import CodeCheck from "./code/codePage";
+import WaitlistScreen from "./waitlist/waitlistScreen";
 
 function PublicRoutes() {
   return (
@@ -29,6 +30,7 @@ function PublicRoutes() {
       <Route path="/terms" element={<TermsOfService />} />
       <Route path="/policy" element={<ComingSoon />} />
       <Route path="/code" element={<CodeCheck />} />
+      <Route path="/getin" element={<WaitlistScreen />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

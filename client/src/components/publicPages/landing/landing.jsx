@@ -14,8 +14,10 @@ function Landing() {
         <NoteTakingReasons />
         <VrseFix />
 
+        <Waitlist />
+
         {/*<Corner />
-                <Waitlist />
+               
 
         */}
       </div>
