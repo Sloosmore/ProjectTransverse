@@ -105,6 +105,7 @@ export function BlockText() {
             autoPlay
             muted
             loop={false}
+            playsInline
             className="rounded shadow-xl ml-auto ring-2 ring-gray-200 ring-opacity-50"
             style={{ width: "100%" }}
           >
