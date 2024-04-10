@@ -37,8 +37,8 @@ const VrseFix = () => {
   ];
 
   return (
-    <div className=" flex-col lg:h-screen sm:mx-20 justify-center items-center flex">
-      <h2 className="text-5xl text-center mb-20 gradient-text mt-16 lg:mt-0  ">
+    <div className=" flex-col xl:h-screen sm:mx-20 justify-center items-center flex">
+      <h2 className="text-5xl text-center  gradient-text lg:my-14 my-20   ">
         vrse fixes this
       </h2>
       <div className="flex flex-col-reverse lg:flex-row items-center w-full justify-between">
@@ -66,7 +66,7 @@ const VrseFix = () => {
           <img
             src={activePoint}
             alt=""
-            className="lg:max-h-[48rem] max-h-[35rem] ring ring-gray-100 rounded-xl"
+            className="lg:max-h-[42rem] max-h-[35rem] ring ring-gray-100 rounded-xl"
           />
         </div>
       </div>

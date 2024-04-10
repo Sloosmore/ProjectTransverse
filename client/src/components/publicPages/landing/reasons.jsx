@@ -21,13 +21,13 @@ const NoteTakingReasons = () => {
   ];
 
   return (
-    <div className=" mx-5 sm:mx-20 border-t pt-20 mt-10 items-center ">
+    <div className=" mx-5 sm:mx-20 border-t pt-20 mt-10 items-center xl:mb-10">
       <div className="flex flex-col-reverse lg:flex-row items-center w-full justify-between h-full ">
         <div className="">
           <img
             src={sideImage}
             alt=""
-            className="lg:max-h-[48rem] max-h-[35rem] ring ring-gray-100 rounded-xl shadow-lg"
+            className="lg:max-h-[46rem] max-h-[35rem] ring ring-gray-100 rounded-xl shadow-lg"
           />
         </div>
         <div className="flex flex-grow justify-center">
