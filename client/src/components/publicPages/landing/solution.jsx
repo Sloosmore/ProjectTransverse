@@ -38,12 +38,12 @@ const VrseFix = () => {
 
   return (
     <div className=" flex-col lg:h-screen sm:mx-20 justify-center items-center flex">
-      <h2 className="text-5xl text-center mb-20 gradient-text ">
+      <h2 className="text-5xl text-center mb-20 gradient-text mt-16 lg:mt-0  ">
         vrse fixes this
       </h2>
       <div className="flex flex-col-reverse lg:flex-row items-center w-full justify-between">
         <div className="flex justify-center min-w-[30rem]">
-          <div className="flex flex-col">
+          <div className="flex flex-col lg:my-0 my-12">
             {steps.map((item) => (
               <button
                 className={`items-center space-x-2 rounded-md px-4 py-3 text-left text-sm hover:bg-accent aria-selected:bg-accent mb-4 ${
@@ -57,12 +57,12 @@ const VrseFix = () => {
                 </div>
               </button>
             ))}
-            <div className="w-72 mx-auto border-t pt-6">
+            <div className="w-72 mx-auto border-t pt-6 ">
               {steps.find((item) => item.state === activePoint).description}
             </div>
           </div>
         </div>
-        <div className="">
+        <div className="mx-10 md:mx-0">
           <img
             src={activePoint}
             alt=""
