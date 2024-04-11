@@ -34,12 +34,170 @@ function HelpModalShad({ show, onClose }) {
   const title = ` Take Notes. In real time. Your way.`;
   const radios = [{ name: "Word" }, { name: "PDF" }];
 
+  /**/
+
   const content = [
     {
-      title: "Setup and Personalization",
+      title: "Notetaking Video",
       body: () => (
+        <div className="flex justify-center align-center">
+          <h2>
+            <a
+              href="https://www.youtube.com/watch?v=VvOh4cMfcdo"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Watch the video
+            </a>
+          </h2>
+        </div>
+      ),
+      link: "https://www.youtube.com/watch?v=VvOh4cMfcdo",
+    },
+    {
+      title: "Personalization Video",
+      body: () => (
+        <div className="flex justify-center align-center">
+          <a
+            href="https://www.youtube.com/watch?v=oybdf31Xqcs"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Watch the video
+          </a>
+        </div>
+      ),
+      link: "https://www.youtube.com/watch?v=oybdf31Xqcs",
+    },
+    {
+      title: "Exporting and File Management",
+      body: () => (
+        <div className="text-gray-400">
+          <div>Hit the transverse Icon to go back home</div>
+          <div className="flex justify-center ">
+            <div className="shadow rounded-lg mt-2">
+              <img className="h-16 w-16 p-2.5" src={icon} alt="Transverse" />
+            </div>
+          </div>
+          <div className="mt-4">
+            And find the edit button for the specific file:
+          </div>
+          <div className="text-center mt-3 flex justify-center">
+            <div className=" border-2 border-gray-300 p-4 w-4 h-5 flex justify-center items-center hover:bg-gray-500 rounded-lg hover:text-white">
+              <div className="  align-middle  ">
+                <i className=" bi bi-gear align-middle "></i>
+              </div>
+            </div>
+          </div>
+          <div className="mt-3">
+            From there you can change the title, markdown, visibility in the
+            sidebar and more in the edit page.
+          </div>
+          <br />
+          <div>You can also download the markdown as a PDF/Word doc:</div>
+          <div className="col justify-content-center d-flex mt-3 "></div>
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <div className="overflow-auto">
+      <DialogContent className="text-gray-400 sm:max-w-[800px] lg:max-w-screen-lg overflow-y-scroll max-h-screen rounded">
+        <DialogHeader>
+          <DialogTitle className="text-gray-600 text-3xl mb-3">
+            How vrse works
+          </DialogTitle>
+        </DialogHeader>
         <>
-          <div className=" text-black-50">
+          {content.slice(0, 2).map((item, index) => (
+            <h3
+              key={index}
+              className="text-gray-600 text-2xl  border-b pb-3 pt-4"
+            >
+              <a
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                {item.title}
+              </a>
+            </h3>
+          ))}
+          <Accordion type="single" collapsible className="w-full ">
+            {content.slice(2).map((item, index) => (
+              <div key={index + 2}>
+                <AccordionItem value={(index + 2).toString()}>
+                  <AccordionTrigger>
+                    <div className="text-gray-600 text-gray-600 text-2xl hover:underline">
+                      {item.title}
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div>{item.body()}</div>
+                  </AccordionContent>
+                </AccordionItem>
+              </div>
+            ))}
+          </Accordion>
+        </>
+        <DialogFooter>
+          <Button
+            variant="secondary"
+            className="bg-gray-200"
+            type="button"
+            onClick={onClose}
+          >
+            Close
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </div>
+  );
+}
+
+export default HelpModalShad;
+
+/*     
+    `
+  ## Note Personilzation\n 
+  - Voice: Say the title of your notes and then afterword say 'note insturctions'\n
+  - Command Center: Open the Command Center and enter in custom LLM propmpt\n
+  ##\n
+  ## Note Taking\n
+  - Voice: Say the title of your notes and then "Note Mode" afterword to be\n
+  - Command Center: Open the Command Center, navigate to the 2nd accordian tab, enter document name and submit\n
+  ##\n
+  ## Document Gen\n
+  - Voice: give your document a prompt and then say the keyword "tranverse" after a brief pause to send your script to the backend\n
+  - Command Center: Open the Command Center and enter in custom LLM propmpt\n
+  ##\n
+  ## Clear Transcript\n
+   - Voice: say "Clear" after pausing breifly while to the model\n
+   - Keyboard: Press the C Key\n
+
+   ## Additional Commands\n
+   - "Help": Brings up this modal
+   `,
+   
+                 <ul className="mt-2">
+                <li>
+                  In the <strong>pref tab </strong>you can set how you want your
+                  notes to be formated and how you want them to be explained
+                  through natural launguage
+                </li>
+                <li className="mt-1">
+                  In the <strong>note tab</strong> you can set the title of your
+                  note and start taking notes
+                </li>
+              </ul>
+              From there hit submit and you can find your notes in the notes tab
+
+
+
+
+              <div className=" text-black-50">
             <div>
               <h6 className="mb-6">
                 <strong>Start a new note:</strong>
@@ -112,14 +270,9 @@ function HelpModalShad({ show, onClose }) {
               </ul>
             </div>
           </div>
-        </>
-      ),
-    },
-    {
-      title: "Notetaking",
-      body: () => (
-        <>
-          <div>
+
+
+           <div>
             <div className="text-black-50 flex-col">
               <div className=" list-disc list-inside">
                 <h5 className="mb-6">
@@ -191,131 +344,4 @@ function HelpModalShad({ show, onClose }) {
               </div>
             </div>
           </div>
-        </>
-      ),
-    },
-    {
-      title: "Exporting and File Management",
-      body: () => (
-        <div className="text-gray-400">
-          <div>Hit the transverse Icon to go back home</div>
-          <div className="flex justify-center ">
-            <div className="shadow rounded-lg mt-2">
-              <img className="h-16 w-16 p-2.5" src={icon} alt="Transverse" />
-            </div>
-          </div>
-          <div className="mt-4">
-            And find the edit button for the specific file:
-          </div>
-          <div className="text-center mt-3 flex justify-center">
-            <div className=" border-2 border-gray-300 p-4 w-4 h-5 flex justify-center items-center hover:bg-gray-500 rounded-lg hover:text-white">
-              <div className="  align-middle  ">
-                <i className=" bi bi-gear align-middle "></i>
-              </div>
-            </div>
-          </div>
-          <div className="mt-3">
-            From there you can change the title, markdown, visibility in the
-            sidebar and more in the edit page.
-          </div>
-          <br />
-          <div>You can also download the markdown as a PDF/Word doc:</div>
-          <div className="col justify-content-center d-flex mt-3 ">
-            {/*
-            <ButtonGroup>
-              {radios.map((radio, idx) => (
-                <ToggleButton
-                  className="shadow"
-                  key={idx}
-                  variant="info-outline"
-                  type="radio"
-                  name="radio"
-                  checked={radioValue === idx} // Compare with idx
-                  onClick={() => setRadioValue(idx)}
-                >
-                  {radio.name}
-                </ToggleButton>
-              ))}
-              </ButtonGroup>*/}
-          </div>
-        </div>
-      ),
-    },
-  ];
-
-  return (
-    <div className="overflow-auto">
-      <DialogContent className="text-gray-400 sm:max-w-[800px] lg:max-w-screen-lg overflow-y-scroll max-h-screen rounded">
-        <DialogHeader>
-          <DialogTitle className="text-gray-800">
-            How transverse works
-          </DialogTitle>
-        </DialogHeader>
-        <>
-          <Accordion type="single" collapsible className="w-full">
-            {content.map((item, index) => (
-              <div key={index}>
-                <AccordionItem value={index.toString()}>
-                  <AccordionTrigger>
-                    <div className="text-gray-600">{item.title}</div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div>{item.body()}</div>
-                  </AccordionContent>
-                </AccordionItem>
-              </div>
-            ))}
-          </Accordion>
-        </>
-        <DialogFooter>
-          <Button
-            variant="secondary"
-            className="bg-gray-200"
-            type="button"
-            onClick={onClose}
-          >
-            Close
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </div>
-  );
-}
-
-export default HelpModalShad;
-
-/*     
-    `
-  ## Note Personilzation\n 
-  - Voice: Say the title of your notes and then afterword say 'note insturctions'\n
-  - Command Center: Open the Command Center and enter in custom LLM propmpt\n
-  ##\n
-  ## Note Taking\n
-  - Voice: Say the title of your notes and then "Note Mode" afterword to be\n
-  - Command Center: Open the Command Center, navigate to the 2nd accordian tab, enter document name and submit\n
-  ##\n
-  ## Document Gen\n
-  - Voice: give your document a prompt and then say the keyword "tranverse" after a brief pause to send your script to the backend\n
-  - Command Center: Open the Command Center and enter in custom LLM propmpt\n
-  ##\n
-  ## Clear Transcript\n
-   - Voice: say "Clear" after pausing breifly while to the model\n
-   - Keyboard: Press the C Key\n
-
-   ## Additional Commands\n
-   - "Help": Brings up this modal
-   `,
-   
-                 <ul className="mt-2">
-                <li>
-                  In the <strong>pref tab </strong>you can set how you want your
-                  notes to be formated and how you want them to be explained
-                  through natural launguage
-                </li>
-                <li className="mt-1">
-                  In the <strong>note tab</strong> you can set the title of your
-                  note and start taking notes
-                </li>
-              </ul>
-              From there hit submit and you can find your notes in the notes tab
    */
