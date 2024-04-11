@@ -93,7 +93,7 @@ function TransverseApp() {
       console.log("fetching deepgram key");
       getDeepgramKey();
     }
-  }, [apiKey, userType]);
+  }, [apiKey, userType, mode]);
 
   useEffect(() => {
     if (apiKey && "key" in apiKey) {
@@ -246,15 +246,28 @@ function TransverseApp() {
   const [timeoutId, setTimeoutId] = useState(null);
 
   useEffect(() => {
+    //first is stop any recording
     if (mode !== "note") {
+      const title = titleFromID(noteID, noteData);
+
+      let transcriptMessage;
       stopRecordingMedia(recorder);
       if (userType === "Standard") {
         setTimeout(() => {
           SpeechRecognition.stopListening();
         }, 500);
+        transcriptMessage = fullTranscript;
       } else {
         stopDGMicrophone();
+        transcriptMessage = fullTranscript + " " + caption;
       }
+      sendJsonMessage({
+        title,
+        transcript: transcriptMessage,
+        init: false,
+        note_id: noteID,
+        token: session.access_token,
+      });
     } else {
       if (userType === "Standard") {
         //google
