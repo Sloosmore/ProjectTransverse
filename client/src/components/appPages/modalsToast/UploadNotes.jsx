@@ -34,8 +34,9 @@ const UploadNotes = ({ activeNum, setPreferences, setTextareaValue }) => {
         console.log(data);
         const pref = data.preference;
         setPreferences((prev) => {
-          const newPrefs = [...prev];
-          newPrefs[activeNum] = pref;
+          const newPrefs = { ...prev };
+          console.log(newPrefs);
+          newPrefs["note"][activeNum] = pref;
           return newPrefs;
         });
         setTextareaValue(pref);
@@ -57,7 +58,9 @@ const UploadNotes = ({ activeNum, setPreferences, setTextareaValue }) => {
       />
       <Button
         onClick={() => {
-          handleFileUpload(file, activeNum, session, setTextareaValue);
+          if (file) {
+            handleFileUpload(file, activeNum, session, setTextareaValue);
+          }
         }}
         variant="secondary"
         className="bg-gray-200 mt-4"

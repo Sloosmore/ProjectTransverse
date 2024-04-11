@@ -171,6 +171,7 @@ function ControlModalShad() {
             activeNum={activeNum}
             setPreferences={setPreferences}
             setTextareaValue={setTextareaValue}
+            preferences={preferences}
           />
 
           <div className="sm:flex-row flex-col flex justify-between mt-4 gap-y-2 sm:gap-y-0">
