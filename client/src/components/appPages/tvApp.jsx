@@ -37,7 +37,7 @@ function TransverseApp() {
   const [noteData, setNotes] = useState([]);
   //this is for specific active instace of WS notes
   //ID of note and not title use titleFromID to get title
-  const [noteID, setNoteID] = useState(localStorage.getItem("noteID") || "");
+  const [noteID, setNoteID] = useState(localStorage.getItem("noteID") || null);
   //this is for the media recorder
   const [recorder, setRecorder] = useState(null);
 
@@ -89,12 +89,11 @@ function TransverseApp() {
       console.log("dgkey");
       setApiKey(object);
     };
-    console.log("userType", userType);
-
     if (!apiKey && userType !== "Standard") {
+      console.log("fetching deepgram key");
       getDeepgramKey();
     }
-  }, [apiKey]);
+  }, [apiKey, userType]);
 
   useEffect(() => {
     if (apiKey && "key" in apiKey) {
