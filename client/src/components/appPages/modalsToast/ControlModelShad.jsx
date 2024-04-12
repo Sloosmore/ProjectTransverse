@@ -25,7 +25,7 @@ function ControlModalShad() {
 
   const [showAlert, setShowAlert] = useState(false);
 
-  const [activeNum, setActiveNum] = useState(0);
+  const [activeNum, setActiveNum] = useState({ note: 0, diagram: 0 });
 
   const [textKey, setTextKey] = useState(0);
   const [activeTab, setActiveTab] = useState("note");
@@ -73,7 +73,7 @@ function ControlModalShad() {
     <SheetContent className="text-gray-400 sm:max-w-[800px] rounded-l-lg flex-col flex justify-between ">
       <div className="min-width-[320px]">
         <SheetHeader>
-          <SheetTitle> Set Prefferences</SheetTitle>
+          <SheetTitle> Set Preferences</SheetTitle>
         </SheetHeader>
         <div className="flex flex-col mt-3">
           <div className="mb-3 flex-col flex">
@@ -182,7 +182,7 @@ function ControlModalShad() {
               variant="secondary"
               className="bg-gray-200"
             >
-              Save Prefference
+              Save Preference
             </Button>
             <SheetClose asChild>
               <Button type="submit" variant="secondary" className="bg-gray-200">

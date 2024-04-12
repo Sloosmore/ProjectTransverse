@@ -35,11 +35,13 @@ const UploadNotes = ({ activeNum, setPreferences, setTextareaValue }) => {
         const pref = data.preference;
         setPreferences((prev) => {
           const newPrefs = { ...prev };
+          console.log("setting new preferences");
           console.log(newPrefs);
-          newPrefs["note"][activeNum] = pref;
+          console.log(newPrefs["note"][activeNum["note"]]);
+
+          newPrefs["note"][activeNum["note"]] = pref;
           return newPrefs;
         });
-        setTextareaValue(pref);
       });
   }
 
