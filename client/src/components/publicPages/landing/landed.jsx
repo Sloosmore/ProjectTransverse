@@ -1,17 +1,11 @@
 import React from "react";
 import "./blockText.css";
-import { useState, useEffect, useRef } from "react";
-import ReactMarkdown from "react-markdown";
-import LoadLine from "./load";
-import { mdList, titlesList } from "./markDownSample";
-import grey from "../../../assets/greyFull.png";
-import Open from "../../../assets/novelLanding.png";
-import { Link } from "react-router-dom";
-import { useAuth } from "../../../hooks/auth";
-import loadVideo from "../../../assets/Onload video.mp4";
-import loadVideoMov from "../../../assets/Onload video.mov";
+import { useEffect, useRef } from "react";
 
-import afterVid from "../../../assets/afterVid.png";
+import grey from "../../../assets/greyFull.png";
+import { Link } from "react-router-dom";
+
+import loadVideoMov from "../../../assets/Onload video.mov";
 
 export function BlockText() {
   const videoRef = useRef(null);

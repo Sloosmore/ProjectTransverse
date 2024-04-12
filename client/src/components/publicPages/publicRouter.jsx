@@ -10,7 +10,7 @@ import NotFound from "./notFound/notFound";
 import PrivatePolicy from "./policies/private";
 import TermsOfService from "./policies/terms";
 import ProtectedCodeRoute from "./login/codeProtect";
-import CodeCheck from "./code/codePage";
+import CodeCheck from "./passcode/codePage";
 import WaitlistScreen from "./waitlist/waitlistScreen";
 
 function PublicRoutes() {

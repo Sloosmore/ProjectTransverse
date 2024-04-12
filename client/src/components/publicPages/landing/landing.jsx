@@ -2,7 +2,6 @@ import BlockText from "./landed";
 import TrustedBy from "./trust";
 import Footer from "../footer";
 import Waitlist from "../waitlist/waitlist.jsx";
-import Corner from "./feature";
 import NoteTakingReasons from "./reasons";
 import VrseFix from "./solution";
 function Landing() {
@@ -15,11 +14,6 @@ function Landing() {
         <VrseFix />
 
         <Waitlist />
-
-        {/*<Corner />
-               
-
-        */}
       </div>
       <Footer />
     </div>

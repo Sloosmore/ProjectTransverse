@@ -31,11 +31,8 @@ function Footer() {
           </Link>
         </li>
         <li className="nav-item">
-          <Link
-            to="/thisPageDoesn'tLeadToAnything"
-            className="nav-link px-2 text-gray-600"
-          >
-            Other cool link
+          <Link to="/login" className="nav-link px-2 text-gray-600">
+            Login
           </Link>
         </li>
       </ul>
