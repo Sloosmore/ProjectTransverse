@@ -261,13 +261,6 @@ function TransverseApp() {
         stopDGMicrophone();
         transcriptMessage = fullTranscript + " " + caption;
       }
-      sendJsonMessage({
-        title,
-        transcript: transcriptMessage,
-        init: false,
-        note_id: noteID,
-        token: session.access_token,
-      });
     } else {
       if (userType === "Standard") {
         //google
