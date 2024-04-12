@@ -1,14 +1,13 @@
 .blur-shadow::before {
   content: "";
   position: absolute;
-  inset: -20%; /* Shorthand for top, right, bottom, left */
+  inset: -15%; /* Increase the negative inset value to extend the blur effect even further */
   background: radial-gradient(
     at center,
-    /* Center the gradient in the middle of the element */
-      rgba(255, 255, 255, 1) 20%,
-    /* Start with fully opaque (solid color) closer to the center */
-      rgba(255, 255, 255, 0) 100%
-      /* End with fully transparent further from the center */
+    rgba(255, 255, 255, 1) 0%,
+    /* Start with fully opaque (solid color) at the center */
+      rgba(255, 255, 255, 0) 75%
+      /* Gradually fade to fully transparent at 60% of the radius */
   );
   z-index: -1;
 }

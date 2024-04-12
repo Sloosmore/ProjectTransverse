@@ -98,11 +98,12 @@ function SubmitNewNote({ controlProps }) {
   return (
     <>
       {newNoteField && (
-        <div className="w-full mx-auto z-20 relative overflow-x-hidden">
-          <div className="absolute inset-0 blur-shadow "></div>
+        <div className="w-full mx-auto z-20 relative overflow-x-hidden overflow-y-hidden h-40 ">
+          <div className="absolute inset-0 blur-shadow pt-5 mt-5"></div>
+
           <div
             ref={noteRef}
-            className={`lg:w-3/4 md:w-5/6 sm:w-11/12 mx-auto z-10 transition-opacity duration-300 p-5 `}
+            className={`lg:w-3/4 md:w-5/6 sm:w-11/12 mx-auto z-10 transition-opacity duration-300 p-5 mt-10`}
           >
             <div className=" flex  items-center flex-row overflow-hidden bg-white [&:has(textarea:focus)]:border-token-border-xheavy shadow-lg w-full dark:border-token-border-heavy flex-grow relative border border-token-border-heavy rounded-2xl bg-token-main-surface-primary shadow-lg">
               <input
@@ -116,7 +117,7 @@ function SubmitNewNote({ controlProps }) {
                   }
                 }}
               />
-              <div className="md:border-r md:h-[52px] flex items-center me-2 ">
+              <div className="md:border-r h-[52px] flex items-center me-2 ">
                 <Select
                   className="self-center"
                   onOpenChange={(isDropdownOpen) =>
@@ -127,7 +128,7 @@ function SubmitNewNote({ controlProps }) {
                     setSelectedValue(value);
                   }}
                 >
-                  <SelectTrigger className="w-[180px] border-0 ring-0 focus:ring-0 focus:ring-offset-0">
+                  <SelectTrigger className="w-[100px] p-0 md:p-3 sm:w-[180px] border-0 ring-0 focus:ring-0 focus:ring-offset-0">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
