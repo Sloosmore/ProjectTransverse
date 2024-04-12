@@ -74,10 +74,7 @@ export function EditExportNote({ file }) {
 
   return (
     <Sheet>
-      <SheetTrigger
-        className=" border-2 border-gray-300 p-4 w-4 h-5 flex justify-center items-center hover:bg-gray-500 rounded-lg hover:text-white"
-        onClick={() => setOpen(true)}
-      >
+      <SheetTrigger className=" border-2 border-gray-300 p-4 w-4 h-5 flex justify-center items-center hover:bg-gray-500 rounded-lg hover:text-white">
         <div className="  align-middle  ">
           <i className=" bi bi-gear align-middle "></i>
         </div>
