@@ -260,10 +260,10 @@ function FolderBox({ folders, files, handleDeleteFolder }) {
               </tr>
             ))}
             {!sortedFiles.length && (
-              <h2 className="text-center py-3 md:mx-10 mx-3">
+              <div className="text-center py-3 md:mx-10 mx-3 text-3xl font-semibold">
                 No notes to see here yet! But click the bottom right quesiton
                 mark to get started
-              </h2>
+              </div>
             )}
           </tbody>
         </table>

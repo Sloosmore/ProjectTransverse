@@ -3,7 +3,7 @@ import sideImage from "../../../assets/staticPages/whatHappening.png";
 const NoteTakingReasons = () => {
   const reasons = [
     {
-      title: "You can’t fully pay attention",
+      title: "You can’t always pay attention",
       icon: "bi bi-eye-slash",
       description:
         "You are not alone, it’s hard to focus on everything at once",
@@ -14,14 +14,14 @@ const NoteTakingReasons = () => {
       description: "So much information, so little time to get it all down",
     },
     {
-      title: "You don’t know what is important",
+      title: "It's difficult to find what's important",
       icon: "bi bi-pencil-square",
       description: "How can you study if you don’t know what to study",
     },
   ];
 
   return (
-    <div className=" mx-5 sm:mx-20 border-t pt-20 mt-10 items-center xl:mb-10">
+    <div className=" mx-5 sm:mx-20 border-t pt-20 mt-10 items-center">
       <div className="flex flex-col-reverse lg:flex-row items-center w-full justify-between h-full ">
         <div className="">
           <img

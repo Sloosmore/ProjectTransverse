@@ -12,7 +12,7 @@ const VrseFix = () => {
     {
       title: "Generate notes on the fly",
       description:
-        "Create notes from the transcript quickly putting more time in your hands to focus on the class",
+        "Create notes and diagrams quickly letting you focus on the class",
       state: generate,
     },
     {
@@ -38,26 +38,28 @@ const VrseFix = () => {
 
   return (
     <div className=" flex-col xl:h-screen sm:mx-20 justify-center items-center flex">
-      <h2 className="text-5xl text-center  gradient-text lg:my-14 my-20   ">
-        vrse fixes this
+      <h2 className="text-5xl text-center  gradient-text lg:py-14 py-20  xl:mb-5 ">
+        vrse fixes this through understanding you
       </h2>
       <div className="flex flex-col-reverse lg:flex-row items-center w-full justify-between">
         <div className="flex justify-center md:min-w-[30rem] flex-grow">
-          <div className="flex flex-col lg:my-0 my-12 2xl:me-10">
-            {steps.map((item) => (
-              <button
-                className={`items-center space-x-2 rounded-md px-4 py-3 text-left text-sm hover:bg-accent aria-selected:bg-accent mb-4 ${
-                  item.state === activePoint ? "bg-accent" : ""
-                }`}
-                key={item.title}
-                onClick={() => setActivePoint(item.state)}
-              >
-                <div>
-                  <h3 className="text-2xl text-gray-600">{item.title}</h3>
-                </div>
-              </button>
-            ))}
-            <div className="w-72 mx-auto border-t pt-6 ">
+          <div className="flex lg:flex-col flex-col-reverse lg:my-0 my-12 2xl:me-10">
+            <div className="flex-col flex">
+              {steps.map((item) => (
+                <button
+                  className={`items-center space-x-2 rounded-md px-4 py-3 text-left text-sm hover:bg-accent aria-selected:bg-accent mb-4 ${
+                    item.state === activePoint ? "bg-accent" : ""
+                  }`}
+                  key={item.title}
+                  onClick={() => setActivePoint(item.state)}
+                >
+                  <div>
+                    <h3 className="text-2xl text-gray-600">{item.title}</h3>
+                  </div>
+                </button>
+              ))}
+            </div>
+            <div className="w-72 mx-auto lg:border-t lg:border-b-0 border-b lg:pt-6 pb-6 ">
               {steps.find((item) => item.state === activePoint).description}
             </div>
           </div>

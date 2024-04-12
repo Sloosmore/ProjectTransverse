@@ -44,7 +44,7 @@ function Login() {
       <div className=" md:flex-grow h-1/3 md:h-screen flex mx-auto lg:ms-[9%] md:mt-0 sm:mt-20">
         <div className="self-center">
           <h1 className="text-gray-500 ms-8  ">
-            Find Your <span className="gradient-text "> Verse </span> Today
+            Never miss a <span className="gradient-text "> vrse </span>
           </h1>
           <ul className="ms-14 mt-6 gap-y-2 flex-col flex text-gray-500 me-5 flex-shrink">
             {talkingPoints.map((value) => (
