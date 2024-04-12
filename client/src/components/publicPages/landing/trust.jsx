@@ -1,7 +1,7 @@
-import tmoble from "../../../assets/logos/t-mobile.png";
-import microsoft from "../../../assets/logos/microsoft.png";
-import stanford from "../../../assets/logos/stanford.png";
-import usc from "../../../assets/logos/usc.png";
+import tmoble from "../../../assets/trustLogos/t-mobile.png";
+import microsoft from "../../../assets/trustLogos/microsoft.png";
+import stanford from "../../../assets/trustLogos/stanford.png";
+import usc from "../../../assets/trustLogos/usc.png";
 
 function TrustedBy() {
   return (

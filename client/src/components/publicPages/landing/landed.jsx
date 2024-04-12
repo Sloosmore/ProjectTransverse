@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import grey from "../../../assets/greyFull.png";
 import { Link } from "react-router-dom";
 
-import loadVideoMov from "../../../assets/Onload video.mov";
+import loadVideoMov from "../../../assets/staticPages/Onload video.mov";
 
 export function BlockText() {
   const videoRef = useRef(null);
