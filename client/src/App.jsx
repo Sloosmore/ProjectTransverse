@@ -12,6 +12,7 @@ import { BrowserProvider } from "./hooks/browserSupport.jsx";
 import { Toaster } from "@/components/ui/sonner";
 import { CodeProvider } from "./hooks/code.jsx";
 import FacebookPixel from "./lib/FacebookPixle.jsx";
+import GoogleAnalytics from "./lib/googleAnalytics.jsx";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Toaster />
         </BrowserProvider>
       </BrowserRouter>
+      <GoogleAnalytics />
       <FacebookPixel />
       <SpeedInsights />
       <Analytics />
