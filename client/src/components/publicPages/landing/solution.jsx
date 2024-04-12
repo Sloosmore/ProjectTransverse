@@ -1,8 +1,8 @@
 import { useState } from "react";
-import preferences from "../../../assets/preferences.png";
-import refine from "../../../assets/reasons.png";
-import capture from "../../../assets/capture.png";
-import generate from "../../../assets/generate.png";
+import preferences from "../../../assets/staticPages/preferences.png";
+import refine from "../../../assets/staticPages/reasons.png";
+import capture from "../../../assets/staticPages/capture.png";
+import generate from "../../../assets/staticPages/generate.png";
 import "./blockText.css";
 
 const VrseFix = () => {

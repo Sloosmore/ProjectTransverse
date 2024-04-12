@@ -1,4 +1,4 @@
-import sideImage from "../../../assets/whatHappening.png";
+import sideImage from "../../../assets/staticPages/whatHappening.png";
 
 const NoteTakingReasons = () => {
   const reasons = [

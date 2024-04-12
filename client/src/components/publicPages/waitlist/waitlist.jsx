@@ -1,7 +1,6 @@
 import { addToWaitlist } from "./waitlist";
 import { useState } from "react";
 import "../landing/blockText.css";
-import "./waitlist.css";
 import { toast } from "sonner";
 
 function Waitlist({}) {
