@@ -134,6 +134,12 @@ function FileScroll({ files, folders, searchTerm }) {
                 </td>
               </tr>
             ))}
+            {!sortedFiles.length && (
+              <h2 className="text-center py-3 md:mx-10 mx-3 mt-8">
+                No notes to see here yet! But click the bottom right quesiton
+                mark to get started
+              </h2>
+            )}
           </tbody>
         </table>
       </div>

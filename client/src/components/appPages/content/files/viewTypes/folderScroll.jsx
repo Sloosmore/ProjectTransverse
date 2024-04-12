@@ -80,6 +80,11 @@ function FolderScroll({ files, folders }) {
           </Accordion>
         </div>
       ))}
+      {folders.length === 0 && (
+        <h2 className="text-center text-gray-600 mt-4">
+          No folders to display yet!
+        </h2>
+      )}
     </div>
   );
 }
