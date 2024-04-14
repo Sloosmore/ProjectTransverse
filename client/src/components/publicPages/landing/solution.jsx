@@ -38,9 +38,15 @@ const VrseFix = () => {
 
   return (
     <div className=" flex-col xl:h-screen sm:mx-20 justify-center items-center flex">
-      <h2 className="text-5xl text-center  gradient-text lg:py-14 py-20  xl:mb-5 ">
-        vrse fixes this through understanding you
-      </h2>
+      <div className="lg:py-10 py-20 xl:mb-5 ">
+        <h2 className="text-5xl text-center  gradient-text pb-3 ">
+          vrse fixes this through understanding you
+        </h2>
+        <h3 className="text-gray-500">
+          We take in a real time transcrcript and your preferences to generate
+          real time full/guided notes and diagrams
+        </h3>
+      </div>
       <div className="flex flex-col-reverse lg:flex-row items-center w-full justify-between">
         <div className="flex justify-center md:min-w-[30rem] flex-grow">
           <div className="flex lg:flex-col flex-col-reverse lg:my-0 my-12 2xl:me-10">
