@@ -67,7 +67,7 @@ const UploadNotes = ({ activeNum, setPreferences, setTextareaValue }) => {
         variant="secondary"
         className="bg-gray-200 mt-4"
       >
-        Generate Preffeences
+        Generate Preferences
       </Button>
     </div>
   );
