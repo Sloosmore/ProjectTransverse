@@ -38,13 +38,13 @@ const VrseFix = () => {
 
   return (
     <div className=" flex-col xl:h-screen sm:mx-20 justify-center items-center flex">
-      <div className="lg:py-10 py-20 xl:mb-5 ">
-        <h2 className="text-5xl text-center  gradient-text pb-3 ">
-          vrse fixes this through understanding you
+      <div className="lg:py-10 py-16 xl:mb-5 ">
+        <h2 className="text-5xl text-center  gradient-text pb-3 mx-8">
+          vrse fixes this by understanding you
         </h2>
-        <h3 className="text-gray-500">
-          We take in a real time transcrcript and your preferences to generate
-          real time full/guided notes and diagrams
+        <h3 className="text-gray-500 mx-8 mt-4 md:mt-0 text-center lg:mx-20 xl:px-20">
+          Vrse captures what you listen to live using the transcript & your
+          preferences to generate personalized notes & diagrams in real time
         </h3>
       </div>
       <div className="flex flex-col-reverse lg:flex-row items-center w-full justify-between">
