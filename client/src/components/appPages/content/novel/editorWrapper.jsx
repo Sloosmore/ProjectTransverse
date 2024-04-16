@@ -186,9 +186,13 @@ function NoteComponent() {
 
       <div className="flex-grow min-h-0">
         {transcriptView && !(editView || slideView) && (
-          <div className="overflow-auto flex-grow min-h-0">
-            <Transcript currentNote={currentNote} />
-          </div>
+          <ResizablePanelGroup>
+            <ResizablePanel className="flex flex-col xl:mx-40">
+              <div className="overflow-auto flex-grow min-h-0">
+                <Transcript currentNote={currentNote} />
+              </div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
         )}
         {slideView && !(editView || transcriptView) && (
           <div className="overflow-auto flex-grow min-h-0 items-center h-full">
