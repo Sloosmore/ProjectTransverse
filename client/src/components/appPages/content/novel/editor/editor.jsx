@@ -36,6 +36,7 @@ import { useContext } from "react";
 import RunAI from "./insideComponents/runAi";
 import aiTranscript from "./extentions/aiTranscript";
 import DemoJson from "./insideComponents/demo";
+import { useNoteData } from "@/hooks/noteDataStore";
 
 const NovelEditor = ({
   currentNote,
@@ -61,10 +62,15 @@ const NovelEditor = ({
 
   const [openNode, setOpenNode] = useState(false);
   const [saveStatus, setSaveStatus] = useState("Saved");
+  const { setNotes } = useNoteData();
 
   const debouncedUpdates = useDebouncedCallback(async (editor) => {
     const json = editor.getJSON();
     console.log("setting json");
+    setNotes((prev) => {
+      prev.find((note) => note.note_id === note_id).json_content = json;
+      return prev;
+    });
     setContent(json);
     console.log(json);
     setSaveStatus("Saved");
