@@ -1,3 +1,5 @@
+const inDevelopment = import.meta.env.NODE_ENV === "development";
+
 export const handleSendLLM = (instructions, frequency, pref_num, session) => {
   const token = session.access_token;
 
@@ -22,7 +24,7 @@ export const fetchLLMpref = (
   setFrequency,
   session
 ) => {
-  console.log(session);
+  if (inDevelopment) console.log(session);
   const token = session.access_token;
   fetch(`${import.meta.env.VITE_BASE_URL}/settings/notes`, {
     method: "GET",

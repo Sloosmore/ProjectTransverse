@@ -1,5 +1,7 @@
+const inDevelopment = import.meta.env.MODE === "development";
+
 export const fetchDeepGramKey = () => {
-  console.log("getting a new api key");
+  if (inDevelopment) console.log("getting a new api key");
   return fetch(`${import.meta.env.VITE_BASE_URL}/audio/deepgram`, {
     cache: "no-store",
   })

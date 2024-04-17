@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "@/hooks/auth";
 
 import { rewindContext } from "@/components/appPages/services/rewind";
+const inDevelopment = import.meta.env.NODE_ENV === "development";
 
 const RunAI = () => {
   const { editor } = useCurrentEditor();
@@ -58,7 +59,7 @@ const RunAI = () => {
   //
 
   useEffect(() => {
-    console.log("rewind:", rewind);
+    if (inDevelopment) console.log("rewind:", rewind);
 
     if (editor && rewind) {
       const runRewind = async () => {

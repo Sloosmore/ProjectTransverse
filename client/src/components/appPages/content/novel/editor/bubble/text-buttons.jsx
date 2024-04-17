@@ -50,6 +50,15 @@ export const TextButtons = () => {
       command: (editor) => editor.chain().focus().toggleHighlight().run(),
       icon: HighlighterIcon,
     },
+    {
+      name: "Wiki",
+      command: (editor) => {
+        const { from, to } = editor.state.selection;
+        const selectedText = editor.state.doc.textBetween(from, to);
+        window.open(`https://en.wikipedia.org/wiki/${selectedText}`, "_blank");
+      },
+      icon: "Wiki",
+    },
   ];
   return (
     <div className="flex border-l">
@@ -61,11 +70,15 @@ export const TextButtons = () => {
           }}
         >
           <Button size="icon" className="rounded-none" variant="ghost">
-            <item.icon
-              className={cn("h-4 w-4", {
-                "text-blue-500": item.isActive(editor),
-              })}
-            />
+            {item.icon === "Wiki" ? (
+              <i className="bi bi-wikipedia h-4 w-4 mb-[.25rem]"></i>
+            ) : (
+              <item.icon
+                className={cn("h-4 w-4", {
+                  "text-blue-500": item.isActive(editor),
+                })}
+              />
+            )}
           </Button>
         </EditorBubbleItem>
       ))}

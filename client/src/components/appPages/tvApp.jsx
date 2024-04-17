@@ -185,7 +185,9 @@ function TransverseApp() {
 
   const { sendJsonMessage, readyState } = useWebSocket(WS_URL, {
     onOpen: () => {
-      console.log("WebSocket connection established.");
+      if (inDevelopment) {
+        console.log("WebSocket connection established.");
+      }
     },
 
     onMessage: (event) => {

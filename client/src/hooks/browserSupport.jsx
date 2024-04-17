@@ -20,9 +20,10 @@ export const BrowserProvider = ({ children }) => {
           "--arc-palette-title"
         )
       ) {
-        console.log("arc");
+        if (BrowserContext) {
+          console.log("arc");
+        }
 
-        console.log("test");
         setCompatible(false);
       }
       if (!isChrome && !isSafari) {
