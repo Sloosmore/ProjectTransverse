@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import UploadNotes from "./UploadNotes";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const inDevelopment = import.meta.env.NODE_ENV === "development";
+const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 function ControlModalShad() {
   const { session } = useAuth();

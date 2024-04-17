@@ -24,7 +24,7 @@ import Slides from "./slides/slides";
 import AudioControls from "./playback/streamAudio";
 import { useNoteData } from "@/hooks/noteDataStore";
 import { useRewind } from "@/hooks/aiRewind";
-const inDevelopment = import.meta.env.NODE_ENV === "development";
+const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 function NoteComponent() {
   const { mode, noteData } = useNoteData();

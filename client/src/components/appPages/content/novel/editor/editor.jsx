@@ -38,7 +38,7 @@ import aiTranscript from "./extentions/aiTranscript";
 import DemoJson from "./insideComponents/demo";
 import { useNoteData } from "@/hooks/noteDataStore";
 
-const inDevelopment = import.meta.env.NODE_ENV === "development";
+const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 const NovelEditor = ({
   currentNote,

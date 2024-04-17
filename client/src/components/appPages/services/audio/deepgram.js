@@ -1,4 +1,4 @@
-const inDevelopment = import.meta.env.MODE === "development";
+const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 export const fetchDeepGramKey = () => {
   if (inDevelopment) console.log("getting a new api key");

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "../../../hooks/auth";
 
-const inDevelopment = import.meta.env.NODE_ENV === "development";
+const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 const UploadNotes = ({ activeNum, setPreferences, setTextareaValue }) => {
   const [file, setFile] = useState();

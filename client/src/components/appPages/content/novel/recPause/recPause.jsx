@@ -21,7 +21,7 @@ import { useRewind } from "@/hooks/aiRewind.jsx";
 import { useDebouncedCallback } from "use-debounce";
 
 // Default values shown
-const inDevelopment = import.meta.env.NODE_ENV === "development";
+const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 const RecPause = ({ localNoteID, ToggleGenKit }) => {
   const [recStatus, setRecStatus] = useState();

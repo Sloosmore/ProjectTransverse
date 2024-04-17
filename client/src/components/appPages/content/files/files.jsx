@@ -15,7 +15,7 @@ import { deleteFolder } from "@/components/appPages/services/crudApi";
 import { useNoteData } from "@/hooks/noteDataStore";
 import { useNewNote } from "@/hooks/newNote";
 //overflow for records
-const inDevelopment = import.meta.env.NODE_ENV === "development";
+const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 function Files({}) {
   const { setNotes, noteData, noteID } = useNoteData();

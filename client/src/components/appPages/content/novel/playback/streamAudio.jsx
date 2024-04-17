@@ -5,7 +5,7 @@ import { fetchURLs } from "@/components/appPages/services/audio/streamAudio";
 import { getMaxTime } from "@/components/appPages/services/audio/playback";
 import { Howl } from "howler";
 
-const inDevelopment = import.meta.env.NODE_ENV === "development";
+const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
   const { session } = useAuth();

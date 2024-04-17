@@ -1,4 +1,4 @@
-const inDevelopment = import.meta.env.NODE_ENV === "development";
+const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 export const handleSendLLM = (instructions, frequency, pref_num, session) => {
   const token = session.access_token;

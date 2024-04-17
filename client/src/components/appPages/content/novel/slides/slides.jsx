@@ -11,7 +11,7 @@ const Slides = React.memo(function Slides({
   const [uploadedFile, setUploadedFile] = useState("");
   const [fileType, setFileType] = useState("");
 
-  const inDevelopment = import.meta.env.NODE_ENV === "development";
+  const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
   const uploadSlides = async (file, note_id) => {
     if (uploadedFile) {

@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { supabaseClient } from "../config/supabaseClient";
 
+const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
+
 // Create a context for authentication
 const AuthContext = createContext({
   session: null,
@@ -26,7 +28,7 @@ const AuthProvider = ({ children }) => {
           .select("user_type")
           .eq("user_id", userID)
           .single();
-        console.log("userType", userType.user_type);
+        if (inDevelopment) console.log("userType", userType.user_type);
         if (userErr) throw userErr;
 
         setSession(data.session);
@@ -61,7 +63,7 @@ const AuthProvider = ({ children }) => {
           .select("user_type")
           .eq("user_id", userID)
           .single();
-        console.log("userType", userType.user_type);
+        if (inDevelopment) console.log("userType", userType.user_type);
         if (userErr) throw userErr;
         setUserType(userType.user_type);
       }

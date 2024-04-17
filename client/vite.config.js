@@ -7,7 +7,7 @@ dotenv.config();
 // https://vitejs.dev/config/
 let config;
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.VITE_NODE_ENV === "production") {
   // Production config
   config = defineConfig({
     plugins: [react()],

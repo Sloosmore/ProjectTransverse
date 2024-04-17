@@ -25,7 +25,8 @@ import { LiveTranscriptionEvents, createClient } from "@deepgram/sdk";
 import { toast } from "sonner";
 import { useBrowser } from "@/hooks/browserSupport";
 
-const inDevelopment = import.meta.env.NODE_ENV === "development";
+const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
+console.log("inDevelopment", inDevelopment);
 const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 
 function TransverseApp() {
