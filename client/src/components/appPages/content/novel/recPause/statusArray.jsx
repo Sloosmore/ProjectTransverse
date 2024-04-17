@@ -29,7 +29,6 @@ const getRecStatusArray = ({
     leftFunction: () => {
       setMode("note");
       onPlay(noteID);
-      console.log("between start and speech");
     },
     rightFunction: () => {
       setNoteID();
@@ -43,7 +42,6 @@ const getRecStatusArray = ({
       setNoteID(localNoteID);
       onPlay(localNoteID);
       setMode("note");
-      console.log("between start and speech");
     },
     rightFunction: () => {
       setNoteID();

@@ -13,6 +13,8 @@ import { cn } from "@/lib/utils";
 import UploadNotes from "./UploadNotes";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+const inDevelopment = import.meta.env.NODE_ENV === "development";
+
 function ControlModalShad() {
   const { session } = useAuth();
 
@@ -41,7 +43,9 @@ function ControlModalShad() {
 
   // Call fetchData when the modal opens
   useEffect(() => {
-    console.log("fetching preffs");
+    if (inDevelopment) {
+      console.log("fetching preffs");
+    }
     fetchLLMpref(setPreferences, setActiveNum, setFrequency, session);
   }, []);
 
@@ -50,9 +54,13 @@ function ControlModalShad() {
   }, [activeNum, activeTab]);
 
   useEffect(() => {
-    console.log(activeNum);
+    if (inDevelopment) {
+      console.log(activeNum);
+    }
     setPreferences((prev) => {
-      console.log("activeTab", activeTab);
+      if (inDevelopment) {
+        console.log("activeTab", activeTab);
+      }
       return {
         ...prev,
         [activeTab]: prev[activeTab].map((item, index) =>
@@ -63,7 +71,9 @@ function ControlModalShad() {
   }, [textareaValue, activeNum, activeTab]);
 
   useEffect(() => {
-    console.log("pref", preferences);
+    if (inDevelopment) {
+      console.log("pref", preferences);
+    }
   }, [preferences]);
 
   const prefArray = [0, 1, 2, 3, 4];

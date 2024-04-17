@@ -11,9 +11,13 @@ const Slides = React.memo(function Slides({
   const [uploadedFile, setUploadedFile] = useState("");
   const [fileType, setFileType] = useState("");
 
+  const inDevelopment = import.meta.env.NODE_ENV === "development";
+
   const uploadSlides = async (file, note_id) => {
     if (uploadedFile) {
-      console.log("note_id", note_id);
+      if (inDevelopment) {
+        console.log("note_id", note_id);
+      }
       const formData = new FormData();
       formData.append("file", file);
       formData.append("note_id", note_id);
@@ -25,16 +29,20 @@ const Slides = React.memo(function Slides({
         }
       );
       const { slide_url } = await response.json();
-      console.log("slide_url", slide_url);
       setActiveUrl(slide_url);
       const newfileType = slide_url.split(".").pop();
-      console.log("File type:", newfileType);
+      if (inDevelopment) {
+        console.log("slide_url", slide_url);
+        console.log("File type:", newfileType);
+      }
       setFileType(newfileType);
     }
   };
 
   useEffect(() => {
-    console.log("activeUrl", activeUrl);
+    if (inDevelopment) {
+      console.log("activeUrl", activeUrl);
+    }
   }, [activeUrl]);
 
   return (

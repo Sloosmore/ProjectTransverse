@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "../../../hooks/auth";
 
+const inDevelopment = import.meta.env.NODE_ENV === "development";
+
 const UploadNotes = ({ activeNum, setPreferences, setTextareaValue }) => {
   const [file, setFile] = useState();
   const { session } = useAuth();
@@ -10,6 +12,7 @@ const UploadNotes = ({ activeNum, setPreferences, setTextareaValue }) => {
     const selectedFile = e.target.files[0];
     if (selectedFile && selectedFile.type === "application/pdf") {
       setFile(selectedFile);
+
       console.log(selectedFile);
     } else {
       console.log("Please select a PDF file.");
@@ -31,14 +34,15 @@ const UploadNotes = ({ activeNum, setPreferences, setTextareaValue }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        if (inDevelopment) console.log(data);
         const pref = data.preference;
         setPreferences((prev) => {
           const newPrefs = { ...prev };
-          console.log("setting new preferences");
-          console.log(newPrefs);
-          console.log(newPrefs["note"][activeNum["note"]]);
-
+          if (inDevelopment) {
+            console.log("setting new preferences");
+            console.log(newPrefs);
+            console.log(newPrefs["note"][activeNum["note"]]);
+          }
           newPrefs["note"][activeNum["note"]] = pref;
           return newPrefs;
         });

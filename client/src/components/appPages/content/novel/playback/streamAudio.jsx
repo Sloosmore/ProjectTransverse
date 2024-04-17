@@ -5,6 +5,8 @@ import { fetchURLs } from "@/components/appPages/services/audio/streamAudio";
 import { getMaxTime } from "@/components/appPages/services/audio/playback";
 import { Howl } from "howler";
 
+const inDevelopment = import.meta.env.NODE_ENV === "development";
+
 const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
   const { session } = useAuth();
   const [playing, setPlaying] = useState(false);
@@ -44,12 +46,13 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
             onload: function () {
               let newSeek = globalSeekRef.current;
               if (index !== 0) {
-                console.log("loaded data");
-                console.log(segData[index - 1].end_time / 1000);
-                console.log(globalSeekRef.current);
+                if (inDevelopment) {
+                  console.log("loaded data");
+                  console.log(segData[index - 1].end_time / 1000);
+                  console.log(globalSeekRef.current);
+                }
                 newSeek -= segData[index - 1].end_time / 1000;
               }
-              console.log("newSeek", newSeek);
               this.seek(newSeek);
             },
             onend: function () {
@@ -170,7 +173,6 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
 
   useEffect(() => {
     // loop through audioData to find the current index for the new seek
-    console.log("globalSeek", globalSeek);
     for (let i = 0; i < audioData.length; i++) {
       // this will trigger when the new seek is less than the end time of the current audioData
       // which means the new seek is within the current audioData
@@ -193,7 +195,7 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
         // if it is not and the audio is not playing, then we just need to set the currentSoundIndex to i
         // we also need to set the seek to the new seek
         else if (!audio[currentSoundIndex].playing()) {
-          console.log("setting index", i);
+          if (inDevelopment) console.log("setting index", i);
           setCurrentSoundIndex(i);
           // this seek is relitive to the start of this audio instead of the start of the entire audio
 
@@ -212,7 +214,7 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
   }, [globalSeek]);
 
   useEffect(() => {
-    console.log("currentSoundIndex", currentSoundIndex);
+    if (inDevelopment) console.log("currentSoundIndex", currentSoundIndex);
   }, [currentSoundIndex]);
 
   const formatTime = (seconds) => {

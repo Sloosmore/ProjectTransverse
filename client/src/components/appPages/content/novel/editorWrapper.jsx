@@ -24,6 +24,7 @@ import Slides from "./slides/slides";
 import AudioControls from "./playback/streamAudio";
 import { useNoteData } from "@/hooks/noteDataStore";
 import { useRewind } from "@/hooks/aiRewind";
+const inDevelopment = import.meta.env.NODE_ENV === "development";
 
 function NoteComponent() {
   const { mode, noteData } = useNoteData();
@@ -84,11 +85,15 @@ function NoteComponent() {
   const [currentNote, setCurrentNote] = useState({});
 
   useEffect(() => {
-    console.log("noteId", noteId);
+    if (inDevelopment) {
+      console.log("noteId", noteId);
+    }
     if (noteData) {
       const note = noteData.find((record) => noteId === record.note_id);
       if (note) {
-        console.log("note", note);
+        if (inDevelopment) {
+          console.log("note", note);
+        }
         setCurrentNote(note);
         if (note.slide_url) {
           setActiveUrl(note.slide_url);
@@ -101,9 +106,13 @@ function NoteComponent() {
     setUpdatedTitle(currentNote.title);
     if (currentNote.json_content !== content) {
       setContent(currentNote.json_content);
-      console.log("content", currentNote.json_content);
+      if (inDevelopment) {
+        console.log("content", currentNote.json_content);
+      }
     }
-    console.log("currentNote", currentNote);
+    if (inDevelopment) {
+      console.log("currentNote", currentNote);
+    }
     //setKeyFlag(keyFlag + 1);
   }, [currentNote.json_content, currentNote.title]);
 
@@ -113,7 +122,9 @@ function NoteComponent() {
 
   useEffect(() => {
     if (currentNote.new_json) {
-      console.log("fireing");
+      if (inDevelopment) {
+        console.log("fireing");
+      }
       setnewJson(currentNote.new_json);
     }
   }, [currentNote.new_json]);

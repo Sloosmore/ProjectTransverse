@@ -18,7 +18,6 @@ export const Playback = ({ setglobalSeek }) => {
       isActive: (editor) => editor.isActive("highlight"),
       command: (editor) => {
         const time = editor.commands.getTime();
-        console.log("time", time);
         setglobalSeek(time / 1000);
       },
       icon: Play,

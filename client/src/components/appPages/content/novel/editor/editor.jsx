@@ -38,6 +38,8 @@ import aiTranscript from "./extentions/aiTranscript";
 import DemoJson from "./insideComponents/demo";
 import { useNoteData } from "@/hooks/noteDataStore";
 
+const inDevelopment = import.meta.env.NODE_ENV === "development";
+
 const NovelEditor = ({
   currentNote,
   contentKit,
@@ -66,14 +68,17 @@ const NovelEditor = ({
 
   const debouncedUpdates = useDebouncedCallback(async (editor) => {
     const json = editor.getJSON();
-    console.log("setting json");
+
     setNotes((prev) => {
       prev.find((note) => note.note_id === note_id).json_content = json;
       return prev;
     });
     setContent(json);
     console.log(json);
-    setSaveStatus("Saved");
+
+    if (inDevelopment) {
+      console.log("setting json saved");
+    }
     saveNoteMarkdown(note_id, full_markdown, json);
   }, 300);
 
@@ -84,12 +89,16 @@ const NovelEditor = ({
   useEffect(() => {
     if (content) {
       setUpdate(true);
-      console.log("update");
+      if (inDevelopment) {
+        console.log("update");
+      }
     }
   }, [content]);
 
   useEffect(() => {
-    console.log("newJson??", newJson);
+    if (inDevelopment) {
+      console.log("newJson??", newJson);
+    }
     if (newJson) {
       setJsonToAppend(newJson);
     }
