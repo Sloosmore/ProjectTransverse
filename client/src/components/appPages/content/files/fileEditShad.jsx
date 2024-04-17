@@ -135,7 +135,7 @@ export function EditExportNote({ file }) {
           <div className="border my-3"></div>
 
           <div className="mt-4">
-            <DownloadMd noteID={noteID} />
+            <DownloadMd noteID={noteID} json={file.json_content} />
           </div>
           <div className="border-top my-4"></div>
 
