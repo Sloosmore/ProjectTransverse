@@ -21,6 +21,7 @@ import { useRewind } from "@/hooks/aiRewind.jsx";
 import { useDebouncedCallback } from "use-debounce";
 
 // Default values shown
+const inDevelopment = import.meta.env.NODE_ENV === "development";
 
 const RecPause = ({ localNoteID, ToggleGenKit }) => {
   const [recStatus, setRecStatus] = useState();
@@ -46,7 +47,9 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
   }, [noteID, noteData]);
 
   useEffect(() => {
-    console.log("typeof noteID:", typeof noteID);
+    if (inDevelopment) {
+      console.log("typeof noteID:", typeof noteID);
+    }
     if (mode === "note" && noteID === localNoteID) {
       setRecStatus("pause");
     } else if (noteID === localNoteID) {
@@ -64,7 +67,9 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
     const newRec = recStatusArray.find(
       (status) => status.recStatus === recStatus
     );
-    console.log(newRec);
+    if (inDevelopment) {
+      console.log(newRec);
+    }
     setRecStatusObject(newRec);
   }, [recStatus]);
   waveform.register();
@@ -83,7 +88,9 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
       setNoteOn((prev) => !prev);
     } else if (buttonClicks === 2) {
       setRewind(true);
-      console.log("rewind");
+      if (inDevelopment) {
+        console.log("rewind");
+      }
     }
     setClicks(0);
   }, 250);

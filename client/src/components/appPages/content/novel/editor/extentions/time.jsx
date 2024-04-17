@@ -60,11 +60,7 @@ const UniversalTimeAttribute = Extension.create({
 
           const { pause_timestamps, play_timestamps } =
             this.options.currentNote;
-          console.log(
-            `pause_array play_array`,
-            pause_timestamps,
-            play_timestamps
-          );
+
           const newTime = calcTime(play_timestamps, pause_timestamps);
           console.log(`newTime`, newTime);
 
@@ -74,8 +70,6 @@ const UniversalTimeAttribute = Extension.create({
             if (node.isText) {
               return;
             }
-
-            console.log("node", node);
 
             const shouldUpdateTime =
               "time" in node.attrs &&

@@ -42,6 +42,7 @@ function SubmitNewNote({ controlProps }) {
     //no longer will have transcript
     const transcript = "";
     setNewNoteField(false);
+
     console.log("selectedValue", selectedValue);
 
     createNewNote(

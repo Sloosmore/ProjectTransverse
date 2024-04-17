@@ -15,6 +15,7 @@ import { deleteFolder } from "@/components/appPages/services/crudApi";
 import { useNoteData } from "@/hooks/noteDataStore";
 import { useNewNote } from "@/hooks/newNote";
 //overflow for records
+const inDevelopment = import.meta.env.NODE_ENV === "development";
 
 function Files({}) {
   const { setNotes, noteData, noteID } = useNoteData();
@@ -28,7 +29,9 @@ function Files({}) {
   }, [noteID]);
 
   useEffect(() => {
-    console.log("folders", folders);
+    if (inDevelopment) {
+      console.log("folders", folders);
+    }
   }, [folders]);
 
   const fileViewArray = [
@@ -52,7 +55,9 @@ function Files({}) {
 
   const handleDeleteFolder = (folder_id) => {
     deleteFolder(folder_id, session).then((res) => {
-      console.log("res", res);
+      if (inDevelopment) {
+        console.log("res", res);
+      }
       fetchFolders(session).then(setFolders);
     });
   };

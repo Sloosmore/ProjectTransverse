@@ -25,6 +25,7 @@ import { LiveTranscriptionEvents, createClient } from "@deepgram/sdk";
 import { toast } from "sonner";
 import { useBrowser } from "@/hooks/browserSupport";
 
+const inDevelopment = import.meta.env.NODE_ENV === "development";
 const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 
 function TransverseApp() {
@@ -86,18 +87,24 @@ function TransverseApp() {
   useEffect(() => {
     const getDeepgramKey = async () => {
       const object = await fetchDeepGramKey();
-      console.log("dgkey");
+      if (inDevelopment) {
+        console.log("dgkey");
+      }
       setApiKey(object);
     };
     if (!apiKey && userType !== "Standard") {
-      console.log("fetching deepgram key");
+      if (inDevelopment) {
+        console.log("fetching deepgram key");
+      }
       getDeepgramKey();
     }
   }, [apiKey, userType, mode]);
 
   useEffect(() => {
     if (apiKey && "key" in apiKey) {
-      console.log("connecting to deepgram");
+      if (inDevelopment) {
+        console.log("connecting to deepgram");
+      }
       const deepgram = createClient(apiKey?.key ?? "");
       const connection = deepgram.listen.live({
         model: "nova-2",
@@ -106,19 +113,25 @@ function TransverseApp() {
       });
 
       connection.on(LiveTranscriptionEvents.Open, () => {
-        console.log("connection established");
+        if (inDevelopment) {
+          console.log("connection established");
+        }
         setListening(true);
       });
 
       connection.on(LiveTranscriptionEvents.Close, () => {
-        console.log("connection closed");
+        if (inDevelopment) {
+          console.log("connection closed");
+        }
         setListening(false);
         setApiKey(null);
         setConnection(null);
       });
 
       connection.on(LiveTranscriptionEvents.Transcript, (data) => {
-        console.log("look at the data", data);
+        if (inDevelopment) {
+          console.log("look at the data", data);
+        }
         const words = data.channel.alternatives[0].words;
         const caption = words
           .map((word) => word.punctuated_word ?? word.word)
@@ -200,13 +213,17 @@ function TransverseApp() {
   // Mic Failsafe functions -----------------------------------------------------------------------------
   //so timerFailsame does not call UseEffect
   useEffect(() => {
-    console.log("listening effect triggered");
-    console.log("mode", mode);
+    if (inDevelopment) {
+      console.log("listening effect triggered");
+      console.log("mode", mode);
+    }
     if (!listening && mode === "note" && userType === "Standard") {
       setTimeout(() => {
         if (mode === "note") {
           SpeechRecognition.startListening({ continuous: true });
-          console.log("Restart after trgger");
+          if (inDevelopment) {
+            console.log("Restart after trgger");
+          }
         } else {
           return;
         }
@@ -215,8 +232,10 @@ function TransverseApp() {
   }, [listening]);
 
   useEffect(() => {
-    console.log("updated mode", mode);
-
+    if (inDevelopment) {
+      console.log("mode effect triggered");
+      console.log("mode", mode);
+    }
     const handleBeforeUnload = (e) => {
       onPause(noteID, new Date());
       setMode("default");
@@ -264,7 +283,9 @@ function TransverseApp() {
     } else {
       if (userType === "Standard") {
         //google
-        console.log("start recording with api......", noteID);
+        if (inDevelopment) {
+          console.log("start recording with api......", noteID);
+        }
         SpeechRecognition.startListening({ continuous: true });
       } else {
         //deepgram
@@ -295,7 +316,9 @@ function TransverseApp() {
       }
       const backID = setTimeout(() => {
         if (mode === "note") {
-          console.log("reset and sending to back");
+          if (inDevelopment) {
+            console.log("reset and sending to back");
+          }
 
           SpeechRecognition.startListening({ continuous: true });
 
@@ -359,7 +382,9 @@ function TransverseApp() {
   useEffect(() => {
     setTimeout(() => {
       if (userType !== "Premium" && !compatible) {
-        console.log(userType);
+        if (inDevelopment) {
+          console.log(userType);
+        }
         toast("Live trasncript not supported on this browser", {
           description: "Upgrade Plan or swich to Chrome/Safari",
           action: {
