@@ -313,41 +313,55 @@ function TransverseApp() {
 
   //core logic for note mode
   useEffect(() => {
-    if (mode === "note") {
-      let timeCheck;
-      if (userType === "Standard") {
-        timeCheck = 3250;
-      } else {
-        timeCheck = 2000;
+    const sendMessage = () => {
+      if (fullTranscript || caption) {
+        const title = titleFromID(noteID, noteData);
+        const transcriptMessage =
+          userType === "Standard"
+            ? fullTranscript
+            : fullTranscript + " " + caption;
+        if (inDevelopment) {
+          console.log("sending to back", transcriptMessage);
+        }
+        sendJsonMessage({
+          title,
+          transcript: transcriptMessage,
+          init: false,
+          note_id: noteID,
+          token: session.access_token,
+        });
       }
-      //send to backend after 2 sec
-      if (timeoutId && fullTranscript.length <= frequency * 1.7) {
+    };
+
+    if (mode === "note") {
+      const timeCheck = userType === "Standard" ? 3250 : 2000;
+
+      if (timeoutId) {
         clearTimeout(timeoutId);
       }
+
+      if (fullTranscript.length >= frequency * 1.7) {
+        if (inDevelopment) {
+          console.log("overflow sending");
+        }
+        sendMessage();
+        if (userType === "Standard") {
+          resetTranscript();
+        } else {
+          setFullTranscript("");
+        }
+      }
+
+      //send to backend after 2 sec
       const backID = setTimeout(() => {
         if (mode === "note") {
           if (inDevelopment) {
             console.log("reset and sending to back");
           }
-
-          SpeechRecognition.startListening({ continuous: true });
-
-          const title = titleFromID(noteID, noteData);
-
-          let transcriptMessage;
           if (userType === "Standard") {
-            transcriptMessage = fullTranscript;
-          } else {
-            transcriptMessage = fullTranscript + " " + caption;
+            SpeechRecognition.startListening({ continuous: true });
           }
-
-          sendJsonMessage({
-            title,
-            transcript: transcriptMessage,
-            init: false,
-            note_id: noteID,
-            token: session.access_token,
-          });
+          sendMessage();
         } else {
           SpeechRecognition.stopListening();
         }
@@ -359,6 +373,11 @@ function TransverseApp() {
         SpeechRecognition.stopListening();
       }
     }
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, [fullTranscript, caption]);
 
   useEffect(() => {

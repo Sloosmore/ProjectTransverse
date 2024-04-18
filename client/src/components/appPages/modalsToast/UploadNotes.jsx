@@ -46,6 +46,7 @@ const UploadNotes = ({ activeNum, setPreferences, setTextareaValue }) => {
           newPrefs["note"][activeNum["note"]] = pref;
           return newPrefs;
         });
+        setTextareaValue(pref);
       });
   }
 
