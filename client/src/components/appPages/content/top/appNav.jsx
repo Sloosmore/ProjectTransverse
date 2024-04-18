@@ -38,7 +38,7 @@ function AppNav() {
                           className="block rounded-md px-3 py-2 text-base text-gray-400 hover:bg-white hover:text-gray-700"
                         >
                           <i
-                            class="bi bi-person-gear"
+                            className="bi bi-person-gear"
                             style={{ fontSize: "1.5rem" }}
                           ></i>
                         </div>

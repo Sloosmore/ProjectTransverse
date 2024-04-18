@@ -13,6 +13,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { CodeProvider } from "./hooks/code.jsx";
 import FacebookPixel from "./lib/FacebookPixle.jsx";
 import GoogleAnalytics from "./lib/googleAnalytics.jsx";
+import AppRouter from "./AppRouter.jsx";
 
 function App() {
   return (
@@ -21,17 +22,7 @@ function App() {
         <BrowserProvider>
           <AuthProvider>
             <CodeProvider>
-              <Routes>
-                <Route
-                  path="/app/*"
-                  element={
-                    <ProtectedRoute>
-                      <TransverseApp />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="/*" element={<PublicRoutes />} />
-              </Routes>
+              <AppRouter />
             </CodeProvider>
           </AuthProvider>
           <Toaster />

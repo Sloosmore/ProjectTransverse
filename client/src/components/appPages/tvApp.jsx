@@ -24,6 +24,7 @@ import { fetchDeepGramKey } from "./services/audio/deepgram";
 import { LiveTranscriptionEvents, createClient } from "@deepgram/sdk";
 import { toast } from "sonner";
 import { useBrowser } from "@/hooks/browserSupport";
+import { useUserPref } from "@/hooks/userPreff";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 console.log("inDevelopment", inDevelopment);
@@ -33,6 +34,7 @@ function TransverseApp() {
   const { compatible } = useBrowser();
   const navigate = useNavigate();
   const { session, userType } = useAuth();
+  const { frequency } = useUserPref();
   //this is for note vs default mode
   const [mode, setMode] = useState("default");
   //this is for notes in sidebar
@@ -43,6 +45,11 @@ function TransverseApp() {
   //this is for the media recorder
   const [recorder, setRecorder] = useState(null);
 
+  useEffect(() => {
+    if (inDevelopment) {
+      console.log("freq", frequency);
+    }
+  }, []);
   //state for deepgram
 
   const { add, remove, first, size, queue } = useQueue([]);
@@ -314,7 +321,7 @@ function TransverseApp() {
         timeCheck = 2000;
       }
       //send to backend after 2 sec
-      if (timeoutId) {
+      if (timeoutId && fullTranscript.length <= frequency * 1.7) {
         clearTimeout(timeoutId);
       }
       const backID = setTimeout(() => {
