@@ -32,8 +32,19 @@ function AppNav() {
                   <div className="ml-4 flex items-center md:ml-6">
                     {/* Profile dropdown */}
                     <Sheet>
-                      <ProfIcon logOut={signOut} />
+                      <SheetTrigger asChild>
+                        <div
+                          as="a"
+                          className="block rounded-md px-3 py-2 text-base text-gray-400 hover:bg-white hover:text-gray-700"
+                        >
+                          <i
+                            className="bi bi-person-gear"
+                            style={{ fontSize: "1.5rem" }}
+                          ></i>
+                        </div>
+                      </SheetTrigger>
                       <ControlModalShad />
+                      <ProfIcon logOut={signOut} />
                     </Sheet>
                   </div>
                 </div>

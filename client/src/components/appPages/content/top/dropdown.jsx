@@ -11,6 +11,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { LogOut } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -22,11 +24,8 @@ function ProfIcon({ logOut }) {
     <div className=" justify-center items-center">
       <Menu as="div" className="relative inline-block text-left w-full">
         <div>
-          <Menu.Button className="rounded-full flex justify-center items-center ml-auto mr-auto w-12 h-12 justify-center gap-x-1.5 rounded-circle bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-500 shadow hover:bg-gray-200">
-            <i
-              className="bi bi-person-circle"
-              style={{ fontSize: "1.5rem" }}
-            ></i>
+          <Menu.Button className=" flex justify-center items-center ml-auto mr-auto w-12 h-12 justify-center gap-x-1.5 px-3 py-2 text-sm font-semibold text-gray-400 hover:text-gray-700">
+            <LogOut className={cn("h-5 w-5", {})} />
           </Menu.Button>
         </div>
 
@@ -41,19 +40,6 @@ function ProfIcon({ logOut }) {
         >
           <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none me-2">
             <div className="py-1">
-              <Menu.Item>
-                <SheetTrigger asChild>
-                  <button
-                    className={classNames(
-                      "text-gray-700 block w-full px-4 py-2  text-left  text-sm hover:bg-gray-100 hover:text-gray-900"
-                    )}
-                    onClick={() => setShow(!show)}
-                  >
-                    Note settings
-                  </button>
-                </SheetTrigger>
-              </Menu.Item>
-
               <Menu.Item>
                 {({ active }) => (
                   <button
@@ -75,3 +61,17 @@ function ProfIcon({ logOut }) {
   );
 }
 export default ProfIcon;
+
+/*
+              <Menu.Item>
+                <SheetTrigger asChild>
+                  <button
+                    className={classNames(
+                      "text-gray-700 block w-full px-4 py-2  text-left  text-sm hover:bg-gray-100 hover:text-gray-900"
+                    )}
+                    onClick={() => setShow(!show)}
+                  >
+                    Note settings
+                  </button>
+                </SheetTrigger>
+              </Menu.Item> */

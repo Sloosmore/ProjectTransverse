@@ -12,22 +12,25 @@ import {
 import { cn } from "@/lib/utils";
 import UploadNotes from "./UploadNotes";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useUserPref } from "@/hooks/userPreff";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 function ControlModalShad() {
   const { session } = useAuth();
+  const {
+    preferences,
+    setPreferences,
+    activeNum,
+    setActiveNum,
+    frequency,
+    setFrequency,
+  } = useUserPref();
 
   //LLM preffereences
-  const [preferences, setPreferences] = useState({ note: [], diagram: [] });
   //Value of LLMPref text box
   const [textareaValue, setTextareaValue] = useState("");
-
-  const [frequency, setFrequency] = useState(0);
-
   const [showAlert, setShowAlert] = useState(false);
-
-  const [activeNum, setActiveNum] = useState({ note: 0, diagram: 0 });
 
   const [textKey, setTextKey] = useState(0);
   const [activeTab, setActiveTab] = useState("note");
