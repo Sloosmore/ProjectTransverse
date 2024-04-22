@@ -62,7 +62,10 @@ const CodeCheck = () => {
         height: "100vh",
       }}
     >
-      <h1> Enter a Code or Email if you are already signed up</h1>
+      <h1 className="mx-10 md:mx-0">
+        {" "}
+        Enter a Code or Email if you are already signed up
+      </h1>
       <p className="mt-3"></p>
       <input
         type="text"
