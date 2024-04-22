@@ -55,10 +55,11 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
     } else if (noteID === localNoteID) {
       setRecStatus("play");
       //Deactivate the notes for good meause
-    } else if (!noteID || noteID === "undefined" || noteID === null) {
+    } else if (!noteID || noteID === "null") {
       setRecStatus("unlock");
     } else {
       setRecStatus("lock");
+      console.log(noteID, "is locked");
       //need to unlock the note by hitting square in current note
     }
   }, [mode, noteID]);
@@ -96,12 +97,12 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
   }, 250);
 
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={100}>
       <Tooltip>
         <TooltipTrigger>
           <div
             className={`flex me-2.5 align-middle ${
-              recStatus !== "pause" && "ms-[22px]"
+              recStatus !== "pause" && "sm:ms-[22px]"
             }`}
           >
             {recStatus === "pause" && (

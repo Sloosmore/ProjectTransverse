@@ -146,8 +146,14 @@ function NoteComponent() {
             <RecPause localNoteID={noteId} ToggleGenKit={ToggleGenKit} />
             {mode === "default" && (
               <>
-                <Separator orientation="vertical" className="me-2.5" />
-                <button onClick={() => setAudioView((view) => !view)}>
+                <Separator
+                  orientation="vertical"
+                  className="me-2.5 sm:inline hidden"
+                />
+                <button
+                  onClick={() => setAudioView((view) => !view)}
+                  className="sm:inline hidden"
+                >
                   <i
                     className={`bi bi-collection-play p-2.5 hover:bg-gray-100 rounded cursor-pointer ${
                       mode === "default" && audioView && "text-gray-500"
@@ -173,7 +179,7 @@ function NoteComponent() {
                       }}
                       tabIndex={index}
                     >
-                      <TooltipProvider>
+                      <TooltipProvider delayDuration={100}>
                         <Tooltip>
                           <TooltipTrigger>
                             <i

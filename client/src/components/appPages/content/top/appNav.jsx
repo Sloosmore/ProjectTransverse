@@ -6,6 +6,7 @@ import { useAuth } from "../../../../hooks/auth";
 import ControlModalShad from "../../modalsToast/ControlModelShad";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import ProfIcon from "./dropdown";
+import ReportBug from "./reportBug";
 
 function AppNav() {
   const { user, signOut } = useAuth();
@@ -44,8 +45,10 @@ function AppNav() {
                         </div>
                       </SheetTrigger>
                       <ControlModalShad />
-                      <ProfIcon logOut={signOut} />
                     </Sheet>
+
+                    <ProfIcon logOut={signOut} />
+                    <ReportBug />
                   </div>
                 </div>
                 <div className="-mr-2 flex md:hidden">
