@@ -8,7 +8,7 @@ export const fetchDeepGramKey = () => {
     .then((res) => res.json())
     .then((object) => {
       if (!("key" in object)) throw new Error("No api key returned");
-      console.log("api key", object.key);
+      if (inDevelopment) console.log("api key", object.key);
       return object;
     })
     .catch((e) => console.error(e));

@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import UploadNotes from "./UploadNotes";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useUserPref } from "@/hooks/userPreff";
+import { toast } from "sonner";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
@@ -38,10 +39,7 @@ function ControlModalShad() {
   //Set prefferences when called
   const handleSubmitLLM = (preferences, frequency, activeNum, session) => {
     handleSendLLM(preferences, frequency, activeNum, session);
-    setShowAlert(true);
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 5000); // hide after 5 second
+    toast.success("Preferences Saved");
   };
 
   // Call fetchData when the modal opens
@@ -204,17 +202,6 @@ function ControlModalShad() {
             </SheetClose>
           </div>
         </div>
-      </div>
-      <div className="p-3 flex justify-end">
-        {showAlert && (
-          <div
-            className="alert alert-success shadow-lg flex flex-row p-4 rounded-lg translate-x-4 translate-y-4"
-            role="alert"
-          >
-            <i className="bi bi-check2-circle me-2"></i>
-            <p>Notetaking preference submitted</p>
-          </div>
-        )}
       </div>
     </SheetContent>
   );
