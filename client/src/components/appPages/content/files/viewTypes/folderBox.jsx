@@ -36,8 +36,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ArrowDownUp } from "lucide-react";
+import { useWindowWidth } from "@/hooks/windowWidth";
 
 function FolderBox({ folders, files, handleDeleteFolder }) {
+  const windowWidth = useWindowWidth();
   //this needs to be in the use effect for use State
   const [searchTerm, setSearchTerm] = useState("");
   const [sortValue, setSortValue] = useState("");
@@ -187,7 +189,12 @@ function FolderBox({ folders, files, handleDeleteFolder }) {
             >
               <div className="flex flex-col w-full h-36 border rounded-[2rem] transform transition-transform duration-500 hover:-translate-y-1 bg-white">
                 <div className="ps-8 pt-8 text-gray-700">
-                  <h2>{folder.title}</h2>
+                  <h2 className="md:w-full overflow-hidden md:overflow-hidden md:whitespace-nowrap overflow-ellipsis pe-8">
+                    {(windowWidth < 750 &&
+                      folder.title.slice(0, 15) +
+                        (folder.title.length > 15 ? "..." : "")) ||
+                      folder.title}
+                  </h2>
                   <h4>
                     Created:{" "}
                     {new Date(folder.created_at).toLocaleDateString(undefined, {

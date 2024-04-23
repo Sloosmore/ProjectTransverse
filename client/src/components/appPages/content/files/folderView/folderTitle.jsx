@@ -19,7 +19,7 @@ function EditFolderTitle({ folder }) {
 
   const debounceTitle = useDebouncedCallback(async (title) => {
     updateFolderTitle(folder.folder_id, title);
-  }, 1500);
+  }, 300);
 
   return (
     <div className="flex-grow my-4 border-0">
