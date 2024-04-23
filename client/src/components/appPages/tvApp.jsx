@@ -10,21 +10,21 @@ import SpeechRecognition, {
 import { handleOnMessage } from "./services/noteWebsockets/wsResponce";
 import { deactivateNotes, fetchNoteRecords } from "./services/crudApi";
 import titleFromID from "./services/frontendNoteConfig/titleFromID";
-import { useAuth } from "../../hooks/auth";
+import { useAuth } from "../../hooks/userHooks/auth";
 import { useNavigate } from "react-router-dom";
 import { stopRecordingMedia } from "./services/audio/mediaRecorder";
-import { TranscriptContext } from "@/hooks/transcriptStore";
-import { NoteDataContext } from "@/hooks/noteDataStore";
+import { TranscriptContext } from "@/hooks/noteHooks/transcriptStore";
+import { NoteDataContext } from "@/hooks/noteHooks/noteDataStore";
 import { onPause } from "./services/pausePlay";
 import { startRecordingMedia } from "./services/audio/mediaRecorder";
 import { ToastProvider } from "@/hooks/toast";
-import { NewNoteProvider } from "@/hooks/newNote";
+import { NewNoteProvider } from "@/hooks/noteHooks/newNote";
 import { useQueue } from "@uidotdev/usehooks";
 import { fetchDeepGramKey } from "./services/audio/deepgram";
 import { LiveTranscriptionEvents, createClient } from "@deepgram/sdk";
 import { toast } from "sonner";
 import { useBrowser } from "@/hooks/browserSupport";
-import { useUserPref } from "@/hooks/userPreff";
+import { useUserPref } from "@/hooks/userHooks/userPreff";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 console.log("inDevelopment", inDevelopment);

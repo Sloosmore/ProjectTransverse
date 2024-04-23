@@ -10,7 +10,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { useAuth } from "@/hooks/auth";
+import { useAuth } from "@/hooks/userHooks/auth";
 
 import { supabaseClient } from "../../../../config/supabaseClient";
 

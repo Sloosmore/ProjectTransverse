@@ -5,7 +5,7 @@ import AppNav from "./top/appNav";
 import NoteComponent from "./novel/editorWrapper";
 import FolderView from "./files/folderView/folderView";
 //import Editor from "./tiptapNotes/editor";
-import RewindProvider from "@/hooks/aiRewind";
+import RewindProvider from "@/hooks/noteHooks/aiRewind";
 
 export const AppRoutes = ({ controlProps }) => (
   <div className="flex flex-col h-screen">

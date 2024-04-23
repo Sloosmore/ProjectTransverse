@@ -4,8 +4,8 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import PublicRoutes from "./components/publicPages/publicRouter.jsx";
 import ProtectedRoute from "./components/appPages/protectedRoute.jsx";
 import "./index.css";
-import { useAuth } from "./hooks/auth.jsx";
-import UserPrefProvider from "./hooks/userPreff.jsx";
+import { useAuth } from "./hooks/userHooks/auth.jsx";
+import UserPrefProvider from "./hooks/userHooks/userPreff.jsx";
 
 function TransverseAppWithUserPref({ session }) {
   return (

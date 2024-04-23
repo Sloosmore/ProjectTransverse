@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { handleSendLLM, fetchLLMpref } from "../services/setNotepref";
-import { useAuth } from "../../../hooks/auth";
+import { useAuth } from "../../../hooks/userHooks/auth";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -12,7 +12,7 @@ import {
 import { cn } from "@/lib/utils";
 import UploadNotes from "./UploadNotes";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useUserPref } from "@/hooks/userPreff";
+import { useUserPref } from "@/hooks/userHooks/userPreff";
 import { toast } from "sonner";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
@@ -97,6 +97,13 @@ function ControlModalShad() {
                 <TabsTrigger value="note">Notes</TabsTrigger>
                 <TabsTrigger value="diagram">Diagrams</TabsTrigger>
               </TabsList>
+
+              <UploadNotes
+                activeNum={activeNum}
+                setPreferences={setPreferences}
+                setTextareaValue={setTextareaValue}
+                preferences={preferences}
+              />
               {typeArray.map((type) => (
                 <TabsContent key={type} value={type}>
                   <textarea
@@ -177,13 +184,6 @@ function ControlModalShad() {
               <div>Slower (5m)</div>
             </div>
           </div>
-
-          <UploadNotes
-            activeNum={activeNum}
-            setPreferences={setPreferences}
-            setTextareaValue={setTextareaValue}
-            preferences={preferences}
-          />
 
           <div className="sm:flex-row flex-col flex justify-between mt-4 gap-y-2 sm:gap-y-0">
             <Button

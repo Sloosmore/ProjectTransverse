@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "../../../hooks/auth";
+import { useAuth } from "../../../hooks/userHooks/auth";
 import { toast } from "sonner";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
@@ -63,13 +63,7 @@ const UploadNotes = ({ activeNum, setPreferences, setTextareaValue }) => {
   }
 
   return (
-    <div className="pb-6 border-b">
-      <label
-        className="block text-gray-400 dark:text-white mb-2 "
-        htmlFor="file_input"
-      >
-        Upload Your own notes (PDF)
-      </label>
+    <div className="my-6">
       <div className="flex flex-row">
         <input
           type="file"
@@ -86,7 +80,7 @@ const UploadNotes = ({ activeNum, setPreferences, setTextareaValue }) => {
           variant="secondary"
           className="bg-gray-200"
         >
-          Generate Preferences
+          Upload an Example Note
         </Button>
       </div>
     </div>

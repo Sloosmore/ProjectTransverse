@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { supabaseClient } from "../config/supabaseClient";
+import { supabaseClient } from "../../config/supabaseClient";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 

@@ -1,10 +1,10 @@
 import { useCurrentEditor } from "@tiptap/react";
 import React, { useEffect } from "react";
-import { useRewind } from "@/hooks/aiRewind";
-import { TranscriptContext } from "@/hooks/transcriptStore";
+import { useRewind } from "@/hooks/noteHooks/aiRewind";
+import { TranscriptContext } from "@/hooks/noteHooks/transcriptStore";
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { useAuth } from "@/hooks/auth";
+import { useAuth } from "@/hooks/userHooks/auth";
 
 import { rewindContext } from "@/components/appPages/services/rewind";
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";

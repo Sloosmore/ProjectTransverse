@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { fetchNoteRecords } from "../../services/crudApi";
 //import EditOffcanvas from "./fileEdit";
-import { useAuth } from "../../../../hooks/auth";
+import { useAuth } from "../../../../hooks/userHooks/auth";
 import FileNewNote from "./fileNewNote";
 import FileScroll from "./viewTypes/fileScroll";
 import { fetchFolders } from "../../services/crudApi";
@@ -12,8 +12,8 @@ import { Route, Link, Routes } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import CreateFolder from "./folderView/createFolder";
 import { deleteFolder } from "@/components/appPages/services/crudApi";
-import { useNoteData } from "@/hooks/noteDataStore";
-import { useNewNote } from "@/hooks/newNote";
+import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
+import { useNewNote } from "@/hooks/noteHooks/newNote";
 //overflow for records
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 

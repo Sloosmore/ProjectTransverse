@@ -1,5 +1,5 @@
 import { createFolder } from "@/components/appPages/services/crudApi";
-import { useAuth } from "@/hooks/auth";
+import { useAuth } from "@/hooks/userHooks/auth";
 import { useNavigate } from "react-router-dom";
 
 import {

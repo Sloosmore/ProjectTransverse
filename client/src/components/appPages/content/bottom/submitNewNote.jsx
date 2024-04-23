@@ -4,7 +4,7 @@ import "./submit.css";
 import { fetchFolders } from "../../services/crudApi";
 
 import { createNewNote } from "../../services/noteWebsockets/noteModeApi";
-import { useAuth } from "../../../../hooks/auth";
+import { useAuth } from "../../../../hooks/userHooks/auth";
 import {
   Select,
   SelectContent,
@@ -15,8 +15,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { useNoteData } from "@/hooks/noteDataStore";
-import { useNewNote } from "@/hooks/newNote";
+import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
+import { useNewNote } from "@/hooks/noteHooks/newNote";
 
 function SubmitNewNote({ controlProps }) {
   const { noteData, setNotes, setMode, setNoteID } = useNoteData();

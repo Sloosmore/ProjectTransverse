@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import getRecStatusArray from "./statusArray.jsx";
-import { useAuth } from "@/hooks/auth.jsx";
+import { useAuth } from "@/hooks/userHooks/auth.jsx";
 import { fetchNoteRecords } from "@/components/appPages/services/crudApi.js";
 import { onPause, onPlay } from "@/components/appPages/services/pausePlay.js";
 import titleFromID from "@/components/appPages/services/frontendNoteConfig/titleFromID.js";
@@ -16,8 +16,8 @@ import { Separator } from "@/components/ui/separator";
 import "./recPause.css";
 import CardTextSvg from "./svg/card-text.jsx";
 import CardPicSvg from "./svg/card-pic.jsx";
-import { useNoteData } from "@/hooks/noteDataStore.jsx";
-import { useRewind } from "@/hooks/aiRewind.jsx";
+import { useNoteData } from "@/hooks/noteHooks/noteDataStore.jsx";
+import { useRewind } from "@/hooks/noteHooks/aiRewind.jsx";
 import { useDebouncedCallback } from "use-debounce";
 
 // Default values shown

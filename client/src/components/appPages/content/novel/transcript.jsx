@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import AudioControls from "./playback/streamAudio";
 
-import { TranscriptContext } from "@/hooks/transcriptStore";
-import { useNoteData } from "@/hooks/noteDataStore";
+import { TranscriptContext } from "@/hooks/noteHooks/transcriptStore";
+import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
 import { pulsar } from "ldrs";
 
 // Default values shown

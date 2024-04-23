@@ -2,7 +2,7 @@ import React from "react";
 import TransverseApp from "./components/appPages/tvApp.jsx";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import PublicRoutes from "./components/publicPages/publicRouter.jsx";
-import AuthProvider from "./hooks/auth.jsx";
+import AuthProvider from "./hooks/userHooks/auth.jsx";
 import ProtectedRoute from "./components/appPages/protectedRoute.jsx";
 import "./index.css";
 //import "bootstrap/dist/css/bootstrap.css";

@@ -3,7 +3,7 @@ import { supabaseClient } from "../../../config/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
 import "./login.css";
-import { useAuth } from "../../../hooks/auth";
+import { useAuth } from "../../../hooks/userHooks/auth";
 
 const talkingPoints = [
   "Live Personoalized Generated Notes & Diagrams",

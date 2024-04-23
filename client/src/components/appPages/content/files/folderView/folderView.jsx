@@ -5,14 +5,14 @@ import {
   fetchFolders,
 } from "@/components/appPages/services/crudApi";
 import { useParams } from "react-router-dom";
-import { useAuth } from "@/hooks/auth";
+import { useAuth } from "@/hooks/userHooks/auth";
 import FileNewNote from "../fileNewNote";
 import EditFolderTitle from "./folderTitle";
 import { useNavigate } from "react-router-dom";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import EditExportNote from "../fileEditShad";
-import { useNoteData } from "@/hooks/noteDataStore";
-import { useNewNote } from "@/hooks/newNote";
+import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
+import { useNewNote } from "@/hooks/noteHooks/newNote";
 import {
   Table,
   TableBody,
