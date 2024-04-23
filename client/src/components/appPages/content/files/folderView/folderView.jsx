@@ -13,6 +13,16 @@ import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import EditExportNote from "../fileEditShad";
 import { useNoteData } from "@/hooks/noteDataStore";
 import { useNewNote } from "@/hooks/newNote";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 function FolderView({}) {
   const { noteData } = useNoteData();
@@ -122,59 +132,42 @@ function FolderView({}) {
           />
         </div>
       </div>
-      <table className="w-full mb-2 h-7">
-        <thead className="">
-          <tr>
-            <th
-              className="ps-3 cursor-pointer hover:text-gray-500 text-left w-[71.5%] "
-              onClick={() => handleSort("title")}
-            >
-              Title <i className="ms-1 bi bi-arrow-down-up"></i>
-            </th>
-            <th
-              className="cursor-pointer hover:text-gray-500 hidden lg:table-cell"
-              onClick={() => handleSort("date_updated")}
-            >
-              <div className="me-14 xl:me-16 xl:pe-4">
-                Date Updated
-                <i className=" ms-2  bi bi-arrow-down-up my-auto "></i>
-              </div>
-            </th>
-            <th className="text-right text-right pr-2">Export</th>
-          </tr>
-        </thead>
-      </table>
       <div className="flex-grow overflow-auto ">
-        <table className="w-full text-gray-600">
-          <tbody>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="max-w-[500px]">Title</TableHead>
+              <TableHead className="sm:w-[8rem] text-center flex items-center">
+                Date
+              </TableHead>
+              <TableHead className=" w-10">Edit</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {sortedFiles.map((file, index) => (
-              <tr key={index} className={`hover:bg-gray-200 border-b`}>
-                <td
-                  className="align-middle py-3 ps-3 "
+              <TableRow key={index}>
+                <TableCell
+                  className="align-middle py-3 ps-3 text-base"
                   onClick={() => goToTask(file)}
                 >
                   {file.title}
-                </td>
-
-                <td
-                  className="align-middle hidden lg:table-cell py-2 "
-                  onClick={() => goToTask(file)}
-                >
-                  <div className="ms">
-                    {new Date(file.date_updated).toLocaleDateString(undefined, {
-                      month: "long",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
+                </TableCell>
+                <TableCell onClick={() => goToTask(file)}>
+                  {new Date(file.date_updated).toLocaleDateString(undefined, {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </TableCell>
+                <TableCell className="">
+                  <div className="ms-auto">
+                    <EditExportNote file={file} />
                   </div>
-                </td>
-                <td className="">
-                  <EditExportNote file={file} />
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

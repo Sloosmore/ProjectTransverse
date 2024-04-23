@@ -25,11 +25,23 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { ArrowDownUp } from "lucide-react";
 
 function FolderBox({ folders, files, handleDeleteFolder }) {
   //this needs to be in the use effect for use State
   const [searchTerm, setSearchTerm] = useState("");
   const [sortValue, setSortValue] = useState("");
+  const [sortField, setSortField] = useState(null);
 
   if (searchTerm !== "") {
     folders = folders.filter((folders) =>
@@ -48,24 +60,15 @@ function FolderBox({ folders, files, handleDeleteFolder }) {
       file.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }
-  const folderName = (folder_id) => {
-    const folder = folders.find((folder) => folder.folder_id === folder_id);
-    return folder ? folder.title : "";
+
+  const [sortDirection, setSortDirection] = useState(true);
+
+  const handleSort = (field) => {
+    let direction =
+      sortField === field && sortDirection === "asc" ? "desc" : "asc";
+    setSortField(field);
+    setSortDirection(direction);
   };
-  const [sortDirection, setSortDirection] = useState(null);
-  const [sortField, setSortField] = useState(null);
-  useEffect(() => {
-    if (sortValue === "Recent") {
-      setSortField("date_updated");
-      setSortDirection("desc");
-    } else if (sortValue === "A-Z") {
-      setSortField("title");
-      setSortDirection("asc");
-    } else if (sortValue === "Z-A") {
-      setSortField("title");
-      setSortDirection("desc");
-    }
-  }, [sortValue]);
 
   if (sortField !== null) {
     sortedFiles.sort((a, b) => {
@@ -94,9 +97,12 @@ function FolderBox({ folders, files, handleDeleteFolder }) {
       }
       return 0;
     });
+  }
+
+  if (sortValue !== null) {
     sortedFolders.sort((a, b) => {
-      let aValue = a[sortField];
-      let bValue = b[sortField];
+      let aValue = a[sortValue];
+      let bValue = b[sortValue];
 
       // Convert to Date objects if the values are dates
 
@@ -109,10 +115,10 @@ function FolderBox({ folders, files, handleDeleteFolder }) {
       }
 
       if (aValue < bValue) {
-        return sortDirection === "asc" ? 1 : -1;
+        return sortDirection === true ? 1 : -1;
       }
       if (aValue > bValue) {
-        return sortDirection === "asc" ? -1 : 1;
+        return sortDirection === false ? -1 : 1;
       }
       return 0;
     });
@@ -139,18 +145,31 @@ function FolderBox({ folders, files, handleDeleteFolder }) {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="lg:w-1/3 md:w-5/12 w-7/12 py-2 px-3 border border-gray-300 rounded-md shrink shadow-sm"
         />
-        <Select onValueChange={(value) => setSortValue(value)}>
-          <SelectTrigger className="w-[180px] ring-0 focus:ring-0 focus:ring-offset-0 mt-4 sm:mt-0">
-            <SelectValue placeholder="Filter by" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="Recent">Recent</SelectItem>
-              <SelectItem value="A-Z">Name Accending</SelectItem>
-              <SelectItem value="Z-A">Name Decending</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <div className="flex sm:flex-row flex-row-reverse items-center mt-4 sm:mt-0 align-start sm:me-0 me-auto ">
+          <button
+            className="md:me-1 p-2 rounded ms-2"
+            onClick={() => {
+              setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+            }}
+          >
+            <ArrowDownUp className="text-gray-400 hover:text-gray-600" />
+          </button>
+          <Select onValueChange={(value) => handleSort(value)}>
+            <SelectTrigger className="w-[180px] ring-0 focus:ring-0 focus:ring-offset-0">
+              <SelectValue placeholder="Filter by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="date_updated" className="">
+                  Date
+                </SelectItem>
+                <SelectItem value="title" className="">
+                  Title
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
       <div className="max-h-[350px] pb-8 overflow-hidden pt-6 flex-none">
         <div className="w-full flex-grow flex flex-row grid xl:grid-cols-3 md:grid-cols-2 md:gap-x-16 gap-x-8 gap-y-6">
@@ -227,7 +246,62 @@ function FolderBox({ folders, files, handleDeleteFolder }) {
         </div>
       </div>
       <div className="flex-grow border-t-2 overflow-auto ">
-        <table className="w-full text-gray-600">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="max-w-[500px]">Title</TableHead>
+              <TableHead className="sm:w-[8rem] text-center flex items-center">
+                Date
+              </TableHead>
+              <TableHead className=" w-10">Edit</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {sortedFiles.map((file, index) => (
+              <TableRow key={index}>
+                <TableCell
+                  className="align-middle py-3 ps-3 text-base"
+                  onClick={() => goToTask(file)}
+                >
+                  {file.title}
+                </TableCell>
+                <TableCell onClick={() => goToTask(file)}>
+                  {new Date(file.date_updated).toLocaleDateString(undefined, {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </TableCell>
+                <TableCell className="">
+                  <div className="ms-auto">
+                    <EditExportNote file={file} />
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        {!files.length && (
+          <div className="text-center py-3 md:mx-10 mx-3 text-3xl font-semibold">
+            No notes to see here yet! But click the bottom right quesiton mark
+            to get started
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default FolderBox;
+
+{
+  /*
+
+                
+                
+                
+                
+              <table className="w-full text-gray-600">
           <tbody>
             {sortedFiles.map((file, index) => (
               <tr key={index} className={`hover:bg-gray-200 border-b`}>
@@ -259,17 +333,8 @@ function FolderBox({ folders, files, handleDeleteFolder }) {
                 </td>
               </tr>
             ))}
-            {!sortedFiles.length && (
-              <div className="text-center py-3 md:mx-10 mx-3 text-3xl font-semibold">
-                No notes to see here yet! But click the bottom right quesiton
-                mark to get started
-              </div>
-            )}
           </tbody>
-        </table>
-      </div>
-    </div>
-  );
+        </table>         
+                
+                */
 }
-
-export default FolderBox;

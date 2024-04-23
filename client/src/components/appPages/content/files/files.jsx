@@ -39,16 +39,17 @@ function Files({}) {
       view: "folder-grid",
       icon: "bi bi-archive",
     },
-    {
+  ];
+
+  /*    {
+      view: "files",
+      icon: "bi bi-card-list",
+    }, 
+        {
       view: "folder-list",
       icon: "bi bi-folder2",
     },
-
-    {
-      view: "files",
-      icon: "bi bi-card-list",
-    },
-  ];
+    */
 
   const location = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
@@ -73,7 +74,7 @@ function Files({}) {
         />
 
         <div className="flex items-center gap-x-4 me-2 text-gray-400">
-          {fileViewArray.map((item, index) => (
+          {/*  {fileViewArray.map((item, index) => (
             <Link
               key={index}
               to={`${item.view}`}
@@ -81,12 +82,13 @@ function Files({}) {
                 location.pathname.endsWith(item.view) ? "text-gray-600" : ""
               }`}
             >
+
               <i
                 className={`${item.icon} `}
                 style={{ fontSize: "1.25rem" }}
               ></i>
             </Link>
-          ))}
+          ))} */}
         </div>
       </div>
       <div className="flex-grow overflow-auto">
