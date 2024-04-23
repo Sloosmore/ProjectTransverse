@@ -146,14 +146,16 @@ function FolderBox({ folders, files, handleDeleteFolder }) {
           className="lg:w-1/3 md:w-5/12 w-7/12 py-2 px-3 border border-gray-300 rounded-md shrink shadow-sm"
         />
         <div className="flex sm:flex-row flex-row-reverse items-center mt-4 sm:mt-0 align-start sm:me-0 me-auto ">
-          <button
-            className="md:me-1 p-2 rounded ms-2"
-            onClick={() => {
-              setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-            }}
-          >
-            <ArrowDownUp className="text-gray-400 hover:text-gray-600" />
-          </button>
+          {sortField && (
+            <button
+              className="md:me-1 p-2 rounded ms-2"
+              onClick={() => {
+                setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+              }}
+            >
+              <ArrowDownUp className="text-gray-400 hover:text-gray-600" />
+            </button>
+          )}
           <Select onValueChange={(value) => handleSort(value)}>
             <SelectTrigger className="w-[180px] ring-0 focus:ring-0 focus:ring-offset-0">
               <SelectValue placeholder="Filter by" />
