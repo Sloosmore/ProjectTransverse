@@ -97,13 +97,14 @@ function ControlModalShad() {
                 <TabsTrigger value="note">Notes</TabsTrigger>
                 <TabsTrigger value="diagram">Diagrams</TabsTrigger>
               </TabsList>
-
-              <UploadNotes
-                activeNum={activeNum}
-                setPreferences={setPreferences}
-                setTextareaValue={setTextareaValue}
-                preferences={preferences}
-              />
+              {activeTab === "note" && (
+                <UploadNotes
+                  activeNum={activeNum}
+                  setPreferences={setPreferences}
+                  setTextareaValue={setTextareaValue}
+                  preferences={preferences}
+                />
+              )}
               {typeArray.map((type) => (
                 <TabsContent key={type} value={type}>
                   <textarea
