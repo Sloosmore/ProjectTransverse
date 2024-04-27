@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./stream.css";
-import { useAuth } from "@/hooks/auth";
+import { useAuth } from "@/hooks/userHooks/auth";
 import { fetchURLs } from "@/components/appPages/services/audio/streamAudio";
 import { getMaxTime } from "@/components/appPages/services/audio/playback";
 import { Howl } from "howler";

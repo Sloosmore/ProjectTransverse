@@ -22,8 +22,8 @@ import {
   SheetTrigger,
   Sheet,
 } from "@/components/ui/sheet";
-import { useNoteData } from "@/hooks/noteDataStore";
-import { useAuth } from "@/hooks/auth";
+import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
+import { useAuth } from "@/hooks/userHooks/auth";
 
 import { fetchNoteRecords } from "../../services/crudApi";
 

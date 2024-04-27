@@ -4,7 +4,7 @@ import "./submit.css";
 import { fetchFolders } from "../../services/crudApi";
 
 import { createNewNote } from "../../services/noteWebsockets/noteModeApi";
-import { useAuth } from "../../../../hooks/auth";
+import { useAuth } from "../../../../hooks/userHooks/auth";
 import {
   Select,
   SelectContent,
@@ -15,10 +15,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { useNoteData } from "@/hooks/noteDataStore";
-import { useNewNote } from "@/hooks/newNote";
+import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
+import { useNewNote } from "@/hooks/noteHooks/newNote";
+import { useNavigate } from "react-router-dom";
 
-function SubmitNewNote({ controlProps }) {
+function SubmitNewNote() {
+  const navigate = useNavigate();
   const { noteData, setNotes, setMode, setNoteID } = useNoteData();
 
   const { session } = useAuth();
@@ -36,8 +38,6 @@ function SubmitNewNote({ controlProps }) {
 
   const { newNoteField, setNewNoteField } = useNewNote();
 
-  const { wsJSON } = controlProps;
-
   const handleNoteSubmit = () => {
     //no longer will have transcript
     const transcript = "";
@@ -47,14 +47,11 @@ function SubmitNewNote({ controlProps }) {
 
     createNewNote(
       localNoteName,
-      transcript,
-      noteData,
-      setNotes,
       setMode,
-      wsJSON,
       session,
       selectedValue,
-      setNoteID
+      setNoteID,
+      navigate
     );
   };
   useEffect(() => {

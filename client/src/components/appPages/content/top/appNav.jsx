@@ -2,7 +2,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import icon from "../../../../assets/TransverseIcon.svg";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../../hooks/auth";
+import { useAuth } from "../../../../hooks/userHooks/auth";
 import ControlModalShad from "../../modalsToast/ControlModelShad";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import ProfIcon from "./dropdown";

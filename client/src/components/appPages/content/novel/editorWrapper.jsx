@@ -22,8 +22,8 @@ import { useWindowWidth } from "@/hooks/windowWidth";
 import { Separator } from "@/components/ui/separator";
 import Slides from "./slides/slides";
 import AudioControls from "./playback/streamAudio";
-import { useNoteData } from "@/hooks/noteDataStore";
-import { useRewind } from "@/hooks/aiRewind";
+import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
+import { useRewind } from "@/hooks/noteHooks/aiRewind";
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 function NoteComponent() {

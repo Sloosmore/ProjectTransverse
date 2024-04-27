@@ -52,7 +52,7 @@ async function handleWebSocketConnection(ws, request) {
       const token = data.token;
       const user = getUserIdFromToken(token);
 
-      if (justActivated) {
+      /*if (justActivated) {
         //extenal data: data.folder_id, user, title,
         console.log("data", data);
         const user_id = user;
@@ -76,7 +76,8 @@ async function handleWebSocketConnection(ws, request) {
             note_id,
           })
         );
-      } else if (ts) {
+      } else */
+      if (ts) {
         //get the id of the note which will only be passed when note is Activated
         const note_id = data.note_id;
         console.log("note_id in ws", note_id);

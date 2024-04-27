@@ -10,21 +10,21 @@ import SpeechRecognition, {
 import { handleOnMessage } from "./services/noteWebsockets/wsResponce";
 import { deactivateNotes, fetchNoteRecords } from "./services/crudApi";
 import titleFromID from "./services/frontendNoteConfig/titleFromID";
-import { useAuth } from "../../hooks/auth";
+import { useAuth } from "../../hooks/userHooks/auth";
 import { useNavigate } from "react-router-dom";
 import { stopRecordingMedia } from "./services/audio/mediaRecorder";
-import { TranscriptContext } from "@/hooks/transcriptStore";
-import { NoteDataContext } from "@/hooks/noteDataStore";
+import { TranscriptContext } from "@/hooks/noteHooks/transcriptStore";
+import { NoteDataContext } from "@/hooks/noteHooks/noteDataStore";
 import { onPause } from "./services/pausePlay";
 import { startRecordingMedia } from "./services/audio/mediaRecorder";
 import { ToastProvider } from "@/hooks/toast";
-import { NewNoteProvider } from "@/hooks/newNote";
+import { NewNoteProvider } from "@/hooks/noteHooks/newNote";
 import { useQueue } from "@uidotdev/usehooks";
 import { fetchDeepGramKey } from "./services/audio/deepgram";
 import { LiveTranscriptionEvents, createClient } from "@deepgram/sdk";
 import { toast } from "sonner";
 import { useBrowser } from "@/hooks/browserSupport";
-import { useUserPref } from "@/hooks/userPreff";
+import { useUserPref } from "@/hooks/userHooks/userPreff";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 console.log("inDevelopment", inDevelopment);
@@ -100,12 +100,54 @@ function TransverseApp() {
       }
       setApiKey(object);
     };
+
+    const isKeyExpired = (keyObject) => {
+      const currentDate = new Date();
+      const currentDateUTC = Date.UTC(
+        currentDate.getUTCFullYear(),
+        currentDate.getUTCMonth(),
+        currentDate.getUTCDate(),
+        currentDate.getUTCHours(),
+        currentDate.getUTCMinutes(),
+        currentDate.getUTCSeconds(),
+        currentDate.getUTCMilliseconds()
+      );
+
+      const expirationDate = new Date(keyObject.expiration_date);
+      const expirationDateUTC = expirationDate.getTime();
+
+      console.log("currentDateUTC", new Date(currentDateUTC));
+      console.log("expirationDateUTC", new Date(expirationDateUTC));
+      console.log("therfore", currentDateUTC > expirationDateUTC + 10000);
+
+      return currentDateUTC > expirationDateUTC + 10000;
+    };
+
+    const handleVisibilityChange = () => {
+      console.log("visibility key", apiKey);
+
+      if (
+        document.visibilityState === "visible" &&
+        ((apiKey && isKeyExpired(apiKey)) || !apiKey)
+      ) {
+        if (mode === "default") {
+          getDeepgramKey();
+        }
+      }
+    };
+
     if (!apiKey && userType !== "Standard") {
       if (inDevelopment) {
         console.log("fetching deepgram key");
       }
       getDeepgramKey();
     }
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Remove event listener when component unmounts
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, [apiKey, userType, mode]);
 
   useEffect(() => {
@@ -299,7 +341,8 @@ function TransverseApp() {
         SpeechRecognition.startListening({ continuous: true });
       } else {
         //deepgram
-        startDGMicrophone();
+        console.log("start recording with deepgram......", apiKey);
+        startDGMicrophone(apiKey);
       }
       startRecordingMedia(session, setRecorder, noteID);
     }
@@ -308,7 +351,7 @@ function TransverseApp() {
       fetchNoteRecords(session, true).then((data) => {
         setNotes(data);
       });
-    }, 1000);
+    }, 400);
   }, [mode]);
 
   //core logic for note mode
@@ -361,10 +404,11 @@ function TransverseApp() {
           if (userType === "Standard") {
             SpeechRecognition.startListening({ continuous: true });
           }
-          sendMessage();
         } else {
           SpeechRecognition.stopListening();
         }
+        if (inDevelopment) console.log("failsafe");
+        sendMessage();
       }, timeCheck);
       setTimeoutId(backID);
     } else {
@@ -422,7 +466,7 @@ function TransverseApp() {
           },
         });
       }
-    }, 400);
+    }, 600);
   }, [compatible]);
 
   return (

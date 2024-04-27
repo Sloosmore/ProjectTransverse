@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { updateTitle } from "@/components/appPages/services/crudApi";
 import { fetchNoteRecords } from "@/components/appPages/services/crudApi";
-import { useNoteData } from "@/hooks/noteDataStore";
-import { useAuth } from "@/hooks/auth";
+import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
+import { useAuth } from "@/hooks/userHooks/auth";
 
 function EditTitle({ currentNote }) {
   const [title, setTitle] = useState(currentNote.title || "");

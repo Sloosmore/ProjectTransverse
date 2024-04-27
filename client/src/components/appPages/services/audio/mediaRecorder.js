@@ -13,7 +13,7 @@ const startRecordingMedia = (session, setRecorder, noteID) => {
         formData.append("noteID", noteID);
 
         const token = session.access_token;
-        console.log("sending audio data");
+        console.log("sending actual audio data");
         fetch(`${import.meta.env.VITE_BASE_URL}/audio/upload`, {
           method: "POST",
           headers: {
@@ -57,9 +57,7 @@ const stopRecordingMedia = (recorderObj) => {
     mediaRecorder.stop();
     mediaRecorder.stream.getTracks().forEach((track) => track.stop());
 
-    sendAudioData(); // Send combined audio data when recording is stopped
-
-    console.log("Recording stopped");
+    console.log("Actual audio Recording stopped");
   }
 };
 

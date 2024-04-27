@@ -31,12 +31,12 @@ import Playback from "./bubble/playback-buttons";
 import SpeakExtension from "./extentions/speak";
 import UpdateNoteState from "./insideComponents/updateExtentionState";
 import ErrorBoundary from "./errorBoundary";
-import { TranscriptContext } from "@/hooks/transcriptStore";
+import { TranscriptContext } from "@/hooks/noteHooks/transcriptStore";
 import { useContext } from "react";
 import RunAI from "./insideComponents/runAi";
 import aiTranscript from "./extentions/aiTranscript";
 import DemoJson from "./insideComponents/demo";
-import { useNoteData } from "@/hooks/noteDataStore";
+import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
