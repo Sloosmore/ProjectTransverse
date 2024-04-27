@@ -14,6 +14,7 @@ import UploadNotes from "./UploadNotes";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useUserPref } from "@/hooks/userHooks/userPreff";
 import { toast } from "sonner";
+import { Switch } from "@/components/ui/switch";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
@@ -26,6 +27,8 @@ function ControlModalShad() {
     setActiveNum,
     frequency,
     setFrequency,
+    guidedNotes,
+    setGuidedNotes,
   } = useUserPref();
 
   //LLM preffereences
@@ -37,8 +40,14 @@ function ControlModalShad() {
   const [activeTab, setActiveTab] = useState("note");
 
   //Set prefferences when called
-  const handleSubmitLLM = (preferences, frequency, activeNum, session) => {
-    handleSendLLM(preferences, frequency, activeNum, session);
+  const handleSubmitLLM = (
+    preferences,
+    frequency,
+    activeNum,
+    guidedNotes,
+    session
+  ) => {
+    handleSendLLM(preferences, frequency, activeNum, guidedNotes, session);
     toast.success("Preferences Saved");
   };
 
@@ -47,7 +56,8 @@ function ControlModalShad() {
     if (inDevelopment) {
       console.log("fetching preffs");
     }
-    fetchLLMpref(setPreferences, setActiveNum, setFrequency, session);
+    //this may not be needed because of hook
+    //fetchLLMpref(setPreferences, setActiveNum, setFrequency, session);
   }, []);
 
   useEffect(() => {
@@ -82,7 +92,7 @@ function ControlModalShad() {
 
   return (
     <SheetContent className="text-gray-400 sm:max-w-[800px] rounded-l-lg flex-col flex justify-between ">
-      <div className="min-width-[320px]">
+      <div className="min-width-[320px] overflow-auto">
         <SheetHeader>
           <SheetTitle> Set Preferences</SheetTitle>
         </SheetHeader>
@@ -98,34 +108,40 @@ function ControlModalShad() {
                 <TabsTrigger value="diagram">Diagrams</TabsTrigger>
               </TabsList>
               {activeTab === "note" && (
-                <UploadNotes
-                  activeNum={activeNum}
-                  setPreferences={setPreferences}
-                  setTextareaValue={setTextareaValue}
-                  preferences={preferences}
-                />
+                <div className="border rounded-lg p-6 mt-3 mb-5">
+                  <UploadNotes
+                    activeNum={activeNum}
+                    setPreferences={setPreferences}
+                    setTextareaValue={setTextareaValue}
+                    preferences={preferences}
+                  />
+                </div>
               )}
               {typeArray.map((type) => (
                 <TabsContent key={type} value={type}>
                   <textarea
-                    className="form-control p-3 border rounded w-full"
+                    className="form-control p-6 border rounded-lg w-full"
                     id="prefTextArea"
                     rows="6"
                     value={textareaValue || preferences[type][activeNum[type]]}
                     onChange={(e) => setTextareaValue(e.target.value)}
                   ></textarea>
-                  <div className="flex flex-row sm:space-x-4 space-x-1 mt-2.5 overflow-x-auto">
-                    {prefArray.map((num) => (
-                      <div
-                        className={
-                          num === activeNum[type]
-                            ? "border-b-2 border-gray-700 pb-2"
-                            : ""
-                        }
-                        key={num}
-                      >
+
+                  <div className="flex flex-row s overflow-x-auto px-6 py-6 rounded-xl border justify-between mt-4">
+                    <div>
+                      <div className="text-lg text-gray-700">
+                        Prompt Selection
+                      </div>
+                      <div>Each prompt corresponds to the text input</div>
+                    </div>
+                    <div className="flex flex-row space-x-5 mt-2.5">
+                      {prefArray.map((num) => (
                         <Button
-                          className={`hover:bg-gray-700 hover:text-white bg-gray-200`}
+                          className={`hover:bg-gray-700 hover:text-white bg-gray-200 ${
+                            num === activeNum[type]
+                              ? "bg-gray-700 text-white"
+                              : " "
+                          }`}
                           variant="secondary"
                           onClick={(event) => {
                             setActiveNum((prevNum) => {
@@ -135,8 +151,8 @@ function ControlModalShad() {
                         >
                           {num + 1}
                         </Button>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </TabsContent>
               ))}
@@ -150,26 +166,29 @@ function ControlModalShad() {
               onChange={(e) => setTextareaValue(e.target.value)}
             ></textarea>
               */}
+            <div className="mt-5 border px-6 py-6 rounded-xl ">
+              <label
+                htmlFor="freqRange"
+                className="my-3 mt-4 pt-4 text-lg text-gray-700"
+              >
+                Note Generation Speed (minutes)
+              </label>
+              <Slider
+                className={cn(
+                  "border",
+                  "border-gray-300",
+                  "rounded-full",
+                  "mt-6"
+                )}
+                min={350}
+                max={1500}
+                step={5}
+                defaultValue={[frequency]}
+                onValueChange={(v) => setFrequency(...v)}
+                id="freqRange"
+              ></Slider>
 
-            <label htmlFor="freqRange" className="my-3 mt-4 pt-4 border-t">
-              Note Generation Speed (minutes)
-            </label>
-            <Slider
-              className={cn(
-                "border",
-                "border-gray-300",
-                "rounded-full",
-                "mt-3"
-              )}
-              min={350}
-              max={1500}
-              step={5}
-              defaultValue={[frequency]}
-              onValueChange={(v) => setFrequency(...v)}
-              id="freqRange"
-            ></Slider>
-
-            {/* <input
+              {/* <input
               type="range"
               className="form-range"
               min="350"
@@ -179,17 +198,41 @@ function ControlModalShad() {
               value={frequency}
               onChange={(e) => setFrequency(e.target.value)}
                 ></input>*/}
-            <div className="justify-between flex flex-row mb-2 mt-3 pb-3 border-b">
-              <div>Quicker (1m)</div>
-              <div>Average (3m)</div>
-              <div>Slower (5m)</div>
+              <div className="justify-between flex flex-row mt-5 ">
+                <div>Quicker (1m)</div>
+                <div>Average (3m)</div>
+                <div>Slower (5m)</div>
+              </div>
+            </div>
+
+            <div className="flex flex-row justify-between my-5 border px-6 py-6 rounded-xl ">
+              <div className="">
+                <div className="text-lg text-gray-700">Guided Note Mode</div>
+                <div>Create partial generations that you fill in</div>
+              </div>
+              <div className="my-auto">
+                <Switch
+                  defaultChecked={guidedNotes}
+                  onCheckedChange={() =>
+                    setGuidedNotes((i) => {
+                      return !i;
+                    })
+                  }
+                />
+              </div>
             </div>
           </div>
 
-          <div className="sm:flex-row flex-col flex justify-between mt-4 gap-y-2 sm:gap-y-0">
+          <div className="sm:flex-row flex-col flex justify-between gap-y-2 sm:gap-y-0">
             <Button
               onClick={() => {
-                handleSubmitLLM(preferences, frequency, activeNum, session);
+                handleSubmitLLM(
+                  preferences,
+                  frequency,
+                  activeNum,
+                  guidedNotes,
+                  session
+                );
               }}
               variant="secondary"
               className="bg-gray-200"

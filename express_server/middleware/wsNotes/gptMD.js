@@ -8,6 +8,8 @@ const openAIKey = process.env.OPENAI_KEY;
 
 const openai = new OpenAI({ apiKey: openAIKey });
 
+const { markdownToGuided } = require("./guidedNotes");
+
 async function queryAI(note_id, ts_message, frequency) {
   try {
     const { data: note, error: noteError } = await supabase
@@ -45,7 +47,7 @@ async function queryAI(note_id, ts_message, frequency) {
     const { data: user, error: userError } = await supabase
       .from("user")
       .select(
-        "note_preferences, pref_number, diagram_preferences, diagram_pref_number"
+        "note_preferences, pref_number, diagram_preferences, diagram_pref_number, guided_note_setting"
       )
       .eq("user_id", user_id)
       .single();
@@ -59,6 +61,7 @@ async function queryAI(note_id, ts_message, frequency) {
       pref_number,
       diagram_preferences,
       diagram_pref_number,
+      guided_note_setting,
     } = user;
 
     const user_prompt = `
@@ -66,6 +69,8 @@ async function queryAI(note_id, ts_message, frequency) {
     Preferences on notetaking: ${note_preferences[pref_number]}
     Recent content: ${recent_data}
     `;
+
+    console.log(user_prompt);
 
     console.log("diagram_pref", diagram_preferences);
 
@@ -119,6 +124,9 @@ async function queryAI(note_id, ts_message, frequency) {
       gptMessage = await sendAICall(thread_id, user_prompt, ts2md_id);
       md = gptMessage["data"][0]["content"][0]["text"]["value"];
       console.log("md", md);
+      if (guided_note_setting) {
+        md = await markdownToGuided(md, user_prompt);
+      }
     }
 
     // append transcript to diagram thread regardless of whether mermaid is fired
@@ -180,13 +188,11 @@ async function queryAI(note_id, ts_message, frequency) {
       console.log("mermaidMd", mermaidMd);
       console.log("md", md);
       console.log("full responce", md + "\n\n" + mermaidMd);
-      if (md){
+      if (md) {
         return mermaidMd + "\n\n" + md;
-
       } else {
-        return mermaidMd
+        return mermaidMd;
       }
-
     } else {
       const updatedCount = diagram_message_count + 1;
       try {

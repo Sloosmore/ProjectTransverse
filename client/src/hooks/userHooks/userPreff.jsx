@@ -10,6 +10,8 @@ export const UserPrefContext = createContext({
   setActiveNum: () => {},
   frequency: 0,
   setFrequency: () => {},
+  guidedNotes: false,
+  setGuidedNotes: () => {},
 });
 
 const UserPrefProvider = ({ children, session }) => {
@@ -19,11 +21,24 @@ const UserPrefProvider = ({ children, session }) => {
 
   const [activeNum, setActiveNum] = useState({ note: 0, diagram: 0 });
 
+  const [guidedNotes, setGuidedNotes] = useState(false);
+
   useEffect(() => {
-    if (inDevelopment) {
-      console.log("fetching context prefs");
-    }
-    fetchLLMpref(setPreferences, setActiveNum, setFrequency, session);
+    const fetchPreferences = async () => {
+      if (inDevelopment) {
+        console.log("fetching context prefs");
+      }
+
+      await fetchLLMpref(
+        setPreferences,
+        setActiveNum,
+        setFrequency,
+        setGuidedNotes,
+        session
+      );
+    };
+
+    fetchPreferences();
   }, [session]);
 
   useEffect(() => {
@@ -41,6 +56,8 @@ const UserPrefProvider = ({ children, session }) => {
         setActiveNum,
         frequency,
         setFrequency,
+        guidedNotes,
+        setGuidedNotes,
       }}
     >
       {children}

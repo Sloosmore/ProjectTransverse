@@ -63,7 +63,7 @@ const UploadNotes = ({ activeNum, setPreferences, setTextareaValue }) => {
   }
 
   return (
-    <div className="my-6">
+    <div className="">
       <div className="flex flex-row">
         <input
           type="file"

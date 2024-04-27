@@ -125,11 +125,14 @@ function TransverseApp() {
 
     const handleVisibilityChange = () => {
       console.log("visibility key", apiKey);
+
       if (
         document.visibilityState === "visible" &&
         ((apiKey && isKeyExpired(apiKey)) || !apiKey)
       ) {
-        getDeepgramKey();
+        if (mode === "default") {
+          getDeepgramKey();
+        }
       }
     };
 
