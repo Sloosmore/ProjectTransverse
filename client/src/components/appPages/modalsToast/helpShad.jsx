@@ -103,18 +103,13 @@ function HelpModalShad({ show, onClose }) {
 
   return (
     <div className="overflow-auto">
-      <DialogContent className="text-gray-400 sm:max-w-[800px] lg:max-w-screen-lg overflow-y-scroll max-h-screen rounded">
+      <DialogContent className="text-gray-600 dark:text-gray-200 sm:max-w-[800px] lg:max-w-screen-lg overflow-y-scroll max-h-screen rounded">
         <DialogHeader>
-          <DialogTitle className="text-gray-600 text-3xl mb-3">
-            How vrse works
-          </DialogTitle>
+          <DialogTitle className=" text-3xl mb-3">How vrse works</DialogTitle>
         </DialogHeader>
         <>
           {content.slice(0, 2).map((item, index) => (
-            <h3
-              key={index}
-              className="text-gray-600 text-2xl  border-b pb-3 pt-4"
-            >
+            <h3 key={index} className=" text-2xl  border-b pb-3 pt-4">
               <a
                 href={item.link}
                 target="_blank"
@@ -130,9 +125,7 @@ function HelpModalShad({ show, onClose }) {
               <div key={index + 2}>
                 <AccordionItem value={(index + 2).toString()}>
                   <AccordionTrigger>
-                    <div className="text-gray-600 text-gray-600 text-2xl hover:underline">
-                      {item.title}
-                    </div>
+                    <div className="text-2xl hover:underline">{item.title}</div>
                   </AccordionTrigger>
                   <AccordionContent>
                     <div>{item.body()}</div>
@@ -145,7 +138,7 @@ function HelpModalShad({ show, onClose }) {
         <DialogFooter>
           <Button
             variant="secondary"
-            className="bg-gray-200"
+            className=""
             type="button"
             onClick={onClose}
           >

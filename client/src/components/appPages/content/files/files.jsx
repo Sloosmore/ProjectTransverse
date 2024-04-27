@@ -14,6 +14,7 @@ import CreateFolder from "./folderView/createFolder";
 import { deleteFolder } from "@/components/appPages/services/crudApi";
 import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
 import { useNewNote } from "@/hooks/noteHooks/newNote";
+
 //overflow for records
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 

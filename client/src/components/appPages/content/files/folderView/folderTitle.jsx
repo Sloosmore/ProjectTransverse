@@ -22,12 +22,12 @@ function EditFolderTitle({ folder }) {
   }, 300);
 
   return (
-    <div className="flex-grow my-4 border-0">
+    <div className="flex-grow my-4 border-0 bg-transparent	">
       <input
         type="text"
         value={title}
         onChange={handleChange}
-        className=" pb-4 w-full text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold"
+        className=" pb-4 w-full text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold  bg-transparent	"
         style={{ outline: "none" }}
       />
     </div>

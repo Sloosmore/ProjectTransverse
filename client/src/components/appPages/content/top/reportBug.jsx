@@ -12,6 +12,7 @@ import {
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/userHooks/auth";
 
+import { Textarea } from "@/components/ui/textarea";
 import { supabaseClient } from "../../../../config/supabaseClient";
 
 export function ReportBug() {
@@ -50,7 +51,7 @@ export function ReportBug() {
       <DialogTrigger asChild>
         <div
           as="a"
-          className="block rounded-md px-3 py-2 text-base text-gray-400 hover:bg-white hover:text-gray-700"
+          className="block rounded-md px-3 py-2 text-base text-gray-400 dark:hover:text-white dark:text-gray-300 hover:text-gray-700"
         >
           <i className="bi bi-bug" style={{ fontSize: "1.25rem" }}></i>
         </div>
@@ -59,7 +60,7 @@ export function ReportBug() {
         <DialogHeader>
           <DialogTitle>Report a Bug</DialogTitle>
         </DialogHeader>
-        <textarea
+        <Textarea
           id="bugReport"
           className=" w-full h-40 border-gray-400 border rounded min-h-12 max-h-96 p-2"
           placeholder="Describe the bug here..."

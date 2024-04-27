@@ -7,6 +7,7 @@ import ControlModalShad from "../../modalsToast/ControlModelShad";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import ProfIcon from "./dropdown";
 import ReportBug from "./reportBug";
+import ToggleTheme from "./toggleTheme";
 
 function AppNav() {
   const { user, signOut } = useAuth();
@@ -17,7 +18,10 @@ function AppNav() {
 
   return (
     <div>
-      <Disclosure as="nav" className="bg-white shadow-sm ">
+      <Disclosure
+        as="nav"
+        className="bg-white dark:bg-[#020817] shadow-sm dark:border-b dark:border-gray-800"
+      >
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -36,7 +40,7 @@ function AppNav() {
                       <SheetTrigger asChild>
                         <div
                           as="a"
-                          className="block rounded-md px-3 py-2 text-base text-gray-400 hover:bg-white hover:text-gray-700"
+                          className="block rounded-md px-3 py-2 text-base text-gray-400 dark:text-gray-300 dark:hover:text-white hover:text-gray-700"
                         >
                           <i
                             className="bi bi-person-gear"
@@ -49,6 +53,7 @@ function AppNav() {
 
                     <ProfIcon logOut={signOut} />
                     <ReportBug />
+                    <ToggleTheme />
                   </div>
                 </div>
                 <div className="-mr-2 flex md:hidden">

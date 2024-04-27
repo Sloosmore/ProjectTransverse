@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import PdfView from "./pdfViewer";
+import { Button } from "@/components/ui/button";
 
 const Slides = React.memo(function Slides({
   currentNote,
@@ -69,14 +70,15 @@ const Slides = React.memo(function Slides({
             accept="application/pdf, application/vnd.openxmlformats-officedocument.presentationml.presentation"
             className="  file:-mx-3  file:ms-1 file:rounded-sm file:text-gray-600 file:overflow-hidden file:rounded-none file:border-0 file:bg-gray-100 file:hover:bg-gray-200 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out  file:[margin-inline-end:0.75rem] text-gray-700 text-sm focus:outline-none focus:ring-0 focus:border-0 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full grow"
           />
-          <button
+          <Button
             onClick={async () =>
               await uploadSlides(uploadedFile, currentNote.note_id)
             }
-            className="bg-gray-100 hover:bg-gray-200 py-1 px-4 rounded-lg my-1"
+            className=" py-1 px-4 my-1"
+            variant="secondary"
           >
             Upload
-          </button>
+          </Button>
         </div>
       )}
     </div>

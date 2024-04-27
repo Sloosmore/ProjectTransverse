@@ -30,12 +30,12 @@ function EditTitle({ currentNote }) {
   }, 1500);
 
   return (
-    <div className="flex-grow md:px-12 px-6 mt-8">
+    <div className="flex-grow md:px-12 px-6 mt-8 bg-transparent	 ">
       <input
         type="text"
         value={title}
         onChange={handleChange}
-        className="border-b pb-4 w-full text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold"
+        className="border-b pb-4 w-full text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold bg-transparent	"
         style={{ outline: "none" }}
       />
     </div>

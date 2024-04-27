@@ -139,7 +139,7 @@ function NoteComponent() {
   };
 
   return (
-    <div className="flex-grow flex flex-col px-10 overflow-auto text-gray-500">
+    <div className="flex-grow flex flex-col px-10 overflow-auto text-gray-500 dark:text-gray-300">
       <div className="h-12 flex-none border-b flex">
         <div className="my-auto md:ps-10 flex w-full justify-between">
           <div className="text-gray-400 flex align-items">
@@ -155,8 +155,10 @@ function NoteComponent() {
                   className="sm:inline hidden"
                 >
                   <i
-                    className={`bi bi-collection-play p-2.5 hover:bg-gray-100 rounded cursor-pointer ${
-                      mode === "default" && audioView && "text-gray-500"
+                    className={`bi bi-collection-play p-2.5 hover:bg-gray-100 rounded cursor-pointer  dark:hover:bg-gray-800 ${
+                      mode === "default" &&
+                      audioView &&
+                      "text-gray-500 dark:text-gray-100"
                     }`}
                     style={{ fontSize: "1.1rem" }}
                   ></i>
@@ -171,7 +173,9 @@ function NoteComponent() {
                   (windowWidth > 640 || tooltip.content !== "Split") && (
                     <div
                       className={`  ${
-                        tooltip.variable === true ? "text-gray-600" : ""
+                        tooltip.variable === true
+                          ? "text-gray-600 dark:text-gray-200"
+                          : ""
                       }`}
                       key={index}
                       onClick={() => {
@@ -183,7 +187,7 @@ function NoteComponent() {
                         <Tooltip>
                           <TooltipTrigger>
                             <i
-                              className={`${tooltip.icon} p-2.5 hover:bg-gray-100 rounded cursor-pointer `}
+                              className={`${tooltip.icon} p-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer `}
                               style={{ fontSize: "1.1rem" }}
                             ></i>
                           </TooltipTrigger>

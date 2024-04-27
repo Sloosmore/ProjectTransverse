@@ -23,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
 
 function FolderView({}) {
   const { noteData } = useNoteData();
@@ -116,14 +117,14 @@ function FolderView({}) {
         <div className="w-full flex-row flex mb-4 justify-between">
           <button
             onClick={() => setNewNoteField(!newNoteField)}
-            className=" inline-flex rounded-lg justify-between px-3 py-2.5 border-gray-300 text-sm font-semibold text-gray-500   bg-gray-100 hover:bg-gray-200 border  shadow-sm  "
+            className=" inline-flex rounded-lg justify-between px-3 py-2.5 border-gray-300 dark:border-gray-700 text-sm font-semibold text-gray-500 dark:bg-gray-900 bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-800 border  shadow-sm  "
           >
             <i className="bi bi-plus-lg" style={{ fontSize: "1.5rem" }}></i>
             <span className="ms-2 flex justify-center items-center w-full text-center my-auto">
               New Note
             </span>
           </button>{" "}
-          <input
+          <Input
             type="text"
             placeholder="Search..."
             value={searchTerm}

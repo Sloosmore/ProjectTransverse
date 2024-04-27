@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Button } from "@/components/ui/button.jsx";
 
 const radios = [{ name: "Word" }, { name: "PDF" }];
 
@@ -32,7 +33,7 @@ function DownloadMd({ noteID, json }) {
         </RadioGroup>
       </div>
       <div className="self-center">
-        <button
+        <Button
           variant="secondary"
           className="align-middle"
           onClick={(event) => {
@@ -46,7 +47,7 @@ function DownloadMd({ noteID, json }) {
           }}
         >
           Download
-        </button>
+        </Button>
       </div>
     </div>
   );

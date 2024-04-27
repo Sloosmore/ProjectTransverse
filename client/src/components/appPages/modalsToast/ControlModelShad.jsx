@@ -15,6 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useUserPref } from "@/hooks/userHooks/userPreff";
 import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
@@ -119,17 +120,17 @@ function ControlModalShad() {
               )}
               {typeArray.map((type) => (
                 <TabsContent key={type} value={type}>
-                  <textarea
+                  <Textarea
                     className="form-control p-6 border rounded-lg w-full"
                     id="prefTextArea"
                     rows="6"
                     value={textareaValue || preferences[type][activeNum[type]]}
                     onChange={(e) => setTextareaValue(e.target.value)}
-                  ></textarea>
+                  ></Textarea>
 
                   <div className="flex flex-row s overflow-x-auto px-6 py-6 rounded-xl border justify-between mt-4">
                     <div>
-                      <div className="text-lg text-gray-700">
+                      <div className="text-lg text-gray-700 dark:text-gray-300">
                         Prompt Selection
                       </div>
                       <div>Each prompt corresponds to the text input</div>
@@ -137,9 +138,9 @@ function ControlModalShad() {
                     <div className="flex flex-row space-x-5 mt-2.5">
                       {prefArray.map((num) => (
                         <Button
-                          className={`hover:bg-gray-700 hover:text-white bg-gray-200 ${
+                          className={`  ${
                             num === activeNum[type]
-                              ? "bg-gray-700 text-white"
+                              ? "bg-gray-700 text-white hover:bg-gray-700 text-white dark:bg-gray-500 dark:hover:bg-gray-500"
                               : " "
                           }`}
                           variant="secondary"
@@ -169,7 +170,7 @@ function ControlModalShad() {
             <div className="mt-5 border px-6 py-6 rounded-xl ">
               <label
                 htmlFor="freqRange"
-                className="my-3 mt-4 pt-4 text-lg text-gray-700"
+                className="my-3 mt-4 pt-4 text-lg text-gray-700 dark:text-gray-300"
               >
                 Note Generation Speed (minutes)
               </label>
@@ -207,7 +208,9 @@ function ControlModalShad() {
 
             <div className="flex flex-row justify-between my-5 border px-6 py-6 rounded-xl ">
               <div className="">
-                <div className="text-lg text-gray-700">Guided Note Mode</div>
+                <div className="text-lg text-gray-700 dark:text-gray-300">
+                  Guided Note Mode
+                </div>
                 <div>Create partial generations that you fill in</div>
               </div>
               <div className="my-auto">
@@ -235,12 +238,12 @@ function ControlModalShad() {
                 );
               }}
               variant="secondary"
-              className="bg-gray-200"
+              className=""
             >
               Save Preference
             </Button>
             <SheetClose asChild>
-              <Button type="submit" variant="secondary" className="bg-gray-200">
+              <Button type="submit" variant="secondary" className="">
                 Close
               </Button>
             </SheetClose>

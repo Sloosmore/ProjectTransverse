@@ -306,7 +306,7 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
           <div className="playback-bar__progress-time-elapsed">
             {formatTime(benchTime(globalSeek))}
           </div>
-          <div className=" md:w-4/12 w-5/12 my-auto mx-2 flex">
+          <div className=" md:w-4/12 w-5/12 my-auto mx-2 flex bg-transparent	">
             <input
               type="range"
               min="0"
@@ -314,7 +314,7 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
               value={globalSeek}
               max={duration}
               onChange={handleSliderChange}
-              className="slider self-center flex-none"
+              className="slider self-center flex-none bg-transparent	"
               style={{
                 "--c": "lightgray", // Change the color based on value
               }}

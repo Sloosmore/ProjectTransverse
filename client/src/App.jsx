@@ -14,18 +14,21 @@ import { CodeProvider } from "./hooks/code.jsx";
 import FacebookPixel from "./lib/FacebookPixle.jsx";
 import GoogleAnalytics from "./lib/googleAnalytics.jsx";
 import AppRouter from "./AppRouter.jsx";
+import ThemeProvider from "./hooks/theme.jsx";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <BrowserProvider>
-          <AuthProvider>
-            <CodeProvider>
-              <AppRouter />
-            </CodeProvider>
-          </AuthProvider>
-          <Toaster />
+          <ThemeProvider>
+            <AuthProvider>
+              <CodeProvider>
+                <AppRouter />
+              </CodeProvider>
+            </AuthProvider>
+            <Toaster />
+          </ThemeProvider>
         </BrowserProvider>
       </BrowserRouter>
       <GoogleAnalytics />

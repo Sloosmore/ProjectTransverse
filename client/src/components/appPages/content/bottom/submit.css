@@ -11,3 +11,16 @@
   );
   z-index: -1;
 }
+
+.blur-shadow-dark::before {
+  content: "";
+  position: absolute;
+  inset: -15%; /* Increase the negative inset value to extend the blur effect even further */
+  background: radial-gradient(
+    at center,
+    rgba(0, 0, 0, 1) 0%,
+    /* Start with fully opaque black at the center */ rgba(0, 0, 0, 0) 75%
+      /* Gradually fade to fully transparent at 75% of the radius */
+  );
+  z-index: -1;
+}
