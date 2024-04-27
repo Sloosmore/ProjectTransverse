@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/table";
 import { ArrowDownUp } from "lucide-react";
 import { useWindowWidth } from "@/hooks/windowWidth";
+import { Input } from "@/components/ui/input";
 
 function FolderBox({ folders, files, handleDeleteFolder }) {
   const windowWidth = useWindowWidth();
@@ -139,13 +140,13 @@ function FolderBox({ folders, files, handleDeleteFolder }) {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="w-full sm:flex-row flex-col flex justify-between">
-        <input
+      <div className="w-full sm:flex-row flex-col flex justify-between mt-1">
+        <Input
           type="text"
           placeholder="Search..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="lg:w-1/3 md:w-5/12 w-7/12 py-2 px-3 border border-gray-300 rounded-md shrink shadow-sm"
+          className="lg:w-1/3 md:w-5/12 w-7/12 py-2 px-3 rounded-md shrink shadow-sm ms-1"
         />
         <div className="flex sm:flex-row flex-row-reverse items-center mt-4 sm:mt-0 align-start sm:me-0 me-auto ">
           {sortField && (
@@ -180,15 +181,15 @@ function FolderBox({ folders, files, handleDeleteFolder }) {
           {sortedFolders.map((folder, index) => (
             <div
               key={index}
-              className="bg-gray-100 rounded-[2rem] "
+              className="bg-gray-100 dark:bg-gray-900 rounded-[2rem] "
               onClick={() => {
                 if (folderDialog === false) {
                   navigate(`/app/f/${folder.folder_id}`);
                 }
               }}
             >
-              <div className="flex flex-col w-full h-36 border rounded-[2rem] transform transition-transform duration-500 hover:-translate-y-1 bg-white">
-                <div className="ps-8 pt-8 text-gray-700">
+              <div className="flex flex-col w-full h-36 border rounded-[2rem] transform transition-transform duration-500 hover:-translate-y-1 bg-white dark:bg-[#020817]">
+                <div className="ps-8 pt-8 text-gray-700 dark:text-gray-200">
                   <h2 className="md:w-full overflow-hidden md:overflow-hidden md:whitespace-nowrap overflow-ellipsis pe-8">
                     {(windowWidth < 750 &&
                       folder.title.slice(0, 15) +
@@ -220,7 +221,7 @@ function FolderBox({ folders, files, handleDeleteFolder }) {
                         event.stopPropagation();
                       }}
                     >
-                      <DialogTrigger className="p-2 me-3 rounded-full hover:bg-gray-200 ">
+                      <DialogTrigger className="p-2 me-3 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ">
                         <div className="w-6 h-6">
                           <i className="bi bi-three-dots"></i>
                         </div>

@@ -125,7 +125,7 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
               <i
                 className={`${
                   recStatusObject?.leftIcon || ""
-                } align-middle my-auto hover:bg-gray-100 rounded p-2.5`}
+                } align-middle my-auto hover:bg-gray-100 dark:hover:bg-gray-800 rounded p-2.5 dark:text-gray-100`}
                 style={{ fontSize: "1.2rem" }}
               ></i>
             </div>
@@ -138,7 +138,7 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
               <i
                 className={`${
                   recStatusObject?.rightIcon || ""
-                } align-middle my-auto hover:bg-gray-100 rounded p-2.5`}
+                } align-middle my-auto hover:bg-gray-100 dark:hover:bg-gray-800 rounded p-2.5 dark:text-gray-100`}
               ></i>
             </div>
           </div>
@@ -160,12 +160,12 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
             }}
           >
             {noteOn ? (
-              <div className="hover:bg-gray-100 rounded p-2.5 text-gray-500">
+              <div className="hover:bg-gray-100 rounded p-2.5 text-gray-500 dark:text-gray-300 dark:hover:bg-gray-800 ">
                 <CardTextSvg />
               </div>
             ) : (
               <i
-                className={`bi bi-card-text hover:bg-gray-100 rounded p-2.5`}
+                className={`bi bi-card-text hover:bg-gray-100 dark:hover:bg-gray-800 rounded px-2.5 py-2`}
                 style={{ fontSize: "1.1rem" }}
               ></i>
             )}
@@ -176,14 +176,12 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
             }}
           >
             {diagramOn ? (
-              <div className="hover:bg-gray-100 rounded p-2.5 text-gray-500">
+              <div className="hover:bg-gray-100 rounded p-2.5 text-gray-500 dark:text-gray-300 dark:hover:bg-gray-800 ">
                 <CardPicSvg />
               </div>
             ) : (
               <i
-                className={`bi bi-image hover:bg-gray-100 rounded p-2.5 ${
-                  diagramOn && `text-gray-500 animate-colorChange`
-                }`}
+                className={`bi bi-image hover:bg-gray-100 dark:hover:bg-gray-800 rounded px-2.5 py-2`}
                 style={{ fontSize: "1.1rem" }}
               ></i>
             )}
