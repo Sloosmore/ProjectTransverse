@@ -75,6 +75,8 @@ const UploadNotes = ({ activeNum, setPreferences, setTextareaValue }) => {
           onClick={() => {
             if (file) {
               handleFileUpload(file, activeNum, session, setTextareaValue);
+            } else {
+              toast.warning("No file chosen!");
             }
           }}
           variant="secondary"
