@@ -32,7 +32,9 @@ function ProfIcon({ logOut }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] max-h-[36rem]">
         <div className="flex justify-center">
-          <Button variant="destructive">Log out</Button>
+          <Button variant="destructive" onClick={logOut}>
+            Log out
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

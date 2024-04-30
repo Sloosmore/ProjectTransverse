@@ -120,13 +120,17 @@ function ControlModalShad() {
               )}
               {typeArray.map((type) => (
                 <TabsContent key={type} value={type}>
-                  <Textarea
-                    className="form-control p-6 border rounded-lg w-full"
-                    id="prefTextArea"
-                    rows="6"
-                    value={textareaValue || preferences[type][activeNum[type]]}
-                    onChange={(e) => setTextareaValue(e.target.value)}
-                  ></Textarea>
+                  <div className="px-1">
+                    <Textarea
+                      className="form-control p-6 border rounded-lg w-full"
+                      id="prefTextArea"
+                      rows="6"
+                      value={
+                        textareaValue || preferences[type][activeNum[type]]
+                      }
+                      onChange={(e) => setTextareaValue(e.target.value)}
+                    ></Textarea>
+                  </div>
 
                   <div className="flex flex-row s overflow-x-auto px-6 py-6 rounded-xl border justify-between mt-4">
                     <div>
