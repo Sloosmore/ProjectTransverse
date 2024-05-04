@@ -90,7 +90,8 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "use-debounce": "^10.0.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "vaul": "^0.9.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",

@@ -160,6 +160,7 @@ function TransverseApp() {
         model: "nova-2",
         interim_results: true,
         smart_format: true,
+        diarize: true,
       });
 
       connection.on(LiveTranscriptionEvents.Open, () => {
@@ -183,6 +184,10 @@ function TransverseApp() {
           console.log("look at the data", data);
         }
         const words = data.channel.alternatives[0].words;
+        if (inDevelopment && (word.punctuated_word || words.word)) {
+          console.log("incoming speaker", words.speaker);
+        }
+
         const caption = words
           .map((word) => word.punctuated_word ?? word.word)
           .join(" ");
@@ -470,7 +475,7 @@ function TransverseApp() {
   }, [compatible]);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-dvh lg:h-screen">
       <NewNoteProvider>
         <ToastProvider>
           <NoteDataContext.Provider

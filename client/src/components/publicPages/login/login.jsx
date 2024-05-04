@@ -40,15 +40,15 @@ function Login() {
   }, []);
 
   return (
-    <div className="flex h-screen flex-col md:flex-row xl:px-20">
-      <div className=" md:flex-grow h-1/3 md:h-screen flex mx-auto lg:ms-[9%] md:mt-0 sm:mt-20">
+    <div className="flex h-dvh flex-col md:flex-row xl:px-20 justify-center sm:justify-normal   md:px-6">
+      <div className=" md:flex-grow sm:h-1/3  md:h-screen flex mx-auto lg:ms-[9%] md:mt-0 sm:mt-10">
         <div className="self-center">
-          <h1 className="text-gray-500 ms-8  ">
+          <h1 className="text-gray-500 sm:ms-8  ">
             Never miss a <span className="gradient-text "> vrse </span>
           </h1>
-          <ul className="ms-14 mt-6 gap-y-2 flex-col flex text-gray-500 me-5 flex-shrink">
-            {talkingPoints.map((value) => (
-              <li>
+          <ul className="ms-14 mt-6 gap-y-2 flex-col sm:flex text-gray-500 me-5 flex-shrink hidden sm:visable">
+            {talkingPoints.map((value, index) => (
+              <li key={index}>
                 <i className="bi bi-check-circle-fill me-2 w-full"></i> {value}
               </li>
             ))}
@@ -56,9 +56,9 @@ function Login() {
         </div>
       </div>
 
-      <div className="  md:w-1/2  flex justify-center md:me-2 md:mt-0 mt-10">
+      <div className="  md:w-1/2  flex justify-center md:mt-0 mt-10 ">
         <div className=" w-[400px] self-center ">
-          <div className=" text-center p-5 shadow-lg auth-container rounded-lg ring ring-gray-100 ">
+          <div className=" text-center p-5 shadow-lg auth-container md:mb-2 mx-7 sm:mx-0 rounded-lg ring ring-gray-100 ">
             <Auth
               supabaseClient={supabaseClient}
               appearance={{

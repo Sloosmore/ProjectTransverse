@@ -53,15 +53,7 @@ const CodeCheck = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
+    <div className="flex flex-col justify-center items-center h-dvh md:h-screen ">
       <h1 className="mx-10 md:mx-0">
         {" "}
         Enter a Code or Email if you are already signed up

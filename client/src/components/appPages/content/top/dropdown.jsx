@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import ControlModalShad from "../../modalsToast/ControlModelShad";
+import ControlModalShad from "./userPref/ControlModelShad";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 

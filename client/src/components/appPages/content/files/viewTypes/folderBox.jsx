@@ -139,7 +139,7 @@ function FolderBox({ folders, files, handleDeleteFolder }) {
   };
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full  flex flex-col">
       <div className="w-full sm:flex-row flex-col flex justify-between mt-1">
         <Input
           type="text"

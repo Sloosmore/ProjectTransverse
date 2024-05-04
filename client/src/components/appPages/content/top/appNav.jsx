@@ -3,11 +3,12 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import icon from "../../../../assets/TransverseIcon.svg";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../../hooks/userHooks/auth";
-import ControlModalShad from "../../modalsToast/ControlModelShad";
+import ControlModalShad from "./userPref/ControlModelShad";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import ProfIcon from "./dropdown";
 import ReportBug from "./reportBug";
 import ToggleTheme from "./toggleTheme";
+import ControlDrawerShad from "./userPref/PrefDrawer";
 
 function AppNav() {
   const { user, signOut } = useAuth();
@@ -36,20 +37,8 @@ function AppNav() {
                 <div className="hidden md:block">
                   <div className="ml-4 flex items-center md:ml-6">
                     {/* Profile dropdown */}
-                    <Sheet>
-                      <SheetTrigger asChild>
-                        <div
-                          as="a"
-                          className="block rounded-md px-3 py-2 text-base text-gray-400 dark:text-gray-300 dark:hover:text-white hover:text-gray-700"
-                        >
-                          <i
-                            className="bi bi-person-gear"
-                            style={{ fontSize: "1.5rem" }}
-                          ></i>
-                        </div>
-                      </SheetTrigger>
-                      <ControlModalShad />
-                    </Sheet>
+
+                    <ControlModalShad />
 
                     <ProfIcon logOut={signOut} />
                     <ReportBug />
@@ -87,17 +76,7 @@ function AppNav() {
                   </div>
                 </div>
                 <div className="mt-3 space-y-1 px-4">
-                  <Sheet>
-                    <SheetTrigger asChild>
-                      <div
-                        as="a"
-                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                      >
-                        Note Settings
-                      </div>
-                    </SheetTrigger>
-                    <ControlModalShad />
-                  </Sheet>
+                  <ControlDrawerShad />
 
                   <Disclosure.Button
                     as="a"
