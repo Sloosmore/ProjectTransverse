@@ -111,7 +111,7 @@ function ControlDrawerShad() {
           <DrawerHeader>
             <DrawerTitle> Set Preferences</DrawerTitle>
           </DrawerHeader>
-          <div className="flex flex-col mt-3 overflow-auto max-h-[550px]">
+          <div className="flex flex-col mt-3 overflow-auto max-h-[500px]">
             <div className="mb-3 flex-col flex">
               <Tabs
                 defaultValue="note"
