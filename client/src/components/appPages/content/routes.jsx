@@ -8,7 +8,7 @@ import FolderView from "./files/folderView/folderView";
 import RewindProvider from "@/hooks/noteHooks/aiRewind";
 
 export const AppRoutes = ({ controlProps }) => (
-  <div className="flex flex-col h-screen">
+  <div className="flex flex-col h-dvh">
     <AppNav />
     <RewindProvider>
       <Routes>
