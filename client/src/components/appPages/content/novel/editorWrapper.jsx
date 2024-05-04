@@ -176,10 +176,22 @@ function NoteComponent() {
                         tooltip.variable === true
                           ? "text-gray-600 dark:text-gray-200"
                           : ""
+                      } ${
+                        tooltip.content === "Slides" ? "hidden sm:flex" : ""
                       }`}
                       key={index}
                       onClick={() => {
-                        tooltip.function((prev) => !prev);
+                        if (windowWidth > 640) {
+                          tooltip.function((prev) => !prev);
+                        } else {
+                          tooltips.forEach((t) => {
+                            if (t !== tooltip) {
+                              t.function(false); // Turn off the tooltip
+                            } else {
+                              tooltip.function((prev) => !prev);
+                            }
+                          });
+                        }
                       }}
                       tabIndex={index}
                     >
@@ -354,7 +366,7 @@ function NoteComponent() {
       </div>
 
       {mode === "default" && audioView && (
-        <div className="h-24 flex-none border-t flex">
+        <div className="h-24 flex-none border-t hidden sm:flex">
           <AudioControls
             currentNote={currentNote}
             globalSeek={globalSeek}
