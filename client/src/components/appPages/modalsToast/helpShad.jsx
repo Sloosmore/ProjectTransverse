@@ -102,8 +102,8 @@ function HelpModalShad({ show, onClose }) {
   ];
 
   return (
-    <div className="overflow-auto">
-      <DialogContent className="text-gray-600 dark:text-gray-200 sm:max-w-[800px] lg:max-w-screen-lg overflow-y-scroll max-h-screen rounded">
+    <div className="overflow-auto max-h-[500px]">
+      <DialogContent className="text-gray-600 dark:text-gray-200 sm:max-w-[500px] sm:max-h-auto md:max-w-[700px] max-w-[350px] lg:max-w-screen-lg h-dvl overflow-y-scroll max-h-screen rounded ">
         <DialogHeader>
           <DialogTitle className=" text-3xl mb-3">How vrse works</DialogTitle>
         </DialogHeader>
