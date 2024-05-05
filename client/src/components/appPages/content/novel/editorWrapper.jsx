@@ -230,6 +230,8 @@ function NoteComponent() {
             <PopoverSetting
               setFontColor={setFontColor}
               setFontSize={setFontSize}
+              fontColor={fontColor}
+              fontSize={fontSize}
             />
           </div>
         </div>

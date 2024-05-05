@@ -10,7 +10,7 @@ import {
 import { FileCog } from "lucide-react";
 import { fontStore } from "./editor/fontStore";
 
-function PopoverSetting({ setFontColor, setFontSize }) {
+function PopoverSetting({ setFontColor, fontColor, setFontSize, fontSize }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -31,7 +31,7 @@ function PopoverSetting({ setFontColor, setFontSize }) {
               <Label htmlFor="width">Color</Label>
               <Input
                 id="width"
-                defaultValue="#ffffff"
+                defaultValue={fontColor ? fontColor : "#6B7280"}
                 className="col-span-2 h-8 py-1 px-5 rounded rounded-md"
                 type="color"
                 onChange={(e) => {
@@ -43,9 +43,9 @@ function PopoverSetting({ setFontColor, setFontSize }) {
               <Label htmlFor="maxWidth">Text Size</Label>
               <Slider
                 min={0.5}
-                max={3}
-                step={0.2}
-                defaultValue={[1]}
+                max={2}
+                step={0.125}
+                defaultValue={fontSize ? [fontSize] : [1]}
                 onValueChange={(v) => {
                   const val = v[0];
                   console.log(val);

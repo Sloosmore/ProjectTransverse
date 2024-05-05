@@ -6,8 +6,8 @@ function generateStyleSheet(scaleFactor) {
             }
         
             .scale-text p {
-              margin-top: ${scaleFactor * 1.3333333}em !important;
-              margin-bottom: ${scaleFactor * 1.3333333}em !important;
+              margin-top: ${scaleFactor}em !important;
+              margin-bottom: ${scaleFactor}em !important;
             }
         
             .scale-text [class~="lead"] {
@@ -24,23 +24,23 @@ function generateStyleSheet(scaleFactor) {
             }
         
             .scale-text h1 {
-              font-size: ${scaleFactor * 2.6666667}em !important;
+              font-size: ${scaleFactor * 2}em !important;
               margin-top: ${scaleFactor * 0}em !important;
-              margin-bottom: ${scaleFactor * 0.8888889}em !important;
+              margin-bottom: ${0.8888889}em !important;
               line-height: ${scaleFactor * 1.1111111} !important;
             }
         
             .scale-text h2 {
               font-size: ${scaleFactor * 1.6666667}em !important;
-              margin-top: ${scaleFactor * 1.8666667}em !important;
-              margin-bottom: ${scaleFactor * 1.0666667}em !important;
+              margin-top: ${Math.log(scaleFactor)}em !important;
+              margin-bottom: ${Math.log(scaleFactor)}em !important;
               line-height: ${scaleFactor * 1.3333333} !important;
             }
         
             .scale-text h3 {
-              font-size: ${scaleFactor * 1.3333333}em !important;
-              margin-top: ${scaleFactor * 1.6666667}em !important;
-              margin-bottom: ${scaleFactor * 0.6666667}em !important;
+              font-size: ${scaleFactor}em !important;
+              margin-top: ${Math.log(scaleFactor)}em !important;
+              margin-bottom: ${Math.log(scaleFactor) * 0.6666667}em !important;
               line-height: ${scaleFactor * 1.5} !important;
             }
         
@@ -79,14 +79,14 @@ function generateStyleSheet(scaleFactor) {
             }
         
             .scale-text ol {
-              margin-top: ${scaleFactor * 1.3333333}em !important;
-              margin-bottom: ${scaleFactor * 1.3333333}em !important;
+              margin-top: ${scaleFactor}em !important;
+              margin-bottom: ${scaleFactor}em !important;
               padding-left: ${scaleFactor * 1.6}em !important;
             }
         
             .scale-text ul {
-              margin-top: ${scaleFactor * 1.3333333}em !important;
-              margin-bottom: ${scaleFactor * 1.3333333}em !important;
+              margin-top: ${scaleFactor}em !important;
+              margin-bottom: ${scaleFactor}em !important;
               padding-left: ${scaleFactor * 1.6}em !important;
             }
         
