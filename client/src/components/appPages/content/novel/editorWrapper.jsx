@@ -12,6 +12,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import PopoverSetting from "./popoverSettings";
 
 //  { icon: "bi bi-window-split", content: "Split" },
 
@@ -42,6 +43,9 @@ function NoteComponent() {
   const [globalSeek, setglobalSeek] = useState(0.0);
   const [diagramOn, setDiagramOn] = useState(false);
   const [noteOn, setNoteOn] = useState(false);
+
+  const [fontColor, setFontColor] = useState(false);
+  const [fontSize, setFontSize] = useState(null);
 
   const ToggleGenKit = {
     diagramOn,
@@ -103,6 +107,10 @@ function NoteComponent() {
   }, [noteData, noteId]);
 
   useEffect(() => {
+    console.log("fontColor", fontColor);
+  }, [fontColor]);
+
+  useEffect(() => {
     setUpdatedTitle(currentNote.title);
     if (currentNote.json_content !== content) {
       setContent(currentNote.json_content);
@@ -139,7 +147,12 @@ function NoteComponent() {
   };
 
   return (
-    <div className="flex-grow flex flex-col px-10 overflow-auto text-gray-500 dark:text-gray-300">
+    <div
+      className={`flex-grow flex flex-col sm:px-10 px-4 overflow-auto text-gray-500 dark:text-gray-300 ${
+        fontColor ? `` : ""
+      }`}
+      style={fontColor ? { color: fontColor } : {}}
+    >
       <div className="h-12 flex-none border-b flex">
         <div className="my-auto md:ps-10 flex w-full justify-between">
           <div className="text-gray-400 flex align-items">
@@ -148,7 +161,7 @@ function NoteComponent() {
               <>
                 <Separator
                   orientation="vertical"
-                  className="me-2.5 sm:inline hidden"
+                  className="me-2.5 sm:inline hidden h-8 my-auto flex"
                 />
                 <button
                   onClick={() => setAudioView((view) => !view)}
@@ -166,7 +179,7 @@ function NoteComponent() {
               </>
             )}
           </div>
-          <div className="flex h-5 items-center text-sm text-gray-400 my-auto me-2 md:me-16">
+          <div className="flex h-full items-center text-sm text-gray-400 my-auto me-2 md:me-16">
             <div className="flex">
               {tooltips.map(
                 (tooltip, index) =>
@@ -213,11 +226,19 @@ function NoteComponent() {
                   )
               )}
             </div>
+            <Separator orientation="vertical" className="h-8 mx-2" />
+            <PopoverSetting
+              setFontColor={setFontColor}
+              setFontSize={setFontSize}
+            />
           </div>
         </div>
       </div>
 
-      <div className="flex-grow min-h-0">
+      <div
+        className="flex-grow min-h-0"
+        style={fontSize ? { fontSize: `${fontSize}rem` } : {}}
+      >
         {transcriptView && !(editView || slideView) && (
           <ResizablePanelGroup>
             <ResizablePanel className="flex flex-col xl:mx-40">

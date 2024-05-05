@@ -47,13 +47,19 @@ function AppNav() {
                 </div>
                 <div className="-mr-2 flex md:hidden">
                   {/* Mobile menu button */}
-                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-gray-200 p-2 text-gray-700 hover:bg-gray-300 hover:text-black focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-200">
+                  <Disclosure.Button className="relative inline-flex items-center justify-center dark:bg-gray-900 dark:border dark:border-gray-600 rounded-md bg-gray-200 p-2 text-gray-700 hover:bg-gray-300 hover:text-black focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-200">
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>
                     {open ? (
-                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                      <XMarkIcon
+                        className="block h-6 w-6 dark:text-gray-200"
+                        aria-hidden="true"
+                      />
                     ) : (
-                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                      <Bars3Icon
+                        className="block h-6 w-6 dark:text-gray-200"
+                        aria-hidden="true"
+                      />
                     )}
                   </Disclosure.Button>
                 </div>
@@ -61,20 +67,24 @@ function AppNav() {
             </div>
 
             <Disclosure.Panel className="md:hidden rounded">
-              <div className="border-t border-gray-200 pb-3 pt-4">
-                <div className="flex items-center px-4 ">
-                  <div className="flex-shrink-0 text-gray-500">
+              <div className="border-t border-gray-200 pb-3 pt-4 ">
+                <div className="flex items-center px-4 border-b pb-4 dark:text-gray-300">
+                  <div className="flex-shrink-0 text-gray-500 dark:text-gray-300">
                     <i className="bi bi-person-circle "></i>
                   </div>
                   <div className="ml-3">
-                    <div className="text-base font-medium leading-none text-white">
+                    <div className="text-base font-medium leading-none text-white text-gray-400 dark:text-gray-300">
                       {user.name}
                     </div>
-                    <div className="text-sm font-medium leading-none text-gray-400">
+                    <div className="text-sm font-medium leading-none text-gray-400 dark:text-gray-300">
                       {user.email}
                     </div>
                   </div>
+                  <div className="flex ms-auto">
+                    <ToggleTheme />
+                  </div>
                 </div>
+
                 <div className="mt-3 space-y-1 px-4">
                   <ControlDrawerShad />
 

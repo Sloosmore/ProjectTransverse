@@ -38,6 +38,10 @@ import aiTranscript from "./extentions/aiTranscript";
 import DemoJson from "./insideComponents/demo";
 import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
 
+import { useStore } from "@nanostores/react";
+import { fontStore } from "./fontStore";
+import generateStyleSheet from "./fontScale";
+
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 const NovelEditor = ({
@@ -65,6 +69,11 @@ const NovelEditor = ({
   const [openNode, setOpenNode] = useState(false);
   const [saveStatus, setSaveStatus] = useState("Saved");
   const { setNotes } = useNoteData();
+
+  const scaleFactor = useStore(fontStore);
+  const styles = generateStyleSheet(scaleFactor);
+
+  //const size = useStore(fontStore);
 
   const debouncedUpdates = useDebouncedCallback(async (editor) => {
     const json = editor.getJSON();
@@ -111,6 +120,7 @@ const NovelEditor = ({
 
   return (
     <div key={update} className="w-full flex flex-col justify-center">
+      <style>{styles}</style>
       {<EditTitle currentNote={currentNote} />}
 
       <ErrorBoundary>
@@ -132,7 +142,7 @@ const NovelEditor = ({
               handleDrop: (view, event, _slice, moved) =>
                 handleImageDrop(view, event, moved, uploadFn),
               attributes: {
-                class: `prose-lg prose-stone dark:prose-invert prose-headings:font-title font-default focus:outline-none w-full mx-auto h-full override-heading-margin`,
+                class: `prose-lg prose-stone dark:prose-invert prose-headings:font-title font-default focus:outline-none w-full mx-auto h-full override-heading-margin scale-text`,
               },
             }}
             slotAfter={<ImageResizer />}
