@@ -31,7 +31,7 @@ function PopoverSetting({ setFontColor, fontColor, setFontSize, fontSize }) {
               <Label htmlFor="width">Color</Label>
               <Input
                 id="width"
-                defaultValue={fontColor ? fontColor : "#6B7280"}
+                value={fontColor ? fontColor : "#6B7280"}
                 className="col-span-2 h-8 py-1 px-5 rounded rounded-md"
                 type="color"
                 onChange={(e) => {
@@ -45,10 +45,11 @@ function PopoverSetting({ setFontColor, fontColor, setFontSize, fontSize }) {
                 min={0.5}
                 max={2}
                 step={0.125}
-                defaultValue={[1]}
+                value={fontSize ? [fontSize] : [1]}
                 onValueChange={(v) => {
                   const val = v[0];
                   fontStore.set(val);
+                  setFontSize(val);
                 }}
                 className="col-span-2 h-8 py-1 rounded rounded-md"
               ></Slider>
@@ -58,6 +59,7 @@ function PopoverSetting({ setFontColor, fontColor, setFontSize, fontSize }) {
                 variant="secondary"
                 onClick={() => {
                   setFontColor(null);
+                  setFontSize(1);
                   fontStore.set(1);
                 }}
               >

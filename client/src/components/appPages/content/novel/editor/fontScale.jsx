@@ -24,7 +24,7 @@ function generateStyleSheet(scaleFactor) {
             }
         
             .scale-text h1 {
-              font-size: ${scaleFactor * 2}em !important;
+              font-size: ${scaleFactor * 2.66}em !important;
               margin-top: ${scaleFactor * 0}em !important;
               margin-bottom: ${0.8888889}em !important;
               line-height: ${scaleFactor * 1.1111111} !important;
