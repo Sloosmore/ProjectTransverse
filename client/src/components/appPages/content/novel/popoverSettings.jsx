@@ -45,15 +45,24 @@ function PopoverSetting({ setFontColor, fontColor, setFontSize, fontSize }) {
                 min={0.5}
                 max={2}
                 step={0.125}
-                defaultValue={fontSize ? [fontSize] : [1]}
+                defaultValue={[1]}
                 onValueChange={(v) => {
                   const val = v[0];
-                  console.log(val);
-                  setFontSize(val);
                   fontStore.set(val);
                 }}
                 className="col-span-2 h-8 py-1 rounded rounded-md"
               ></Slider>
+            </div>
+            <div className="justify-self-end flex mt-3">
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setFontColor(null);
+                  fontStore.set(1);
+                }}
+              >
+                Reset Settings
+              </Button>
             </div>
           </div>
         </div>
