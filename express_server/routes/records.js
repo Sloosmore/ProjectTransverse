@@ -7,10 +7,6 @@ const {
   updateVisibilitySB,
   delNoteSB,
   upInactiveStatus,
-  sendFoldersFromSB,
-  postFolderToSB,
-  upFolderTitleToSB,
-  delFolder,
 } = require("../controllers/noteCRUD/handleRecords");
 const { upload } = require("../server");
 
@@ -31,18 +27,6 @@ const { handleRewind } = require("../controllers/noteCRUD/handleRewind");
 
 //change to
 router.get("/notes", sendNotesFromSB);
-
-//GET folder
-router.get("/folders", sendFoldersFromSB);
-
-//POST folder
-router.post("/folders", postFolderToSB);
-
-//UPDATE folder title
-router.post("/folder-title", upFolderTitleToSB);
-
-//DELETE folder
-router.delete("/folders", delFolder);
 
 //UPDATE MD JSON
 router.put("/notes-markdown", updateMarkdownToSB);

@@ -5,13 +5,12 @@ import { fetchNoteRecords } from "../../services/crudApi";
 import { useAuth } from "../../../../hooks/userHooks/auth";
 import FileNewNote from "./fileNewNote";
 import FileScroll from "./viewTypes/fileScroll";
-import { fetchFolders } from "../../services/crudApi";
+import { fetchFolders } from "@/api/crud/folder/readFolders";
 import FolderScroll from "./viewTypes/folderScroll";
 import FolderBox from "./viewTypes/folderBox";
 import { Route, Link, Routes } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import CreateFolder from "./folderView/createFolder";
-import { deleteFolder } from "@/components/appPages/services/crudApi";
+import { deleteFolder } from "@/api/crud/folder/deleteFolder";
 import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
 import { useNewNote } from "@/hooks/noteHooks/newNote";
 

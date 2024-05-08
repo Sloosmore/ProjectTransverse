@@ -1,10 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { deleteFolder } from "@/components/appPages/services/crudApi";
-import FileScroll from "./fileScroll";
 import EditExportNote from "../fileEditShad";
-import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import {
   Select,

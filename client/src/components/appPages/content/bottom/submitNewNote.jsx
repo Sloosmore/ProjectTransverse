@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import "./submit.css";
-import { fetchFolders } from "../../services/crudApi";
+import { fetchFolders } from "@/api/crud/folder/readFolders";
 
 import { createNewNote } from "../../services/noteWebsockets/noteModeApi";
 import { useAuth } from "../../../../hooks/userHooks/auth";
