@@ -23,8 +23,6 @@ const {
 
 const { downloadNote } = require("../controllers/handleNoteDownload");
 
-const { toggleGeneration } = require("../controllers/noteCRUD/handleGenOnOff");
-
 const { uploadMDImage } = require("../controllers/noteCRUD/handleImgUp");
 
 const { handleRewind } = require("../controllers/noteCRUD/handleRewind");
@@ -60,9 +58,6 @@ router.put("/notes-title", updateTitleToSB);
 
 //UPDATE Vis (do we need this?)
 router.put("/notes-visiblity", updateVisibilitySB);
-
-//turn on and off note generation
-router.put("/notes-toggleGen", toggleGeneration);
 
 //UPDATE Play
 router.put("/notes-play", playAppend);
