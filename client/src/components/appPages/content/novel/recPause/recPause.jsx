@@ -11,7 +11,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { waveform } from "ldrs";
-import { toggleGen } from "@/components/appPages/services/toggleGen.js";
+import { toggleGen } from "@/api/crud/notes/toggleGen.js";
 import { Separator } from "@/components/ui/separator";
 import "./recPause.css";
 import CardTextSvg from "./svg/card-text.jsx";

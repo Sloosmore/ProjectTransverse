@@ -36,22 +36,6 @@ export const handleSendLLM = async (
   } catch (error) {
     console.error(`Set LLM Error: ${error}`);
   }
-  /*
-  const token = session.access_token;
-
-  fetch(`${import.meta.env.VITE_BASE_URL}/settings/notes`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: JSON.stringify({ instructions, frequency, pref_num }),
-  })
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((error) => {
-      console.error("Error:", error);
-    });*/
 };
 
 export const fetchLLMpref = async (
@@ -98,34 +82,3 @@ const clientFetchLLM = async (session) => {
 
   return { preferences, activeNum, frequency, guided_notes };
 };
-
-//old fetch code
-/*
-  const token = session.access_token;
-  fetch(`${import.meta.env.VITE_BASE_URL}/settings/notes`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  })
-    .then((response) => response.json())
-    .then((body) => {
-      const preferences = {
-        note: body.instructions,
-        diagram: body.diagram_instructions,
-      };
-
-      const activeNum = {
-        note: body.pref_num,
-        diagram: body.diagram_pref_numb,
-      };
-      setFrequency(body.frequency);
-
-      setPreferences(preferences);
-      setActiveNum(activeNum);
-      clientFetchLLM(session);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });*/
