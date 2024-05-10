@@ -90,8 +90,6 @@ const updateMarkdownToSB = async (req, res) => {
     console.log("totTime", totTime);
     //replace any nulls with a time stamp
 
-    const newJsonContent = replaceTimeWithCurrent(json_content, totTime);
-
     //console.log(`${markdown}`);
     const result = await supabase
       .from("note")
@@ -130,28 +128,6 @@ const updateTitleToSB = async (req, res) => {
   }
 };
 
-//UP VIS (no auth needed for MVP)
-const updateVisibilitySB = async (req, res) => {
-  try {
-    const { note_id, visible } = req.body;
-    const result = await supabase
-      .from("note")
-      .update({
-        visible: visible,
-        date_updated: new Date(),
-        status: "inactive",
-      })
-      .eq("note_id", note_id);
-    if (result.error) {
-      throw result.error;
-    }
-    res.status(200).json({ message: `saved ${visible}` });
-  } catch (error) {
-    res.sendStatus(401);
-    console.error("Error:", error);
-  }
-};
-
 //DEL (no auth needed for MVP)
 const delNoteSB = async (req, res) => {
   try {
@@ -174,7 +150,6 @@ module.exports = {
   sendNotesFromSB,
   updateMarkdownToSB,
   updateTitleToSB,
-  updateVisibilitySB,
   delNoteSB,
   upInactiveStatus,
 };

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import insertNewNoteRecord from "./insertNoteTable";
-import { fetchNoteRecords } from "../crudApi";
+import { fetchNoteRecords } from "@/api/crud/notes/readNotes";
 import insertNewAudioSegment from "./insertAudioSeg";
 
 export const createNewNote = async (

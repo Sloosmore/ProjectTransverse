@@ -8,7 +8,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { handleOnMessage } from "./services/noteWebsockets/wsResponce";
-import { deactivateNotes, fetchNoteRecords } from "./services/crudApi";
+import { fetchNoteRecords } from "@/api/crud/notes/readNotes";
 import titleFromID from "./services/frontendNoteConfig/titleFromID";
 import { useAuth } from "../../hooks/userHooks/auth";
 import { useNavigate } from "react-router-dom";
@@ -184,13 +184,11 @@ function TransverseApp() {
           console.log("look at the data", data);
         }
         const words = data.channel.alternatives[0].words;
-        if (inDevelopment && (word.punctuated_word || words.word)) {
-          console.log("incoming speaker", words.speaker);
-        }
 
         const caption = words
           .map((word) => word.punctuated_word ?? word.word)
           .join(" ");
+
         if (data.is_final) {
           setFullTranscript((prev) => prev.trim() + " " + caption);
           setCaption("");
@@ -352,11 +350,11 @@ function TransverseApp() {
       startRecordingMedia(session, setRecorder, noteID);
     }
 
-    setTimeout(() => {
-      fetchNoteRecords(session, true).then((data) => {
-        setNotes(data);
-      });
-    }, 400);
+    const deactivate = mode === "note" ? false : true;
+
+    fetchNoteRecords(session, deactivate).then((data) => {
+      setNotes(data);
+    });
   }, [mode]);
 
   //core logic for note mode
@@ -443,9 +441,6 @@ function TransverseApp() {
     }, 30000);
 
     //if deactivate any active notes
-    deactivateNotes(session).then((data) => {
-      setNotes(data);
-    });
 
     return () => {
       clearInterval(ping);

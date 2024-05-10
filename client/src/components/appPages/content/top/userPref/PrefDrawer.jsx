@@ -158,6 +158,7 @@ function ControlDrawerShad() {
                                 return { ...prevNum, [type]: num };
                               });
                             }}
+                            key={num}
                           >
                             {num + 1}
                           </Button>

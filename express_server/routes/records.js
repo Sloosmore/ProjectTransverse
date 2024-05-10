@@ -4,7 +4,6 @@ const {
   sendNotesFromSB,
   updateMarkdownToSB,
   updateTitleToSB,
-  updateVisibilitySB,
   delNoteSB,
   upInactiveStatus,
 } = require("../controllers/noteCRUD/handleRecords");
@@ -39,9 +38,6 @@ router.put("/notes-deactivate", upInactiveStatus);
 
 //UPDATE Title
 router.put("/notes-title", updateTitleToSB);
-
-//UPDATE Vis (do we need this?)
-router.put("/notes-visiblity", updateVisibilitySB);
 
 //UPDATE Play
 router.put("/notes-play", playAppend);

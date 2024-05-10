@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import getRecStatusArray from "./statusArray.jsx";
-import { useAuth } from "@/hooks/userHooks/auth.jsx";
-import { fetchNoteRecords } from "@/components/appPages/services/crudApi.js";
 import { onPause, onPlay } from "@/components/appPages/services/pausePlay.js";
 import titleFromID from "@/components/appPages/services/frontendNoteConfig/titleFromID.js";
 import {

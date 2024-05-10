@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { fetchNoteRecords } from "../../services/crudApi";
 //import EditOffcanvas from "./fileEdit";
 import { useAuth } from "../../../../hooks/userHooks/auth";
 import FileNewNote from "./fileNewNote";
