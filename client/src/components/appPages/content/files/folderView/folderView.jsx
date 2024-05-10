@@ -1,24 +1,16 @@
-import FileScroll from "../viewTypes/fileScroll";
 import React, { useEffect, useState } from "react";
-import {
-  fetchNoteRecords,
-  fetchFolders,
-} from "@/components/appPages/services/crudApi";
+import { fetchFolders } from "@/api/crud/folder/readFolders";
 import { useParams } from "react-router-dom";
 import { useAuth } from "@/hooks/userHooks/auth";
-import FileNewNote from "../fileNewNote";
 import EditFolderTitle from "./folderTitle";
 import { useNavigate } from "react-router-dom";
-import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import EditExportNote from "../fileEditShad";
 import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
 import { useNewNote } from "@/hooks/noteHooks/newNote";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,

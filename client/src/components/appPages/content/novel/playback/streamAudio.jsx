@@ -4,6 +4,8 @@ import { useAuth } from "@/hooks/userHooks/auth";
 import { fetchURLs } from "@/components/appPages/services/audio/streamAudio";
 import { getMaxTime } from "@/components/appPages/services/audio/playback";
 import { Howl } from "howler";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
@@ -34,41 +36,49 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
   useEffect(() => {
     if (currentNote?.note_id === undefined) return;
     const fetchAudio = async () => {
-      const segData = await fetchURLs(session, currentNote.note_id);
-      const urls = segData.map((seg) => seg.url);
-      const sounds = urls.map(
-        (url, index) =>
-          new Howl({
-            src: [url],
-            preload: true,
-            html5: true,
-            buffer: true,
-            onload: function () {
-              let newSeek = globalSeekRef.current;
-              if (index !== 0) {
-                if (inDevelopment) {
-                  console.log("loaded data");
-                  console.log(segData[index - 1].end_time / 1000);
-                  console.log(globalSeekRef.current);
+      if (
+        audio.length === 0 ||
+        audio[0]?._src.length === 0 ||
+        !audio[0]._src[0]
+      ) {
+        const segData = await fetchURLs(session, currentNote.note_id);
+        const urls = segData.map((seg) => seg.url);
+        const sounds = urls.map(
+          (url, index) =>
+            new Howl({
+              src: [url],
+              preload: true,
+              html5: true,
+              buffer: true,
+              onload: function () {
+                let newSeek = globalSeekRef.current;
+                console.log("okay the problem has been idetified");
+                if (index !== 0) {
+                  if (inDevelopment) {
+                    console.log("loaded data");
+                    console.log(segData[index - 1].end_time / 1000);
+                    console.log(globalSeekRef.current);
+                  }
+                  newSeek -= segData[index - 1].end_time / 1000;
                 }
-                newSeek -= segData[index - 1].end_time / 1000;
-              }
-              this.seek(newSeek);
-            },
-            onend: function () {
-              if (index === sounds.length - 1) {
-                setPlaying(false);
-              }
-            },
-          })
-      );
-      setAudioData(segData);
-      setAudio(sounds);
-      const { totTime } = getMaxTime(segData);
-      setDuration(totTime / 1000);
+                this.seek(newSeek);
+              },
+              onend: function () {
+                if (index === sounds.length - 1) {
+                  setPlaying(false);
+                }
+              },
+            })
+        );
+        console.log("sounds", sounds);
+        setAudioData(segData);
+        setAudio(sounds);
+        const { totTime } = getMaxTime(segData);
+        setDuration(totTime / 1000);
+      }
     };
     fetchAudio();
-  }, [currentNote]);
+  }, [currentNote, audio, session, mode, playing]);
 
   useEffect(() => {
     if (audio) {
@@ -113,10 +123,13 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
   };
 
   const handleToggle = () => {
-    if (audio[currentSoundIndex]) {
+    console.log("okay quick test");
+    if (audio[currentSoundIndex] && audio.length > 0) {
+      console.log("in audio sound index");
       if (audio[currentSoundIndex].playing()) {
         audio[currentSoundIndex].pause();
       } else {
+        console.log("trying to start");
         const audioStart =
           (audioData[currentSoundIndex].end_time -
             audioData[currentSoundIndex].duration) /
@@ -124,6 +137,8 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
         audio[currentSoundIndex].seek(globalSeek - audioStart);
         audio[currentSoundIndex].play();
       }
+    } else {
+      toast.error("something has gone wrong try again");
     }
     setPlaying(!playing);
   };
@@ -266,21 +281,29 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
               style={{ fontSize: "1.25rem" }}
             ></i>
           </button>
-          <button onClick={() => handleToggle()}>
-            <div className="w-8 h-8 rounded-full flex justify-center items-center bg-gray-500 hover:bg-gray-400">
+          <Button
+            onClick={() => handleToggle()}
+            className="w-8 h-8 rounded-full flex justify-center items-center bg-gray-500 hover:bg-gray-400"
+            disabled={
+              audio.length === 0 ||
+              audio[0]?._src.length === 0 ||
+              !audio[0]._src[0]
+            }
+          >
+            <div className="mt-[.125rem]">
               {playing ? (
                 <i
                   className="bi bi-pause-fill text-white"
-                  style={{ fontSize: "1.25rem" }}
+                  style={{ fontSize: "1.2rem" }}
                 ></i>
               ) : (
                 <i
                   className="bi bi-play-fill text-white"
-                  style={{ marginLeft: "1.5px", fontSize: "1.25rem" }}
+                  style={{ marginLeft: "1.5px", fontSize: "1.2rem" }}
                 ></i>
               )}
             </div>
-          </button>
+          </Button>
           <button onClick={() => skipToNext()}>
             <i
               className="bi bi-skip-end-fill"

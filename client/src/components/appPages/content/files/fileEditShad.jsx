@@ -1,22 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import React from "react";
 import { useState, useEffect } from "react";
-import { Toast } from "react-bootstrap";
 import DownloadMd from "./download";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import {
-  updateTitle,
-  updateVis,
-  saveNoteMarkdown,
-  deleteRecord,
-} from "../../services/crudApi";
+import { deleteRecord } from "@/api/crud/notes/deleteNote";
+import { updateTitle } from "@/api/crud/notes/updateTitle";
 import {
   SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -25,45 +17,26 @@ import {
 import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
 import { useAuth } from "@/hooks/userHooks/auth";
 
-import { fetchNoteRecords } from "../../services/crudApi";
+import { fetchNoteRecords } from "@/api/crud/notes/readNotes";
+import { toast } from "sonner";
 
 //edit for sheet
 
 export function EditExportNote({ file }) {
   const { setNotes } = useNoteData();
   const { session } = useAuth();
-
   const [title, setTitle] = useState(file ? file.title : "");
-  const [visible, setVisible] = useState(file ? file.visible : "");
-  const [markdown, setMarkdown] = useState(file ? file.full_markdown : "");
   const [noteID, setNoteID] = useState(file ? file.note_id : "");
-  const [showAlert, setShowAlert] = useState(false);
   useEffect(() => {
     setTitle(file ? file.title : "");
-    setVisible(file ? file.visible : "");
-    setMarkdown(file ? file.full_markdown : "");
     setNoteID(file ? file.note_id : "");
   }, [file]);
 
-  const updateNote = async (
-    file,
-    markdown,
-    visible,
-    title,
-    noteID,
-    setShowAlert
-  ) => {
+  const updateNote = async (file, title, noteID) => {
     if (file) {
-      await saveNoteMarkdown(noteID, markdown);
-      await updateVis(noteID, visible);
       await updateTitle(noteID, title);
-      setShowAlert(true);
-      const notes = await fetchNoteRecords(session, true);
+      const notes = await fetchNoteRecords(session);
       setNotes(notes);
-
-      setTimeout(() => {
-        setShowAlert(false);
-      }, 3000);
     }
   };
 
@@ -101,36 +74,14 @@ export function EditExportNote({ file }) {
             <Button
               type="button"
               onClick={() => {
-                updateNote(
-                  file,
-                  markdown,
-                  visible,
-                  title,
-                  noteID,
-                  setShowAlert
-                );
+                updateNote(file, title, noteID);
+                toast.success("Note Save");
               }}
               className="col"
             >
               Save
             </Button>
           </div>
-
-          {showAlert && (
-            <Toast
-              style={{
-                position: "absolute",
-                bottom: "20px",
-                right: "20px",
-              }}
-              className="bg-success text-white"
-            >
-              <Toast.Body className="bg-success">
-                <i className="bi bi-check2-circle me-2"></i>
-                Saved
-              </Toast.Body>
-            </Toast>
-          )}
 
           <div className="border my-3"></div>
 
@@ -151,8 +102,8 @@ export function EditExportNote({ file }) {
               <button
                 className="bg-red-500 text-white px-4 py-2 rounded-md"
                 onClick={(e) => {
-                  console.log("deleting note");
                   deleteRec(noteID);
+                  toast.info("Note Deleted");
                 }}
               >
                 Delete
@@ -160,14 +111,6 @@ export function EditExportNote({ file }) {
             </SheetClose>
           </div>
         </form>
-        <SheetFooter>
-          {/*
-       
-          <Button type="submit" variant="secondary" className="mx-auto">
-            Close
-          </Button>
-          </SheetClose>*/}
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   );

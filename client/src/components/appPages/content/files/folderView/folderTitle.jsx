@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { updateFolderTitle } from "@/components/appPages/services/crudApi";
+import { updateFolderTitle } from "@/api/crud/folder/updateTitleFolder";
 
 function EditFolderTitle({ folder }) {
   const [title, setTitle] = useState(folder.title || "");

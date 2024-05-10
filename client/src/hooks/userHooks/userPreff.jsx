@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { fetchLLMpref } from "@/components/appPages/services/setNotepref";
+import { fetchLLMpref } from "@/api/crud/user/setNotepref";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 

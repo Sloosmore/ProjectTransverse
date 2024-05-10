@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import getRecStatusArray from "./statusArray.jsx";
-import { useAuth } from "@/hooks/userHooks/auth.jsx";
-import { fetchNoteRecords } from "@/components/appPages/services/crudApi.js";
 import { onPause, onPlay } from "@/components/appPages/services/pausePlay.js";
 import titleFromID from "@/components/appPages/services/frontendNoteConfig/titleFromID.js";
 import {
@@ -11,7 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { waveform } from "ldrs";
-import { toggleGen } from "@/components/appPages/services/toggleGen.js";
+import { toggleGen } from "@/api/crud/notes/toggleGen.js";
 import { Separator } from "@/components/ui/separator";
 import "./recPause.css";
 import CardTextSvg from "./svg/card-text.jsx";

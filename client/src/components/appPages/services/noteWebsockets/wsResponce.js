@@ -1,5 +1,4 @@
-import { saveNoteMarkdown } from "../crudApi";
-import { useNavigate } from "react-router-dom";
+import { saveNoteMarkdown } from "@/api/crud/notes/updateNoteContent";
 //this takes two params note ID and markdown
 
 export const handleOnMessage = (

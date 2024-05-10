@@ -29,7 +29,6 @@ app.use(express.urlencoded({ extended: true }));
 // For parsing application/json
 app.use(express.json());
 app.use("/", require("./routes/root"));
-app.use("/tscript-api", require("./routes/tscript"));
 
 //put in GET req for notes data
 app.use("/records-api", require("./routes/records"));

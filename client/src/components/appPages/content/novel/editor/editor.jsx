@@ -18,7 +18,7 @@ import { NodeSelector } from "./bubble/nodeSelector";
 import { TextButtons } from "./bubble/text-buttons";
 import "./editor.css";
 import { useDebouncedCallback } from "use-debounce";
-import { saveNoteMarkdown } from "@/components/appPages/services/crudApi";
+import { saveNoteMarkdown } from "@/api/crud/notes/updateNoteContent";
 import { ImageResizer, handleCommandNavigation } from "novel/extensions";
 import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import { uploadFn } from "./extentions/image-upload";
@@ -62,7 +62,7 @@ const NovelEditor = ({
     aiTranscript,
   ];
   //mode
-  const { title, json_content, full_markdown, note_id } = currentNote;
+  const { full_markdown, note_id } = currentNote;
 
   const { content, setContent } = contentKit;
 

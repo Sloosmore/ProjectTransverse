@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { handleSendLLM, fetchLLMpref } from "../../../services/setNotepref";
+import { handleSendLLM } from "@/api/crud/user/setNotepref";
 import { useAuth } from "../../../../../hooks/userHooks/auth";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
@@ -165,6 +165,7 @@ function ControlModalShad() {
                                 return { ...prevNum, [type]: num };
                               });
                             }}
+                            key={num}
                           >
                             {num + 1}
                           </Button>

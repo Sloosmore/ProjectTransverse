@@ -13,81 +13,6 @@ const {
 } = require("../../middleware/infoTracking/addTimeJson");
 
 //GET folders from auth
-const sendFoldersFromSB = async (req, res) => {
-  try {
-    console.log("Fetching folders...");
-    const token = req.headers.authorization.split(" ")[1];
-    const user_id = getUserIdFromToken(token);
-    console.log(user_id);
-
-    const result = await supabase
-      .from("folder")
-      .select("*")
-      .eq("user_id", user_id);
-    let folderRecords = result.data;
-    res.status(200).json({ folderRecords });
-  } catch (error) {
-    folderRecords = ["test"];
-    res.status(401).json({ folderRecords });
-
-    console.error("Error:", error);
-  }
-};
-
-//POST folder from auth
-const postFolderToSB = async (req, res) => {
-  try {
-    const token = req.headers.authorization.split(" ")[1];
-    const user_id = getUserIdFromToken(token);
-    const title = "Untitled Folder";
-    const folder_id = uuid();
-
-    const result = await supabase
-      .from("folder")
-      .insert({ title, folder_id, user_id });
-    res.status(200).json({ folder_id });
-  } catch (error) {
-    console.error("Error:", error);
-    res.sendStatus(401);
-  }
-};
-
-//UP folder title
-const upFolderTitleToSB = async (req, res) => {
-  try {
-    const { folder_id, title } = req.body;
-    console.log("Updating title to DB...");
-    const result = await supabase
-      .from("folder")
-      .update({ title: title })
-      .eq("folder_id", folder_id);
-    if (result.error) {
-      throw result.error;
-    }
-    res.status(200).json({ message: `saved title ${title}` });
-  } catch (error) {
-    res.sendStatus(401);
-    console.error("Error:", error);
-  }
-};
-
-//DEL folder
-const delFolder = async (req, res) => {
-  try {
-    const { folder_id } = req.query;
-    const result = await supabase
-      .from("folder")
-      .delete()
-      .eq("folder_id", folder_id);
-    if (result.error) {
-      throw result.error;
-    }
-    res.status(200).json({ message: `deleted folder ${folder_id}` });
-  } catch (error) {
-    res.sendStatus(401);
-    console.error("Error:", error);
-  }
-};
 
 //GET notes AUTH
 const sendNotesFromSB = async (req, res) => {
@@ -165,8 +90,6 @@ const updateMarkdownToSB = async (req, res) => {
     console.log("totTime", totTime);
     //replace any nulls with a time stamp
 
-    const newJsonContent = replaceTimeWithCurrent(json_content, totTime);
-
     //console.log(`${markdown}`);
     const result = await supabase
       .from("note")
@@ -205,28 +128,6 @@ const updateTitleToSB = async (req, res) => {
   }
 };
 
-//UP VIS (no auth needed for MVP)
-const updateVisibilitySB = async (req, res) => {
-  try {
-    const { note_id, visible } = req.body;
-    const result = await supabase
-      .from("note")
-      .update({
-        visible: visible,
-        date_updated: new Date(),
-        status: "inactive",
-      })
-      .eq("note_id", note_id);
-    if (result.error) {
-      throw result.error;
-    }
-    res.status(200).json({ message: `saved ${visible}` });
-  } catch (error) {
-    res.sendStatus(401);
-    console.error("Error:", error);
-  }
-};
-
 //DEL (no auth needed for MVP)
 const delNoteSB = async (req, res) => {
   try {
@@ -249,12 +150,7 @@ module.exports = {
   sendNotesFromSB,
   updateMarkdownToSB,
   updateTitleToSB,
-  updateVisibilitySB,
   delNoteSB,
   upInactiveStatus,
-  sendFoldersFromSB,
-  postFolderToSB,
-  upFolderTitleToSB,
-  delFolder,
 };
 //

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { updateTitle } from "@/components/appPages/services/crudApi";
-import { fetchNoteRecords } from "@/components/appPages/services/crudApi";
+import { updateTitle } from "@/api/crud/notes/updateTitle";
+import { fetchNoteRecords } from "@/api/crud/notes/readNotes";
 import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
 import { useAuth } from "@/hooks/userHooks/auth";
 
@@ -24,10 +24,10 @@ function EditTitle({ currentNote }) {
 
   const debounceTitle = useDebouncedCallback(async (title) => {
     await updateTitle(currentNote.note_id, title);
-    await fetchNoteRecords(session, true).then((data) => {
+    await fetchNoteRecords(session).then((data) => {
       setNotes(data);
     });
-  }, 1500);
+  }, 400);
 
   return (
     <div className="flex-grow md:px-12 px-6 mt-8 bg-transparent	 ">

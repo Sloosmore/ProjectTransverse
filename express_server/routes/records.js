@@ -4,13 +4,8 @@ const {
   sendNotesFromSB,
   updateMarkdownToSB,
   updateTitleToSB,
-  updateVisibilitySB,
   delNoteSB,
   upInactiveStatus,
-  sendFoldersFromSB,
-  postFolderToSB,
-  upFolderTitleToSB,
-  delFolder,
 } = require("../controllers/noteCRUD/handleRecords");
 const { upload } = require("../server");
 
@@ -23,8 +18,6 @@ const {
 
 const { downloadNote } = require("../controllers/handleNoteDownload");
 
-const { toggleGeneration } = require("../controllers/noteCRUD/handleGenOnOff");
-
 const { uploadMDImage } = require("../controllers/noteCRUD/handleImgUp");
 
 const { handleRewind } = require("../controllers/noteCRUD/handleRewind");
@@ -33,18 +26,6 @@ const { handleRewind } = require("../controllers/noteCRUD/handleRewind");
 
 //change to
 router.get("/notes", sendNotesFromSB);
-
-//GET folder
-router.get("/folders", sendFoldersFromSB);
-
-//POST folder
-router.post("/folders", postFolderToSB);
-
-//UPDATE folder title
-router.post("/folder-title", upFolderTitleToSB);
-
-//DELETE folder
-router.delete("/folders", delFolder);
 
 //UPDATE MD JSON
 router.put("/notes-markdown", updateMarkdownToSB);
@@ -57,12 +38,6 @@ router.put("/notes-deactivate", upInactiveStatus);
 
 //UPDATE Title
 router.put("/notes-title", updateTitleToSB);
-
-//UPDATE Vis (do we need this?)
-router.put("/notes-visiblity", updateVisibilitySB);
-
-//turn on and off note generation
-router.put("/notes-toggleGen", toggleGeneration);
 
 //UPDATE Play
 router.put("/notes-play", playAppend);

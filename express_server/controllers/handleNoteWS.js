@@ -45,38 +45,9 @@ async function handleWebSocketConnection(ws, request) {
       }
 
       const ts = data.transcript;
-      const justActivated = data.init;
-      //console.log(`this is the incomming transcript ${ts}`);
-
-      //this is loosmore's user ID
       const token = data.token;
       const user = getUserIdFromToken(token);
 
-      /*if (justActivated) {
-        //extenal data: data.folder_id, user, title,
-        console.log("data", data);
-        const user_id = user;
-        const title = data.title;
-        const folder_id = data.folder_id;
-        const note_id = data.note_id;
-
-        const inactiveRecords = await deactivateRecords(user);
-        const record = await insertNewNoteRecord(
-          user_id,
-          title,
-          folder_id,
-          note_id
-        );
-        console.log(record[0]);
-        const audioSegment = await insertNewAudioSegment(note_id);
-
-        ws.send(
-          JSON.stringify({
-            noteRecords: [record[0], ...inactiveRecords],
-            note_id,
-          })
-        );
-      } else */
       if (ts) {
         //get the id of the note which will only be passed when note is Activated
         const note_id = data.note_id;
