@@ -15,15 +15,17 @@ const fetchActiveTs = async (id, incomingTs) => {
       console.error(`fetchActiveTs Note with ID ${id} not found`);
       return false;
     }
+
     const activeTS = note.active_transcript + incomingTs;
 
+    /*
     const { error: updateError } = await supabase
       .from("note")
       .update({ active_transcript: activeTS, date_updated: new Date() })
       .eq("note_id", id);
     if (updateError) {
       throw updateError;
-    }
+    }*/
 
     return activeTS;
   } catch (error) {

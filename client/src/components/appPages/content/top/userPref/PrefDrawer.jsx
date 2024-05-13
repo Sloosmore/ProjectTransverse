@@ -86,12 +86,6 @@ function ControlDrawerShad() {
     });
   }, [textareaValue, activeNum, activeTab]);
 
-  useEffect(() => {
-    if (inDevelopment) {
-      console.log("pref", preferences);
-    }
-  }, [preferences]);
-
   const prefArray = [0, 1, 2, 3, 4];
   const typeArray = ["note", "diagram"];
 

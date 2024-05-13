@@ -6,13 +6,11 @@ export const handleOnMessage = (
   noteData,
   setNotes,
   noteID,
-  resetTranscript,
-  navigate,
-  userType,
-  setFullTranscript
+  navigate
 ) => {
   const wsData = JSON.parse(event.data);
   console.log("WebSocket message received:", wsData);
+  /*
   if (wsData.noteRecords) {
     //this should happen once during notemode init
     console.log("-------======================================-------");
@@ -21,22 +19,8 @@ export const handleOnMessage = (
     console.log("returned noteID", noteID);
     setNotes(wsData.noteRecords);
     navigate(`/app/n/${noteID}`);
-  }
-  if (wsData.resetState) {
-    if (userType === "Standard") {
-      resetTranscript();
-    } else {
-      setFullTranscript("");
-    }
+  }*/
 
-    const upDataNotes = noteData.map((record) => {
-      if (record.note_id === noteID) {
-        record.full_transcript = wsData.transcript;
-      }
-      return record;
-    });
-    setNotes(upDataNotes);
-  }
   if (wsData.md) {
     //find record and set markdown in that specific file
     //this will update the markdown of a specific record

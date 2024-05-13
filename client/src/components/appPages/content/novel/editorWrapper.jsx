@@ -6,7 +6,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
-import Transcript from "./transcript";
+import Transcript from "./transcript/transcript";
 import {
   ResizableHandle,
   ResizablePanel,

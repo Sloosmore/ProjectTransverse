@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Transcript from "../transcript";
+import Transcript from "../transcript/transcript";
 
 function Playback() {
   const [playbackState, setPlaybackState] = useState("Transcript");

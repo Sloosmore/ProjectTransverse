@@ -8,9 +8,7 @@ import { useAuth } from "../../../../hooks/userHooks/auth";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -42,7 +40,6 @@ function SubmitNewNote() {
 
   const handleNoteSubmit = () => {
     //no longer will have transcript
-    const transcript = "";
     setNewNoteField(false);
 
     console.log("selectedValue", selectedValue);

@@ -69,11 +69,11 @@ function ControlModalShad() {
 
   useEffect(() => {
     if (inDevelopment) {
-      console.log(activeNum);
+      //console.log(activeNum);
     }
     setPreferences((prev) => {
       if (inDevelopment) {
-        console.log("activeTab", activeTab);
+        //console.log("activeTab", activeTab);
       }
       return {
         ...prev,
@@ -86,7 +86,7 @@ function ControlModalShad() {
 
   useEffect(() => {
     if (inDevelopment) {
-      console.log("pref", preferences);
+      //console.log("pref", preferences);
     }
   }, [preferences]);
 
