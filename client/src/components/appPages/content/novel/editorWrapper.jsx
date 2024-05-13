@@ -388,7 +388,7 @@ function NoteComponent() {
         )}
       </div>
 
-      {mode === "default" && audioView && (
+      {mode === "default" && audioView && false && (
         <div className="h-24 flex-none border-t hidden sm:flex">
           <AudioControls
             currentNote={currentNote}
