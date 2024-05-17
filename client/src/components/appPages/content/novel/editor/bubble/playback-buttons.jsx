@@ -24,13 +24,14 @@ export const Playback = ({ setglobalSeek }) => {
     },
   ];
   return (
-    <div className="flex border-l">
+    <div className="flex border-l items-start">
       {items.map((item, index) => (
         <EditorBubbleItem
           key={index}
           onSelect={(editor) => {
             item.command(editor);
           }}
+          className="flex"
         >
           <Button size="icon" className="rounded-none" variant="ghost">
             <item.icon className={cn("h-4 w-4", {})} />

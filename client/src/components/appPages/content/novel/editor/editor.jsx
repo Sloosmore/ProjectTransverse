@@ -43,6 +43,7 @@ import { fontStore } from "./fontStore";
 import generateStyleSheet from "./fontScale";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
+import { useUserPref } from "@/hooks/userHooks/userPreff";
 
 const NovelEditor = ({
   currentNote,
@@ -70,8 +71,13 @@ const NovelEditor = ({
   const [saveStatus, setSaveStatus] = useState("Saved");
   const { setNotes } = useNoteData();
 
-  const scaleFactor = useStore(fontStore);
-  const styles = generateStyleSheet(scaleFactor);
+  const { fontSize } = useUserPref();
+
+  const [styles, setStyles] = useState(generateStyleSheet(fontSize));
+
+  useEffect(() => {
+    setStyles(generateStyleSheet(fontSize));
+  }, [fontSize]);
 
   //const size = useStore(fontStore);
 
@@ -151,7 +157,7 @@ const NovelEditor = ({
               tippyOptions={{
                 placement: "top",
               }}
-              className="flex w-fit max-w-[90vw] overflow-hidden rounded border border-muted bg-background shadow-xl"
+              className="flex w-fit max-w-[90vw] overflow-hidden rounded border border-muted bg-background shadow-xl font-base"
             >
               <Separator orientation="vertical" />
 

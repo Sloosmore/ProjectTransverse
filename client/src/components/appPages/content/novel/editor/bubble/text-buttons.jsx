@@ -61,17 +61,18 @@ export const TextButtons = () => {
     },
   ];
   return (
-    <div className="flex border-l">
+    <div className="flex border-l	">
       {items.map((item, index) => (
         <EditorBubbleItem
           key={index}
           onSelect={(editor) => {
             item.command(editor);
           }}
+          className="flex"
         >
-          <Button size="icon" className="rounded-none" variant="ghost">
+          <Button size="icon" className="rounded-none " variant="ghost">
             {item.icon === "Wiki" ? (
-              <i className="bi bi-wikipedia h-4 w-4 mb-[.25rem]"></i>
+              <i className="bi bi-wikipedia h-4 w-4"></i>
             ) : (
               <item.icon
                 className={cn("h-4 w-4", {

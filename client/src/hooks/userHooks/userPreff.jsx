@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { fetchLLMpref } from "@/api/crud/user/setNotepref";
+import { fetchLLMText } from "@/api/crud/user/visualNotes";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
@@ -12,6 +13,10 @@ export const UserPrefContext = createContext({
   setFrequency: () => {},
   guidedNotes: false,
   setGuidedNotes: () => {},
+  fontColor: null,
+  setFontColor: () => {},
+  fontSize: 1,
+  setFontSize: () => {},
 });
 
 const UserPrefProvider = ({ children, session }) => {
@@ -22,6 +27,9 @@ const UserPrefProvider = ({ children, session }) => {
   const [activeNum, setActiveNum] = useState({ note: 0, diagram: 0 });
 
   const [guidedNotes, setGuidedNotes] = useState(false);
+
+  const [fontColor, setFontColor] = useState(false);
+  const [fontSize, setFontSize] = useState(null);
 
   useEffect(() => {
     const fetchPreferences = async () => {
@@ -36,6 +44,8 @@ const UserPrefProvider = ({ children, session }) => {
         setGuidedNotes,
         session
       );
+
+      await fetchLLMText(setFontColor, setFontSize, session);
     };
 
     fetchPreferences();
@@ -58,6 +68,10 @@ const UserPrefProvider = ({ children, session }) => {
         setFrequency,
         guidedNotes,
         setGuidedNotes,
+        fontColor,
+        setFontColor,
+        fontSize,
+        setFontSize,
       }}
     >
       {children}
