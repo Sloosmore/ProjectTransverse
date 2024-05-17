@@ -4,7 +4,8 @@ export const formatIncommingTranscript = (
   noteData,
   noteID,
   fullTranscript,
-  newCaption
+  newCaption,
+  currentCaption
 ) => {
   /**
    * This formats incoming transcript for Premium users because speaker idetificaition
@@ -18,11 +19,11 @@ export const formatIncommingTranscript = (
    *    B. Add new caption to the back of the old caption
    *
    */
-  let json_transcript, pause_array, play_array;
+  let json_transcript, pause_timestamps, play_timestamps;
   try {
     const matchingNote = noteData.find((note) => note.note_id === noteID);
     if (matchingNote) {
-      ({ json_transcript, pause_array, play_array } = matchingNote);
+      ({ json_transcript, pause_timestamps, play_timestamps } = matchingNote);
     } else {
       console.error(`No note found with ID ${noteID}`);
     }
@@ -30,8 +31,9 @@ export const formatIncommingTranscript = (
     console.error(err);
   }
 
-  const transcript = [...json_transcript, ...fullTranscript];
-  console.log("full transcript", fullTranscript);
+  console.log("currentCaption", currentCaption);
+
+  const transcript = [...json_transcript, ...fullTranscript, ...currentCaption];
 
   let updatedSpeakerCount = 0;
 
@@ -42,8 +44,10 @@ export const formatIncommingTranscript = (
       updatedSpeakerCount = breakList[breakList.length - 1].maxSpeaker;
     }
   }
-
-  const timeToAdd = calcTotTime(play_array, pause_array);
+  let timeToAdd =
+    Array.isArray(pause_timestamps) && pause_timestamps.length
+      ? calcTotTime(play_timestamps, pause_timestamps)
+      : 0;
 
   try {
     const Caption = newCaption.reduce((result, word, index) => {
@@ -99,13 +103,14 @@ export const formatIncommingTranscript = (
 export const calcTotTime = (playArray, pauseArray) => {
   let totTime = 0;
 
+  console.log("this is important to chekc", pauseArray.length);
+
   //this should loop for the lenth of pause array
-  if (pauseArray) {
-    for (let i = 0; i < pauseArray.length; i++) {
-      let timeDiferential =
-        new Date(pauseArray[i]).getTime() - new Date(playArray[i]).getTime();
-      totTime += timeDiferential;
-    }
+  for (let i = 0; i < pauseArray.length; i++) {
+    let timeDiferential =
+      new Date(pauseArray[i]).getTime() - new Date(playArray[i]).getTime();
+    totTime += timeDiferential;
   }
-  return totTime;
+
+  return totTime / 1000;
 };

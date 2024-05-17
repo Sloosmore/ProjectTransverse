@@ -7,7 +7,7 @@ export const reduceTranscript = (TS) => {
   }
   function reducerFunction(acc, curr) {
     if (curr?.break === true) {
-      acc.push(curr);
+      //acc.push(curr);
       return acc;
     }
     if (acc?.length === 0) {

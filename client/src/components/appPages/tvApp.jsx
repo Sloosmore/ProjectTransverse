@@ -31,6 +31,8 @@ import { StandardFormating } from "./services/noteWebsockets/transcriptFormat";
 import { appendFullTranscript } from "@/api/crud/notes/updateTranscript";
 import { resetSaveTranscript } from "./services/noteWebsockets/transcriptReset";
 import { useRef } from "react";
+import { getAudioStream } from "./services/audio/startMic";
+
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 function TransverseApp() {
@@ -45,9 +47,11 @@ function TransverseApp() {
   //this is for specific active instace of WS notes
   //ID of note and not title use titleFromID to get title
   const [noteID, setNoteID] = useState(localStorage.getItem("noteID") || null);
+  const [caption, setCaption] = useState([]);
 
   const noteIDRef = useRef(noteID);
   const notesRef = useRef(noteData);
+  const captionRef = useRef(caption);
 
   //this is for the media recorder
   const [recorder, setRecorder] = useState(null);
@@ -67,7 +71,6 @@ function TransverseApp() {
   const [isProcessing, setProcessing] = useState(false);
   const [microphone, setMicrophone] = useState(null);
   const [userMedia, setUserMedia] = useState(null);
-  const [caption, setCaption] = useState([]);
   const [fullTranscript, setFullTranscript] = useState([]);
   const fullTsRef = useRef(fullTranscript);
 
@@ -77,25 +80,28 @@ function TransverseApp() {
   }, [noteID, noteData]);
 
   useEffect(() => {
+    captionRef.current = caption;
+  }, [caption]);
+
+  useEffect(() => {
     fullTsRef.current = fullTranscript;
   }, [fullTranscript]);
 
   const startDGMicrophone = useCallback(async () => {
     // Set up mediaRecorder and getUserMedia
     console.log("starting deep microphone");
-    const userMedia = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-    });
-
-    const microphone = new MediaRecorder(userMedia);
-    microphone.start(500);
-
-    microphone.ondataavailable = (e) => {
-      add(e.data);
-    };
-
-    setUserMedia(userMedia);
-    setMicrophone(microphone);
+    try {
+      const userMedia = await getAudioStream();
+      const microphone = new MediaRecorder(userMedia);
+      microphone.start(500);
+      microphone.ondataavailable = (e) => {
+        add(e.data);
+      };
+      setUserMedia(userMedia);
+      setMicrophone(microphone);
+    } catch (error) {
+      console.error("Error capturing audio:", error);
+    }
   }, [add]);
 
   const stopDGMicrophone = useCallback(() => {
@@ -178,13 +184,12 @@ function TransverseApp() {
         const words = data.channel.alternatives[0].words;
         console.log(data);
 
-        console.log("noteID", noteIDRef.current);
-
         const in_caption = formatIncommingTranscript(
           notesRef.current,
           noteIDRef.current,
           fullTsRef.current,
-          words
+          words,
+          captionRef.current
         );
 
         if (
@@ -369,7 +374,8 @@ function TransverseApp() {
           StandardFormating(noteID, setFullTranscript);
         } else {
           threshold =
-            transcriptMessage.map((obj) => obj.caption).join(" ").length >= 100; //frequency;
+            transcriptMessage.map((obj) => obj.caption).join(" ").length >=
+            frequency;
         }
 
         if (threshold) {
@@ -491,7 +497,9 @@ function TransverseApp() {
           <NoteDataContext.Provider
             value={{ noteData, setNotes, noteID, setNoteID, mode, setMode }}
           >
-            <TranscriptContext.Provider value={{ fullTranscript, caption }}>
+            <TranscriptContext.Provider
+              value={{ fullTranscript, caption, setFullTranscript, setCaption }}
+            >
               <AppRoutes />
             </TranscriptContext.Provider>
           </NoteDataContext.Provider>

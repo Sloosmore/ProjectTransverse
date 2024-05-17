@@ -1,3 +1,5 @@
+import { formatElapsedTime } from "../transcriptFormating/formatTime";
+
 export const StandardFormating = async (noteID, setFullTranscript) => {
   const totTime = await calculateTotTime(noteID);
 

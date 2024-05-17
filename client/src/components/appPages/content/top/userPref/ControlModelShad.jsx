@@ -93,6 +93,14 @@ function ControlModalShad() {
   const prefArray = [0, 1, 2, 3, 4];
   const typeArray = ["note", "diagram"];
 
+  useEffect(() => {
+    guidedNotes
+      ? toast.info(
+          "Make sure to set preferences accordingly to make the most out of guided notes"
+        )
+      : () => {};
+  }, [guidedNotes]);
+
   return (
     <Sheet>
       <SheetTrigger asChild>

@@ -5,6 +5,7 @@ import { pulsar } from "ldrs";
 import { useAuth } from "@/hooks/userHooks/auth";
 import { useParams } from "react-router-dom";
 import { reduceTranscript } from "@/components/appPages/services/transcriptFormating/transcriptReducer";
+import SpeakerCaption from "./speakerIdetification";
 
 // Default values shown
 
@@ -13,8 +14,9 @@ function Transcript({ currentNote }) {
 
   const { noteId } = useParams();
   pulsar.register();
-  const { mode } = useNoteData();
-  const { fullTranscript, caption } = useContext(TranscriptContext);
+  const { mode, setNotes } = useNoteData();
+  const { fullTranscript, caption, setFullTranscript } =
+    useContext(TranscriptContext);
   const { userType } = useAuth();
   const { noteID } = useNoteData();
   const [transcriptData, setTranscriptData] = useState([]);
@@ -46,13 +48,15 @@ function Transcript({ currentNote }) {
   }, [caption]);
 
   useEffect(() => {
-    setTranscriptData([
-      ...(Array.isArray(json_transcript) ? json_transcript : []),
-      ...(Array.isArray(fullTranscript) && noteID === noteId
-        ? fullTranscript
-        : []),
-      ...(Array.isArray(caption) && noteID === noteId ? caption : []),
-    ]);
+    setTranscriptData(
+      reduceTranscript([
+        ...(Array.isArray(json_transcript) ? json_transcript : []),
+        ...(Array.isArray(fullTranscript) && noteID === noteId
+          ? fullTranscript
+          : []),
+        ...(Array.isArray(caption) && noteID === noteId ? caption : []),
+      ])
+    );
   }, [json_transcript, fullTranscript, caption]);
 
   useEffect(() => {
@@ -62,32 +66,33 @@ function Transcript({ currentNote }) {
   }, [transcriptData]);
 
   return (
-    <div className="p-6 ">
+    <div className="px-6 pb-6 pt-2">
       <div>
-        {userType === "Premium" && full_transcript.length === 0 ? (
-          (json_transcript || fullTranscript || caption) && (
-            <>
-              {reduceTranscript(transcriptData).map((line, index) => (
-                <div key={index}>
-                  {line.caption}
-                  <br />
-                </div>
-              ))}
-            </>
-          )
-        ) : (
+        {userType === "Premium" ? (
           <div>
-            {(full_transcript || "").split("\n").map((line, index) => (
-              <React.Fragment key={index}>
-                {line}
-                <br />
-              </React.Fragment>
-            ))}
+            {transcriptData.length > 0 && (
+              <>
+                {transcriptData.map((line, index) => (
+                  <SpeakerCaption speak={line} key={index} />
+                ))}
+              </>
+            )}
+          </div>
+        ) : userType !== "None" ? (
+          <div>
+            {typeof full_transcript === "string" &&
+              (full_transcript || "").split("\n").map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
             {status === "active" && fullTranscript}
           </div>
+        ) : (
+          <div className="text-4xl">loading</div>
         )}
       </div>
-
       {processing && (
         <div className="flex justify-between items-center flex-row h-20 mx-3 border-t mt-5">
           <p className=" mt-3  italic h-full flex items-center ms-2">

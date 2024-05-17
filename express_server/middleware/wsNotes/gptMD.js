@@ -125,7 +125,9 @@ async function queryAI(note_id, ts_message, frequency) {
       md = gptMessage["data"][0]["content"][0]["text"]["value"];
       console.log("md", md);
       if (guided_note_setting) {
+        console.log("guided note hit");
         md = await markdownToGuided(md, user_prompt);
+        console.log("guided notes", md);
       }
     }
 

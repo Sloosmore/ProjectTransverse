@@ -44,6 +44,8 @@ async function handleWebSocketConnection(ws, request) {
         const note_id = data.note_id;
         console.log("note_id in ws", note_id);
 
+        const totTime = await calculateTotTime(note_id);
+
         //this is what needs to be appended to the full TS and thrown on to the active to see if it needs to be appended
         //throw on a date if it has a x charecter count
 
@@ -55,7 +57,6 @@ async function handleWebSocketConnection(ws, request) {
         }
 
         if (typeof incomingTs === "string") {
-          const totTime = await calculateTotTime(note_id);
 
           const formattedTime = formatElapsedTime(totTime);
 
