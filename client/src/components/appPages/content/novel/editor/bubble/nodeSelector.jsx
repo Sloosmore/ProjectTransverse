@@ -105,7 +105,7 @@ export const NodeSelector = ({ open, onOpenChange }) => {
           <ChevronDown className="h-4 w-4" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent sideOffset={5} align="start" className="w-48 p-1">
+      <PopoverC-ontent sideOffset={5} align="start" className="w-48 p-1">
         {items.map((item, index) => (
           <EditorBubbleItem
             key={index}
@@ -124,7 +124,7 @@ export const NodeSelector = ({ open, onOpenChange }) => {
             {activeItem.name === item.name && <Check className="h-4 w-4" />}
           </EditorBubbleItem>
         ))}
-      </PopoverContent>
+      </PopoverC-ontent>
     </Popover>
   );
 };

@@ -9,8 +9,23 @@ import {
 } from "@/components/ui/popover";
 import { FileCog } from "lucide-react";
 import { fontStore } from "./editor/fontStore";
+import { useUserPref } from "@/hooks/userHooks/userPreff";
+import { useDebouncedCallback } from "use-debounce";
+import { useAuth } from "@/hooks/userHooks/auth";
+import { handleTextUpdate } from "@/api/crud/user/visualNotes";
+import { useEffect } from "react";
 
-function PopoverSetting({ setFontColor, fontColor, setFontSize, fontSize }) {
+function PopoverSetting() {
+  const { setFontColor, fontColor, setFontSize, fontSize } = useUserPref();
+  const { session } = useAuth();
+
+  const upText = useDebouncedCallback(async (color, size) => {
+    handleTextUpdate(size, color, session);
+  }, 500);
+
+  useEffect(() => {
+    upText(fontColor, fontSize);
+  });
   return (
     <Popover>
       <PopoverTrigger asChild>

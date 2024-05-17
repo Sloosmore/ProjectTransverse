@@ -35,8 +35,8 @@ function EditTitle({ currentNote }) {
         type="text"
         value={title}
         onChange={handleChange}
-        className="w-full text-5xl  font-semibold bg-transparent overflow-ellipsis overflow-hidden	"
-        style={{ outline: "none" }}
+        className="w-full font-semibold bg-transparent overflow-ellipsis overflow-hidden	"
+        style={{ outline: "none", fontSize: "3em" }}
         placeholder="Title here..."
       />
     </div>

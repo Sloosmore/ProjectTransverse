@@ -25,6 +25,7 @@ import Slides from "./slides/slides";
 import AudioControls from "./playback/streamAudio";
 import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
 import { useRewind } from "@/hooks/noteHooks/aiRewind";
+import { useUserPref } from "@/hooks/userHooks/userPreff";
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 function NoteComponent() {
@@ -44,8 +45,7 @@ function NoteComponent() {
   const [diagramOn, setDiagramOn] = useState(false);
   const [noteOn, setNoteOn] = useState(false);
 
-  const [fontColor, setFontColor] = useState(false);
-  const [fontSize, setFontSize] = useState(null);
+  const { fontColor, fontSize } = useUserPref();
 
   const ToggleGenKit = {
     diagramOn,
@@ -146,6 +146,10 @@ function NoteComponent() {
     setUpdatedTitle,
   };
 
+  useEffect(() => {
+    console.log("fontSize", fontSize);
+  }, [fontSize]);
+
   return (
     <div
       className={`flex-grow flex flex-col sm:px-10 px-4 overflow-auto text-gray-500 dark:text-gray-300 ${
@@ -227,12 +231,7 @@ function NoteComponent() {
               )}
             </div>
             <Separator orientation="vertical" className="h-8 mx-2" />
-            <PopoverSetting
-              setFontColor={setFontColor}
-              setFontSize={setFontSize}
-              fontColor={fontColor}
-              fontSize={fontSize}
-            />
+            <PopoverSetting />
           </div>
         </div>
       </div>

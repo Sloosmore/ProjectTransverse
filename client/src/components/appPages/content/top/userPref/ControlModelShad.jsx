@@ -37,10 +37,9 @@ function ControlModalShad() {
   //LLM preffereences
   //Value of LLMPref text box
   const [textareaValue, setTextareaValue] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
-
-  const [textKey, setTextKey] = useState(0);
   const [activeTab, setActiveTab] = useState("note");
+
+  const [open, setOpen] = useState(false);
 
   //Set prefferences when called
   const handleSubmitLLM = (
@@ -94,7 +93,7 @@ function ControlModalShad() {
   const typeArray = ["note", "diagram"];
 
   useEffect(() => {
-    guidedNotes
+    guidedNotes && open
       ? toast.info(
           "Make sure to set preferences accordingly to make the most out of guided notes"
         )
@@ -102,7 +101,7 @@ function ControlModalShad() {
   }, [guidedNotes]);
 
   return (
-    <Sheet>
+    <Sheet onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <div
           as="a"
