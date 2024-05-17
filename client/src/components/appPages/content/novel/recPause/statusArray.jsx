@@ -5,6 +5,8 @@ const getRecStatusArray = ({
   setMode,
   setNoteID,
   localNoteID,
+  userType,
+  breakTranscript,
 }) => [
   {
     recStatus: "pause",
@@ -12,6 +14,13 @@ const getRecStatusArray = ({
       const date = new Date();
       setMode("default");
       onPause(noteID, date);
+
+      if (userType === "Premium") {
+        setTimeout(() => {
+          console.log("transcript break");
+          breakTranscript(noteID);
+        }, 500);
+      }
       //the mode is default so the recording will stop and fetch the notes
       //uploading note data
     },
@@ -19,6 +28,12 @@ const getRecStatusArray = ({
       const date = new Date();
       setMode("default");
       onPause(noteID, date);
+      if (userType === "Premium") {
+        setTimeout(() => {
+          console.log("transcript break");
+          breakTranscript(noteID);
+        }, 500);
+      }
       setNoteID(null);
     },
     leftIcon: "bi bi-pause-fill bi-2x align-left",

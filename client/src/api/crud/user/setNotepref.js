@@ -45,7 +45,7 @@ export const fetchLLMpref = async (
   setGuidedNotes,
   session
 ) => {
-  if (inDevelopment) console.log(session);
+  //if (inDevelopment) console.log(session);
   const { preferences, activeNum, frequency, guided_notes } =
     await clientFetchLLM(session);
   setFrequency(frequency);

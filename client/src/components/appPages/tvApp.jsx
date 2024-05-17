@@ -1,6 +1,5 @@
 import "regenerator-runtime";
 import { useState, useEffect, useCallback } from "react";
-import useWebSocket from "react-use-websocket";
 import "./tvApp.css";
 import { AppRoutes } from "./content/routes";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -20,15 +19,21 @@ import { startRecordingMedia } from "./services/audio/mediaRecorder";
 import { ToastProvider } from "@/hooks/toast";
 import { NewNoteProvider } from "@/hooks/noteHooks/newNote";
 import { useQueue } from "@uidotdev/usehooks";
-import { fetchDeepGramKey } from "./services/audio/deepgram";
+import { fetchDeepGramKey, isKeyExpired } from "./services/audio/deepgram";
 import { LiveTranscriptionEvents, createClient } from "@deepgram/sdk";
 import { toast } from "sonner";
 import { useBrowser } from "@/hooks/browserSupport";
 import { useUserPref } from "@/hooks/userHooks/userPreff";
+import { formatIncommingTranscript } from "./services/transcriptFormating/transcriptConfig";
+import { useCustomWebSocket } from "@/hooks/websocket/customWebsocket";
+import { breakTranscript } from "@/api/crud/notes/updateTranscriptBreak";
+import { StandardFormating } from "./services/noteWebsockets/transcriptFormat";
+import { appendFullTranscript } from "@/api/crud/notes/updateTranscript";
+import { resetSaveTranscript } from "./services/noteWebsockets/transcriptReset";
+import { useRef } from "react";
+import { getAudioStream } from "./services/audio/startMic";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
-console.log("inDevelopment", inDevelopment);
-const WS_URL = `${import.meta.env.VITE_WS_SERVER_URL}/notes-api`;
 
 function TransverseApp() {
   const { compatible } = useBrowser();
@@ -42,6 +47,12 @@ function TransverseApp() {
   //this is for specific active instace of WS notes
   //ID of note and not title use titleFromID to get title
   const [noteID, setNoteID] = useState(localStorage.getItem("noteID") || null);
+  const [caption, setCaption] = useState([]);
+
+  const noteIDRef = useRef(noteID);
+  const notesRef = useRef(noteData);
+  const captionRef = useRef(caption);
+
   //this is for the media recorder
   const [recorder, setRecorder] = useState(null);
 
@@ -60,25 +71,37 @@ function TransverseApp() {
   const [isProcessing, setProcessing] = useState(false);
   const [microphone, setMicrophone] = useState(null);
   const [userMedia, setUserMedia] = useState(null);
-  const [caption, setCaption] = useState("");
-  const [fullTranscript, setFullTranscript] = useState("");
+  const [fullTranscript, setFullTranscript] = useState([]);
+  const fullTsRef = useRef(fullTranscript);
+
+  useEffect(() => {
+    noteIDRef.current = noteID;
+    notesRef.current = noteData;
+  }, [noteID, noteData]);
+
+  useEffect(() => {
+    captionRef.current = caption;
+  }, [caption]);
+
+  useEffect(() => {
+    fullTsRef.current = fullTranscript;
+  }, [fullTranscript]);
 
   const startDGMicrophone = useCallback(async () => {
     // Set up mediaRecorder and getUserMedia
     console.log("starting deep microphone");
-    const userMedia = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-    });
-
-    const microphone = new MediaRecorder(userMedia);
-    microphone.start(500);
-
-    microphone.ondataavailable = (e) => {
-      add(e.data);
-    };
-
-    setUserMedia(userMedia);
-    setMicrophone(microphone);
+    try {
+      const userMedia = await getAudioStream();
+      const microphone = new MediaRecorder(userMedia);
+      microphone.start(500);
+      microphone.ondataavailable = (e) => {
+        add(e.data);
+      };
+      setUserMedia(userMedia);
+      setMicrophone(microphone);
+    } catch (error) {
+      console.error("Error capturing audio:", error);
+    }
   }, [add]);
 
   const stopDGMicrophone = useCallback(() => {
@@ -96,35 +119,13 @@ function TransverseApp() {
     const getDeepgramKey = async () => {
       const object = await fetchDeepGramKey();
       if (inDevelopment) {
-        console.log("dgkey");
+        //console.log("dgkey");
       }
       setApiKey(object);
     };
 
-    const isKeyExpired = (keyObject) => {
-      const currentDate = new Date();
-      const currentDateUTC = Date.UTC(
-        currentDate.getUTCFullYear(),
-        currentDate.getUTCMonth(),
-        currentDate.getUTCDate(),
-        currentDate.getUTCHours(),
-        currentDate.getUTCMinutes(),
-        currentDate.getUTCSeconds(),
-        currentDate.getUTCMilliseconds()
-      );
-
-      const expirationDate = new Date(keyObject.expiration_date);
-      const expirationDateUTC = expirationDate.getTime();
-
-      console.log("currentDateUTC", new Date(currentDateUTC));
-      console.log("expirationDateUTC", new Date(expirationDateUTC));
-      console.log("therfore", currentDateUTC > expirationDateUTC + 10000);
-
-      return currentDateUTC > expirationDateUTC + 10000;
-    };
-
     const handleVisibilityChange = () => {
-      console.log("visibility key", apiKey);
+      //console.log("visibility key", apiKey);
 
       if (
         document.visibilityState === "visible" &&
@@ -138,7 +139,7 @@ function TransverseApp() {
 
     if (!apiKey && userType !== "Standard") {
       if (inDevelopment) {
-        console.log("fetching deepgram key");
+        //console.log("fetching deepgram key");
       }
       getDeepgramKey();
     }
@@ -153,7 +154,7 @@ function TransverseApp() {
   useEffect(() => {
     if (apiKey && "key" in apiKey) {
       if (inDevelopment) {
-        console.log("connecting to deepgram");
+        //console.log("connecting to deepgram");
       }
       const deepgram = createClient(apiKey?.key ?? "");
       const connection = deepgram.listen.live({
@@ -180,21 +181,35 @@ function TransverseApp() {
       });
 
       connection.on(LiveTranscriptionEvents.Transcript, (data) => {
-        if (inDevelopment) {
-          console.log("look at the data", data);
-        }
         const words = data.channel.alternatives[0].words;
+        console.log(data);
 
-        const caption = words
-          .map((word) => word.punctuated_word ?? word.word)
-          .join(" ");
+        const in_caption = formatIncommingTranscript(
+          notesRef.current,
+          noteIDRef.current,
+          fullTsRef.current,
+          words,
+          captionRef.current
+        );
 
-        if (data.is_final) {
-          setFullTranscript((prev) => prev.trim() + " " + caption);
-          setCaption("");
+        if (
+          data.is_final &&
+          Array.isArray(in_caption) &&
+          in_caption.length > 0
+        ) {
+          //I should also write to the DB at this point
+          setFullTranscript((prev) => [...prev, ...in_caption]);
+          setCaption([]);
         } else {
-          if (caption !== "") {
-            setCaption(caption);
+          //this is broken because caption is not being set
+          if (Array.isArray(in_caption) && in_caption.length > 0) {
+            setCaption((prev) => {
+              if (Array.isArray(prev) && prev.length > 0) {
+                return [...prev.slice(0, prev.length - 1), ...in_caption];
+              } else {
+                return in_caption;
+              }
+            });
           }
         }
       });
@@ -229,41 +244,14 @@ function TransverseApp() {
     localStorage.setItem("noteID", noteID);
   }, [noteID]);
 
-  const {
-    transcript,
-    listening,
-    resetTranscript,
-    browserSupportsSpeechRecognition,
-  } = useSpeechRecognition();
+  const { transcript, listening, resetTranscript } = useSpeechRecognition();
 
-  const { sendJsonMessage, readyState } = useWebSocket(WS_URL, {
-    onOpen: () => {
-      if (inDevelopment) {
-        console.log("WebSocket connection established.");
-      }
-    },
-
-    onMessage: (event) => {
-      handleOnMessage(
-        event,
-        noteData,
-        setNotes,
-        noteID,
-        resetTranscript,
-        navigate,
-        userType,
-        setFullTranscript
-      );
-    },
-
-    onError: (event) => {
-      console.error("WebSocket error observed:", event);
-    },
-    share: true,
-    filter: () => false,
-    retryOnError: true,
-    shouldReconnect: () => true,
-  });
+  const { sendJsonMessage, readyState } = useCustomWebSocket(
+    noteData,
+    setNotes,
+    noteID,
+    navigate
+  );
 
   // Mic Failsafe functions -----------------------------------------------------------------------------
   //so timerFailsame does not call UseEffect
@@ -293,6 +281,9 @@ function TransverseApp() {
     }
     const handleBeforeUnload = (e) => {
       onPause(noteID, new Date());
+
+      if (userType === "Premuim")
+        breakTranscript(noteID, [...fullTranscript, ...caption]);
       setMode("default");
       e.preventDefault();
       e.returnValue = "Are you sure you want to leave?";
@@ -322,10 +313,17 @@ function TransverseApp() {
   useEffect(() => {
     //first is stop any recording
     if (mode !== "note") {
-      const title = titleFromID(noteID, noteData);
-
       let transcriptMessage;
       stopRecordingMedia(recorder);
+
+      resetSaveTranscript(
+        fullTranscript,
+        userType,
+        resetTranscript,
+        setFullTranscript,
+        setNotes,
+        noteID
+      );
       if (userType === "Standard") {
         setTimeout(() => {
           SpeechRecognition.stopListening();
@@ -333,7 +331,6 @@ function TransverseApp() {
         transcriptMessage = fullTranscript;
       } else {
         stopDGMicrophone();
-        transcriptMessage = fullTranscript + " " + caption;
       }
     } else {
       if (userType === "Standard") {
@@ -341,6 +338,8 @@ function TransverseApp() {
         if (inDevelopment) {
           console.log("start recording with api......", noteID);
         }
+        //so it won't mess with anything as premium will need an array of objects
+        setFullTranscript("");
         SpeechRecognition.startListening({ continuous: true });
       } else {
         //deepgram
@@ -362,20 +361,52 @@ function TransverseApp() {
     const sendMessage = () => {
       if (fullTranscript || caption) {
         const title = titleFromID(noteID, noteData);
-        const transcriptMessage =
+        let transcriptMessage =
           userType === "Standard"
             ? fullTranscript
-            : fullTranscript + " " + caption;
-        if (inDevelopment) {
-          console.log("sending to back", transcriptMessage);
+            : // This needed to change because they are a list
+              [...fullTranscript, ...caption];
+
+        let threshold = false;
+        if (userType === "Standard") {
+          threshold = transcriptMessage.length >= frequency;
+          //needs to format transcript
+          StandardFormating(noteID, setFullTranscript);
+        } else {
+          threshold =
+            transcriptMessage.map((obj) => obj.caption).join(" ").length >=
+            frequency;
         }
-        sendJsonMessage({
-          title,
-          transcript: transcriptMessage,
-          init: false,
-          note_id: noteID,
-          token: session.access_token,
-        });
+
+        if (threshold) {
+          /*
+          1. reset transcript 
+          2. save transcript in DB & notedata
+          */
+
+          resetSaveTranscript(
+            transcriptMessage,
+            userType,
+            resetTranscript,
+            setFullTranscript,
+            setNotes,
+            noteID
+          );
+
+          if (inDevelopment) console.log("sending to back", transcriptMessage);
+
+          /*
+          3. Send to backend
+          */
+
+          sendJsonMessage({
+            title,
+            transcript: transcriptMessage,
+            note_id: noteID,
+            token: session.access_token,
+          });
+        }
+        //write transcript here
       }
     };
 
@@ -391,11 +422,6 @@ function TransverseApp() {
           console.log("overflow sending");
         }
         sendMessage();
-        if (userType === "Standard") {
-          resetTranscript();
-        } else {
-          setFullTranscript("");
-        }
       }
 
       //send to backend after 2 sec
@@ -447,11 +473,6 @@ function TransverseApp() {
     };
   }, []);
 
-  const controlProps = {
-    wsJSON: sendJsonMessage,
-    SpeechRecognition,
-  };
-
   useEffect(() => {
     setTimeout(() => {
       if (userType !== "Premium" && !compatible) {
@@ -476,8 +497,10 @@ function TransverseApp() {
           <NoteDataContext.Provider
             value={{ noteData, setNotes, noteID, setNoteID, mode, setMode }}
           >
-            <TranscriptContext.Provider value={{ fullTranscript, caption }}>
-              <AppRoutes controlProps={controlProps} />
+            <TranscriptContext.Provider
+              value={{ fullTranscript, caption, setFullTranscript, setCaption }}
+            >
+              <AppRoutes />
             </TranscriptContext.Provider>
           </NoteDataContext.Provider>
         </ToastProvider>

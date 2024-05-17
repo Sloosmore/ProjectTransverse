@@ -140,7 +140,7 @@ function FolderView({}) {
             {sortedFiles.map((file, index) => (
               <TableRow key={index}>
                 <TableCell
-                  className="align-middle py-3 ps-3 text-base"
+                  className="align-middle py-3 ps-3"
                   onClick={() => goToTask(file)}
                 >
                   {file.title}

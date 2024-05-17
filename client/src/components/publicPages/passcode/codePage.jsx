@@ -62,7 +62,7 @@ const CodeCheck = () => {
       <input
         type="text"
         onChange={(e) => setCodeValue(e.target.value)}
-        className="block p-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 md:w-[600px] sm:w-[400px] w-[250px] my-4"
+        className="block p-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 md:w-[600px] sm:w-[400px] w-[250px] my-4"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             checkCode();

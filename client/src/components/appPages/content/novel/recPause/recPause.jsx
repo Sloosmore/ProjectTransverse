@@ -17,11 +17,14 @@ import CardPicSvg from "./svg/card-pic.jsx";
 import { useNoteData } from "@/hooks/noteHooks/noteDataStore.jsx";
 import { useRewind } from "@/hooks/noteHooks/aiRewind.jsx";
 import { useDebouncedCallback } from "use-debounce";
+import { breakTranscript } from "@/api/crud/notes/updateTranscriptBreak.js";
+import { useAuth } from "@/hooks/userHooks/auth.jsx";
 
 // Default values shown
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 const RecPause = ({ localNoteID, ToggleGenKit }) => {
+  const { userType } = useAuth();
   const [recStatus, setRecStatus] = useState();
   const [viewTitle, setViewTitle] = useState();
   const [recStatusObject, setRecStatusObject] = useState();
@@ -38,6 +41,8 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
     setMode,
     setNoteID,
     localNoteID,
+    userType,
+    breakTranscript,
   });
 
   useEffect(() => {

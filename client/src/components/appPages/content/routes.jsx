@@ -17,6 +17,6 @@ export const AppRoutes = ({ controlProps }) => (
         <Route path="/*" element={<Files />} />
       </Routes>
     </RewindProvider>
-    <BottomConent controlProps={controlProps} />
+    <BottomConent />
   </div>
 );

@@ -5,8 +5,10 @@ import { TranscriptContext } from "@/hooks/noteHooks/transcriptStore";
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "@/hooks/userHooks/auth";
+import { toast } from "sonner";
 
 import { rewindContext } from "@/components/appPages/services/rewind";
+import Transcript from "../../transcript/transcript";
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 const RunAI = () => {
@@ -62,18 +64,19 @@ const RunAI = () => {
     if (inDevelopment) console.log("rewind:", rewind);
 
     if (editor && rewind) {
-      const runRewind = async () => {
-        const { contentLevel } = await rewindContext(
-          session,
-          noteId,
-          fullTranscript,
-          caption
-        );
+      if (fullTranscript) {
+        const runRewind = async () => {
+          const { contentLevel } = await rewindContext(
+            session,
+            noteId,
+            fullTranscript,
+            caption
+          );
 
-        editor.chain().focus().appendJSON({ content: contentLevel }).run();
+          editor.chain().focus().appendJSON({ content: contentLevel }).run();
 
-        //response = response.replace(/^[ \t]*/gm, "").replace(/\n+/g, "\n");
-        /*
+          //response = response.replace(/^[ \t]*/gm, "").replace(/\n+/g, "\n");
+          /*
         const response = "- test\n### test2\n- He\n- He has\n- His mother.";
         await editor.chain().insertNewNode().focus().run();
         setTimeout(() => {
@@ -82,10 +85,13 @@ const RunAI = () => {
         console.log("rewind ran");
         */
 
-        setRewind(false);
-      };
+          setRewind(false);
+        };
 
-      runRewind();
+        runRewind();
+      } else {
+        toast.error("No new transcript to use rewind for");
+      }
     }
   }, [rewind]);
 
