@@ -7,7 +7,7 @@ import {
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import React from "react";
 import { useEffect } from "react";
-import EditExportNote from "../fileEditShad";
+import EditExportNote from "../editNote/fileEditShad";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 

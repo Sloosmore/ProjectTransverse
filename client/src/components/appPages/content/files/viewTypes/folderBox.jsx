@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import EditExportNote from "../fileEditShad";
+import EditExportNote from "../editNote/fileEditShad";
 import { Button } from "@/components/ui/button";
 import {
   Select,

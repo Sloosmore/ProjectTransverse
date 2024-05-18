@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "@/hooks/userHooks/auth";
 import EditFolderTitle from "./folderTitle";
 import { useNavigate } from "react-router-dom";
-import EditExportNote from "../fileEditShad";
+import EditExportNote from "../editNote/fileEditShad";
 import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
 import { useNewNote } from "@/hooks/noteHooks/newNote";
 import {
@@ -16,11 +16,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
+import { newNote } from "@/components/appPages/services/noteWebsockets/noteModeApi";
 
 function FolderView({}) {
   const { noteData } = useNoteData();
   const { session } = useAuth();
   const { folderId } = useParams();
+  const { setNoteID } = useNoteData();
 
   const { newNoteField, setNewNoteField } = useNewNote();
   const [files, setFiles] = useState([]);
@@ -108,7 +110,10 @@ function FolderView({}) {
         <EditFolderTitle folder={folder} />
         <div className="w-full flex-row flex mb-4 justify-between">
           <button
-            onClick={() => setNewNoteField(!newNoteField)}
+            onClick={() => {
+              //setNewNoteField(!newNoteField)
+              newNote(session, setNoteID, navigate, folderId);
+            }}
             className=" inline-flex rounded-lg justify-between px-3 py-2.5 border-gray-300 dark:border-gray-700 text-sm font-semibold text-gray-500 dark:bg-gray-900 bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-800 border  shadow-sm  "
           >
             <i className="bi bi-plus-lg" style={{ fontSize: "1.5rem" }}></i>

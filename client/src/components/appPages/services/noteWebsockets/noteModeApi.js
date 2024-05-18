@@ -27,14 +27,23 @@ export const createNewNote = async (
   await insertNewAudioSegment(noteID);
 
   navigate(`/app/n/${noteID}`);
-  setMode("note");
+  //setMode("note");
 };
 
-/* wsJSON({
-  title: name,
-  transcript: transcript,
-  init: true,
-  token: session.access_token,
-  folder_id: folder_id,
-  note_id: noteID,
-});*/
+export const newNote = async (session, setNoteID, navigate, folder_id) => {
+  //turn on the mike
+  console.log("in new note");
+
+  //this may be blocking
+  const noteID = uuidv4();
+  setNoteID(noteID);
+  const record = await insertNewNoteRecord({
+    user_id: session.user.id,
+    title: "",
+    folder_id: folder_id ? folder_id : null,
+    note_id: noteID,
+  });
+  await fetchNoteRecords(session, false);
+  console.log("trying to nav");
+  navigate(`/app/n/${noteID}`);
+};

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 //import EditOffcanvas from "./fileEdit";
 import { useNavigate } from "react-router-dom";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
-import EditExportNote from "../fileEditShad";
+import EditExportNote from "../editNote/fileEditShad";
 
 //overflow for records
 
