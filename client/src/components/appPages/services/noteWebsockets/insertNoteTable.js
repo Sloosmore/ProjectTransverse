@@ -1,7 +1,7 @@
 import { supabaseClient } from "@/config/supabaseClient";
 
 const insertNewNoteRecord = async ({ user_id, title, folder_id, note_id }) => {
-  const status = "active";
+  const status = "inactive"; //"active"
   const is_deleted = false;
   const thread_id = "";
 
@@ -10,7 +10,7 @@ const insertNewNoteRecord = async ({ user_id, title, folder_id, note_id }) => {
   const full_markdown = "";
   const visible = "true";
   //this may not be needed... but need to make sure that this happens before play does
-  const play_timestamps = [new Date()];
+  const play_timestamps = []; //new Date()
   const pause_timestamps = [];
   const json_content = {
     type: "doc",

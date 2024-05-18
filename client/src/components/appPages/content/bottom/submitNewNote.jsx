@@ -42,8 +42,6 @@ function SubmitNewNote() {
     //no longer will have transcript
     setNewNoteField(false);
 
-    console.log("selectedValue", selectedValue);
-
     createNewNote(
       localNoteName,
       setMode,
@@ -57,7 +55,7 @@ function SubmitNewNote() {
     if (newNoteField) {
       setIsVisible(true);
     } else {
-      setTimeout(() => setIsVisible(false), 300);
+      setTimeout(() => setIsVisible(false), 0);
     }
   }, [newNoteField]);
 

@@ -8,6 +8,8 @@ import {
   DropdownMenuTrigger,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
+import { newNote } from "../../services/noteWebsockets/noteModeApi";
 
 function FileNewNote({ setNewNoteField, newNoteField }) {
   const navigate = useNavigate();
@@ -18,6 +20,7 @@ function FileNewNote({ setNewNoteField, newNoteField }) {
     const folderId = response.folder_id;
     navigate(`/app/f/${folderId}`);
   };
+  const { setNoteID } = useNoteData();
 
   const actionMenu = [
     {
@@ -65,7 +68,10 @@ function FileNewNote({ setNewNoteField, newNoteField }) {
         </DropdownMenu>
 
         <button
-          onClick={() => setNewNoteField(!newNoteField)}
+          onClick={() => {
+            //setNewNoteField(!newNoteField)
+            newNote(session, setNoteID, navigate);
+          }}
           className=" inline-flex rounded-r-lg justify-between px-3 py-2.5 border-gray-300 text-sm font-semibold text-gray-500 dark:bg-gray-900 dark:border-gray-700  hover:bg-gray-200 dark:hover:bg-gray-800 border-s"
         >
           <i className="bi bi-plus-lg" style={{ fontSize: "1.5rem" }}></i>

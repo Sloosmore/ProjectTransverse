@@ -19,6 +19,7 @@ import { useRewind } from "@/hooks/noteHooks/aiRewind.jsx";
 import { useDebouncedCallback } from "use-debounce";
 import { breakTranscript } from "@/api/crud/notes/updateTranscriptBreak.js";
 import { useAuth } from "@/hooks/userHooks/auth.jsx";
+import { toast } from "sonner";
 
 // Default values shown
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
@@ -121,7 +122,9 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
 
             <div
               onClick={() => {
-                recStatusObject.leftFunction();
+                if (userType === ("Premium" || "Standard")) {
+                  recStatusObject.leftFunction();
+                } else toast.warning("You do not have access to recording");
               }}
               className=""
             >
