@@ -17,8 +17,6 @@ function ChangeFolder({ open, folderId, setSelectedValue, folders }) {
   const [activeFolder, setActiveFolder] = useState("Choose a folder");
 
   useEffect(() => {
-    console.log(folderId);
-    console.log(folders);
     if (folderId) {
       setActiveFolder(folders.find((folder) => folder.folder_id === folderId));
     }
