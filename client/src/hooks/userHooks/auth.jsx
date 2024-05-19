@@ -9,7 +9,10 @@ const AuthContext = createContext({
   user: null,
   signOut: () => {},
   userType: null,
+  setUserType: () => {},
   accountID: null,
+  setAccountID: () => {},
+  audioOn: true,
 });
 
 const AuthProvider = ({ children }) => {
@@ -18,6 +21,7 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [userType, setUserType] = useState("Standard");
   const [accountID, setAccountID] = useState(null);
+  const [audioOn, setAudioOn] = useState(null);
 
   useEffect(() => {
     const setData = async () => {
@@ -27,7 +31,7 @@ const AuthProvider = ({ children }) => {
 
         const { data: userType, error: userErr } = await supabaseClient
           .from("user")
-          .select("user_type, account_id")
+          .select("user_type, account_id, audio_on")
           .eq("user_id", userID)
           .single();
         if (inDevelopment) console.log("userType", userType.user_type);
@@ -37,6 +41,7 @@ const AuthProvider = ({ children }) => {
         setUser(data.session?.user);
         setLoading(false);
         setUserType(userType.user_type);
+        setAudioOn(userType.audio_on);
         console.log("userType data", userType.account_id);
         userType.user_type === "Admin" && setAccountID(userType.account_id);
       }
@@ -80,7 +85,10 @@ const AuthProvider = ({ children }) => {
     user,
     signOut: () => supabaseClient.auth.signOut(),
     userType,
+    setUserType,
     accountID,
+    setAccountID,
+    audioOn,
   };
 
   return (

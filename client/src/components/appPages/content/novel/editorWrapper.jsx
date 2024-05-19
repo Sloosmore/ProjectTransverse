@@ -12,7 +12,6 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import PopoverSetting from "./popoverSettings";
 
 //  { icon: "bi bi-window-split", content: "Split" },
 
@@ -26,10 +25,12 @@ import AudioControls from "./playback/streamAudio";
 import { useNoteData } from "@/hooks/noteHooks/noteDataStore";
 import { useRewind } from "@/hooks/noteHooks/aiRewind";
 import { useUserPref } from "@/hooks/userHooks/userPreff";
+import { useAuth } from "@/hooks/userHooks/auth";
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 function NoteComponent() {
   const { mode, noteData } = useNoteData();
+  const { audioOn } = useAuth();
 
   const { noteId } = useParams();
   const [content, setContent] = useState();
@@ -230,8 +231,6 @@ function NoteComponent() {
                   )
               )}
             </div>
-            <Separator orientation="vertical" className="h-8 mx-2" />
-            <PopoverSetting />
           </div>
         </div>
       </div>
@@ -387,7 +386,7 @@ function NoteComponent() {
         )}
       </div>
 
-      {mode === "default" && audioView && false && (
+      {mode === "default" && audioView && audioOn && (
         <div className="h-24 flex-none border-t hidden sm:flex">
           <AudioControls
             currentNote={currentNote}

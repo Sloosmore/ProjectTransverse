@@ -117,6 +117,7 @@ const Utable = () => {
                               {account.premium_licenses - premLicenses > 0 && (
                                 <SelectItem value="Premium">Premium</SelectItem>
                               )}
+                              <SelectItem value="None">None</SelectItem>
                             </SelectGroup>
                           </SelectContent>
                         </Select>
