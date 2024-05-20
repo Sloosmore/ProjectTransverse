@@ -12,7 +12,7 @@ const adminCode = async (req, res) => {
 
     const { data: Accounts, error: accountErr } = await supabase
       .from("user")
-      .select("account_id")
+      .select("corporate_account")
       .eq("account_id", code);
 
     if (accountErr) {
