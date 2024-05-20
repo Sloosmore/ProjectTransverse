@@ -12,7 +12,7 @@ import AdminApp from "./components/adminPages/AdminApp.jsx";
 function TransverseAppWithUserPref() {
   const { session, userType } = useAuth();
 
-  //if (userType === "Admin") return <Navigate to={"/admin"} />;
+  if (userType === "Admin") return <Navigate to={"/admin"} />;
 
   return (
     <UserPrefProvider session={session}>

@@ -18,6 +18,10 @@ import { useUserPref } from "@/hooks/userHooks/userPreff";
 import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { FileCog } from "lucide-react";
+import VisSettings from "./visPref";
+import TabGen from "./genTabContent";
+import ToggleTheme from "../toggleTheme";
 
 const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
@@ -63,24 +67,26 @@ function ControlModalShad() {
   }, []);
 
   useEffect(() => {
-    setTextareaValue(preferences[activeTab][activeNum[activeTab]]);
+    activeTab !== "vis" &&
+      setTextareaValue(preferences[activeTab][activeNum[activeTab]]);
   }, [activeNum, activeTab]);
 
   useEffect(() => {
     if (inDevelopment) {
       //console.log(activeNum);
     }
-    setPreferences((prev) => {
-      if (inDevelopment) {
-        //console.log("activeTab", activeTab);
-      }
-      return {
-        ...prev,
-        [activeTab]: prev[activeTab].map((item, index) =>
-          index === activeNum[activeTab] ? textareaValue : item
-        ),
-      };
-    });
+    activeTab !== "vis" &&
+      setPreferences((prev) => {
+        if (inDevelopment) {
+          //console.log("activeTab", activeTab);
+        }
+        return {
+          ...prev,
+          [activeTab]: prev[activeTab].map((item, index) =>
+            index === activeNum[activeTab] ? textareaValue : item
+          ),
+        };
+      });
   }, [textareaValue, activeNum, activeTab]);
 
   useEffect(() => {
@@ -107,14 +113,17 @@ function ControlModalShad() {
           as="a"
           className="block rounded-md px-3 py-2 text-base text-gray-400 dark:text-gray-300 dark:hover:text-white hover:text-gray-700"
         >
-          <i className="bi bi-person-gear" style={{ fontSize: "1.5rem" }}></i>
+          <FileCog className="h-[1.4rem]" strokeWidth={1.75} />
         </div>
       </SheetTrigger>
 
       <SheetContent className="text-gray-400 sm:max-w-[800px] rounded-l-lg flex-col flex justify-between ">
         <div className="min-width-[320px] overflow-auto">
           <SheetHeader>
-            <SheetTitle> Set Preferences</SheetTitle>
+            <div className="mt-6 mb-2 flex flex-row justify-between">
+              <SheetTitle> Set Preferences</SheetTitle>
+              <ToggleTheme />
+            </div>
           </SheetHeader>
           <div className="flex flex-col mt-3">
             <div className="mb-3 flex-col flex">
@@ -123,9 +132,10 @@ function ControlModalShad() {
                 className="w-full"
                 onValueChange={setActiveTab}
               >
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="note">Notes</TabsTrigger>
-                  <TabsTrigger value="diagram">Diagrams</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="note">Notes Generation</TabsTrigger>
+                  <TabsTrigger value="diagram">Diagrams Generation</TabsTrigger>
+                  <TabsTrigger value="vis">Visualization</TabsTrigger>
                 </TabsList>
                 {activeTab === "note" && (
                   <div className="border rounded-lg p-6 mt-3 mb-5">
@@ -137,117 +147,29 @@ function ControlModalShad() {
                     />
                   </div>
                 )}
-                {typeArray.map((type) => (
-                  <TabsContent key={type} value={type}>
-                    <div className="px-1">
-                      <Textarea
-                        className="form-control p-6 border rounded-lg w-full"
-                        id="prefTextArea"
-                        rows="6"
-                        value={
-                          textareaValue || preferences[type][activeNum[type]]
-                        }
-                        onChange={(e) => setTextareaValue(e.target.value)}
-                      ></Textarea>
-                    </div>
-
-                    <div className="flex flex-row s overflow-x-auto px-6 py-6 rounded-xl border justify-between mt-4">
-                      <div>
-                        <div className="text-lg text-gray-700 dark:text-gray-300">
-                          Prompt Selection
-                        </div>
-                        <div>Each prompt corresponds to the text input</div>
-                      </div>
-                      <div className="flex flex-row space-x-5 ms-5 jusify-center items-center">
-                        {prefArray.map((num) => (
-                          <Button
-                            className={`  ${
-                              num === activeNum[type]
-                                ? "bg-gray-700 text-white hover:bg-gray-700 text-white dark:bg-gray-500 dark:hover:bg-gray-500"
-                                : " "
-                            }`}
-                            variant="secondary"
-                            onClick={(event) => {
-                              setActiveNum((prevNum) => {
-                                return { ...prevNum, [type]: num };
-                              });
-                            }}
-                            key={num}
-                          >
-                            {num + 1}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-                  </TabsContent>
-                ))}
-              </Tabs>
-              {/*
-            <textarea
-              className="form-control p-3 border rounded"
-              id="prefTextArea"
-              rows="6"
-              value={textareaValue || preferences[activeNum]}
-              onChange={(e) => setTextareaValue(e.target.value)}
-            ></textarea>
-              */}
-              <div className="mt-5 border px-6 py-6 rounded-xl ">
-                <label
-                  htmlFor="freqRange"
-                  className="my-3 mt-4 pt-4 text-lg text-gray-700 dark:text-gray-300"
-                >
-                  Note Generation Speed (minutes)
-                </label>
-                <Slider
-                  className={cn(
-                    "border",
-                    "border-gray-300",
-                    "rounded-full",
-                    "mt-6"
-                  )}
-                  min={350}
-                  max={1500}
-                  step={5}
-                  defaultValue={[frequency]}
-                  onValueChange={(v) => setFrequency(...v)}
-                  id="freqRange"
-                ></Slider>
-
-                {/* <input
-              type="range"
-              className="form-range"
-              min="350"
-              max="1500"
-              step="5"
-              id="freqRange"
-              value={frequency}
-              onChange={(e) => setFrequency(e.target.value)}
-                ></input>*/}
-                <div className="justify-between flex flex-row mt-5 ">
-                  <div>Quicker (1m)</div>
-                  <div>Average (3m)</div>
-                  <div>Slower (5m)</div>
-                </div>
-              </div>
-
-              <div className="flex flex-row justify-between my-5 border px-6 py-6 rounded-xl ">
-                <div className="">
-                  <div className="text-lg text-gray-700 dark:text-gray-300">
-                    Guided Note Mode
+                {activeTab !== "vis" ? (
+                  typeArray.map((type, index) => (
+                    <TabGen
+                      key={index}
+                      type={type}
+                      textareaValue={textareaValue}
+                      preferences={preferences}
+                      activeNum={activeNum}
+                      setTextareaValue={setTextareaValue}
+                      prefArray={prefArray}
+                      setActiveNum={setActiveNum}
+                      frequency={frequency}
+                      setFrequency={setFrequency}
+                      guidedNotes={guidedNotes}
+                      setGuidedNotes={setGuidedNotes}
+                    />
+                  ))
+                ) : (
+                  <div>
+                    <VisSettings />
                   </div>
-                  <div>Create partial generations that you fill in</div>
-                </div>
-                <div className="my-auto">
-                  <Switch
-                    defaultChecked={guidedNotes}
-                    onCheckedChange={() =>
-                      setGuidedNotes((i) => {
-                        return !i;
-                      })
-                    }
-                  />
-                </div>
-              </div>
+                )}
+              </Tabs>
             </div>
 
             <div className="sm:flex-row flex-col flex justify-between gap-y-2 sm:gap-y-0">

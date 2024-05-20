@@ -38,7 +38,7 @@ const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 function TransverseApp() {
   const { compatible } = useBrowser();
   const navigate = useNavigate();
-  const { session, userType } = useAuth();
+  const { session, userType, audioOn } = useAuth();
   const { frequency } = useUserPref();
   //this is for note vs default mode
   const [mode, setMode] = useState("default");
@@ -346,7 +346,7 @@ function TransverseApp() {
         console.log("start recording with deepgram......", apiKey);
         startDGMicrophone(apiKey);
       }
-      startRecordingMedia(session, setRecorder, noteID);
+      audioOn && startRecordingMedia(session, setRecorder, noteID);
     }
 
     const deactivate = mode === "note" ? false : true;

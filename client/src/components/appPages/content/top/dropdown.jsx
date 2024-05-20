@@ -15,24 +15,26 @@ import {
 } from "@/components/ui/sheet";
 import { LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/userHooks/auth";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function ProfIcon({ logOut }) {
+function ProfIcon() {
+  const { signOut } = useAuth();
   return (
     <Dialog>
       <DialogTrigger>
         <div className="flex">
           <div className=" flex justify-center items-center ml-auto mr-auto w-12 h-12 justify-center gap-x-1.5 px-3 text-sm font-semibold text-gray-400 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white">
             <LogOut className={cn("h-5 w-5", {})} />
-          </div>{" "}
+          </div>
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] max-h-[36rem]">
         <div className="flex justify-center">
-          <Button variant="destructive" onClick={logOut}>
+          <Button variant="destructive" onClick={signOut}>
             Log out
           </Button>
         </div>

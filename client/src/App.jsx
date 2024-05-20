@@ -10,7 +10,6 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
 import { BrowserProvider } from "./hooks/browserSupport.jsx";
 import { Toaster } from "@/components/ui/sonner";
-import { CodeProvider } from "./hooks/code.jsx";
 import FacebookPixel from "./lib/FacebookPixle.jsx";
 import GoogleAnalytics from "./lib/googleAnalytics.jsx";
 import AppRouter from "./AppRouter.jsx";
@@ -23,9 +22,7 @@ function App() {
         <BrowserProvider>
           <ThemeProvider>
             <AuthProvider>
-              <CodeProvider>
-                <AppRouter />
-              </CodeProvider>
+              <AppRouter />
             </AuthProvider>
             <Toaster />
           </ThemeProvider>

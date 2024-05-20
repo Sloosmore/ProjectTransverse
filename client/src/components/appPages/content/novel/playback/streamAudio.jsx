@@ -11,8 +11,11 @@ const inDevelopment = import.meta.env.VITE_NODE_ENV === "development";
 
 const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
   const { session } = useAuth();
+
+  const [missing, setMissing] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [duration, setDuration] = useState(0.0);
+  const [disabled, setDisabled] = useState(true);
   //const [globalSeek, setglobalSeek] = useState(0.0);
 
   //loaded audio
@@ -42,39 +45,41 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
         !audio[0]._src[0]
       ) {
         const segData = await fetchURLs(session, currentNote.note_id);
-        const urls = segData.map((seg) => seg.url);
-        const sounds = urls.map(
-          (url, index) =>
-            new Howl({
-              src: [url],
-              preload: true,
-              html5: true,
-              buffer: true,
-              onload: function () {
-                let newSeek = globalSeekRef.current;
-                console.log("okay the problem has been idetified");
-                if (index !== 0) {
-                  if (inDevelopment) {
-                    console.log("loaded data");
-                    console.log(segData[index - 1].end_time / 1000);
-                    console.log(globalSeekRef.current);
+        if (segData) {
+          const urls = segData.map((seg) => seg.url);
+          const sounds = urls.map(
+            (url, index) =>
+              new Howl({
+                src: [url],
+                preload: true,
+                html5: true,
+                buffer: true,
+                onload: function () {
+                  let newSeek = globalSeekRef.current;
+                  console.log("okay the problem has been idetified");
+                  if (index !== 0) {
+                    if (inDevelopment) {
+                      console.log("loaded data");
+                      console.log(segData[index - 1].end_time / 1000);
+                      console.log(globalSeekRef.current);
+                    }
+                    newSeek -= segData[index - 1].end_time / 1000;
                   }
-                  newSeek -= segData[index - 1].end_time / 1000;
-                }
-                this.seek(newSeek);
-              },
-              onend: function () {
-                if (index === sounds.length - 1) {
-                  setPlaying(false);
-                }
-              },
-            })
-        );
-        console.log("sounds", sounds);
-        setAudioData(segData);
-        setAudio(sounds);
-        const { totTime } = getMaxTime(segData);
-        setDuration(totTime / 1000);
+                  this.seek(newSeek);
+                },
+                onend: function () {
+                  if (index === sounds.length - 1) {
+                    setPlaying(false);
+                  }
+                },
+              })
+          );
+          console.log("sounds", sounds);
+          setAudioData(segData);
+          setAudio(sounds);
+          const { totTime } = getMaxTime(segData);
+          setDuration(totTime / 1000);
+        } else setMissing(true);
       }
     };
     fetchAudio();
@@ -243,6 +248,16 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
     }${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDisabled(
+        audio.length === 0 || audio[0]?._src.length === 0 || !audio[0]._src[0]
+      );
+    }, 500); // 500 milliseconds = 0.5 seconds
+
+    return () => clearTimeout(timer);
+  }, [audio]);
+
   const benchTime = () => {
     if (Math.ceil(globalSeek) === Math.floor(duration)) {
       return duration;
@@ -253,105 +268,107 @@ const AudioControls = ({ currentNote, mode, globalSeek, setglobalSeek }) => {
 
   return (
     <div className="w-full flex flex-col">
-      <div className="w-full flex flex-col">
-        <div className=" flex justify-center mt-3.5 gap-x-5">
-          <button
-            className="mt-1"
-            onClick={() => {
-              // Calculate the new seek time, ensuring it does not exceed the duration
-              let newSeek;
-              if (globalSeek - 30 < 0) {
-                newSeek = 0;
-              } else {
-                newSeek = Math.min(globalSeek - 30, duration);
-              }
+      {!missing ? (
+        <div className="w-full flex flex-col">
+          <div className=" flex justify-center mt-3.5 gap-x-5">
+            <button
+              className="mt-1"
+              onClick={() => {
+                // Calculate the new seek time, ensuring it does not exceed the duration
+                let newSeek;
+                if (globalSeek - 30 < 0) {
+                  newSeek = 0;
+                } else {
+                  newSeek = Math.min(globalSeek - 30, duration);
+                }
 
-              setglobalSeek(newSeek);
-            }}
-          >
-            <i
-              className="bi bi-arrow-counterclockwise"
-              style={{ fontSize: "1.1rem", marginTop: "10px" }}
-            ></i>
-          </button>
-
-          <button onClick={() => skipToPrevious()}>
-            <i
-              className="bi bi-skip-start-fill"
-              style={{ fontSize: "1.25rem" }}
-            ></i>
-          </button>
-          <Button
-            onClick={() => handleToggle()}
-            className="w-8 h-8 rounded-full flex justify-center items-center bg-gray-500 hover:bg-gray-400"
-            disabled={
-              audio.length === 0 ||
-              audio[0]?._src.length === 0 ||
-              !audio[0]._src[0]
-            }
-          >
-            <div className="mt-[.125rem]">
-              {playing ? (
-                <i
-                  className="bi bi-pause-fill text-white"
-                  style={{ fontSize: "1.2rem" }}
-                ></i>
-              ) : (
-                <i
-                  className="bi bi-play-fill text-white"
-                  style={{ marginLeft: "1.5px", fontSize: "1.2rem" }}
-                ></i>
-              )}
-            </div>
-          </Button>
-          <button onClick={() => skipToNext()}>
-            <i
-              className="bi bi-skip-end-fill"
-              style={{ fontSize: "1.25rem" }}
-            ></i>{" "}
-          </button>
-          <button
-            className="mt-1"
-            onClick={() => {
-              // Calculate the new seek time, ensuring it does not exceed the duration
-              const newSeek = Math.min(globalSeek + 30, duration);
-              setglobalSeek(newSeek);
-            }}
-          >
-            <i
-              className="bi bi-arrow-clockwise"
-              style={{ fontSize: "1.1rem", marginTop: "10px" }}
-            ></i>
-          </button>
-        </div>
-
-        <div className="w-full flex-row flex justify-center mt-2.5 slider-container items-center">
-          <div className="playback-bar__progress-time-elapsed">
-            {formatTime(benchTime(globalSeek))}
-          </div>
-          <div className=" md:w-4/12 w-5/12 my-auto mx-2 flex bg-transparent	">
-            <input
-              type="range"
-              min="0"
-              step=".001"
-              value={globalSeek}
-              max={duration}
-              onChange={handleSliderChange}
-              className="slider self-center flex-none bg-transparent	"
-              style={{
-                "--c": "lightgray", // Change the color based on value
+                setglobalSeek(newSeek);
               }}
-            />
-            <div
-              className="progress-bar-background"
-              style={{ width: `${(globalSeek / duration) * 100}%` }}
-            ></div>
+            >
+              <i
+                className="bi bi-arrow-counterclockwise"
+                style={{ fontSize: "1.1rem", marginTop: "10px" }}
+              ></i>
+            </button>
+
+            <button onClick={() => skipToPrevious()}>
+              <i
+                className="bi bi-skip-start-fill"
+                style={{ fontSize: "1.25rem" }}
+              ></i>
+            </button>
+            <Button
+              onClick={() => handleToggle()}
+              className="w-8 h-8 rounded-full flex justify-center items-center bg-gray-500 hover:bg-gray-400"
+              disabled={disabled}
+            >
+              <div className="mt-[.125rem]">
+                {playing ? (
+                  <i
+                    className="bi bi-pause-fill text-white"
+                    style={{ fontSize: "1.2rem" }}
+                  ></i>
+                ) : (
+                  <i
+                    className="bi bi-play-fill text-white"
+                    style={{ marginLeft: "1.5px", fontSize: "1.2rem" }}
+                  ></i>
+                )}
+              </div>
+            </Button>
+            <button onClick={() => skipToNext()}>
+              <i
+                className="bi bi-skip-end-fill"
+                style={{ fontSize: "1.25rem" }}
+              ></i>{" "}
+            </button>
+            <button
+              className="mt-1"
+              onClick={() => {
+                // Calculate the new seek time, ensuring it does not exceed the duration
+                const newSeek = Math.min(globalSeek + 30, duration);
+                setglobalSeek(newSeek);
+              }}
+            >
+              <i
+                className="bi bi-arrow-clockwise"
+                style={{ fontSize: "1.1rem", marginTop: "10px" }}
+              ></i>
+            </button>
           </div>
-          <div className="playback-bar__duration">
-            {!duration ? "Loading..." : formatTime(duration)}
+
+          <div className="w-full flex-row flex justify-center mt-2.5 slider-container items-center">
+            <div className="playback-bar__progress-time-elapsed">
+              {formatTime(benchTime(globalSeek))}
+            </div>
+            <div className=" md:w-4/12 w-5/12 my-auto mx-2 flex bg-transparent	">
+              <input
+                type="range"
+                min="0"
+                step=".001"
+                value={globalSeek}
+                max={duration}
+                onChange={handleSliderChange}
+                className="slider self-center flex-none bg-transparent	"
+                style={{
+                  "--c": "lightgray", // Change the color based on value
+                }}
+              />
+              <div
+                className="progress-bar-background"
+                style={{ width: `${(globalSeek / duration) * 100}%` }}
+              ></div>
+            </div>
+            <div className="playback-bar__duration">
+              {!duration ? "Loading..." : formatTime(duration)}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex justify-center my-auto">
+          audio playback will go here after recording
+        </div>
+      )}
     </div>
   );
 };
