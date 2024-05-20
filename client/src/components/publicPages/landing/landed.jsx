@@ -43,7 +43,7 @@ export function BlockText() {
               Your partner in effortless and efficient notetaking
             </h2>
             <div className="mt-6">
-              <Link to="/getin">
+              <Link to="/login">
                 <div className="text-white">
                   <button
                     type="button"
@@ -61,7 +61,7 @@ export function BlockText() {
                         "0 0 0 0 rgba(127, 90, 179, 0)";
                     }}
                   >
-                    Join Waitlist
+                    Login
                   </button>
                 </div>
               </Link>

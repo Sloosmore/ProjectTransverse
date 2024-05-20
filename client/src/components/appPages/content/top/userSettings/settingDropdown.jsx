@@ -37,7 +37,10 @@ export default function ProfDrop() {
       >
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline">Open</Button>
+            <i
+              class="bi bi-person ms-2  text-gray-400 dark:hover:text-white dark:text-gray-300 hover:text-gray-700"
+              style={{ fontSize: "1.5rem" }}
+            ></i>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuItem>
