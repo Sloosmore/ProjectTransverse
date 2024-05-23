@@ -16,6 +16,7 @@ function PublicRoutes() {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/code" element={<Login />} />
       <Route path="/about" element={<ComingSoon />} />
       <Route path="/privacy" element={<PrivatePolicy />} />
       <Route path="/terms" element={<TermsOfService />} />
