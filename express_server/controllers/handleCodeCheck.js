@@ -11,8 +11,8 @@ const adminCode = async (req, res) => {
     const { code } = req.body;
 
     const { data: Accounts, error: accountErr } = await supabase
-      .from("user")
-      .select("corporate_account")
+      .from("corporate_account")
+      .select("*")
       .eq("account_id", code);
 
     if (accountErr) {
