@@ -42,7 +42,9 @@ const AdminPanel = () => {
         <ToggleTheme />
         <p className="me-3  px-2">|</p>
         <button
-          onClick={signOut}
+          onClick={() => {
+            signOut();
+          }}
           className="underline hover:text-gray-600 dark:hover:text-gray-200"
         >
           log out

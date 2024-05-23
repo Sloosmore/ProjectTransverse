@@ -122,7 +122,7 @@ const RecPause = ({ localNoteID, ToggleGenKit }) => {
 
             <div
               onClick={() => {
-                if (userType === ("Premium" || "Standard")) {
+                if (userType === "Premium" || userType === "Standard") {
                   recStatusObject.leftFunction();
                 } else toast.warning("You do not have access to recording");
               }}
