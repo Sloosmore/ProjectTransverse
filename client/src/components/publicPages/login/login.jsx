@@ -1,9 +1,10 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { supabaseClient } from "../../../config/supabaseClient";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./login.css";
 import { useAuth } from "../../../hooks/userHooks/auth";
+import { useTheme } from "@/hooks/theme";
 
 const talkingPoints = [
   "Live Personoalized Generated Notes & Diagrams",
@@ -13,9 +14,65 @@ const talkingPoints = [
   "And More!",
 ];
 
+const lightTheme = {
+  style: {
+    button: {
+      borderRadius: "10px",
+      borderColor: "rgba(219,219,220,1)",
+      padding: "0.5rem",
+    },
+    input: {
+      borderRadius: "10px",
+      borderColor: "rgba(189,195,199,1)",
+      padding: "0.5rem",
+      marginTop: "0.5rem",
+    },
+  },
+  variables: {
+    default: {
+      colors: {
+        brandButtonText: "white",
+        brand: "blue",
+        brandAccent: `gray`,
+      },
+    },
+  },
+};
+
+const darkTheme = {
+  style: {
+    button: {
+      borderRadius: "10px",
+      borderColor: "rgba(105,105,105,1)", // Darker gray
+      padding: "0.5rem",
+    },
+    input: {
+      borderRadius: "10px",
+      borderColor: "rgba(105,105,105,1)", // Darker gray
+      padding: "0.5rem",
+      marginTop: "0.5rem",
+    },
+  },
+  variables: {
+    default: {
+      colors: {
+        brandButtonText: "white",
+        brand: "blue",
+        brandAccent: `gray`,
+      },
+    },
+  },
+};
+
 function Login() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { darkMode } = useTheme();
+  const [theme, setTheme] = useState(darkTheme);
+
+  useEffect(() => {
+    setTheme(darkMode ? darkTheme : lightTheme);
+  }, [darkMode]);
 
   useEffect(() => {
     const { data } = supabaseClient.auth.onAuthStateChange(
@@ -40,13 +97,13 @@ function Login() {
   }, []);
 
   return (
-    <div className="flex h-dvh flex-col md:flex-row xl:px-20 justify-center sm:justify-normal   md:px-6">
+    <div className="flex h-dvh flex-col md:flex-row xl:px-20 justify-center sm:justify-normal text-gray-500 dark:text-gray-300  md:px-6">
       <div className=" md:flex-grow sm:h-1/3  md:h-screen flex mx-auto lg:ms-[9%] md:mt-0 sm:mt-10">
         <div className="self-center">
-          <h1 className="text-gray-500 sm:ms-8  ">
+          <h1 className=" sm:ms-8  ">
             Never miss a <span className="gradient-text "> vrse </span>
           </h1>
-          <ul className="ms-14 mt-6 gap-y-2 flex-col sm:flex text-gray-500 me-5 flex-shrink hidden sm:visable">
+          <ul className="ms-14 mt-6 gap-y-2 flex-col sm:flex me-5 flex-shrink hidden sm:visable">
             {talkingPoints.map((value, index) => (
               <li key={index}>
                 <i className="bi bi-check-circle-fill me-2 w-full"></i> {value}
@@ -58,33 +115,10 @@ function Login() {
 
       <div className="  md:w-1/2  flex justify-center md:mt-0 mt-10 ">
         <div className=" w-[400px] self-center ">
-          <div className=" text-center p-5 shadow-lg auth-container md:mb-2 mx-7 sm:mx-0 rounded-lg ring ring-gray-100 ">
+          <div className=" text-center p-5 shadow-lg auth-container md:mb-2 mx-7 sm:mx-0 rounded-lg ring ring-gray-100 dark:ring-gray-00 ">
             <Auth
               supabaseClient={supabaseClient}
-              appearance={{
-                style: {
-                  button: {
-                    borderRadius: "10px",
-                    borderColor: "rgba(219,219,220,1)",
-                    padding: "0.5rem",
-                  },
-                  input: {
-                    borderRadius: "10px",
-                    borderColor: "rgba(189,195,199,1)",
-                    padding: "0.5rem",
-                    marginTop: "0.5rem",
-                  },
-                },
-                variables: {
-                  default: {
-                    colors: {
-                      brandButtonText: "white",
-                      brand: "blue",
-                      brandAccent: `gray`,
-                    },
-                  },
-                },
-              }}
+              appearance={theme}
               providers={["google"]}
             />
           </div>

@@ -94,12 +94,12 @@ function Transcript({ currentNote }) {
         )}
       </div>
       {processing && (
-        <div className="flex justify-between items-center flex-row h-20 mx-3 border-t mt-5">
-          <p className=" mt-3  italic h-full flex items-center ms-2">
-            Processing the last audio file. Please wait a few seconds to view
-            the a transcript if you start recording again.
+        <div className="flex justify-between items-center md:flex-row flex-col h-20 mx-3 border-t mt-5 md:pt-5 pt-4 ">
+          <p className=" italic sm:h-24 h-48 flex items-center md:ms-2 md:mx-0 mx-auto">
+            Processing last audio. Please wait to view the transcript if you
+            start recording again.
           </p>
-          <div className="h-full flex items-center mx-4 mt-1">
+          <div className="h-full sm:flex mt-5 items-center mx-4 md:mt-1">
             <l-pulsar size="40" speed="1.75" color="gray"></l-pulsar>
           </div>
         </div>

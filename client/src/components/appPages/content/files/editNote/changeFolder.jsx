@@ -40,7 +40,7 @@ function ChangeFolder({ open, folderId, setSelectedValue, folders }) {
           setSelectedValue(value);
         }}
       >
-        <SelectTrigger className="w-[100px] p-0 md:p-3 sm:w-[180px] ">
+        <SelectTrigger className="w-[100px] p-3 w-[180px] ">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>

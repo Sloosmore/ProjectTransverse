@@ -78,7 +78,7 @@ const SpeakerCaption = ({ speak }) => {
             {name}
           </div>
           <input
-            value={name}
+            value={name || undefined}
             onChange={updateNames}
             placeholder={`Speaker ${speaker}`}
             className=" font-semibold bg-transparent overflow-ellipsis overflow-hidden	focus:outline-none"

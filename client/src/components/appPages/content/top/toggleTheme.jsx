@@ -9,7 +9,7 @@ const ToggleTheme = () => {
           className={
             darkMode
               ? "bi bi-moon-fill text-gray-300 hover:text-white px-3 py-2"
-              : `bi bi-sun text-gray-400 px-3 py-2`
+              : `bi bi-sun text-gray-400 px-3 py-2 hover:text-gray-600`
           }
           style={{ fontSize: "1.25rem" }}
         ></i>

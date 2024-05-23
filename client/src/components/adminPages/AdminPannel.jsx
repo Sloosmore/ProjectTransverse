@@ -2,8 +2,11 @@ import { useAdmin } from "@/hooks/admin/adminContext";
 import Utable from "./userTable/uTable";
 import SaveUsers from "./userTable/save";
 import imgLogo from "../../assets/greyFull.png";
+import { useAuth } from "@/hooks/userHooks/auth";
+import ToggleTheme from "../appPages/content/top/toggleTheme";
 const AdminPanel = () => {
   const { account, user } = useAdmin();
+  const { signOut } = useAuth();
 
   const user_array = [
     { num: account?.premium_licenses, name: "Premium Licenses" },
@@ -28,8 +31,22 @@ const AdminPanel = () => {
         <Utable />
       </div>
       <SaveUsers />
-      <div className="mt-auto flex justify-center h-12 border-t">
-        <p className="mt-4 text-lg bold">vrse.ai</p>
+      <div className="mt-auto flex justify-center h-12 border-t flex-row text-lg bold pt-5 text-gray-400 dark:text-gray-300  ">
+        <a
+          target="#"
+          className="hover:cursor-pointer underline	hover:text-gray-600 dark:hover:text-gray-200"
+        >
+          vrse.ai
+        </a>{" "}
+        <p className="ms-3 px-2">|</p>
+        <ToggleTheme />
+        <p className="me-3  px-2">|</p>
+        <button
+          onClick={signOut}
+          className="underline hover:text-gray-600 dark:hover:text-gray-200"
+        >
+          log out
+        </button>
       </div>
     </div>
   );

@@ -28,7 +28,6 @@ import { formatIncommingTranscript } from "./services/transcriptFormating/transc
 import { useCustomWebSocket } from "@/hooks/websocket/customWebsocket";
 import { breakTranscript } from "@/api/crud/notes/updateTranscriptBreak";
 import { StandardFormating } from "./services/noteWebsockets/transcriptFormat";
-import { appendFullTranscript } from "@/api/crud/notes/updateTranscript";
 import { resetSaveTranscript } from "./services/noteWebsockets/transcriptReset";
 import { useRef } from "react";
 import { getAudioStream } from "./services/audio/startMic";
