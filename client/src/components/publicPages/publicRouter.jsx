@@ -10,6 +10,7 @@ import NotFound from "./notFound/notFound";
 import PrivatePolicy from "./policies/private";
 import TermsOfService from "./policies/terms";
 import WaitlistScreen from "./waitlist/waitlistScreen";
+import ConfirmationPage from "./confirm/confirm";
 
 function PublicRoutes() {
   return (
@@ -21,7 +22,7 @@ function PublicRoutes() {
       <Route path="/privacy" element={<PrivatePolicy />} />
       <Route path="/terms" element={<TermsOfService />} />
       <Route path="/policy" element={<ComingSoon />} />
-      <Route path="/getin" element={<WaitlistScreen />} />
+      <Route path="/confirm-signup" element={<ConfirmationPage />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

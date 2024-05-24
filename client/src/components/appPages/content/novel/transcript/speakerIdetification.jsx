@@ -30,7 +30,7 @@ const SpeakerCaption = ({ speak }) => {
     const newName = e.target.value;
 
     //map through full ts first
-
+    console.log("this could be it 1");
     setNotes((prev) => {
       return prev.map((note) => {
         if (noteID === note.note_id) {

@@ -14,11 +14,6 @@ export const resetSaveTranscript = async (
   //that way if notes are pulled results are the same
   const fullTs = await appendFullTranscript(noteID, updatedTranscript);
 
-  if (userType === "Standard") {
-    resetTranscript();
-  } else {
-    setFullTranscript([]);
-  }
   setNotes((prevNotes) =>
     prevNotes.map((record) =>
       record.note_id === noteID
@@ -26,6 +21,12 @@ export const resetSaveTranscript = async (
         : record
     )
   );
+
+  if (userType === "Standard") {
+    resetTranscript();
+  } else {
+    setFullTranscript([]);
+  }
 
   console.log("the notes should be updated", fullTs);
 };

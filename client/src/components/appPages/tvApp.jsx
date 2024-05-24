@@ -314,7 +314,7 @@ function TransverseApp() {
     if (mode !== "note") {
       let transcriptMessage;
       stopRecordingMedia(recorder);
-
+      console.log("reset and save TS");
       resetSaveTranscript(
         fullTranscript,
         userType,
@@ -351,7 +351,19 @@ function TransverseApp() {
     const deactivate = mode === "note" ? false : true;
 
     fetchNoteRecords(session, deactivate).then((data) => {
-      setNotes(data);
+      console.log("this is more likley to be it");
+      userType === "Premium" && mode === "default"
+        ? setNotes((prev) => {
+            const TS = prev.find(
+              (obj) => obj.note_id === noteID
+            ).json_transcript;
+            return data.map((obj) =>
+              obj.note_id === noteID && TS
+                ? { ...obj, json_transcript: TS }
+                : obj
+            );
+          })
+        : setNotes(data);
     });
   }, [mode]);
 
@@ -488,6 +500,13 @@ function TransverseApp() {
       }
     }, 600);
   }, [compatible]);
+
+  useEffect(() => {
+    console.log(
+      "this is what should be updated",
+      noteData.find((obj) => obj.note_id === noteID)
+    );
+  }, [noteData]);
 
   return (
     <div className="flex flex-col h-dvh lg:h-screen">
