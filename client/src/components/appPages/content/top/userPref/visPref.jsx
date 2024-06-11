@@ -28,9 +28,16 @@ function VisSettings() {
           <Label
             htmlFor="width"
             className="text-lg text-gray-700 dark:text-gray-300 flex flex-col"
+            style={fontSize ? { fontSize: `${fontSize * 1.2}rem` } : {}}
           >
             Note Text Color
-            <div className="text-gray-500 text-base font-normal">
+            <div
+              className="text-gray-500 text-base font-normal"
+              style={{
+                ...(fontSize ? { fontSize: `${fontSize}rem` } : {}),
+                ...(fontColor ? { color: fontColor } : {}),
+              }}
+            >
               {" "}
               Sets the color of text inside notes{" "}
             </div>
@@ -50,9 +57,16 @@ function VisSettings() {
           <Label
             htmlFor="maxWidth"
             className="text-lg text-gray-700 dark:text-gray-300 flex flex-col"
+            style={fontSize ? { fontSize: `${fontSize * 1.2}rem` } : {}}
           >
             Note Text Size
-            <div className="text-gray-500 text-base font-normal">
+            <div
+              className="text-gray-500 text-base font-normal"
+              style={{
+                ...(fontSize ? { fontSize: `${fontSize}rem` } : {}),
+                ...(fontColor ? { color: fontColor } : {}),
+              }}
+            >
               {" "}
               Sets the size of text inside notes
             </div>

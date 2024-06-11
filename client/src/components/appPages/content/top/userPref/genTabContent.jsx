@@ -34,25 +34,47 @@ const TabGen = ({
   guidedNotes,
   setGuidedNotes,
 }) => {
+  const { setFontColor, fontColor, setFontSize, fontSize } = useUserPref();
+
   return (
     <TabsContent key={type} value={type}>
-      <div className="px-1">
+      <div
+        className="px-1"
+        style={{
+          ...(fontSize ? { fontSize: `${fontSize}rem` } : {}),
+          ...(fontColor ? { color: fontColor } : {}),
+        }}
+      >
         <Textarea
           className="form-control p-6 border rounded-lg w-full"
           id="prefTextArea"
           rows="6"
+          style={
+            fontSize
+              ? {
+                  fontSize: `${fontSize}rem`,
+                  lineHeight: `${fontSize * 1.5}rem`,
+                }
+              : {}
+          }
           value={textareaValue || preferences[type][activeNum[type]]}
           onChange={(e) => setTextareaValue(e.target.value)}
         ></Textarea>
       </div>
-      <div className="flex sm:flex-row flex-col  overflow-x-auto px-6 py-6 rounded-xl border justify-between mt-4">
+      <div
+        className="flex sm:flex-row flex-col  overflow-x-auto px-6 py-6 rounded-xl border justify-between mt-4"
+        style={fontSize ? { fontSize: `${fontSize}rem` } : {}}
+      >
         <div>
-          <div className="text-lg text-gray-700 dark:text-gray-300">
+          <div
+            className="text-lg text-gray-700 dark:text-gray-300"
+            style={fontSize ? { fontSize: `${fontSize * 1.2}rem` } : {}}
+          >
             Prompt Selection
           </div>
           <div>Each prompt corresponds to the text input</div>
         </div>
-        <div className="flex flex-row sm:space-x-5 sm:ms-5 mt-5 sm:jusify-center justify-between items-center">
+        <div className="flex flex-row sm:space-x-5 sm:ms-5 sm:justify-center justify-between items-center my-auto">
           {prefArray.map((num) => (
             <Button
               className={`  ${
@@ -77,6 +99,7 @@ const TabGen = ({
         <label
           htmlFor="freqRange"
           className="my-3 mt-4 pt-4 text-lg text-gray-700 dark:text-gray-300"
+          style={fontSize ? { fontSize: `${fontSize * 1.2}rem` } : {}}
         >
           Note Generation Speed (minutes)
         </label>
@@ -100,7 +123,13 @@ const TabGen = ({
               value={frequency}
               onChange={(e) => setFrequency(e.target.value)}
                 ></input>*/}
-        <div className="justify-between flex flex-row mt-5 ">
+        <div
+          className="justify-between flex flex-row mt-5 "
+          style={{
+            ...(fontSize ? { fontSize: `${fontSize}rem` } : {}),
+            ...(fontColor ? { color: fontColor } : {}),
+          }}
+        >
           <div>Quicker (1m)</div>
           <div>Average (3m)</div>
           <div>Slower (5m)</div>
@@ -108,10 +137,15 @@ const TabGen = ({
       </div>
       <div className="flex flex-row justify-between my-5 border px-6 py-6 rounded-xl ">
         <div className="">
-          <div className="text-lg text-gray-700 dark:text-gray-300">
+          <div
+            className="text-lg text-gray-700 dark:text-gray-300"
+            style={fontSize ? { fontSize: `${fontSize * 1.2}rem` } : {}}
+          >
             Guided Note Mode
           </div>
-          <div>Create partial generations that you fill in</div>
+          <div style={fontSize ? { fontSize: `${fontSize}rem` } : {}}>
+            Create partial generations that you fill in
+          </div>
         </div>
         <div className="my-auto">
           <Switch
@@ -123,7 +157,7 @@ const TabGen = ({
             }
           />
         </div>
-      </div>{" "}
+      </div>
     </TabsContent>
   );
 };
